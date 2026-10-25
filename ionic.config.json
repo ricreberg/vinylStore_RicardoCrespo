@@ -1,0 +1,7 @@
+{
+  "name": "vinyl-store-ricardo-crespo",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
