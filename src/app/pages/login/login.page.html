@@ -6,11 +6,65 @@
         aria-label="Abrir menú principal"
       ></ion-menu-button>
     </ion-buttons>
-    <ion-title>Iniciar sesión</ion-title>
+
+    <ion-title>Acceso y sesión</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
-  <h1>Iniciar sesión</h1>
-  <p>Aquí se incorporará el formulario de acceso.</p>
+  @if (checkingSession()) {
+    <p role="status">Comprobando sesión…</p>
+  } @else {
+    @if (session(); as currentSession) {
+      <h1>Tu sesión</h1>
+      <p>Has iniciado sesión con {{ currentSession.user.email }}.</p>
+
+      <ion-button
+        type="button"
+        (click)="signOut()"
+        [disabled]="loading()"
+      >
+        {{ loading() ? 'Cerrando sesión…' : 'Cerrar sesión' }}
+      </ion-button>
+    } @else {
+      <h1>Accede a Vinyl Store</h1>
+      <p>Introduce tu correo y contraseña.</p>
+
+      <form [formGroup]="form" (ngSubmit)="signIn()">
+        <ion-input
+          class="ion-margin-bottom"
+          label="Correo electrónico"
+          labelPlacement="stacked"
+          type="email"
+          autocomplete="username"
+          formControlName="email"
+          errorText="Introduce un correo electrónico válido."
+          [required]="true"
+        ></ion-input>
+
+        <ion-input
+          class="ion-margin-bottom"
+          label="Contraseña"
+          labelPlacement="stacked"
+          type="password"
+          autocomplete="current-password"
+          formControlName="password"
+          errorText="Introduce tu contraseña."
+          [required]="true"
+        ></ion-input>
+
+        <ion-button type="submit" [disabled]="loading()">
+          {{ loading() ? 'Accediendo…' : 'Iniciar sesión' }}
+        </ion-button>
+      </form>
+    }
+
+    @if (errorMessage()) {
+      <p role="alert">{{ errorMessage() }}</p>
+    }
+
+    @if (successMessage()) {
+      <p role="status">{{ successMessage() }}</p>
+    }
+  }
 </ion-content>

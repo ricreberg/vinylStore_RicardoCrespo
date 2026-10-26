@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import {
   IonApp,
@@ -15,6 +15,8 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/angular';
+
+import { AuthService } from './core/services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -39,23 +41,35 @@ import {
   ],
 })
 export class AppComponent {
-  readonly menuSections = [
-    {
-      title: 'Tienda',
-      links: [
-        { title: 'Catálogo', url: '/catalogo' },
-        { title: 'Mis reservas', url: '/mis-reservas' },
-        { title: 'Ayuda', url: '/ayuda' },
-        { title: 'Iniciar sesión', url: '/login' },
-      ],
-    },
-    {
-      title: 'Administración',
-      links: [
-        { title: 'Estadísticas', url: '/admin/dashboard' },
-        { title: 'Productos y existencias', url: '/admin/productos' },
-        { title: 'Gestión de reservas', url: '/admin/reservas' },
-      ],
-    },
-  ];
+  private readonly auth = inject(AuthService);
+
+  readonly menuSections = computed(() => {
+    const sections = [
+      {
+        title: 'Tienda',
+        links: [
+          { title: 'Catálogo', url: '/catalogo' },
+          { title: 'Mis reservas', url: '/mis-reservas' },
+          { title: 'Ayuda', url: '/ayuda' },
+          {
+            title: this.auth.session() ? 'Mi cuenta' : 'Iniciar sesión',
+            url: '/login',
+          },
+        ],
+      },
+    ];
+
+    if (this.auth.role() === 'admin') {
+      sections.push({
+        title: 'Administración',
+        links: [
+          { title: 'Estadísticas', url: '/admin/dashboard' },
+          { title: 'Productos y existencias', url: '/admin/productos' },
+          { title: 'Gestión de reservas', url: '/admin/reservas' },
+        ],
+      });
+    }
+
+    return sections;
+  });
 }
