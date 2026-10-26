@@ -14,6 +14,7 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/angular';
+import type { Session } from '@supabase/supabase-js';
 
 import { AuthService } from '../../core/services/auth.service';
 
@@ -37,6 +38,8 @@ export class LoginPage {
   private readonly auth = inject(AuthService);
   private readonly fb = inject(FormBuilder);
 
+  readonly session = signal<Session | null>(null);
+  readonly checkingSession = signal(true);
   readonly loading = signal(false);
   readonly errorMessage = signal('');
   readonly successMessage = signal('');
@@ -45,6 +48,27 @@ export class LoginPage {
     email: ['', [Validators.required, Validators.email]],
     password: ['', Validators.required],
   });
+
+  async ionViewWillEnter(): Promise<void> {
+    this.checkingSession.set(true);
+    this.errorMessage.set('');
+    this.successMessage.set('');
+
+    try {
+      const { data, error } = await this.auth.getSession();
+
+      if (error) {
+        this.errorMessage.set('No se ha podido recuperar la sesión.');
+        return;
+      }
+
+      this.session.set(data.session);
+    } catch {
+      this.errorMessage.set('No se ha podido comprobar la sesión.');
+    } finally {
+      this.checkingSession.set(false);
+    }
+  }
 
   async signIn(): Promise<void> {
     if (this.loading()) {
@@ -72,10 +96,37 @@ export class LoginPage {
         return;
       }
 
-      this.successMessage.set(
-        `Sesión iniciada con ${data.user.email ?? email}.`,
+      this.session.set(data.session);
+      this.form.reset();
+    } catch {
+      this.errorMessage.set(
+        'No se ha podido conectar con el servicio. Inténtalo de nuevo.',
       );
-      this.form.controls.password.reset();
+    } finally {
+      this.loading.set(false);
+    }
+  }
+
+  async signOut(): Promise<void> {
+    if (this.loading()) {
+      return;
+    }
+
+    this.loading.set(true);
+    this.errorMessage.set('');
+    this.successMessage.set('');
+
+    try {
+      const { error } = await this.auth.signOut();
+
+      if (error) {
+        this.errorMessage.set('No se ha podido cerrar la sesión.');
+        return;
+      }
+
+      this.session.set(null);
+      this.form.reset();
+      this.successMessage.set('Has cerrado la sesión.');
     } catch {
       this.errorMessage.set(
         'No se ha podido conectar con el servicio. Inténtalo de nuevo.',
