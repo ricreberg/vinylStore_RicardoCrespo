@@ -1,5 +1,7 @@
 import { Routes } from '@angular/router';
 
+import { adminGuard, authGuard } from './core/guards/auth.guard';
+
 export const routes: Routes = [
   {
     path: '',
@@ -13,6 +15,7 @@ export const routes: Routes = [
   },
   {
     path: 'mis-reservas',
+    canActivate: [authGuard],
     loadComponent: () =>
       import('./pages/mis-reservas/mis-reservas.page').then(
         (m) => m.MisReservasPage,
@@ -30,6 +33,7 @@ export const routes: Routes = [
   },
   {
     path: 'admin',
+    canActivateChild: [adminGuard],
     children: [
       {
         path: '',

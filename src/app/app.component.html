@@ -13,7 +13,7 @@
 
       <ion-content>
         <nav aria-label="Navegación principal">
-          @for (section of menuSections; track section.title) {
+          @for (section of menuSections(); track section.title) {
             <ion-list>
               <ion-list-header>
                 <ion-label>{{ section.title }}</ion-label>
