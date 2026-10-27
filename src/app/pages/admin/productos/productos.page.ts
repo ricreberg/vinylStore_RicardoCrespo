@@ -26,6 +26,7 @@ import {
   IonToolbar,
 } from '@ionic/angular';
 
+import { PortadasService } from '../../../core/services/portadas.service';
 import { ProductosService } from '../../../core/services/productos.service';
 import type { Producto } from '../../../core/services/productos.service';
 
@@ -58,10 +59,14 @@ import type { Producto } from '../../../core/services/productos.service';
 })
 export class ProductosPage {
   private readonly servicio = inject(ProductosService);
+  readonly portadas = inject(PortadasService);
+
   private readonly fb = inject(FormBuilder);
+  private rutaSubidaPendiente: string | null = null;
 
   readonly productos = signal<Producto[]>([]);
   readonly editando = signal<Producto | null>(null);
+  readonly archivoSeleccionado = signal<File | null>(null);
   readonly loading = signal(true);
   readonly saving = signal(false);
   readonly loadError = signal('');
@@ -117,12 +122,41 @@ export class ProductosPage {
     }
   }
 
+  seleccionarPortada(event: Event): void {
+    const input = event.target;
+
+    if (!(input instanceof HTMLInputElement)) {
+      return;
+    }
+
+    const archivo = input.files?.[0];
+
+    if (archivo) {
+      this.archivoSeleccionado.set(archivo);
+      this.rutaSubidaPendiente = null;
+      this.saveError.set('');
+      this.successMessage.set('');
+    }
+
+    input.value = '';
+  }
+
+  descartarSeleccion(): void {
+    if (this.saving()) {
+      return;
+    }
+
+    this.archivoSeleccionado.set(null);
+    this.rutaSubidaPendiente = null;
+  }
+
   editarProducto(producto: Producto): void {
     if (this.saving() || this.loading()) {
       return;
     }
 
     this.editando.set(producto);
+    this.descartarSeleccion();
     this.saveError.set('');
     this.successMessage.set('');
 
@@ -144,6 +178,7 @@ export class ProductosPage {
 
     this.editando.set(null);
     this.form.reset();
+    this.descartarSeleccion();
     this.saveError.set('');
     this.successMessage.set('');
   }
@@ -163,22 +198,37 @@ export class ProductosPage {
 
     const valores = this.form.getRawValue();
     const original = this.editando();
-
-    const datos = {
-      titulo: valores.titulo.trim(),
-      artista: valores.artista.trim(),
-      genero: valores.genero.trim(),
-      precio: Number(valores.precio),
-      stock: Number(valores.stock),
-      descripcion: valores.descripcion.trim(),
-      activo: valores.activo,
-      imagen_path: original?.imagen_path ?? null,
-    };
+    const archivo = this.archivoSeleccionado();
 
     this.saving.set(true);
     this.form.disable();
 
+    let fase: 'imagen' | 'producto' = 'imagen';
+
     try {
+      let imagenPath = original?.imagen_path ?? null;
+
+      if (archivo) {
+        if (!this.rutaSubidaPendiente) {
+          this.rutaSubidaPendiente = await this.portadas.subir(archivo);
+        }
+
+        imagenPath = this.rutaSubidaPendiente;
+      }
+
+      fase = 'producto';
+
+      const datos = {
+        titulo: valores.titulo.trim(),
+        artista: valores.artista.trim(),
+        genero: valores.genero.trim(),
+        precio: Number(valores.precio),
+        stock: Number(valores.stock),
+        descripcion: valores.descripcion.trim(),
+        activo: valores.activo,
+        imagen_path: imagenPath,
+      };
+
       const producto = original
         ? await this.servicio.actualizar(original.id, datos)
         : await this.servicio.crear(datos);
@@ -192,6 +242,8 @@ export class ProductosPage {
       );
 
       this.editando.set(null);
+      this.archivoSeleccionado.set(null);
+      this.rutaSubidaPendiente = null;
       this.form.reset();
 
       this.successMessage.set(
@@ -199,10 +251,18 @@ export class ProductosPage {
           ? `Producto «${producto.titulo}» actualizado.`
           : `Producto «${producto.titulo}» creado.`,
       );
-    } catch {
-      this.saveError.set(
-        'No se ha podido guardar el producto. Comprueba tu sesión y los datos.',
-      );
+    } catch (error: unknown) {
+      if (fase === 'imagen') {
+        this.saveError.set(
+          error instanceof Error
+            ? `No se ha podido subir la portada: ${error.message}`
+            : 'No se ha podido subir la portada.',
+        );
+      } else {
+        this.saveError.set(
+          'No se ha podido guardar el producto. Actualiza el listado para comprobar su estado antes de volver a intentarlo.',
+        );
+      }
     } finally {
       this.form.enable();
       this.saving.set(false);

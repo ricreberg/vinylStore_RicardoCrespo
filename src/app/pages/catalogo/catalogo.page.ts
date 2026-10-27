@@ -19,6 +19,7 @@ import {
 } from '@ionic/angular';
 
 import { ProductosService } from '../../core/services/productos.service';
+import { PortadasService } from '../../core/services/portadas.service';
 import type { Producto } from '../../core/services/productos.service';
 
 @Component({
@@ -46,6 +47,7 @@ import type { Producto } from '../../core/services/productos.service';
 })
 export class CatalogoPage {
   private readonly servicio = inject(ProductosService);
+  readonly portadas = inject(PortadasService);
 
   readonly productos = signal<Producto[]>([]);
   readonly loading = signal(true);

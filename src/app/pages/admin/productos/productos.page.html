@@ -16,8 +16,8 @@
 
   <section aria-labelledby="nuevo-producto">
     <h2 id="nuevo-producto">
-  {{ editando() ? 'Editar producto' : 'Nuevo producto' }}
-</h2>
+      {{ editando() ? 'Editar producto' : 'Nuevo producto' }}
+    </h2>
 
     <form [formGroup]="form" (ngSubmit)="guardarProducto()">
       <ion-grid>
@@ -90,6 +90,48 @@
           </ion-col>
 
           <ion-col size="12">
+            <label for="portada">Portada del disco</label>
+
+            <p id="ayuda-portada">
+              Imagen opcional en JPEG, PNG o WebP. Máximo 2 MiB.
+              Al editar, se conserva la portada actual si no eliges otra.
+            </p>
+
+            <input
+              id="portada"
+              type="file"
+              accept="image/jpeg,image/png,image/webp"
+              aria-describedby="ayuda-portada"
+              (change)="seleccionarPortada($event)"
+              [disabled]="saving() || loading()"
+            />
+
+            @if (archivoSeleccionado(); as archivo) {
+              <p>Imagen seleccionada: {{ archivo.name }}</p>
+
+              <ion-button
+                type="button"
+                fill="outline"
+                (click)="descartarSeleccion()"
+                [disabled]="saving()"
+              >
+                Descartar selección
+              </ion-button>
+            }
+
+            @if (editando()?.imagen_path; as rutaActual) {
+              <p>Portada guardada:</p>
+              <img
+                class="portada"
+                [src]="portadas.obtenerUrl(rutaActual)"
+                alt="Portada actual del producto en edición"
+                width="480"
+                height="480"
+              />
+            }
+          </ion-col>
+
+          <ion-col size="12">
             <ion-checkbox formControlName="activo">
               Visible en el catálogo
             </ion-checkbox>
@@ -98,28 +140,28 @@
       </ion-grid>
 
       <ion-button
-  type="submit"
-  [disabled]="saving() || loading()"
->
-  {{
-    saving()
-      ? 'Guardando…'
-      : editando()
-        ? 'Guardar cambios'
-        : 'Crear producto'
-  }}
-</ion-button>
+        type="submit"
+        [disabled]="saving() || loading()"
+      >
+        {{
+          saving()
+            ? 'Guardando…'
+            : editando()
+              ? 'Guardar cambios'
+              : 'Crear producto'
+        }}
+      </ion-button>
 
-@if (editando()) {
-  <ion-button
-    type="button"
-    fill="outline"
-    (click)="cancelarEdicion()"
-    [disabled]="saving()"
-  >
-    Cancelar edición
-  </ion-button>
-}
+      @if (editando()) {
+        <ion-button
+          type="button"
+          fill="outline"
+          (click)="cancelarEdicion()"
+          [disabled]="saving()"
+        >
+          Cancelar edición
+        </ion-button>
+      }
     </form>
 
     @if (saveError()) {
@@ -160,6 +202,17 @@
           @for (producto of productos(); track producto.id) {
             <ion-col size="12" size-md="6" size-xl="4">
               <ion-card>
+                @if (producto.imagen_path; as ruta) {
+                  <img
+                    class="portada"
+                    [src]="portadas.obtenerUrl(ruta)"
+                    [alt]="'Portada de ' + producto.titulo"
+                    width="480"
+                    height="480"
+                    loading="lazy"
+                  />
+                }
+
                 <ion-card-header>
                   <ion-card-title>{{ producto.titulo }}</ion-card-title>
                   <ion-card-subtitle>
@@ -178,7 +231,7 @@
                     Estado: {{ producto.activo ? 'Activo' : 'Inactivo' }}
                   </p>
 
-                                    @if (producto.descripcion) {
+                  @if (producto.descripcion) {
                     <p>{{ producto.descripcion }}</p>
                   }
 
