@@ -15,9 +15,11 @@
   <h1>Gestión de vinilos</h1>
 
   <section aria-labelledby="nuevo-producto">
-    <h2 id="nuevo-producto">Nuevo producto</h2>
+    <h2 id="nuevo-producto">
+  {{ editando() ? 'Editar producto' : 'Nuevo producto' }}
+</h2>
 
-    <form [formGroup]="form" (ngSubmit)="crearProducto()">
+    <form [formGroup]="form" (ngSubmit)="guardarProducto()">
       <ion-grid>
         <ion-row>
           <ion-col size="12" size-md="6">
@@ -96,11 +98,28 @@
       </ion-grid>
 
       <ion-button
-        type="submit"
-        [disabled]="saving() || loading()"
-      >
-        {{ saving() ? 'Guardando…' : 'Crear producto' }}
-      </ion-button>
+  type="submit"
+  [disabled]="saving() || loading()"
+>
+  {{
+    saving()
+      ? 'Guardando…'
+      : editando()
+        ? 'Guardar cambios'
+        : 'Crear producto'
+  }}
+</ion-button>
+
+@if (editando()) {
+  <ion-button
+    type="button"
+    fill="outline"
+    (click)="cancelarEdicion()"
+    [disabled]="saving()"
+  >
+    Cancelar edición
+  </ion-button>
+}
     </form>
 
     @if (saveError()) {
@@ -159,9 +178,19 @@
                     Estado: {{ producto.activo ? 'Activo' : 'Inactivo' }}
                   </p>
 
-                  @if (producto.descripcion) {
+                                    @if (producto.descripcion) {
                     <p>{{ producto.descripcion }}</p>
                   }
+
+                  <ion-button
+                    type="button"
+                    fill="outline"
+                    (click)="editarProducto(producto)"
+                    [disabled]="saving() || loading()"
+                    [attr.aria-label]="'Editar ' + producto.titulo"
+                  >
+                    Editar
+                  </ion-button>
                 </ion-card-content>
               </ion-card>
             </ion-col>

@@ -61,6 +61,7 @@ export class ProductosPage {
   private readonly fb = inject(FormBuilder);
 
   readonly productos = signal<Producto[]>([]);
+  readonly editando = signal<Producto | null>(null);
   readonly loading = signal(true);
   readonly saving = signal(false);
   readonly loadError = signal('');
@@ -106,8 +107,7 @@ export class ProductosPage {
     this.loadError.set('');
 
     try {
-      const productos = await this.servicio.listar(false);
-      this.productos.set(productos);
+      this.productos.set(await this.servicio.listar(false));
     } catch {
       this.loadError.set(
         'No se han podido cargar los productos. Inténtalo de nuevo.',
@@ -117,7 +117,38 @@ export class ProductosPage {
     }
   }
 
-  async crearProducto(): Promise<void> {
+  editarProducto(producto: Producto): void {
+    if (this.saving() || this.loading()) {
+      return;
+    }
+
+    this.editando.set(producto);
+    this.saveError.set('');
+    this.successMessage.set('');
+
+    this.form.reset({
+      titulo: producto.titulo,
+      artista: producto.artista,
+      genero: producto.genero,
+      precio: producto.precio,
+      stock: producto.stock,
+      descripcion: producto.descripcion,
+      activo: producto.activo,
+    });
+  }
+
+  cancelarEdicion(): void {
+    if (this.saving()) {
+      return;
+    }
+
+    this.editando.set(null);
+    this.form.reset();
+    this.saveError.set('');
+    this.successMessage.set('');
+  }
+
+  async guardarProducto(): Promise<void> {
     if (this.saving() || this.loading()) {
       return;
     }
@@ -131,28 +162,46 @@ export class ProductosPage {
     }
 
     const valores = this.form.getRawValue();
+    const original = this.editando();
+
+    const datos = {
+      titulo: valores.titulo.trim(),
+      artista: valores.artista.trim(),
+      genero: valores.genero.trim(),
+      precio: Number(valores.precio),
+      stock: Number(valores.stock),
+      descripcion: valores.descripcion.trim(),
+      activo: valores.activo,
+      imagen_path: original?.imagen_path ?? null,
+    };
 
     this.saving.set(true);
     this.form.disable();
 
     try {
-      const producto = await this.servicio.crear({
-        titulo: valores.titulo.trim(),
-        artista: valores.artista.trim(),
-        genero: valores.genero.trim(),
-        precio: Number(valores.precio),
-        stock: Number(valores.stock),
-        descripcion: valores.descripcion.trim(),
-        activo: valores.activo,
-        imagen_path: null,
-      });
+      const producto = original
+        ? await this.servicio.actualizar(original.id, datos)
+        : await this.servicio.crear(datos);
 
-      this.productos.update((actuales) => [producto, ...actuales]);
+      this.productos.update((actuales) =>
+        original
+          ? actuales.map((actual) =>
+              actual.id === producto.id ? producto : actual,
+            )
+          : [producto, ...actuales],
+      );
+
+      this.editando.set(null);
       this.form.reset();
-      this.successMessage.set(`Producto «${producto.titulo}» creado.`);
+
+      this.successMessage.set(
+        original
+          ? `Producto «${producto.titulo}» actualizado.`
+          : `Producto «${producto.titulo}» creado.`,
+      );
     } catch {
       this.saveError.set(
-        'No se ha podido crear el producto. Comprueba tu sesión y los datos.',
+        'No se ha podido guardar el producto. Comprueba tu sesión y los datos.',
       );
     } finally {
       this.form.enable();
