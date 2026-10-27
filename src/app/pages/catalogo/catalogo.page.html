@@ -13,5 +13,58 @@
 
 <ion-content class="ion-padding">
   <h1>Catálogo de vinilos</h1>
-  <p>Aquí se mostrará el catálogo de la tienda.</p>
+  <p>Consulta los discos de la tienda y sus existencias.</p>
+
+  <ion-button
+    type="button"
+    fill="outline"
+    (click)="cargarProductos()"
+    [disabled]="loading()"
+  >
+    Actualizar catálogo
+  </ion-button>
+
+  @if (loading()) {
+    <p role="status">Cargando catálogo…</p>
+  } @else if (errorMessage()) {
+    <p role="alert">{{ errorMessage() }}</p>
+  } @else if (productos().length === 0) {
+    <p>Todavía no hay productos publicados en el catálogo.</p>
+  } @else {
+    <ion-grid>
+      <ion-row>
+        @for (producto of productos(); track producto.id) {
+          <ion-col size="12" size-md="6" size-xl="4">
+            <ion-card>
+              <ion-card-header>
+                <ion-card-title>{{ producto.titulo }}</ion-card-title>
+                <ion-card-subtitle>
+                  {{ producto.artista }}
+                </ion-card-subtitle>
+              </ion-card-header>
+
+              <ion-card-content>
+                <p>Género: {{ producto.genero }}</p>
+
+                @if (producto.descripcion) {
+                  <p>{{ producto.descripcion }}</p>
+                }
+
+                <p>
+                  Precio:
+                  {{ producto.precio | currency:'EUR':'symbol':'1.2-2' }}
+                </p>
+
+                @if (producto.stock > 0) {
+                  <p>Unidades disponibles: {{ producto.stock }}</p>
+                } @else {
+                  <p>Temporalmente sin existencias.</p>
+                }
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        }
+      </ion-row>
+    </ion-grid>
+  }
 </ion-content>
