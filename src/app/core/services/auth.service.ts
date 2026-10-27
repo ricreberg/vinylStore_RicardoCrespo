@@ -1,8 +1,7 @@
 import { DestroyRef, Injectable, inject, signal } from '@angular/core';
-import { createClient } from '@supabase/supabase-js';
 import type { Session } from '@supabase/supabase-js';
 
-import { environment } from '../../../environments/environment';
+import { SupabaseService } from './supabase.service';
 
 export type UserRole = 'cliente' | 'admin';
 
@@ -12,10 +11,7 @@ export type UserRole = 'cliente' | 'admin';
 export class AuthService {
   private readonly destroyRef = inject(DestroyRef);
 
-  private readonly supabase = createClient(
-    environment.supabaseUrl,
-    environment.supabaseKey,
-  );
+  private readonly supabase = inject(SupabaseService).client;
 
   private readonly sessionState = signal<Session | null>(null);
   private readonly roleState = signal<UserRole | null>(null);
