@@ -11,7 +11,7 @@ con roles, la gestión de productos con portadas y las reservas.
 Actualmente incluye:
 
 - Menú lateral adaptable a escritorio y móvil.
-- Siete páginas con carga diferida.
+- Nueve páginas con carga diferida, incluidas listado y ficha de clientes.
 - Inicio, cierre y recuperación de sesión mediante Supabase Auth.
 - Perfiles con roles cliente y administrador en PostgreSQL.
 - Creación automática de perfiles con rol cliente.
@@ -30,6 +30,9 @@ Actualmente incluye:
 - Descuento y devolución de existencias mediante funciones PostgreSQL.
 - Protección frente a reintentos de una misma solicitud de reserva.
 - Mensajes de carga, error, confirmación y listados vacíos.
+- Listado de clientes accesible exclusivamente al administrador.
+- Ficha de cliente con nombre, correo, fecha de alta e historial de reservas.
+- Identificación del cliente en la gestión de reservas y enlace a su ficha.
 
 Las páginas de ayuda y estadísticas mantienen contenido provisional.
 El diseño visual y la revisión final de accesibilidad están pendientes.
@@ -75,6 +78,7 @@ La configuración de la base de datos y Storage está documentada en:
 - supabase/migrations/202610270003_create_reservas.sql
 - supabase/migrations/202610270004_create_reservar_function.sql
 - supabase/migrations/202610270005_create_estado_reserva_function.sql
+- supabase/migrations/202610280001_configure_clientes.sql
 
 Los scripts se han ejecutado manualmente en el SQL Editor de Supabase,
 en el orden de sus nombres. La aplicación no ejecuta migraciones
@@ -176,6 +180,13 @@ visibles por RLS. La interfaz muestra un texto alternativo.
 - API de reservas: el cliente no puede confirmar la recogida.
   La función respondió HTTP 400 con el mensaje de rechazo esperado.
 - API de reservas: cancelar dos veces devuelve el stock una sola vez.
+- Consulta administrativa de clientes y de sus fichas.
+- Historial de reservas filtrado por cliente.
+- Navegación desde una reserva hasta la ficha de su cliente.
+- API de clientes: petición de cuenta cliente rechazada con HTTP 403
+  y código 42501.
+- API de reservas: actualización directa de la tabla rechazada
+  con HTTP 403 y código 42501.
 
 La prueba de dos usuarios reservando simultáneamente la última unidad
 todavía está pendiente. El bloqueo está implementado, pero ese escenario
@@ -183,7 +194,6 @@ no se presenta como verificado.
 
 ## Trabajo pendiente
 
-- Ficha de clientes y su identificación en la gestión administrativa.
 - Validaciones asíncronas de formularios contra un servicio.
 - Pruebas adicionales de concurrencia y acceso a reservas de otra cuenta.
 - Dashboard sin gráficos de barras.
