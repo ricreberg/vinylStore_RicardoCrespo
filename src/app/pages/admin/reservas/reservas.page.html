@@ -6,11 +6,129 @@
         aria-label="Abrir menú principal"
       ></ion-menu-button>
     </ion-buttons>
+
     <ion-title>Gestión de reservas</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
   <h1>Gestión de reservas</h1>
-  <p>Aquí se consultarán las reservas y se actualizará su estado.</p>
+  <p>Consulta las reservas y gestiona la recogida de los discos.</p>
+
+  <div class="ion-margin-bottom">
+    <label for="filtro-estado">Mostrar reservas:</label>
+
+    <select id="filtro-estado" [(ngModel)]="filtro">
+      <option value="todas">Todas</option>
+      <option value="pendiente">Pendientes</option>
+      <option value="recogida">Recogidas</option>
+      <option value="cancelada">Canceladas</option>
+    </select>
+  </div>
+
+  <ion-button
+    type="button"
+    fill="outline"
+    (click)="cargarReservas()"
+    [disabled]="loading() || procesandoId() !== null"
+  >
+    Actualizar listado
+  </ion-button>
+
+  @if (actionError()) {
+    <p role="alert">{{ actionError() }}</p>
+  }
+
+  @if (successMessage()) {
+    <p role="status">{{ successMessage() }}</p>
+  }
+
+  @if (loading()) {
+    <p role="status">Cargando reservas…</p>
+  } @else if (loadError()) {
+    <p role="alert">{{ loadError() }}</p>
+  } @else if (reservasFiltradas.length === 0) {
+    <p>No hay reservas para el estado seleccionado.</p>
+  } @else {
+    <ion-grid>
+      <ion-row>
+        @for (reserva of reservasFiltradas; track reserva.id) {
+          <ion-col size="12" size-md="6" size-xl="4">
+            <ion-card>
+              <ion-card-header>
+                <ion-card-title>
+                  {{
+                    reserva.producto?.titulo
+                      ?? 'Producto no disponible'
+                  }}
+                </ion-card-title>
+
+                @if (reserva.producto; as producto) {
+                  <ion-card-subtitle>
+                    {{ producto.artista }}
+                  </ion-card-subtitle>
+                }
+              </ion-card-header>
+
+              <ion-card-content>
+                <p>Referencia: {{ reserva.id.slice(0, 8) }}</p>
+                <p>
+                  Fecha:
+                  {{ reserva.created_at | date:'dd/MM/yyyy HH:mm' }}
+                </p>
+                <p>Estado: {{ reserva.estado }}</p>
+                <p>Unidades: {{ reserva.cantidad }}</p>
+
+                <p>
+                  Precio por unidad:
+                  {{
+                    reserva.precio_unitario
+                      | currency:'EUR':'symbol':'1.2-2'
+                  }}
+                </p>
+
+                <p>
+                  Total:
+                  {{
+                    reserva.precio_unitario * reserva.cantidad
+                      | currency:'EUR':'symbol':'1.2-2'
+                  }}
+                </p>
+
+                @if (reserva.estado === 'pendiente') {
+                  <ion-button
+                    type="button"
+                    (click)="cambiarEstado(reserva, 'recogida')"
+                    [disabled]="procesandoId() !== null"
+                    [attr.aria-label]="
+                      'Marcar como recogida la reserva ' +
+                      reserva.id.slice(0, 8)
+                    "
+                  >
+                    Marcar como recogida
+                  </ion-button>
+
+                  <ion-button
+                    type="button"
+                    fill="outline"
+                    (click)="cambiarEstado(reserva, 'cancelada')"
+                    [disabled]="procesandoId() !== null"
+                    [attr.aria-label]="
+                      'Cancelar la reserva ' + reserva.id.slice(0, 8)
+                    "
+                  >
+                    Cancelar reserva
+                  </ion-button>
+                }
+
+                @if (procesandoId() === reserva.id) {
+                  <p role="status">Actualizando reserva…</p>
+                }
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        }
+      </ion-row>
+    </ion-grid>
+  }
 </ion-content>

@@ -6,35 +6,39 @@ Ionic y Angular standalone.
 ## Estado del proyecto
 
 En desarrollo. Están implementadas la navegación, la autenticación
-con roles y la gestión inicial de productos con portadas.
+con roles, la gestión de productos con portadas y las reservas.
 
 Actualmente incluye:
 
 - Menú lateral adaptable a escritorio y móvil.
 - Siete páginas con carga diferida.
-- Inicio y cierre de sesión mediante Supabase Auth.
-- Recuperación de la sesión al recargar.
+- Inicio, cierre y recuperación de sesión mediante Supabase Auth.
 - Perfiles con roles cliente y administrador en PostgreSQL.
 - Creación automática de perfiles con rol cliente.
-- RLS para consultar el perfil propio y restricción de su escritura.
-- Acceso a mis reservas condicionado a tener sesión.
-- Rutas administrativas protegidas según el rol.
+- Lectura del perfil propio mediante RLS y escritura restringida.
+- Rutas protegidas según sesión y rol.
 - Menú actualizado automáticamente según la sesión y el rol.
 - Alta y edición de productos mediante formularios reactivos.
 - Validación de campos obligatorios, precios y existencias.
 - Publicación y retirada de productos mediante el campo activo.
-- Catálogo público de productos activos, distribuido en cards.
+- Catálogo público de productos activos distribuido en cards.
 - Subida de portadas a Supabase Storage y visualización pública.
-- Restricción de escritura de productos e imágenes al administrador.
+- Escritura de productos e imágenes restringida al administrador.
+- Reserva de unidades desde el catálogo con sesión iniciada.
+- Consulta y cancelación de reservas propias.
+- Gestión administrativa de reservas y filtro por estado.
+- Descuento y devolución de existencias mediante funciones PostgreSQL.
+- Protección frente a reintentos de una misma solicitud de reserva.
 - Mensajes de carga, error, confirmación y listados vacíos.
 
-Las páginas de reservas, ayuda y estadísticas mantienen contenido
-provisional. La funcionalidad de reservas todavía no está implementada.
+Las páginas de ayuda y estadísticas mantienen contenido provisional.
+El diseño visual y la revisión final de accesibilidad están pendientes.
 
 ## Tecnologías
 
 - Ionic y Angular standalone.
 - TypeScript y SCSS.
+- Formularios reactivos y binding bidireccional con ngModel.
 - Supabase Auth, PostgreSQL y Storage.
 - Git y GitHub.
 - Vercel para despliegues vinculados al repositorio.
@@ -68,9 +72,13 @@ La configuración de la base de datos y Storage está documentada en:
 - supabase/migrations/202610260001_create_profiles.sql
 - supabase/migrations/202610270001_create_productos.sql
 - supabase/migrations/202610270002_configure_portadas.sql
+- supabase/migrations/202610270003_create_reservas.sql
+- supabase/migrations/202610270004_create_reservar_function.sql
+- supabase/migrations/202610270005_create_estado_reserva_function.sql
 
-Los scripts se han ejecutado manualmente en el SQL Editor de Supabase.
-La aplicación no ejecuta migraciones automáticamente.
+Los scripts se han ejecutado manualmente en el SQL Editor de Supabase,
+en el orden de sus nombres. La aplicación no ejecuta migraciones
+automáticamente.
 
 Las cuentas nuevas reciben el rol cliente. La asignación del rol
 admin se realiza desde la administración de la base de datos.
@@ -93,6 +101,48 @@ Cada subida utiliza un nombre único.
 Al sustituir una portada, la imagen anterior permanece en Storage.
 La limpieza de archivos sin referencias está pendiente.
 
+## Funcionamiento de las reservas
+
+Las reservas son para recoger los discos. No incluyen pagos
+ni caducidad automática.
+
+Al reservar:
+
+- Se comprueban la sesión, el producto, la cantidad y las existencias.
+- La identidad del usuario y el precio se obtienen en el servidor.
+- Se guarda el precio unitario del momento de la reserva.
+- Se descuentan las unidades y se registra la reserva en una
+  misma transacción.
+- La fila del producto se bloquea temporalmente con FOR UPDATE
+  para coordinar modificaciones concurrentes.
+
+Los estados son:
+
+- pendiente: unidades reservadas y descontadas de las existencias.
+- recogida: recogida confirmada por el administrador, sin otro descuento.
+- cancelada: cancelación realizada por su propietario o el administrador,
+  con devolución de las unidades.
+
+Las reservas finalizadas no pueden cambiar a otro estado.
+Repetir una cancelación no devuelve las unidades otra vez.
+
+Cada solicitud de creación tiene un identificador. Reintentar la misma
+solicitud devuelve la reserva existente sin volver a descontar stock.
+La página conserva el identificador de su última solicitud fallida
+mientras permanece en memoria; esa conservación no persiste tras
+una recarga completa.
+
+La aplicación consulta las reservas directamente, pero las crea y cambia
+de estado mediante RPC a funciones PostgreSQL. No tiene permisos de
+inserción o actualización directa sobre la tabla reservas.
+
+Los clientes solo pueden consultar sus reservas. El administrador puede
+consultarlas todas y filtrarlas por estado.
+
+Si un producto pasa a inactivo, el cliente conserva los datos propios
+de la reserva, pero sus datos relacionados del catálogo dejan de ser
+visibles por RLS. La interfaz muestra un texto alternativo.
+
 ## Comprobaciones realizadas
 
 - Compilación de producción: npm run build.
@@ -100,7 +150,7 @@ La limpieza de archivos sin referencias está pendiente.
 - Navegación entre las siete páginas.
 - Inicio, cierre y recuperación de sesión.
 - Rechazo de credenciales incorrectas.
-- Acceso a rutas según la sesión y el rol, también mediante URL directa.
+- Acceso a rutas según sesión y rol, también mediante URL directa.
 - Actualización del menú al cambiar de cuenta y cerrar sesión.
 - Verificación de RLS, política de lectura y disparador de perfiles.
 - API de perfiles: lectura limitada al perfil propio y actualización
@@ -114,15 +164,28 @@ La limpieza de archivos sin referencias está pendiente.
 - API de productos con cuenta cliente: actualización sin filas afectadas
   y creación rechazada con HTTP 403 y código 42501.
 - API de Storage con cuenta cliente: subida rechazada por RLS.
-  En la prueba respondió HTTP 400 con statusCode 403 y AccessDenied
-  en el cuerpo de la respuesta.
+  La prueba respondió HTTP 400 con statusCode 403 y AccessDenied
+  en el cuerpo.
+- Reserva desde catálogo y descuento de unidades.
+- Consulta de reservas propias y cancelación con devolución de unidades.
+- Gestión administrativa y filtrado por estado.
+- Recogida sin descontar existencias por segunda vez.
+- Persistencia de estados y existencias tras recargar.
+- API de reservas: repetir la creación devuelve la misma reserva
+  sin descontar más stock.
+- API de reservas: el cliente no puede confirmar la recogida.
+  La función respondió HTTP 400 con el mensaje de rechazo esperado.
+- API de reservas: cancelar dos veces devuelve el stock una sola vez.
+
+La prueba de dos usuarios reservando simultáneamente la última unidad
+todavía está pendiente. El bloqueo está implementado, pero ese escenario
+no se presenta como verificado.
 
 ## Trabajo pendiente
 
-- Gestión de reservas y sus efectos sobre las existencias.
-- Reglas de acceso a los datos de reservas.
-- Validaciones asíncronas contra un servicio.
-- Completar la demostración de binding unidireccional y bidireccional.
+- Ficha de clientes y su identificación en la gestión administrativa.
+- Validaciones asíncronas de formularios contra un servicio.
+- Pruebas adicionales de concurrencia y acceso a reservas de otra cuenta.
 - Dashboard sin gráficos de barras.
 - Exportación de informes en PDF y CSV.
 - Contenido de ayuda y manual de usuario.

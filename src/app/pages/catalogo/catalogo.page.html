@@ -13,21 +13,80 @@
 
 <ion-content class="ion-padding">
   <h1>Catálogo de vinilos</h1>
-  <p>Consulta los discos de la tienda y sus existencias.</p>
+  <p>Consulta los discos y reserva tus unidades para recogerlas.</p>
+
+  @if (successMessage()) {
+    <p role="status">{{ successMessage() }}</p>
+  }
+
+  @if (reservaError()) {
+    <p role="alert">{{ reservaError() }}</p>
+  }
+
+  @if (seleccionado(); as productoSeleccionado) {
+    <section aria-labelledby="titulo-reserva">
+      <h2 id="titulo-reserva">
+        Reservar {{ productoSeleccionado.titulo }}
+      </h2>
+
+      <p>Artista: {{ productoSeleccionado.artista }}</p>
+      <p>
+        Precio por unidad:
+        {{
+          productoSeleccionado.precio
+            | currency:'EUR':'symbol':'1.2-2'
+        }}
+      </p>
+      <p>
+        Existencias consultadas: {{ productoSeleccionado.stock }}
+      </p>
+
+      <form [formGroup]="form" (ngSubmit)="confirmarReserva()">
+        <ion-input
+          label="Unidades que quieres reservar"
+          labelPlacement="stacked"
+          type="number"
+          inputmode="numeric"
+          min="1"
+          [max]="productoSeleccionado.stock"
+          step="1"
+          formControlName="cantidad"
+          errorText="Introduce una cantidad entera dentro de las existencias disponibles."
+          [required]="true"
+        ></ion-input>
+
+        <ion-button
+          type="submit"
+          [disabled]="saving() || loading()"
+        >
+          {{ saving() ? 'Reservando…' : 'Confirmar reserva' }}
+        </ion-button>
+
+        <ion-button
+          type="button"
+          fill="outline"
+          (click)="cancelarSeleccion()"
+          [disabled]="saving()"
+        >
+          Cancelar selección
+        </ion-button>
+      </form>
+    </section>
+  }
 
   <ion-button
     type="button"
     fill="outline"
     (click)="cargarProductos()"
-    [disabled]="loading()"
+    [disabled]="loading() || saving()"
   >
     Actualizar catálogo
   </ion-button>
 
   @if (loading()) {
     <p role="status">Cargando catálogo…</p>
-  } @else if (errorMessage()) {
-    <p role="alert">{{ errorMessage() }}</p>
+  } @else if (loadError()) {
+    <p role="alert">{{ loadError() }}</p>
   } @else if (productos().length === 0) {
     <p>Todavía no hay productos publicados en el catálogo.</p>
   } @else {
@@ -36,18 +95,18 @@
         @for (producto of productos(); track producto.id) {
           <ion-col size="12" size-md="6" size-xl="4">
             <ion-card>
-  @if (producto.imagen_path; as ruta) {
-    <img
-      class="portada"
-      [src]="portadas.obtenerUrl(ruta)"
-      [alt]="'Portada de ' + producto.titulo"
-      width="480"
-      height="480"
-      loading="lazy"
-    />
-  }
+              @if (producto.imagen_path; as ruta) {
+                <img
+                  class="portada"
+                  [src]="portadas.obtenerUrl(ruta)"
+                  [alt]="'Portada de ' + producto.titulo"
+                  width="480"
+                  height="480"
+                  loading="lazy"
+                />
+              }
 
-  <ion-card-header>
+              <ion-card-header>
                 <ion-card-title>{{ producto.titulo }}</ion-card-title>
                 <ion-card-subtitle>
                   {{ producto.artista }}
@@ -68,6 +127,19 @@
 
                 @if (producto.stock > 0) {
                   <p>Unidades disponibles: {{ producto.stock }}</p>
+
+                  <ion-button
+                    type="button"
+                    (click)="prepararReserva(producto)"
+                    [disabled]="saving() || loading()"
+                    [attr.aria-label]="'Reservar ' + producto.titulo"
+                  >
+                    {{
+                      auth.session()
+                        ? 'Reservar'
+                        : 'Iniciar sesión para reservar'
+                    }}
+                  </ion-button>
                 } @else {
                   <p>Temporalmente sin existencias.</p>
                 }
