@@ -47,6 +47,9 @@ export class ReservasService {
   async listarTodas(): Promise<ReservaDetalle[]> {
     return this.consultarReservas();
   }
+    async listarDeCliente(clienteId: string): Promise<ReservaDetalle[]> {
+    return this.consultarReservas(clienteId);
+  }
 
     async reservar(
     productoId: string,

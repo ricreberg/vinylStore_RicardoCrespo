@@ -55,6 +55,20 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'clientes',
+        loadComponent: () =>
+          import('./pages/admin/clientes/clientes.page').then(
+            (m) => m.ClientesPage,
+          ),
+      },
+      {
+        path: 'clientes/:id',
+        loadComponent: () =>
+          import('./pages/admin/cliente-detalle/cliente-detalle.page').then(
+            (m) => m.ClienteDetallePage,
+          ),
+      },
+      {
         path: 'dashboard',
         loadComponent: () =>
           import('./pages/admin/dashboard/dashboard.page').then(
