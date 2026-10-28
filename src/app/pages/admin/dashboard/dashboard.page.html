@@ -35,6 +35,32 @@
     Actualizar dashboard
   </ion-button>
 
+    <div>
+    <ion-button
+      type="button"
+      (click)="descargarCsv()"
+      [disabled]="
+        loading() || errorMessage() !== '' || exportando()
+      "
+    >
+      Descargar CSV
+    </ion-button>
+
+    <ion-button
+      type="button"
+      (click)="descargarPdf()"
+      [disabled]="
+        loading() || errorMessage() !== '' || exportando()
+      "
+    >
+      {{ exportando() ? 'Generando PDF…' : 'Descargar PDF' }}
+    </ion-button>
+  </div>
+
+  @if (exportError()) {
+    <p role="alert">{{ exportError() }}</p>
+  }
+
   @if (loading()) {
     <p role="status">Cargando estadísticas…</p>
   }

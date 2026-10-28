@@ -39,6 +39,8 @@ import {
 
 import { DashboardService } from '../../../core/services/dashboard.service';
 import type { DatosDashboard } from '../../../core/services/dashboard.service';
+import { InformesService } from '../../../core/services/informes.service';
+import type { DatosInforme } from '../../../core/services/informes.service';
 
 Chart.register(
   ArcElement,
@@ -76,6 +78,10 @@ Chart.register(
 })
 export class DashboardPage implements OnDestroy {
   private readonly servicio = inject(DashboardService);
+  private readonly informes = inject(InformesService);
+
+  readonly exportando = signal(false);
+  readonly exportError = signal('');
   private readonly detector = inject(ChangeDetectorRef);
 
   @ViewChild('canvasActividad', { static: true })
@@ -187,6 +193,56 @@ export class DashboardPage implements OnDestroy {
     this.dias.set(dias);
     this.recalcular();
     this.dibujarGraficos();
+  }
+
+    descargarCsv(): void {
+    if (
+      this.loading() ||
+      this.errorMessage() ||
+      this.exportando() ||
+      !this.datos
+    ) {
+      return;
+    }
+
+    this.exportError.set('');
+
+    try {
+      this.informes.descargarCsv(this.prepararInforme());
+    } catch {
+      this.exportError.set('No se ha podido generar el CSV.');
+    }
+  }
+
+  async descargarPdf(): Promise<void> {
+    if (
+      this.loading() ||
+      this.errorMessage() ||
+      this.exportando() ||
+      !this.datos
+    ) {
+      return;
+    }
+
+    this.exportError.set('');
+    this.exportando.set(true);
+
+    try {
+      await this.informes.descargarPdf(this.prepararInforme());
+    } catch {
+      this.exportError.set('No se ha podido generar el PDF.');
+    } finally {
+      this.exportando.set(false);
+    }
+  }
+
+  private prepararInforme(): DatosInforme {
+    return {
+      dias: this.dias(),
+      resumen: this.resumen(),
+      actividad: this.actividad(),
+      estados: this.estados(),
+    };
   }
 
   private recalcular(): void {
