@@ -6,11 +6,225 @@
         aria-label="Abrir menú principal"
       ></ion-menu-button>
     </ion-buttons>
+
     <ion-title>Estadísticas</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
   <h1>Estadísticas de la tienda</h1>
-  <p>Aquí se mostrarán los gráficos y las opciones de exportación.</p>
+
+  <label for="periodo">Periodo de creación de las reservas:</label>
+  <select
+    id="periodo"
+    [value]="dias()"
+    (change)="cambiarPeriodo($event)"
+    [disabled]="loading()"
+  >
+    <option value="7">Últimos 7 días</option>
+    <option value="14">Últimos 14 días</option>
+    <option value="30">Últimos 30 días</option>
+  </select>
+
+  <ion-button
+    type="button"
+    fill="outline"
+    (click)="cargarDashboard()"
+    [disabled]="loading()"
+  >
+    Actualizar dashboard
+  </ion-button>
+
+    <div>
+    <ion-button
+      type="button"
+      (click)="descargarCsv()"
+      [disabled]="
+        loading() || errorMessage() !== '' || exportando()
+      "
+    >
+      Descargar CSV
+    </ion-button>
+
+    <ion-button
+      type="button"
+      (click)="descargarPdf()"
+      [disabled]="
+        loading() || errorMessage() !== '' || exportando()
+      "
+    >
+      {{ exportando() ? 'Generando PDF…' : 'Descargar PDF' }}
+    </ion-button>
+  </div>
+
+  @if (exportError()) {
+    <p role="alert">{{ exportError() }}</p>
+  }
+
+  @if (loading()) {
+    <p role="status">Cargando estadísticas…</p>
+  }
+
+  @if (errorMessage()) {
+    <p role="alert">{{ errorMessage() }}</p>
+  }
+
+  <div [hidden]="loading() || errorMessage() !== ''">
+    <h2>Productos y existencias actuales</h2>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12" size-md="4">
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title>Productos registrados</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              {{ resumen().productos }}
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+
+        <ion-col size="12" size-md="4">
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title>Productos activos</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              {{ resumen().activos }}
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+
+        <ion-col size="12" size-md="4">
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title>Unidades disponibles en catálogo</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              {{ resumen().stock }}
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <h2>Reservas creadas en los últimos {{ dias() }} días</h2>
+    <p>
+      Se incluye hoy. Los estados corresponden a la situación actual
+      de esas reservas.
+    </p>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12" size-md="4">
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title>Reservas creadas</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              {{ resumen().reservas }}
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+
+        <ion-col size="12" size-md="4">
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title>Todavía pendientes</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              {{ resumen().pendientes }}
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+
+        <ion-col size="12" size-md="4">
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title>Valor de reservas recogidas</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              {{
+                resumen().importeRecogidas
+                  | currency:'EUR':'symbol':'1.2-2'
+              }}
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="12" size-lg="6">
+          <h3>Actividad diaria</h3>
+
+          <div class="grafico">
+            <canvas
+              #canvasActividad
+              role="img"
+              aria-label="Gráfico de líneas de reservas creadas por día. Datos disponibles en la tabla siguiente."
+            ></canvas>
+          </div>
+
+          <details>
+            <summary>Ver datos de actividad diaria</summary>
+            <table>
+              <caption>Reservas creadas por día</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Fecha</th>
+                  <th scope="col">Reservas</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (dia of actividad(); track dia.fecha) {
+                  <tr>
+                    <th scope="row">{{ dia.fecha }}</th>
+                    <td>{{ dia.cantidad }}</td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </details>
+        </ion-col>
+
+        <ion-col size="12" size-lg="6">
+          <h3>Distribución por estado</h3>
+
+          @if (resumen().reservas === 0) {
+            <p>No hay reservas en este periodo.</p>
+          }
+
+          <div class="grafico">
+            <canvas
+              #canvasEstados
+              role="img"
+              aria-label="Gráfico de anillo del estado de las reservas. Datos disponibles en la tabla siguiente."
+            ></canvas>
+          </div>
+
+          <details>
+            <summary>Ver datos por estado</summary>
+            <table>
+              <caption>Estado actual de las reservas del periodo</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Estado</th>
+                  <th scope="col">Reservas</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (estado of estados(); track estado.etiqueta) {
+                  <tr>
+                    <th scope="row">{{ estado.etiqueta }}</th>
+                    <td>{{ estado.cantidad }}</td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </details>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
 </ion-content>
