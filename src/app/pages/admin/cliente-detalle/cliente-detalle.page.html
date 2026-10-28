@@ -1,0 +1,110 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button
+        menu="main-menu"
+        aria-label="Abrir menú principal"
+      ></ion-menu-button>
+    </ion-buttons>
+
+    <ion-title>Ficha del cliente</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <h1>Ficha del cliente</h1>
+
+  <ion-button
+    routerLink="/admin/clientes"
+    fill="outline"
+  >
+    Volver a clientes
+  </ion-button>
+
+  <ion-button
+    type="button"
+    fill="outline"
+    (click)="cargarFicha()"
+    [disabled]="loading()"
+  >
+    Actualizar ficha
+  </ion-button>
+
+  @if (loading()) {
+    <p role="status">Cargando ficha e historial…</p>
+  } @else if (errorMessage()) {
+    <p role="alert">{{ errorMessage() }}</p>
+  } @else {
+    @if (cliente(); as datos) {
+      <section aria-labelledby="datos-cliente">
+        <h2 id="datos-cliente">{{ datos.nombre }}</h2>
+        <p>Correo: {{ datos.correo ?? 'Sin correo' }}</p>
+        <p>
+          Fecha de alta:
+          {{ datos.created_at | date:'dd/MM/yyyy HH:mm' }}
+        </p>
+      </section>
+
+      <section aria-labelledby="historial-reservas">
+        <h2 id="historial-reservas">Historial de reservas</h2>
+
+        @if (reservas().length === 0) {
+          <p>Este cliente todavía no tiene reservas.</p>
+        } @else {
+          <p>Reservas registradas: {{ reservas().length }}</p>
+
+          <ion-grid>
+            <ion-row>
+              @for (reserva of reservas(); track reserva.id) {
+                <ion-col size="12" size-md="6" size-xl="4">
+                  <ion-card>
+                    <ion-card-header>
+                      <ion-card-title>
+                        {{
+                          reserva.producto?.titulo
+                            ?? 'Producto no disponible'
+                        }}
+                      </ion-card-title>
+                    </ion-card-header>
+
+                    <ion-card-content>
+                      <p>Referencia: {{ reserva.id.slice(0, 8) }}</p>
+
+                      @if (reserva.producto; as producto) {
+                        <p>Artista: {{ producto.artista }}</p>
+                      }
+
+                      <p>
+                        Fecha:
+                        {{
+                          reserva.created_at
+                            | date:'dd/MM/yyyy HH:mm'
+                        }}
+                      </p>
+                      <p>Estado: {{ reserva.estado }}</p>
+                      <p>Unidades: {{ reserva.cantidad }}</p>
+                      <p>
+                        Precio por unidad:
+                        {{
+                          reserva.precio_unitario
+                            | currency:'EUR':'symbol':'1.2-2'
+                        }}
+                      </p>
+                      <p>
+                        Total:
+                        {{
+                          reserva.precio_unitario * reserva.cantidad
+                            | currency:'EUR':'symbol':'1.2-2'
+                        }}
+                      </p>
+                    </ion-card-content>
+                  </ion-card>
+                </ion-col>
+              }
+            </ion-row>
+          </ion-grid>
+        }
+      </section>
+    }
+  }
+</ion-content>

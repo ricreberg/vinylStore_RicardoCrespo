@@ -1,6 +1,7 @@
 import { CurrencyPipe, DatePipe } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 import {
   IonButton,
   IonButtons,
@@ -24,6 +25,8 @@ import type {
   EstadoReserva,
   ReservaDetalle,
 } from '../../../core/services/reservas.service';
+import { ClientesService } from '../../../core/services/clientes.service';
+import type { Cliente } from '../../../core/services/clientes.service';
 
 @Component({
   selector: 'app-reservas',
@@ -33,6 +36,7 @@ import type {
     CurrencyPipe,
     DatePipe,
     FormsModule,
+    RouterLink,
     IonButton,
     IonButtons,
     IonCard,
@@ -52,6 +56,10 @@ import type {
 })
 export class ReservasPage {
   private readonly servicio = inject(ReservasService);
+  private readonly clientesService = inject(ClientesService);
+
+readonly clientesPorId =
+  signal<Partial<Record<string, Cliente>>>({});
 
   readonly reservas = signal<ReservaDetalle[]>([]);
   readonly loading = signal(true);
@@ -76,7 +84,7 @@ export class ReservasPage {
     await this.cargarReservas();
   }
 
-  async cargarReservas(): Promise<void> {
+    async cargarReservas(): Promise<void> {
     if (this.procesandoId()) {
       return;
     }
@@ -85,10 +93,21 @@ export class ReservasPage {
     this.loadError.set('');
 
     try {
-      this.reservas.set(await this.servicio.listarTodas());
+      const [reservas, clientes] = await Promise.all([
+        this.servicio.listarTodas(),
+        this.clientesService.listar(),
+      ]);
+
+      this.clientesPorId.set(
+        Object.fromEntries(
+          clientes.map((cliente) => [cliente.id, cliente]),
+        ),
+      );
+
+      this.reservas.set(reservas);
     } catch {
       this.loadError.set(
-        'No se han podido cargar las reservas. Inténtalo de nuevo.',
+        'No se han podido cargar las reservas y sus clientes. Inténtalo de nuevo.',
       );
     } finally {
       this.loading.set(false);

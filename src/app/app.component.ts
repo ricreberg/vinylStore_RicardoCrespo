@@ -66,6 +66,7 @@ export class AppComponent {
           { title: 'Estadísticas', url: '/admin/dashboard' },
           { title: 'Productos y existencias', url: '/admin/productos' },
           { title: 'Gestión de reservas', url: '/admin/reservas' },
+          { title: 'Clientes', url: '/admin/clientes' },
         ],
       });
     }
