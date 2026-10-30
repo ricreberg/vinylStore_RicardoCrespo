@@ -65,14 +65,30 @@ export class ProductosService {
     return creado;
   }
 
-  async actualizar(
+    async actualizar(
     id: string,
     cambios: CambiosProducto,
+    stockEsperado: number,
   ): Promise<Producto> {
-    const { data, error } = await this.supabase
+    const { stock, ...otrosCambios } = cambios;
+
+    const cambiaStock =
+      stock !== undefined && stock !== stockEsperado;
+
+    const valores = cambiaStock
+      ? { ...otrosCambios, stock }
+      : otrosCambios;
+
+    let consulta = this.supabase
       .from('productos')
-      .update({ ...cambios })
-      .eq('id', id)
+      .update(valores)
+      .eq('id', id);
+
+    if (cambiaStock) {
+      consulta = consulta.eq('stock', stockEsperado);
+    }
+
+    const { data, error } = await consulta
       .select()
       .overrideTypes<Producto[], { merge: false }>();
 
@@ -82,7 +98,15 @@ export class ProductosService {
 
     const actualizado = data?.[0];
 
-    if (!actualizado || data.length !== 1) {
+    if (!actualizado) {
+      throw new Error(
+        cambiaStock
+          ? 'No se han guardado los cambios. Las existencias pueden haber cambiado. Actualiza el listado y vuelve a abrir la edición para revisarlas.'
+          : 'No se ha podido actualizar el producto. Comprueba que existe y que tienes permisos.',
+      );
+    }
+
+    if (data.length !== 1) {
       throw new Error('No se ha recibido un único producto actualizado.');
     }
 
