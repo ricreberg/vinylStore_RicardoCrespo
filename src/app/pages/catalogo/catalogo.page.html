@@ -12,151 +12,311 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <h1>Catálogo de vinilos</h1>
-  <p>Consulta los discos y reserva tus unidades para recogerlas.</p>
+  <div class="catalogo">
+    <section class="presentacion" aria-labelledby="titulo-catalogo">
+      <div class="presentacion-texto">
+        <p class="etiqueta-editorial">Vinyl Store · La colección</p>
 
-  @if (successMessage()) {
-    <p role="status">{{ successMessage() }}</p>
-  }
+        <h1 id="titulo-catalogo">
+          Tu próxima escucha<br />
+          empieza aquí.
+        </h1>
 
-  @if (reservaError()) {
-    <p role="alert">{{ reservaError() }}</p>
-  }
+        <p class="introduccion">
+          Explora el catálogo, encuentra tu próximo disco y resérvalo
+          para recoger en tienda.
+        </p>
 
-  @if (seleccionado(); as productoSeleccionado) {
-    <section aria-labelledby="titulo-reserva">
-      <h2 id="titulo-reserva">
-        Reservar {{ productoSeleccionado.titulo }}
-      </h2>
+        <p class="nota-recogida">
+          Elige tu vinilo. Nosotros lo apartamos al confirmar la reserva.
+        </p>
+      </div>
 
-      <p>Artista: {{ productoSeleccionado.artista }}</p>
-      <p>
-        Precio por unidad:
-        {{
-          productoSeleccionado.precio
-            | currency:'EUR':'symbol':'1.2-2'
-        }}
-      </p>
-      <p>
-        Existencias consultadas: {{ productoSeleccionado.stock }}
-      </p>
+      <div class="ilustracion" aria-hidden="true">
+        <div class="funda-editorial">
+          <span>VINYL<br />STORE</span>
+          <small>Una colección por descubrir.</small>
+        </div>
 
-      <form [formGroup]="form" (ngSubmit)="confirmarReserva()">
-        <ion-input
-          label="Unidades que quieres reservar"
-          labelPlacement="stacked"
-          type="number"
-          inputmode="numeric"
-          min="1"
-          step="1"
-          formControlName="cantidad"
-          [errorText]="errorCantidad"
-          [required]="true"
-        ></ion-input>
+        <div class="vinilo-editorial"></div>
+      </div>
+    </section>
 
-        @if (form.pending) {
-          <p role="status">Comprobando disponibilidad…</p>
-        }
+    @if (successMessage()) {
+      <p role="status">{{ successMessage() }}</p>
+    }
 
-        <ion-button
-          type="submit"
-          [disabled]="saving() || loading() || form.pending || form.invalid"
-        >
-          {{
-            saving()
-              ? 'Reservando…'
-              : form.pending
-                ? 'Comprobando…'
-                : 'Confirmar reserva'
-          }}
-        </ion-button>
+    @if (reservaError()) {
+      <p role="alert">{{ reservaError() }}</p>
+    }
+
+    @if (seleccionado(); as productoSeleccionado) {
+      <section class="reserva-panel" aria-labelledby="titulo-reserva">
+        <div>
+          <p class="etiqueta-editorial">Tu selección</p>
+
+          <h2 id="titulo-reserva">
+            {{ productoSeleccionado.titulo }}
+          </h2>
+
+          <p class="reserva-artista">
+            {{ productoSeleccionado.artista }}
+          </p>
+
+          <p>
+            {{ formatearPrecio(productoSeleccionado.precio) }}
+            por unidad ·
+            Existencias consultadas: {{ productoSeleccionado.stock }}
+          </p>
+        </div>
+
+        <form [formGroup]="form" (ngSubmit)="confirmarReserva()">
+          <ion-input
+            label="Unidades que quieres reservar"
+            labelPlacement="stacked"
+            type="number"
+            inputmode="numeric"
+            min="1"
+            step="1"
+            formControlName="cantidad"
+            [errorText]="errorCantidad"
+            [required]="true"
+          ></ion-input>
+
+          @if (form.pending) {
+            <p role="status">Comprobando disponibilidad…</p>
+          }
+
+          <div class="reserva-acciones">
+            <ion-button
+              type="submit"
+              [disabled]="saving() || loading() || form.pending || form.invalid"
+            >
+              {{
+                saving()
+                  ? 'Reservando…'
+                  : form.pending
+                    ? 'Comprobando…'
+                    : 'Confirmar reserva'
+              }}
+            </ion-button>
+
+            <ion-button
+              type="button"
+              fill="outline"
+              (click)="cancelarSeleccion()"
+              [disabled]="saving()"
+            >
+              Cancelar selección
+            </ion-button>
+          </div>
+        </form>
+      </section>
+    }
+
+    <section class="coleccion" aria-labelledby="titulo-coleccion">
+      <div class="coleccion-cabecera">
+        <div>
+          <p class="etiqueta-editorial">Encuentra tu disco</p>
+          <h2 id="titulo-coleccion">Explora la colección</h2>
+        </div>
 
         <ion-button
           type="button"
           fill="outline"
-          (click)="cancelarSeleccion()"
-          [disabled]="saving()"
+          (click)="cargarProductos()"
+          [disabled]="loading() || saving()"
         >
-          Cancelar selección
+          {{ loading() ? 'Actualizando…' : 'Actualizar catálogo' }}
         </ion-button>
-      </form>
-    </section>
-  }
+      </div>
 
-  <ion-button
-    type="button"
-    fill="outline"
-    (click)="cargarProductos()"
-    [disabled]="loading() || saving()"
-  >
-    Actualizar catálogo
-  </ion-button>
+      <div class="filtros">
+        <div class="campo-filtro buscador">
+          <label for="buscar-vinilos">Buscar un disco</label>
 
-  @if (loading()) {
-    <p role="status">Cargando catálogo…</p>
-  } @else if (loadError()) {
-    <p role="alert">{{ loadError() }}</p>
-  } @else if (productos().length === 0) {
-    <p>Todavía no hay productos publicados en el catálogo.</p>
-  } @else {
-    <ion-grid>
-      <ion-row>
-        @for (producto of productos(); track producto.id) {
-          <ion-col size="12" size-md="6" size-xl="4">
-            <ion-card>
-              @if (producto.imagen_path; as ruta) {
-                <img
-                  class="portada"
-                  [src]="portadas.obtenerUrl(ruta)"
-                  [alt]="'Portada de ' + producto.titulo"
-                  width="480"
-                  height="480"
-                  loading="lazy"
-                />
-              }
+          <input
+            id="buscar-vinilos"
+            type="search"
+            placeholder="Título o artista"
+            [value]="busqueda()"
+            (input)="actualizarBusqueda($event)"
+          />
+        </div>
 
-              <ion-card-header>
-                <ion-card-title>{{ producto.titulo }}</ion-card-title>
-                <ion-card-subtitle>
-                  {{ producto.artista }}
-                </ion-card-subtitle>
-              </ion-card-header>
+        <div class="campo-filtro">
+          <label for="genero-vinilos">Género</label>
 
-              <ion-card-content>
-                <p>Género: {{ producto.genero }}</p>
+          <select
+            id="genero-vinilos"
+            [value]="genero()"
+            (change)="actualizarGenero($event)"
+          >
+            <option value="">Todos los géneros</option>
 
-                @if (producto.descripcion) {
-                  <p>{{ producto.descripcion }}</p>
-                }
+            @for (opcion of generos(); track opcion) {
+              <option [value]="opcion">{{ opcion }}</option>
+            }
+          </select>
+        </div>
 
-                <p>
-                  Precio:
-                  {{ producto.precio | currency:'EUR':'symbol':'1.2-2' }}
-                </p>
+        <div class="campo-filtro">
+          <label for="orden-vinilos">Ordenar por</label>
 
-                @if (producto.stock > 0) {
-                  <p>Unidades disponibles: {{ producto.stock }}</p>
+          <select
+            id="orden-vinilos"
+            [value]="orden()"
+            (change)="actualizarOrden($event)"
+          >
+            <option value="recientes">Añadidos recientemente</option>
+            <option value="titulo">Título: A–Z</option>
+            <option value="precio-asc">Precio: menor a mayor</option>
+            <option value="precio-desc">Precio: mayor a menor</option>
+          </select>
+        </div>
+      </div>
 
-                  <ion-button
-                    type="button"
-                    (click)="prepararReserva(producto)"
-                    [disabled]="saving() || loading()"
-                    [attr.aria-label]="'Reservar ' + producto.titulo"
-                  >
-                    {{
-                      auth.session()
-                        ? 'Reservar'
-                        : 'Iniciar sesión para reservar'
-                    }}
-                  </ion-button>
-                } @else {
-                  <p>Temporalmente sin existencias.</p>
-                }
-              </ion-card-content>
-            </ion-card>
-          </ion-col>
+      <div class="filtros-secundarios">
+        <label class="filtro-disponibles">
+          <input
+            type="checkbox"
+            [checked]="soloDisponibles()"
+            (change)="actualizarDisponibilidad($event)"
+          />
+          Solo con existencias
+        </label>
+
+        @if (hayFiltros()) {
+          <button
+            class="limpiar-filtros"
+            type="button"
+            (click)="limpiarFiltros()"
+          >
+            Restablecer filtros
+          </button>
         }
-      </ion-row>
-    </ion-grid>
-  }
+      </div>
+
+      @if (loading()) {
+        <p role="status">Cargando la colección…</p>
+      } @else if (loadError()) {
+        <p role="alert">{{ loadError() }}</p>
+      } @else if (productos().length === 0) {
+        <div class="estado-vacio">
+          <h3>La colección está en camino</h3>
+          <p>Todavía no hay vinilos publicados. Vuelve más adelante.</p>
+        </div>
+      } @else {
+        <p class="contador" role="status">
+          {{
+            productosFiltrados().length === 1
+              ? '1 disco'
+              : productosFiltrados().length + ' discos'
+          }}
+          en esta selección
+        </p>
+
+        @if (productosFiltrados().length === 0) {
+          <div class="estado-vacio">
+            <h3>No encontramos esa combinación</h3>
+            <p>Prueba con otro título, artista o género.</p>
+
+            <ion-button
+              type="button"
+              fill="outline"
+              (click)="limpiarFiltros()"
+            >
+              Ver toda la colección
+            </ion-button>
+          </div>
+        } @else {
+          <div class="productos-grid">
+            @for (producto of productosFiltrados(); track producto.id) {
+              <ion-card class="producto-card">
+                <div class="portada-marco">
+                  @if (producto.imagen_path; as ruta) {
+                    <img
+                      class="portada"
+                      [src]="portadas.obtenerUrl(ruta)"
+                      [alt]="'Portada de ' + producto.titulo"
+                      width="480"
+                      height="480"
+                      loading="lazy"
+                    />
+                  } @else {
+                    <div
+                      class="portada-alternativa"
+                      role="img"
+                      [attr.aria-label]="'Sin portada disponible para ' + producto.titulo"
+                    >
+                      <span class="disco-alternativo" aria-hidden="true"></span>
+                      <span>Vinyl Store</span>
+                    </div>
+                  }
+
+                  <span class="genero-producto">
+                    {{ producto.genero }}
+                  </span>
+                </div>
+
+                <ion-card-header>
+                  <ion-card-subtitle>
+                    {{ producto.artista }}
+                  </ion-card-subtitle>
+
+                  <ion-card-title>
+                    {{ producto.titulo }}
+                  </ion-card-title>
+                </ion-card-header>
+
+                <ion-card-content>
+                  @if (producto.descripcion) {
+                    <p class="descripcion-producto">
+                      {{ producto.descripcion }}
+                    </p>
+                  }
+
+                  <div class="producto-pie">
+                    <div class="producto-datos">
+                      <p class="precio">
+                        {{ formatearPrecio(producto.precio) }}
+                      </p>
+
+                      <p
+                        class="disponibilidad"
+                        [class.agotado]="producto.stock <= 0"
+                      >
+                        <span class="indicador-stock" aria-hidden="true"></span>
+
+                        {{
+                          producto.stock > 0
+                            ? producto.stock + ' disponibles'
+                            : 'Temporalmente agotado'
+                        }}
+                      </p>
+                    </div>
+
+                    @if (producto.stock > 0) {
+                      <ion-button
+                        type="button"
+                        (click)="prepararReserva(producto)"
+                        [disabled]="saving() || loading()"
+                        [attr.aria-label]="
+                          auth.session()
+                            ? 'Reservar ' + producto.titulo
+                            : 'Iniciar sesión para reservar ' + producto.titulo
+                        "
+                      >
+                        {{ auth.session() ? 'Reservar' : 'Acceder y reservar' }}
+                      </ion-button>
+                    }
+                  </div>
+                </ion-card-content>
+              </ion-card>
+            }
+          </div>
+        }
+      }
+    </section>
+  </div>
 </ion-content>
