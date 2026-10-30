@@ -26,6 +26,7 @@ import {
 } from '@ionic/angular';
 
 import { AuthService } from '../../core/services/auth.service';
+import { DisponibilidadService } from '../../core/services/disponibilidad.service';
 import { PortadasService } from '../../core/services/portadas.service';
 import { ProductosService } from '../../core/services/productos.service';
 import type { Producto } from '../../core/services/productos.service';
@@ -59,6 +60,7 @@ import { ReservasService } from '../../core/services/reservas.service';
 export class CatalogoPage {
   private readonly productosService = inject(ProductosService);
   private readonly reservasService = inject(ReservasService);
+  private readonly disponibilidad = inject(DisponibilidadService);
   private readonly router = inject(Router);
   private readonly fb = inject(FormBuilder);
 
@@ -81,15 +83,34 @@ export class CatalogoPage {
   } | null = null;
 
   readonly form = this.fb.nonNullable.group({
-    cantidad: [
-      1,
-      [
+    cantidad: this.fb.nonNullable.control(1, {
+      validators: [
         Validators.required,
         Validators.min(1),
         Validators.pattern(/^\d+$/),
       ],
-    ],
+      asyncValidators: [
+        this.disponibilidad.crearValidador(
+          () => this.seleccionado()?.id ?? null,
+        ),
+      ],
+      updateOn: 'blur',
+    }),
   });
+
+  get errorCantidad(): string {
+    const cantidad = this.form.controls.cantidad;
+
+    if (cantidad.hasError('errorDisponibilidad')) {
+      return 'No se ha podido comprobar la disponibilidad. Cancela la selección y vuelve a intentarlo.';
+    }
+
+    if (cantidad.hasError('sinStock')) {
+      return 'El producto no está disponible o no tiene suficientes unidades.';
+    }
+
+    return 'Introduce una cantidad entera mayor que cero.';
+  }
 
   async ionViewWillEnter(): Promise<void> {
     if (!this.saving()) {
@@ -144,15 +165,8 @@ export class CatalogoPage {
         return;
       }
 
-      this.form.controls.cantidad.setValidators([
-        Validators.required,
-        Validators.min(1),
-        Validators.max(producto.stock),
-        Validators.pattern(/^\d+$/),
-      ]);
-
-      this.form.reset({ cantidad: 1 });
       this.seleccionado.set(producto);
+      this.form.reset({ cantidad: 1 });
     } catch {
       this.reservaError.set('No se ha podido comprobar tu sesión.');
     }
@@ -168,7 +182,12 @@ export class CatalogoPage {
   async confirmarReserva(): Promise<void> {
     const producto = this.seleccionado();
 
-    if (!producto || this.saving() || this.loading()) {
+    if (
+      !producto ||
+      this.saving() ||
+      this.loading() ||
+      this.form.pending
+    ) {
       return;
     }
 
