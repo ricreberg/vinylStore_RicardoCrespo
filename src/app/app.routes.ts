@@ -1,0 +1,89 @@
+import { Routes } from '@angular/router';
+
+import { adminGuard, authGuard } from './core/guards/auth.guard';
+
+export const routes: Routes = [
+  {
+    path: '',
+    redirectTo: 'catalogo',
+    pathMatch: 'full',
+  },
+  {
+    path: 'catalogo',
+    loadComponent: () =>
+      import('./pages/catalogo/catalogo.page').then((m) => m.CatalogoPage),
+  },
+  {
+    path: 'mis-reservas',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./pages/mis-reservas/mis-reservas.page').then(
+        (m) => m.MisReservasPage,
+      ),
+  },
+  {
+    path: 'ayuda',
+    loadComponent: () =>
+      import('./pages/ayuda/ayuda.page').then((m) => m.AyudaPage),
+  },
+  {
+    path: 'login',
+    loadComponent: () =>
+      import('./pages/login/login.page').then((m) => m.LoginPage),
+  },
+  {
+    path: 'admin',
+    canActivateChild: [adminGuard],
+    children: [
+      {
+        path: '',
+        redirectTo: 'dashboard',
+        pathMatch: 'full',
+      },
+      {
+        path: 'productos',
+        loadComponent: () =>
+          import('./pages/admin/productos/productos.page').then(
+            (m) => m.ProductosPage,
+          ),
+      },
+      {
+        path: 'reservas',
+        loadComponent: () =>
+          import('./pages/admin/reservas/reservas.page').then(
+            (m) => m.ReservasPage,
+          ),
+      },
+      {
+        path: 'clientes',
+        loadComponent: () =>
+          import('./pages/admin/clientes/clientes.page').then(
+            (m) => m.ClientesPage,
+          ),
+      },
+      {
+        path: 'clientes/:id',
+        loadComponent: () =>
+          import('./pages/admin/cliente-detalle/cliente-detalle.page').then(
+            (m) => m.ClienteDetallePage,
+          ),
+      },
+      {
+        path: 'dashboard',
+        loadComponent: () =>
+          import('./pages/admin/dashboard/dashboard.page').then(
+            (m) => m.DashboardPage,
+          ),
+      },
+    ],
+  },
+  {
+    path: 'home',
+    redirectTo: 'catalogo',
+    pathMatch: 'full',
+  },
+  {
+    path: '**',
+    redirectTo: 'catalogo',
+  },
+];

@@ -1,0 +1,63 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button
+        menu="main-menu"
+        aria-label="Abrir menú principal"
+      ></ion-menu-button>
+    </ion-buttons>
+
+    <ion-title>Clientes</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <h1>Clientes</h1>
+  <p>Consulta las cuentas de clientes y accede a sus fichas.</p>
+
+  <ion-button
+    type="button"
+    fill="outline"
+    (click)="cargarClientes()"
+    [disabled]="loading()"
+  >
+    Actualizar listado
+  </ion-button>
+
+  @if (loading()) {
+    <p role="status">Cargando clientes…</p>
+  } @else if (errorMessage()) {
+    <p role="alert">{{ errorMessage() }}</p>
+  } @else if (clientes().length === 0) {
+    <p>Todavía no hay cuentas de clientes registradas.</p>
+  } @else {
+    <ion-grid>
+      <ion-row>
+        @for (cliente of clientes(); track cliente.id) {
+          <ion-col size="12" size-md="6" size-xl="4">
+            <ion-card>
+              <ion-card-header>
+                <ion-card-title>{{ cliente.nombre }}</ion-card-title>
+              </ion-card-header>
+
+              <ion-card-content>
+                <p>Correo: {{ cliente.correo ?? 'Sin correo' }}</p>
+                <p>
+                  Fecha de alta:
+                  {{ cliente.created_at | date:'dd/MM/yyyy HH:mm' }}
+                </p>
+
+                <ion-button
+                  [routerLink]="['/admin/clientes', cliente.id]"
+                  [attr.aria-label]="'Ver ficha de ' + cliente.nombre"
+                >
+                  Ver ficha
+                </ion-button>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        }
+      </ion-row>
+    </ion-grid>
+  }
+</ion-content>
