@@ -230,14 +230,18 @@ export class ProductosPage {
       };
 
       const producto = original
-        ? await this.servicio.actualizar(original.id, datos)
+        ? await this.servicio.actualizar(
+          original.id,
+          datos,
+          original.stock,
+        )
         : await this.servicio.crear(datos);
 
       this.productos.update((actuales) =>
         original
           ? actuales.map((actual) =>
-              actual.id === producto.id ? producto : actual,
-            )
+            actual.id === producto.id ? producto : actual,
+          )
           : [producto, ...actuales],
       );
 
@@ -260,7 +264,9 @@ export class ProductosPage {
         );
       } else {
         this.saveError.set(
-          'No se ha podido guardar el producto. Actualiza el listado para comprobar su estado antes de volver a intentarlo.',
+          error instanceof Error
+            ? error.message
+            : 'No se ha podido guardar el producto. Actualiza el listado para comprobar su estado antes de volver a intentarlo.',
         );
       }
     } finally {
