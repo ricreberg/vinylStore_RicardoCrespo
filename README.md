@@ -6,8 +6,8 @@ Ionic y Angular standalone.
 ## Estado del proyecto
 
 En desarrollo. Están implementadas la navegación, la autenticación,
-la gestión de productos y portadas, las reservas, la consulta
-administrativa de clientes y el dashboard con exportación de informes.
+los productos y portadas, las reservas, la consulta administrativa
+de clientes y el dashboard con exportación de informes.
 
 Actualmente incluye:
 
@@ -20,10 +20,12 @@ Actualmente incluye:
 - Menú actualizado automáticamente según la sesión.
 - Alta y edición de productos mediante formularios reactivos.
 - Validación de campos obligatorios, precios y existencias.
+- Protección frente a sobrescrituras de stock al editar productos.
 - Publicación y retirada de productos del catálogo.
 - Catálogo público distribuido en cards.
 - Portadas almacenadas en Supabase Storage.
 - Reserva de unidades desde el catálogo.
+- Validación asíncrona de disponibilidad contra Supabase.
 - Consulta y cancelación de reservas propias.
 - Gestión administrativa de reservas y filtro por estado.
 - Descuento y devolución de existencias mediante funciones PostgreSQL.
@@ -31,7 +33,7 @@ Actualmente incluye:
 - Listado y ficha de clientes para el administrador.
 - Historial de reservas por cliente.
 - Identificación del cliente desde la gestión de reservas.
-- Dashboard con métricas, gráficos de líneas y de anillo.
+- Dashboard con gráficos de líneas y de anillo.
 - Selector de periodos de 7, 14 y 30 días.
 - Tablas alternativas con los datos de los gráficos.
 - Exportación de estadísticas en PDF y CSV.
@@ -45,6 +47,7 @@ El diseño visual y la revisión final de accesibilidad están pendientes.
 - Ionic y Angular standalone.
 - TypeScript y SCSS.
 - Formularios reactivos y binding bidireccional con ngModel.
+- RxJS.
 - Supabase Auth, PostgreSQL y Storage.
 - Chart.js.
 - jsPDF y jsPDF-AutoTable.
@@ -60,11 +63,9 @@ Instalar las dependencias:
 
     npm ci
 
-Iniciar el servidor de desarrollo:
+Iniciar el servidor de desarrollo desde la raíz del proyecto:
 
-    npm start
-
-El servidor indicará la dirección local de la aplicación.
+    ionic serve
 
 Comprobar la compilación y el análisis estático:
 
@@ -102,7 +103,7 @@ admin se realiza desde la administración de la base de datos.
 Los visitantes pueden consultar el catálogo y sus portadas.
 Las reservas requieren iniciar sesión.
 
-Los clientes consultan su perfil y sus reservas. La escritura directa
+Los clientes consultan su sesión y sus reservas. La escritura directa
 de perfiles y reservas está restringida.
 
 El administrador gestiona productos y reservas y puede consultar
@@ -115,6 +116,9 @@ comprueba el rol antes de devolver datos de Auth y perfiles.
 Las fichas son de consulta; no permiten editar nombres ni gestionar
 las cuentas de Auth desde la aplicación.
 
+Las cuentas se crean desde Supabase. La interfaz no incluye registro
+público ni recuperación de contraseña.
+
 ## Productos y portadas
 
 Los productos incluyen título, artista, género, precio, existencias,
@@ -124,6 +128,13 @@ Los productos inactivos se conservan en administración y no aparecen
 en el catálogo público. Un producto activo sin existencias sigue
 visible, indicando que está temporalmente agotado.
 
+Al editar sin cambiar las existencias, el stock se omite de la
+actualización para conservar los movimientos realizados por reservas.
+
+Si el administrador modifica las existencias, la actualización exige
+que el stock siga coincidiendo con el valor original del formulario.
+Si ha cambiado, se rechaza el guardado y se solicita revisar el listado.
+
 Las imágenes se almacenan en el bucket público portadas.
 El campo imagen_path guarda la ruta del archivo.
 
@@ -131,12 +142,13 @@ Se admiten JPEG, PNG y WebP de hasta 2 MiB.
 Cada subida utiliza un nombre único.
 
 Al sustituir una portada, la imagen anterior permanece en Storage.
-La limpieza de archivos sin referencias está pendiente.
+También pueden quedar archivos sin referencia tras un guardado fallido.
+La limpieza segura de esos archivos está pendiente.
 
 ## Reservas
 
-Las reservas son para recoger discos. No incluyen pagos
-ni caducidad automática.
+Cada reserva corresponde a un producto y una cantidad de unidades,
+para recoger en tienda. No incluye pagos ni caducidad automática.
 
 Al reservar, PostgreSQL comprueba la sesión, el producto,
 la cantidad y las existencias. La identidad y el precio se obtienen
@@ -158,8 +170,10 @@ Repetir una cancelación no vuelve a devolver existencias.
 
 Cada solicitud de creación tiene un identificador. Reintentar la misma
 solicitud devuelve la reserva existente sin descontar más stock.
+
 La página conserva la última solicitud fallida mientras permanece
-en memoria; esa conservación no persiste tras una recarga completa.
+en memoria. Esa conservación no persiste tras una recarga completa
+ni mantiene un historial de todas las solicitudes anteriores.
 
 La aplicación consulta las reservas directamente, pero las crea
 y cambia de estado mediante RPC a funciones PostgreSQL.
@@ -167,6 +181,26 @@ y cambia de estado mediante RPC a funciones PostgreSQL.
 Si un producto pasa a inactivo, el cliente conserva su reserva,
 pero no puede consultar sus datos relacionados del catálogo por RLS.
 La interfaz muestra un texto alternativo.
+
+### Validación asíncrona de disponibilidad
+
+El formulario valida que la cantidad sea un entero mayor que cero.
+Después consulta mediante un servicio si el producto sigue activo
+y tiene suficientes unidades en Supabase.
+
+Los cambios del campo se validan al perder el foco.
+Mientras la consulta está pendiente, se muestra un mensaje de
+comprobación y se bloquea la confirmación.
+
+Se distinguen la falta de disponibilidad y los errores de conexión.
+La validación tiene un tiempo máximo de espera de diez segundos.
+
+La consulta utiliza el stock actual, aunque el catálogo mostrase
+unas existencias anteriores.
+
+Esta validación no aparta unidades. La función PostgreSQL mantiene
+la comprobación definitiva al confirmar, porque el stock puede
+cambiar después de validar el campo.
 
 ## Dashboard e informes
 
@@ -221,6 +255,11 @@ El CSV utiliza UTF-8 y punto y coma como separador.
 - Dashboard, periodos, gráficos y tablas alternativas.
 - Salida y regreso al dashboard sin reutilización incorrecta del canvas.
 - Descarga y revisión de informes PDF y CSV.
+- Cambio de título tras una reserva sin sobrescribir el stock.
+- Rechazo del guardado de existencias desactualizadas.
+- Validación asíncrona de cantidades disponibles y superiores al stock.
+- Rechazo de cantidad cero y recuperación de validez al corregirla.
+- Detección de cambios de stock desde otra sesión sin recargar el catálogo.
 
 Pruebas mediante API con cuenta cliente:
 
@@ -242,7 +281,6 @@ no se presenta como verificado.
 
 ## Trabajo pendiente
 
-- Validaciones asíncronas de formularios contra un servicio.
 - Pruebas adicionales de concurrencia y acceso a reservas de otra cuenta.
 - Contenido de ayuda y manual de usuario.
 - Documentación técnica generada con Compodoc.
@@ -256,7 +294,7 @@ no se presenta como verificado.
 ## Organización del desarrollo
 
 Se utilizan ramas feature para cada bloque y pull requests
-para integrarlas en develop.
+para integrarlas en develop. Las correcciones pueden utilizar ramas fix.
 
 La rama main se reserva para versiones estables de publicación
 o entrega.

@@ -48,18 +48,27 @@
           type="number"
           inputmode="numeric"
           min="1"
-          [max]="productoSeleccionado.stock"
           step="1"
           formControlName="cantidad"
-          errorText="Introduce una cantidad entera dentro de las existencias disponibles."
+          [errorText]="errorCantidad"
           [required]="true"
         ></ion-input>
 
+        @if (form.pending) {
+          <p role="status">Comprobando disponibilidad…</p>
+        }
+
         <ion-button
           type="submit"
-          [disabled]="saving() || loading()"
+          [disabled]="saving() || loading() || form.pending || form.invalid"
         >
-          {{ saving() ? 'Reservando…' : 'Confirmar reserva' }}
+          {{
+            saving()
+              ? 'Reservando…'
+              : form.pending
+                ? 'Comprobando…'
+                : 'Confirmar reserva'
+          }}
         </ion-button>
 
         <ion-button

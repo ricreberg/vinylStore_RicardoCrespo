@@ -45,7 +45,7 @@ export class ProductosService {
     return data;
   }
 
-      async crear(producto: NuevoProducto): Promise<Producto> {
+  async crear(producto: NuevoProducto): Promise<Producto> {
     const { data, error } = await this.supabase
       .from('productos')
       .insert({ ...producto })
@@ -65,7 +65,7 @@ export class ProductosService {
     return creado;
   }
 
-    async actualizar(
+  async actualizar(
     id: string,
     cambios: CambiosProducto,
     stockEsperado: number,
@@ -111,5 +111,33 @@ export class ProductosService {
     }
 
     return actualizado;
+  }
+
+  async comprobarDisponibilidad(
+    productoId: string,
+    cantidad: number,
+  ): Promise<boolean> {
+    if (!Number.isInteger(cantidad) || cantidad <= 0) {
+      return false;
+    }
+
+    const { data, error } = await this.supabase
+      .from('productos')
+      .select('stock')
+      .eq('id', productoId)
+      .eq('activo', true)
+      .overrideTypes<{ stock: number }[], { merge: false }>();
+
+    if (error) {
+      throw error;
+    }
+
+    const producto = data?.[0];
+
+    return (
+      producto !== undefined &&
+      Number.isFinite(producto.stock) &&
+      producto.stock >= cantidad
+    );
   }
 }
