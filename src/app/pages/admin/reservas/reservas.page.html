@@ -1,7 +1,10 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-menu-button menu="main-menu" aria-label="Abrir menú principal"></ion-menu-button>
+      <ion-menu-button
+        menu="main-menu"
+        aria-label="Abrir menú principal"
+      ></ion-menu-button>
     </ion-buttons>
 
     <ion-title>Gestión de reservas</ion-title>
@@ -9,121 +12,272 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <h1>Gestión de reservas</h1>
-  <p>Consulta las reservas y gestiona la recogida de los discos.</p>
+  <div class="gestion-reservas">
+    <header class="pagina-cabecera">
+      <div>
+        <p class="etiqueta-editorial">Administración · Reservas</p>
+        <h1>Gestión de reservas</h1>
+        <p class="introduccion">
+          Consulta las solicitudes y registra su recogida o cancelación.
+        </p>
+      </div>
 
-  <div class="ion-margin-bottom">
-    <label for="filtro-estado">Mostrar reservas:</label>
+      <ion-button
+        type="button"
+        fill="outline"
+        (click)="cargarReservas()"
+        [disabled]="bloqueado()"
+      >
+        {{ loading() ? 'Actualizando…' : 'Actualizar listado' }}
+      </ion-button>
+    </header>
 
-    <select id="filtro-estado" [(ngModel)]="filtro">
-      <option value="todas">Todas</option>
-      <option value="pendiente">Pendientes</option>
-      <option value="recogida">Recogidas</option>
-      <option value="cancelada">Canceladas</option>
-    </select>
-  </div>
+    @if (actionError()) {
+      <p role="alert">{{ actionError() }}</p>
+    }
 
-  <ion-button type="button" fill="outline" (click)="cargarReservas()" [disabled]="loading() || procesandoId() !== null">
-    Actualizar listado
-  </ion-button>
+    @if (successMessage()) {
+      <p role="status">{{ successMessage() }}</p>
+    }
 
-  @if (actionError()) {
-  <p role="alert">{{ actionError() }}</p>
-  }
+    @if (!loading() && !loadError()) {
+      <div class="resumen-estados" role="group" aria-label="Filtrar por estado">
+        @for (opcion of opcionesEstado; track opcion.valor) {
+          <button
+            type="button"
+            [class.seleccionado]="filtro === opcion.valor"
+            [attr.aria-pressed]="filtro === opcion.valor"
+            [disabled]="bloqueado()"
+            (click)="seleccionarEstado(opcion.valor)"
+          >
+            <span>{{ opcion.etiqueta }}</span>
+            <strong>{{ conteos()[opcion.valor] }}</strong>
+          </button>
+        }
+      </div>
+    }
 
-  @if (successMessage()) {
-  <p role="status">{{ successMessage() }}</p>
-  }
+    <section class="panel-reservas" aria-labelledby="titulo-listado">
+      <div class="listado-cabecera">
+        <div>
+          <p class="etiqueta-editorial">Historial y seguimiento</p>
+          <h2 id="titulo-listado">Reservas registradas</h2>
+        </div>
+        <span class="nota-estados">Las recogidas y canceladas son finales.</span>
+      </div>
 
-  @if (loading()) {
-  <p role="status">Cargando reservas…</p>
-  } @else if (loadError()) {
-  <p role="alert">{{ loadError() }}</p>
-  } @else if (reservasFiltradas.length === 0) {
-  <p>No hay reservas para el estado seleccionado.</p>
-  } @else {
-  <ion-grid>
-    <ion-row>
-      @for (reserva of reservasFiltradas; track reserva.id) {
-      <ion-col size="12" size-md="6" size-xl="4">
-        <ion-card>
-          <ion-card-header>
-            <ion-card-title>
-              {{
-              reserva.producto?.titulo
-              ?? 'Producto no disponible'
-              }}
-            </ion-card-title>
+      <div class="filtros">
+        <div class="campo-filtro campo-busqueda">
+          <label for="buscar-reservas">Buscar reserva</label>
 
-            @if (reserva.producto; as producto) {
-            <ion-card-subtitle>
-              {{ producto.artista }}
-            </ion-card-subtitle>
+          <input
+            id="buscar-reservas"
+            type="search"
+            placeholder="Cliente, correo, disco o referencia"
+            [(ngModel)]="busqueda"
+            [disabled]="bloqueado()"
+          />
+        </div>
+
+        <div class="campo-filtro">
+          <label for="filtro-estado">Mostrar reservas</label>
+
+          <select
+            id="filtro-estado"
+            [(ngModel)]="filtro"
+            [disabled]="bloqueado()"
+          >
+            @for (opcion of opcionesEstado; track opcion.valor) {
+              <option [value]="opcion.valor">
+                {{ opcion.etiqueta }}
+              </option>
             }
-          </ion-card-header>
+          </select>
+        </div>
 
-          <ion-card-content>
-            <p>Referencia: {{ reserva.id.slice(0, 8) }}</p>
+        <div class="campo-filtro">
+          <label for="orden-reservas">Ordenar por</label>
 
-            @if (clientesPorId()[reserva.usuario_id]; as cliente) {
-            <p>Cliente: {{ cliente.nombre }}</p>
-            <p>Correo: {{ cliente.correo ?? 'Sin correo' }}</p>
+          <select
+            id="orden-reservas"
+            [(ngModel)]="orden"
+            [disabled]="bloqueado()"
+          >
+            <option value="recientes">Más recientes</option>
+            <option value="antiguas">Más antiguas</option>
+          </select>
+        </div>
+      </div>
 
-            <ion-button fill="outline" [routerLink]="['/admin/clientes', cliente.id]"
-              [attr.aria-label]="'Ver ficha de ' + cliente.nombre">
-              Ver cliente
-            </ion-button>
-            } @else {
-            <p>La cuenta no está incluida en el listado de clientes.</p>
-            }
-            <p>
-              Fecha:
-              {{ reserva.created_at | date:'dd/MM/yyyy HH:mm' }}
-            </p>
-            <p>Estado: {{ reserva.estado }}</p>
-            <p>Unidades: {{ reserva.cantidad }}</p>
-
-            <p>
-              Precio por unidad:
-              {{
-              reserva.precio_unitario
-              | currency:'EUR':'symbol':'1.2-2'
-              }}
-            </p>
-
-            <p>
-              Total:
-              {{
-              reserva.precio_unitario * reserva.cantidad
-              | currency:'EUR':'symbol':'1.2-2'
-              }}
-            </p>
-
-            @if (reserva.estado === 'pendiente') {
-            <ion-button type="button" (click)="cambiarEstado(reserva, 'recogida')" [disabled]="procesandoId() !== null"
-              [attr.aria-label]="
-                      'Marcar como recogida la reserva ' +
-                      reserva.id.slice(0, 8)
-                    ">
-              Marcar como recogida
-            </ion-button>
-
-            <ion-button type="button" fill="outline" (click)="cambiarEstado(reserva, 'cancelada')"
-              [disabled]="procesandoId() !== null" [attr.aria-label]="
-                      'Cancelar la reserva ' + reserva.id.slice(0, 8)
-                    ">
-              Cancelar reserva
-            </ion-button>
-            }
-
-            @if (procesandoId() === reserva.id) {
-            <p role="status">Actualizando reserva…</p>
-            }
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
+      @if (hayFiltros) {
+        <button
+          class="limpiar-filtros"
+          type="button"
+          (click)="limpiarFiltros()"
+          [disabled]="bloqueado()"
+        >
+          Restablecer filtros
+        </button>
       }
-    </ion-row>
-  </ion-grid>
-  }
+
+      @if (loading()) {
+        <p role="status">Cargando reservas…</p>
+      } @else if (loadError()) {
+        <p role="alert">{{ loadError() }}</p>
+      } @else if (reservas().length === 0) {
+        <div class="estado-vacio">
+          <h3>No hay reservas registradas</h3>
+          <p>Las solicitudes aparecerán aquí cuando se creen desde el catálogo.</p>
+        </div>
+      } @else if (reservasFiltradas.length === 0) {
+        <div class="estado-vacio">
+          <h3>No hay coincidencias</h3>
+          <p>Modifica la búsqueda o selecciona otro estado.</p>
+
+          <ion-button
+            type="button"
+            fill="outline"
+            (click)="limpiarFiltros()"
+          >
+            Ver todas las reservas
+          </ion-button>
+        </div>
+      } @else {
+        <p class="contador" role="status">
+          {{ reservasFiltradas.length }}
+          de {{ reservas().length }} reservas
+        </p>
+
+        <div class="lista-reservas">
+          @for (reserva of reservasFiltradas; track reserva.id) {
+            <article
+              class="reserva"
+              [attr.aria-busy]="procesandoId() === reserva.id"
+            >
+              <header class="reserva-cabecera">
+                <div class="referencia-fecha">
+                  <span class="referencia">
+                    Ref. {{ reserva.id.slice(0, 8) }}
+                  </span>
+
+                  <span>{{ formatearFecha(reserva.created_at) }}</span>
+                </div>
+
+                <span
+                  class="etiqueta-estado"
+                  [class.estado-pendiente]="reserva.estado === 'pendiente'"
+                  [class.estado-recogida]="reserva.estado === 'recogida'"
+                  [class.estado-cancelada]="reserva.estado === 'cancelada'"
+                >
+                  {{ nombreEstado(reserva.estado) }}
+                </span>
+              </header>
+
+              <div class="reserva-contenido">
+                <div class="producto-reservado">
+                  <div class="miniatura">
+                    @if (reserva.producto?.imagen_path; as ruta) {
+                      <img
+                        [src]="portadas.obtenerUrl(ruta)"
+                        [alt]="'Portada de ' + reserva.producto?.titulo"
+                        width="72"
+                        height="72"
+                        loading="lazy"
+                      />
+                    } @else {
+                      <span class="mini-vinilo" aria-hidden="true"></span>
+                      <span class="solo-lectores">Sin portada disponible</span>
+                    }
+                  </div>
+
+                  <div class="producto-texto">
+                    <h3>
+                      {{ reserva.producto?.titulo ?? 'Producto no disponible' }}
+                    </h3>
+
+                    @if (reserva.producto; as producto) {
+                      <p>{{ producto.artista }}</p>
+                    }
+
+                    <span>
+                      {{ reserva.cantidad }}
+                      {{ reserva.cantidad === 1 ? 'unidad' : 'unidades' }}
+                      · {{ formatearPrecio(reserva.precio_unitario) }} por unidad
+                    </span>
+                  </div>
+                </div>
+
+                <div class="cliente-reserva">
+                  <span class="dato-etiqueta">Cliente</span>
+
+                  @if (clientesPorId()[reserva.usuario_id]; as cliente) {
+                    <strong>{{ cliente.nombre }}</strong>
+                    <span class="correo">{{ cliente.correo ?? 'Sin correo' }}</span>
+
+                    <a
+                      [routerLink]="['/admin/clientes', cliente.id]"
+                      [attr.aria-label]="'Ver ficha de ' + cliente.nombre"
+                    >
+                      Ver ficha del cliente
+                    </a>
+                  } @else {
+                    <strong>Cuenta no incluida en Clientes</strong>
+                    <span class="correo">
+                      La cuenta puede tener otro rol.
+                    </span>
+                  }
+                </div>
+
+                <div class="importe-reserva">
+                  <span class="dato-etiqueta">Importe reservado</span>
+                  <strong>{{ formatearTotal(reserva) }}</strong>
+                </div>
+              </div>
+
+              @if (reserva.estado === 'pendiente') {
+                <footer class="reserva-acciones">
+                  <p>
+                    La recogida no vuelve a descontar unidades.
+                    Cancelar devuelve las existencias.
+                  </p>
+
+                  <div>
+                    <ion-button
+                      type="button"
+                      fill="outline"
+                      (click)="cambiarEstado(reserva, 'cancelada')"
+                      [disabled]="bloqueado()"
+                      [attr.aria-label]="
+                        'Cancelar la reserva ' + reserva.id.slice(0, 8)
+                      "
+                    >
+                      Cancelar reserva
+                    </ion-button>
+
+                    <ion-button
+                      type="button"
+                      (click)="cambiarEstado(reserva, 'recogida')"
+                      [disabled]="bloqueado()"
+                      [attr.aria-label]="
+                        'Confirmar recogida de la reserva ' +
+                        reserva.id.slice(0, 8)
+                      "
+                    >
+                      Confirmar recogida
+                    </ion-button>
+                  </div>
+                </footer>
+              }
+
+              @if (procesandoId() === reserva.id) {
+                <p class="mensaje-proceso" role="status">
+                  Actualizando reserva…
+                </p>
+              }
+            </article>
+          }
+        </div>
+      }
+    </section>
+  </div>
 </ion-content>
