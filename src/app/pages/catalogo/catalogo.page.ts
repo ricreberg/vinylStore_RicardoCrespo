@@ -1,5 +1,4 @@
-import { CurrencyPipe } from '@angular/common';
-import { Component, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import {
   FormBuilder,
   ReactiveFormsModule,
@@ -14,13 +13,10 @@ import {
   IonCardHeader,
   IonCardSubtitle,
   IonCardTitle,
-  IonCol,
   IonContent,
-  IonGrid,
   IonHeader,
   IonInput,
   IonMenuButton,
-  IonRow,
   IonTitle,
   IonToolbar,
 } from '@ionic/angular';
@@ -32,12 +28,13 @@ import { ProductosService } from '../../core/services/productos.service';
 import type { Producto } from '../../core/services/productos.service';
 import { ReservasService } from '../../core/services/reservas.service';
 
+type OrdenCatalogo = 'recientes' | 'titulo' | 'precio-asc' | 'precio-desc';
+
 @Component({
   selector: 'app-catalogo',
   templateUrl: './catalogo.page.html',
   styleUrls: ['./catalogo.page.scss'],
   imports: [
-    CurrencyPipe,
     ReactiveFormsModule,
     IonButton,
     IonButtons,
@@ -46,13 +43,10 @@ import { ReservasService } from '../../core/services/reservas.service';
     IonCardHeader,
     IonCardSubtitle,
     IonCardTitle,
-    IonCol,
     IonContent,
-    IonGrid,
     IonHeader,
     IonInput,
     IonMenuButton,
-    IonRow,
     IonTitle,
     IonToolbar,
   ],
@@ -64,6 +58,11 @@ export class CatalogoPage {
   private readonly router = inject(Router);
   private readonly fb = inject(FormBuilder);
 
+  private readonly formatoPrecio = new Intl.NumberFormat('es-ES', {
+    style: 'currency',
+    currency: 'EUR',
+  });
+
   readonly auth = inject(AuthService);
   readonly portadas = inject(PortadasService);
 
@@ -74,6 +73,65 @@ export class CatalogoPage {
   readonly loadError = signal('');
   readonly reservaError = signal('');
   readonly successMessage = signal('');
+
+  readonly busqueda = signal('');
+  readonly genero = signal('');
+  readonly soloDisponibles = signal(false);
+  readonly orden = signal<OrdenCatalogo>('recientes');
+
+  readonly generos = computed(() =>
+    [...new Set(this.productos().map((producto) => producto.genero))]
+      .sort((a, b) => a.localeCompare(b, 'es')),
+  );
+
+  readonly productosFiltrados = computed(() => {
+    const consulta = this.normalizar(this.busqueda().trim());
+    const genero = this.genero();
+
+    const resultado = this.productos().filter((producto) => {
+      const coincideBusqueda =
+        !consulta ||
+        this.normalizar(`${producto.titulo} ${producto.artista}`)
+          .includes(consulta);
+
+      const coincideGenero =
+        !genero || producto.genero === genero;
+
+      const coincideDisponibilidad =
+        !this.soloDisponibles() || producto.stock > 0;
+
+      return (
+        coincideBusqueda &&
+        coincideGenero &&
+        coincideDisponibilidad
+      );
+    });
+
+    switch (this.orden()) {
+      case 'titulo':
+        return resultado.sort((a, b) =>
+          a.titulo.localeCompare(b.titulo, 'es'),
+        );
+
+      case 'precio-asc':
+        return resultado.sort((a, b) => a.precio - b.precio);
+
+      case 'precio-desc':
+        return resultado.sort((a, b) => b.precio - a.precio);
+
+      default:
+        return resultado.sort((a, b) =>
+          b.created_at.localeCompare(a.created_at),
+        );
+    }
+  });
+
+  readonly hayFiltros = computed(() =>
+    this.busqueda().trim() !== '' ||
+    this.genero() !== '' ||
+    this.soloDisponibles() ||
+    this.orden() !== 'recientes',
+  );
 
   private ultimaSolicitud: {
     id: string;
@@ -119,6 +177,60 @@ export class CatalogoPage {
       this.successMessage.set('');
       await this.cargarProductos();
     }
+  }
+
+  actualizarBusqueda(event: Event): void {
+    const campo = event.target;
+
+    if (campo instanceof HTMLInputElement) {
+      this.busqueda.set(campo.value);
+    }
+  }
+
+  actualizarGenero(event: Event): void {
+    const selector = event.target;
+
+    if (selector instanceof HTMLSelectElement) {
+      this.genero.set(selector.value);
+    }
+  }
+
+  actualizarDisponibilidad(event: Event): void {
+    const campo = event.target;
+
+    if (campo instanceof HTMLInputElement) {
+      this.soloDisponibles.set(campo.checked);
+    }
+  }
+
+  actualizarOrden(event: Event): void {
+    const selector = event.target;
+
+    if (!(selector instanceof HTMLSelectElement)) {
+      return;
+    }
+
+    const valor = selector.value;
+
+    if (
+      valor === 'recientes' ||
+      valor === 'titulo' ||
+      valor === 'precio-asc' ||
+      valor === 'precio-desc'
+    ) {
+      this.orden.set(valor);
+    }
+  }
+
+  limpiarFiltros(): void {
+    this.busqueda.set('');
+    this.genero.set('');
+    this.soloDisponibles.set(false);
+    this.orden.set('recientes');
+  }
+
+  formatearPrecio(precio: number): string {
+    return this.formatoPrecio.format(precio);
   }
 
   async cargarProductos(): Promise<void> {
@@ -262,5 +374,12 @@ export class CatalogoPage {
     }
 
     await this.cargarProductos();
+  }
+
+  private normalizar(texto: string): string {
+    return texto
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .toLocaleLowerCase('es');
   }
 }

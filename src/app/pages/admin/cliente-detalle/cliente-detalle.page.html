@@ -12,99 +12,171 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <h1>Ficha del cliente</h1>
+  <div class="pagina-clientes">
+    <header class="pagina-cabecera">
+      <div>
+        <p class="etiqueta-editorial">Administración · Clientes</p>
+        <h1>Ficha del cliente</h1>
+      </div>
 
-  <ion-button
-    routerLink="/admin/clientes"
-    fill="outline"
-  >
-    Volver a clientes
-  </ion-button>
+      <div class="cabecera-acciones">
+        <ion-button
+          type="button"
+          routerLink="/admin/clientes"
+          fill="outline"
+        >
+          Volver a clientes
+        </ion-button>
 
-  <ion-button
-    type="button"
-    fill="outline"
-    (click)="cargarFicha()"
-    [disabled]="loading()"
-  >
-    Actualizar ficha
-  </ion-button>
+        <ion-button
+          type="button"
+          fill="outline"
+          (click)="cargarFicha()"
+          [disabled]="loading()"
+        >
+          {{ loading() ? 'Actualizando…' : 'Actualizar ficha' }}
+        </ion-button>
+      </div>
+    </header>
 
-  @if (loading()) {
-    <p role="status">Cargando ficha e historial…</p>
-  } @else if (errorMessage()) {
-    <p role="alert">{{ errorMessage() }}</p>
-  } @else {
-    @if (cliente(); as datos) {
-      <section aria-labelledby="datos-cliente">
-        <h2 id="datos-cliente">{{ datos.nombre }}</h2>
-        <p>Correo: {{ datos.correo ?? 'Sin correo' }}</p>
-        <p>
-          Fecha de alta:
-          {{ datos.created_at | date:'dd/MM/yyyy HH:mm' }}
-        </p>
+    @if (loading()) {
+      <p role="status">Cargando ficha e historial…</p>
+    } @else if (errorMessage()) {
+      <p role="alert">{{ errorMessage() }}</p>
+    } @else if (cliente(); as datos) {
+      <section class="panel perfil-cliente" aria-labelledby="nombre-cliente">
+        <div class="avatar avatar-grande" aria-hidden="true">
+          {{ iniciales(datos.nombre) }}
+        </div>
+
+        <div class="perfil-identidad">
+          <p class="etiqueta-editorial">Cuenta cliente</p>
+          <h2 id="nombre-cliente">{{ datos.nombre }}</h2>
+          <p class="perfil-correo">
+            {{ datos.correo ?? 'Sin correo electrónico' }}
+          </p>
+        </div>
+
+        <div class="fecha-alta">
+          <span>Fecha de alta</span>
+          <strong>{{ formatearFecha(datos.created_at) }}</strong>
+        </div>
       </section>
 
-      <section aria-labelledby="historial-reservas">
-        <h2 id="historial-reservas">Historial de reservas</h2>
+      <section class="resumen-cliente" aria-label="Resumen del historial">
+        <div>
+          <span>Reservas totales</span>
+          <strong>{{ resumen().total }}</strong>
+        </div>
+
+        <div>
+          <span>Pendientes</span>
+          <strong>{{ resumen().pendientes }}</strong>
+        </div>
+
+        <div>
+          <span>Recogidas</span>
+          <strong>{{ resumen().recogidas }}</strong>
+        </div>
+
+        <div>
+          <span>Canceladas</span>
+          <strong>{{ resumen().canceladas }}</strong>
+        </div>
+      </section>
+
+      <p class="importe-historico">
+        Gasto total:
+        <strong>{{ formatearPrecio(resumen().valorRecogidas) }}</strong>.
+        Importe de las compras completadas en todo su historial.
+      </p>
+
+      <section class="panel" aria-labelledby="historial-reservas">
+        <div class="seccion-cabecera">
+          <div>
+            <p class="etiqueta-editorial">Historial completo</p>
+            <h2 id="historial-reservas">Reservas del cliente</h2>
+          </div>
+
+          <div class="campo-filtro filtro-historial">
+            <label for="estado-historial">Mostrar reservas</label>
+            <select id="estado-historial" [(ngModel)]="filtro">
+              <option value="todas">Todas</option>
+              <option value="pendiente">Pendientes</option>
+              <option value="recogida">Recogidas</option>
+              <option value="cancelada">Canceladas</option>
+            </select>
+          </div>
+        </div>
 
         @if (reservas().length === 0) {
-          <p>Este cliente todavía no tiene reservas.</p>
+          <div class="estado-vacio">
+            <h3>No hay reservas registradas</h3>
+            <p>Este cliente todavía no ha realizado ninguna reserva.</p>
+          </div>
+        } @else if (reservasFiltradas.length === 0) {
+          <div class="estado-vacio">
+            <h3>No hay reservas con ese estado</h3>
+            <p>Selecciona otro estado para consultar el historial.</p>
+          </div>
         } @else {
-          <p>Reservas registradas: {{ reservas().length }}</p>
+          <p class="contador" role="status">
+            {{ reservasFiltradas.length }}
+            de {{ reservas().length }} reservas
+          </p>
 
-          <ion-grid>
-            <ion-row>
-              @for (reserva of reservas(); track reserva.id) {
-                <ion-col size="12" size-md="6" size-xl="4">
-                  <ion-card>
-                    <ion-card-header>
-                      <ion-card-title>
-                        {{
-                          reserva.producto?.titulo
-                            ?? 'Producto no disponible'
-                        }}
-                      </ion-card-title>
-                    </ion-card-header>
+          <div class="historial">
+            @for (reserva of reservasFiltradas; track reserva.id) {
+              <article class="reserva-historial">
+                <header class="reserva-cabecera">
+                  <span>Ref. {{ reserva.id.slice(0, 8) }}</span>
 
-                    <ion-card-content>
-                      <p>Referencia: {{ reserva.id.slice(0, 8) }}</p>
+                  <span
+                    class="etiqueta-estado"
+                    [class.estado-pendiente]="reserva.estado === 'pendiente'"
+                    [class.estado-recogida]="reserva.estado === 'recogida'"
+                    [class.estado-cancelada]="reserva.estado === 'cancelada'"
+                  >
+                    {{ nombreEstado(reserva.estado) }}
+                  </span>
+                </header>
 
-                      @if (reserva.producto; as producto) {
-                        <p>Artista: {{ producto.artista }}</p>
-                      }
+                <div class="reserva-datos">
+                  <div class="reserva-producto">
+                    <h3>
+                      {{ reserva.producto?.titulo ?? 'Producto no disponible' }}
+                    </h3>
 
-                      <p>
-                        Fecha:
-                        {{
-                          reserva.created_at
-                            | date:'dd/MM/yyyy HH:mm'
-                        }}
-                      </p>
-                      <p>Estado: {{ reserva.estado }}</p>
-                      <p>Unidades: {{ reserva.cantidad }}</p>
-                      <p>
-                        Precio por unidad:
-                        {{
-                          reserva.precio_unitario
-                            | currency:'EUR':'symbol':'1.2-2'
-                        }}
-                      </p>
-                      <p>
-                        Total:
-                        {{
-                          reserva.precio_unitario * reserva.cantidad
-                            | currency:'EUR':'symbol':'1.2-2'
-                        }}
-                      </p>
-                    </ion-card-content>
-                  </ion-card>
-                </ion-col>
-              }
-            </ion-row>
-          </ion-grid>
+                    @if (reserva.producto; as producto) {
+                      <p>{{ producto.artista }}</p>
+                    }
+
+                    <span>{{ formatearFecha(reserva.created_at) }}</span>
+                  </div>
+
+                  <div class="reserva-cantidad">
+                    <span>{{ reserva.cantidad }} uds.</span>
+                    <small>
+                      {{ formatearPrecio(reserva.precio_unitario) }}
+                      por unidad
+                    </small>
+                  </div>
+
+                  <strong class="reserva-total">
+                    {{ formatearTotal(reserva) }}
+                  </strong>
+                </div>
+              </article>
+            }
+          </div>
         }
       </section>
+
+      <p class="nota-pagina">
+        Esta ficha es de consulta. Las recogidas y cancelaciones
+        se gestionan desde
+        <a routerLink="/admin/reservas">Gestión de reservas</a>.
+      </p>
     }
-  }
+  </div>
 </ion-content>

@@ -12,244 +12,438 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <h1>Gestión de vinilos</h1>
-
-  <section aria-labelledby="nuevo-producto">
-    <h2 id="nuevo-producto">
-      {{ editando() ? 'Editar producto' : 'Nuevo producto' }}
-    </h2>
-
-    <form [formGroup]="form" (ngSubmit)="guardarProducto()">
-      <ion-grid>
-        <ion-row>
-          <ion-col size="12" size-md="6">
-            <ion-input
-              label="Título"
-              labelPlacement="stacked"
-              formControlName="titulo"
-              errorText="Introduce el título del disco."
-              [required]="true"
-            ></ion-input>
-          </ion-col>
-
-          <ion-col size="12" size-md="6">
-            <ion-input
-              label="Artista"
-              labelPlacement="stacked"
-              formControlName="artista"
-              errorText="Introduce el artista o grupo."
-              [required]="true"
-            ></ion-input>
-          </ion-col>
-
-          <ion-col size="12" size-md="4">
-            <ion-input
-              label="Género"
-              labelPlacement="stacked"
-              formControlName="genero"
-              errorText="Introduce el género musical."
-              [required]="true"
-            ></ion-input>
-          </ion-col>
-
-          <ion-col size="12" size-md="4">
-            <ion-input
-              label="Precio (€)"
-              labelPlacement="stacked"
-              type="number"
-              inputmode="decimal"
-              min="0"
-              step="0.01"
-              formControlName="precio"
-              errorText="Introduce un precio válido con hasta dos decimales."
-              [required]="true"
-            ></ion-input>
-          </ion-col>
-
-          <ion-col size="12" size-md="4">
-            <ion-input
-              label="Existencias"
-              labelPlacement="stacked"
-              type="number"
-              inputmode="numeric"
-              min="0"
-              step="1"
-              formControlName="stock"
-              errorText="Introduce una cantidad entera y no negativa."
-              [required]="true"
-            ></ion-input>
-          </ion-col>
-
-          <ion-col size="12">
-            <ion-textarea
-              label="Descripción"
-              labelPlacement="stacked"
-              formControlName="descripcion"
-              [autoGrow]="true"
-            ></ion-textarea>
-          </ion-col>
-
-          <ion-col size="12">
-            <label for="portada">Portada del disco</label>
-
-            <p id="ayuda-portada">
-              Imagen opcional en JPEG, PNG o WebP. Máximo 2 MiB.
-              Al editar, se conserva la portada actual si no eliges otra.
-            </p>
-
-            <input
-              id="portada"
-              type="file"
-              accept="image/jpeg,image/png,image/webp"
-              aria-describedby="ayuda-portada"
-              (change)="seleccionarPortada($event)"
-              [disabled]="saving() || loading()"
-            />
-
-            @if (archivoSeleccionado(); as archivo) {
-              <p>Imagen seleccionada: {{ archivo.name }}</p>
-
-              <ion-button
-                type="button"
-                fill="outline"
-                (click)="descartarSeleccion()"
-                [disabled]="saving()"
-              >
-                Descartar selección
-              </ion-button>
-            }
-
-            @if (editando()?.imagen_path; as rutaActual) {
-              <p>Portada guardada:</p>
-              <img
-                class="portada"
-                [src]="portadas.obtenerUrl(rutaActual)"
-                alt="Portada actual del producto en edición"
-                width="480"
-                height="480"
-              />
-            }
-          </ion-col>
-
-          <ion-col size="12">
-            <ion-checkbox formControlName="activo">
-              Visible en el catálogo
-            </ion-checkbox>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
+  <div class="inventario">
+    <header class="pagina-cabecera">
+      <div>
+        <p class="etiqueta-editorial">Administración · Inventario</p>
+        <h1>Productos y existencias</h1>
+        <p class="introduccion">
+          Consulta y modifica los productos, su publicación y el stock disponible.
+        </p>
+      </div>
 
       <ion-button
-        type="submit"
-        [disabled]="saving() || loading()"
+        type="button"
+        (click)="nuevoProducto()"
+        [disabled]="loading() || saving()"
       >
-        {{
-          saving()
-            ? 'Guardando…'
-            : editando()
-              ? 'Guardar cambios'
-              : 'Crear producto'
-        }}
+        Añadir vinilo
       </ion-button>
-
-      @if (editando()) {
-        <ion-button
-          type="button"
-          fill="outline"
-          (click)="cancelarEdicion()"
-          [disabled]="saving()"
-        >
-          Cancelar edición
-        </ion-button>
-      }
-    </form>
-
-    @if (saveError()) {
-      <p role="alert">{{ saveError() }}</p>
-    }
+    </header>
 
     @if (successMessage()) {
       <p role="status">{{ successMessage() }}</p>
     }
-  </section>
 
-  <section
-    aria-labelledby="listado-productos"
-    class="ion-margin-top"
-  >
-    <h2 id="listado-productos">Productos registrados</h2>
+    @if (!loading() && !loadError()) {
+      <section class="resumen-inventario" aria-label="Resumen del inventario">
+        <div>
+          <span>Registrados</span>
+          <strong>{{ resumen().total }}</strong>
+        </div>
 
-    <ion-button
-      type="button"
-      fill="outline"
-      (click)="cargarProductos()"
-      [disabled]="loading() || saving()"
-    >
-      Actualizar listado
-    </ion-button>
+        <div>
+          <span>Publicados</span>
+          <strong>{{ resumen().publicados }}</strong>
+        </div>
 
-    @if (loading()) {
-      <p role="status">Cargando productos…</p>
-    } @else {
-      @if (loadError()) {
-        <p role="alert">{{ loadError() }}</p>
-      } @else if (productos().length === 0) {
-        <p>Todavía no hay productos. Puedes crear el primero arriba.</p>
+        <div>
+          <span>Unidades en catálogo</span>
+          <strong>{{ resumen().unidades }}</strong>
+        </div>
+
+        <div>
+          <span>Stock bajo o agotado</span>
+          <strong>{{ resumen().stockBajo }}</strong>
+          <small>Solo productos publicados</small>
+        </div>
+      </section>
+    }
+
+    <section class="panel-listado" aria-labelledby="titulo-listado">
+      <div class="listado-cabecera">
+        <div>
+          <p class="etiqueta-editorial">Catálogo y almacén</p>
+          <h2 id="titulo-listado">Productos registrados</h2>
+        </div>
+
+        <ion-button
+          type="button"
+          fill="outline"
+          (click)="cargarProductos()"
+          [disabled]="loading() || saving()"
+        >
+          {{ loading() ? 'Actualizando…' : 'Actualizar listado' }}
+        </ion-button>
+      </div>
+
+      <div class="filtros">
+        <div class="campo-filtro campo-busqueda">
+          <label for="buscar-productos">Buscar producto</label>
+          <input
+            id="buscar-productos"
+            type="search"
+            placeholder="Título, artista o género"
+            [value]="busqueda()"
+            (input)="actualizarBusqueda($event)"
+          />
+        </div>
+
+        <div class="campo-filtro">
+          <label for="filtrar-publicacion">Publicación</label>
+          <select
+            id="filtrar-publicacion"
+            [value]="publicacion()"
+            (change)="actualizarPublicacion($event)"
+          >
+            <option value="todos">Todos</option>
+            <option value="publicados">Publicados</option>
+            <option value="retirados">Retirados</option>
+          </select>
+        </div>
+
+        <div class="campo-filtro">
+          <label for="filtrar-stock">Existencias</label>
+          <select
+            id="filtrar-stock"
+            [value]="filtroStock()"
+            (change)="actualizarStock($event)"
+          >
+            <option value="todos">Todas</option>
+            <option value="disponibles">Con existencias</option>
+            <option value="bajo">Stock bajo: 1–3 unidades</option>
+            <option value="agotados">Agotados</option>
+          </select>
+        </div>
+      </div>
+
+      @if (hayFiltros()) {
+        <button
+          class="limpiar-filtros"
+          type="button"
+          (click)="limpiarFiltros()"
+        >
+          Restablecer filtros
+        </button>
       }
 
-      <ion-grid>
-        <ion-row>
-          @for (producto of productos(); track producto.id) {
-            <ion-col size="12" size-md="6" size-xl="4">
-              <ion-card>
+      @if (loading()) {
+        <p role="status">Cargando el inventario…</p>
+      } @else if (loadError()) {
+        <p role="alert">{{ loadError() }}</p>
+      } @else if (productos().length === 0) {
+        <div class="estado-vacio">
+          <h3>No hay productos registrados</h3>
+          <p>Utiliza Añadir vinilo para crear el primer producto.</p>
+
+          <ion-button type="button" (click)="nuevoProducto()">
+            Añadir primer vinilo
+          </ion-button>
+        </div>
+      } @else if (productosFiltrados().length === 0) {
+        <div class="estado-vacio">
+          <h3>No hay coincidencias</h3>
+          <p>Prueba otra búsqueda o modifica los filtros.</p>
+
+          <ion-button
+            type="button"
+            fill="outline"
+            (click)="limpiarFiltros()"
+          >
+            Ver todos los productos
+          </ion-button>
+        </div>
+      } @else {
+        <p class="contador" role="status">
+          {{ productosFiltrados().length }}
+          de {{ productos().length }} productos
+        </p>
+
+        <div class="lista-productos">
+          @for (producto of productosFiltrados(); track producto.id) {
+            <article
+              class="fila-producto"
+              [class.producto-retirado]="!producto.activo"
+            >
+              <div class="miniatura">
                 @if (producto.imagen_path; as ruta) {
                   <img
-                    class="portada"
                     [src]="portadas.obtenerUrl(ruta)"
                     [alt]="'Portada de ' + producto.titulo"
-                    width="480"
-                    height="480"
+                    width="80"
+                    height="80"
                     loading="lazy"
                   />
+                } @else {
+                  <span class="mini-vinilo" aria-hidden="true"></span>
+                  <span class="solo-lectores">Sin portada</span>
                 }
+              </div>
 
-                <ion-card-header>
-                  <ion-card-title>{{ producto.titulo }}</ion-card-title>
-                  <ion-card-subtitle>
-                    {{ producto.artista }}
-                  </ion-card-subtitle>
-                </ion-card-header>
+              <div class="producto-identidad">
+                <h3>{{ producto.titulo }}</h3>
+                <p>{{ producto.artista }}</p>
+                <span class="genero">{{ producto.genero }}</span>
+              </div>
 
-                <ion-card-content>
-                  <p>Género: {{ producto.genero }}</p>
-                  <p>
-                    Precio:
-                    {{ producto.precio | currency:'EUR':'symbol':'1.2-2' }}
-                  </p>
-                  <p>Existencias: {{ producto.stock }}</p>
-                  <p>
-                    Estado: {{ producto.activo ? 'Activo' : 'Inactivo' }}
-                  </p>
+              <div class="dato-producto">
+                <span class="dato-etiqueta">Precio</span>
+                <strong>{{ formatearPrecio(producto.precio) }}</strong>
+              </div>
 
-                  @if (producto.descripcion) {
-                    <p>{{ producto.descripcion }}</p>
-                  }
+              <div class="dato-producto">
+                <span class="dato-etiqueta">Existencias</span>
+
+                <span
+                  class="estado-stock"
+                  [class.stock-bajo]="producto.stock > 0 && producto.stock <= umbralStockBajo"
+                  [class.sin-stock]="producto.stock === 0"
+                >
+                  {{
+                    producto.stock === 0
+                      ? 'Agotado'
+                      : producto.stock + ' uds.'
+                  }}
+                </span>
+              </div>
+
+              <span
+                class="estado-publicacion"
+                [class.publicado]="producto.activo"
+              >
+                {{ producto.activo ? 'Publicado' : 'Retirado' }}
+              </span>
+
+              <ion-button
+                type="button"
+                fill="outline"
+                (click)="editarProducto(producto)"
+                [disabled]="saving() || loading()"
+                [attr.aria-label]="'Editar ' + producto.titulo"
+              >
+                Editar
+              </ion-button>
+            </article>
+          }
+        </div>
+      }
+    </section>
+  </div>
+
+  <ion-modal
+    class="editor-producto"
+    [isOpen]="editorAbierto()"
+    [canDismiss]="puedeCerrarEditor"
+    [backdropDismiss]="false"
+    (didDismiss)="editorCerrado()"
+  >
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>
+            {{ editando() ? 'Editar vinilo' : 'Añadir vinilo' }}
+          </ion-title>
+
+          <ion-buttons slot="end">
+            <ion-button
+              type="button"
+              (click)="cerrarEditor()"
+              [disabled]="saving()"
+            >
+              Cerrar
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="ion-padding">
+        <div class="editor-contenido">
+          <p class="etiqueta-editorial">
+            {{ editando() ? 'Edición de producto' : 'Alta de producto' }}
+          </p>
+
+          <h2>{{ editando()?.titulo ?? 'Nuevo producto' }}</h2>
+
+          <p class="editor-introduccion">
+            Completa los datos del vinilo y decide si quieres publicarlo.
+            Título, artista, género, precio y existencias son obligatorios.
+          </p>
+
+          <form [formGroup]="form" (ngSubmit)="guardarProducto()">
+            <div class="formulario-grid">
+              <ion-input
+                label="Título"
+                labelPlacement="stacked"
+                fill="outline"
+                formControlName="titulo"
+                errorText="Introduce el título del disco."
+                [required]="true"
+              ></ion-input>
+
+              <ion-input
+                label="Artista"
+                labelPlacement="stacked"
+                fill="outline"
+                formControlName="artista"
+                errorText="Introduce el artista o grupo."
+                [required]="true"
+              ></ion-input>
+
+              <ion-input
+                label="Género"
+                labelPlacement="stacked"
+                fill="outline"
+                formControlName="genero"
+                errorText="Introduce el género musical."
+                [required]="true"
+              ></ion-input>
+
+              <ion-input
+                label="Precio (€)"
+                labelPlacement="stacked"
+                fill="outline"
+                type="number"
+                inputmode="decimal"
+                min="0"
+                step="0.01"
+                formControlName="precio"
+                errorText="Introduce un precio no negativo con hasta dos decimales."
+                [required]="true"
+              ></ion-input>
+
+              <ion-input
+                label="Existencias"
+                labelPlacement="stacked"
+                fill="outline"
+                type="number"
+                inputmode="numeric"
+                min="0"
+                step="1"
+                formControlName="stock"
+                errorText="Introduce una cantidad entera y no negativa."
+                [required]="true"
+              ></ion-input>
+
+              <div class="nota-stock">
+                <strong>Existencias disponibles</strong>
+                <p>
+                  Las reservas descuentan unidades automáticamente.
+                  Si cambian mientras editas el stock, tendrás que
+                  revisar la cantidad antes de guardar.
+                </p>
+              </div>
+
+              <ion-textarea
+                class="campo-completo"
+                label="Descripción"
+                labelPlacement="stacked"
+                fill="outline"
+                formControlName="descripcion"
+                [autoGrow]="true"
+              ></ion-textarea>
+            </div>
+
+            <section class="editor-portada" aria-labelledby="titulo-portada">
+              <div class="previsualizacion">
+                @if (vistaPrevia(); as previa) {
+                  <img
+                    [src]="previa"
+                    alt="Vista previa de la nueva portada"
+                    width="180"
+                    height="180"
+                  />
+                } @else if (editando()?.imagen_path; as actual) {
+                  <img
+                    [src]="portadas.obtenerUrl(actual)"
+                    alt="Portada actual del vinilo"
+                    width="180"
+                    height="180"
+                  />
+                } @else {
+                  <span class="vinilo-editor" aria-hidden="true"></span>
+                  <span class="sin-portada">Sin portada</span>
+                }
+              </div>
+
+              <div class="portada-controles">
+                <h3 id="titulo-portada">Portada del disco</h3>
+
+                <p id="ayuda-portada">
+                  JPEG, PNG o WebP de hasta 2 MiB.
+                  Se subirá al guardar.
+                  Si no eliges otra, se conservará la portada actual.
+                </p>
+
+                <label class="selector-archivo" for="portada-producto">
+                  Seleccionar imagen
+                </label>
+
+                <input
+                  id="portada-producto"
+                  type="file"
+                  accept="image/jpeg,image/png,image/webp"
+                  aria-describedby="ayuda-portada"
+                  (change)="seleccionarPortada($event)"
+                  [disabled]="saving()"
+                />
+
+                @if (archivoSeleccionado(); as archivo) {
+                  <p class="archivo-nombre">{{ archivo.name }}</p>
 
                   <ion-button
                     type="button"
                     fill="outline"
-                    (click)="editarProducto(producto)"
-                    [disabled]="saving() || loading()"
-                    [attr.aria-label]="'Editar ' + producto.titulo"
+                    size="small"
+                    (click)="descartarSeleccion()"
+                    [disabled]="saving()"
                   >
-                    Editar
+                    Descartar imagen nueva
                   </ion-button>
-                </ion-card-content>
-              </ion-card>
-            </ion-col>
-          }
-        </ion-row>
-      </ion-grid>
-    }
-  </section>
+                }
+              </div>
+            </section>
+
+            <div class="publicacion-control">
+              <ion-checkbox formControlName="activo">
+                Visible en el catálogo
+              </ion-checkbox>
+
+              <p>
+                Los productos retirados permanecen en administración
+                y conservan su historial.
+              </p>
+            </div>
+
+            @if (saveError()) {
+              <p role="alert">{{ saveError() }}</p>
+            }
+
+            <div class="editor-acciones">
+              <ion-button
+                type="button"
+                fill="outline"
+                (click)="cerrarEditor()"
+                [disabled]="saving()"
+              >
+                Cancelar
+              </ion-button>
+
+              <ion-button
+                type="submit"
+                [disabled]="saving() || loading()"
+              >
+                {{
+                  saving()
+                    ? 'Guardando…'
+                    : editando()
+                      ? 'Guardar cambios'
+                      : 'Crear vinilo'
+                }}
+              </ion-button>
+            </div>
+          </form>
+        </div>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
 </ion-content>
