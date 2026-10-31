@@ -89,7 +89,7 @@
     cursor: pointer;
 
     &.activo {
-      background: var(--ion-color-primary);
+      background: var(--store-selected-bg);
       color: #ffffff;
     }
 
@@ -157,12 +157,12 @@
 
 .indicador-destacado {
   border-color: var(--ion-color-primary);
-  background: var(--ion-color-primary);
+  background: var(--store-selected-bg);
   color: #ffffff;
 
   h2,
   .indicador-detalle {
-    color: #f4e7e9;
+    color: var(--store-selected-muted);
   }
 }
 
@@ -400,8 +400,8 @@ thead th:last-child {
 
 .etiqueta-stock,
 .estado-pendiente {
-  background: #f4ead4;
-  color: #78521f;
+  background: var(--store-warning-bg);
+  color: var(--store-warning-text);
 }
 
 .stock-agotado,
@@ -411,8 +411,8 @@ thead th:last-child {
 }
 
 .estado-recogida {
-  background: #e8eee6;
-  color: #304d37;
+  background: var(--store-success-bg);
+  color: var(--store-success-text);
 }
 
 .posicion {
@@ -456,7 +456,7 @@ thead th:last-child {
     display: block;
     height: 12px;
     border-radius: 4px;
-    background: #e9e1d5;
+    background: var(--store-placeholder);
   }
 
   span:first-child {

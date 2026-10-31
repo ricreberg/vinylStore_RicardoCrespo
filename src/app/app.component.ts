@@ -17,6 +17,7 @@ import {
 } from '@ionic/angular';
 
 import { AuthService } from './core/services/auth.service';
+import { TemaService } from './core/services/tema.service';
 
 @Component({
   selector: 'app-root',
@@ -42,6 +43,8 @@ import { AuthService } from './core/services/auth.service';
 })
 export class AppComponent {
   private readonly auth = inject(AuthService);
+
+  readonly tema = inject(TemaService);
 
   readonly menuSections = computed(() => {
     const sections = [

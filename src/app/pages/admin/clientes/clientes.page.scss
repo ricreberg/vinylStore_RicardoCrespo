@@ -87,7 +87,7 @@
     width: 100%;
     min-height: 46px;
     padding: 0.7rem 0.85rem;
-    border: 1px solid #b8ad9f;
+    border: 1px solid var(--store-field-border);
     border-radius: 8px;
     background: var(--store-surface);
     color: var(--store-ink);
@@ -135,7 +135,7 @@
   justify-content: center;
   width: 52px;
   height: 52px;
-  border: 1px solid #dfc7ce;
+  border: 1px solid var(--store-avatar-border);
   border-radius: 50%;
   background: var(--store-accent-soft);
   color: var(--ion-color-primary);

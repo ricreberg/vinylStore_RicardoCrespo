@@ -114,13 +114,13 @@
 }
 
 .estado-pendiente {
-  background: #f4ead4;
-  color: #78521f;
+  background: var(--store-warning-bg);
+  color: var(--store-warning-text);
 }
 
 .estado-recogida {
-  background: #e8eee6;
-  color: #304d37;
+  background: var(--store-success-bg);
+  color: var(--store-success-text);
 }
 
 .estado-cancelada {

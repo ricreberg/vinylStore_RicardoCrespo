@@ -7,6 +7,7 @@ import {
   computed,
   inject,
   signal,
+  HostListener,
 } from '@angular/core';
 import {
   IonButton,
@@ -101,7 +102,13 @@ export class DashboardPage implements OnDestroy {
 
   readonly periodos = [7, 14, 30];
   readonly umbralStockBajo = 3;
-  readonly coloresEstados = ['#956615', '#455b4c', '#782c40'];
+  get coloresEstados(): string[] {
+    return [
+      this.colorTema('--store-chart-pending', '#956615'),
+      this.colorTema('--store-chart-collected', '#455b4c'),
+      this.colorTema('--store-chart-cancelled', '#782c40'),
+    ];
+  }
 
   readonly loading = signal(true);
   readonly errorMessage = signal('');
@@ -490,6 +497,20 @@ export class DashboardPage implements OnDestroy {
     );
   }
 
+  @HostListener('document:vinylstore:tema')
+  actualizarTema(): void {
+    if (this.activa && this.datos && !this.loading() && !this.errorMessage()) {
+      this.detector.detectChanges();
+      this.dibujarGraficos();
+    }
+  }
+
+  private colorTema(variable: string, alternativa: string): string {
+    return getComputedStyle(document.documentElement)
+      .getPropertyValue(variable)
+      .trim() || alternativa;
+  }
+
   private dibujarGraficos(): void {
     this.destruirGraficos();
 
@@ -510,13 +531,13 @@ export class DashboardPage implements OnDestroy {
             {
               label: 'Reservas creadas',
               data: this.actividad().map((dia) => dia.cantidad),
-              borderColor: '#782c40',
-              backgroundColor: '#782c40',
+              borderColor: this.colorTema('--store-chart-primary', '#782c40'),
+              backgroundColor: this.colorTema('--store-chart-primary', '#782c40'),
               borderWidth: 3,
               pointRadius: this.dias() > 14 ? 2 : 4,
               pointHoverRadius: 6,
-              pointBackgroundColor: '#fffdf9',
-              pointBorderColor: '#782c40',
+              pointBackgroundColor: this.colorTema('--store-surface', '#fffdf9'),
+              pointBorderColor: this.colorTema('--store-chart-primary', '#782c40'),
               pointBorderWidth: 2,
               tension: 0.25,
             },
@@ -558,7 +579,7 @@ export class DashboardPage implements OnDestroy {
               beginAtZero: true,
               border: { display: false },
               grid: {
-                color: '#e9e1d5',
+                color: this.colorTema('--store-border', '#ded5c9'),
               },
               ticks: {
                 color: colorTexto,
@@ -585,7 +606,7 @@ export class DashboardPage implements OnDestroy {
             {
               data: this.estados().map((estado) => estado.cantidad),
               backgroundColor: this.coloresEstados,
-              borderColor: '#fffdf9',
+              borderColor: this.colorTema('--store-surface', '#fffdf9'),
               borderWidth: 5,
               hoverOffset: 5,
             },

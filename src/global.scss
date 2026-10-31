@@ -12,9 +12,9 @@
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
 
-/* Tema editorial claro. */
+/* Tema editorial. */
 html {
-  color-scheme: light;
+  color-scheme: var(--store-color-scheme);
 }
 
 body {
@@ -172,16 +172,16 @@ p[role='alert'] {
   padding: 0.85rem 1rem;
   border-inline-start: 3px solid var(--ion-color-danger);
   border-radius: 0 8px 8px 0;
-  background: #f5e5e5;
-  color: #79232a;
+  background: var(--store-error-bg);
+  color: var(--store-error-text);
 }
 
 p[role='status'] {
   padding: 0.85rem 1rem;
   border-inline-start: 3px solid var(--ion-color-secondary);
   border-radius: 0 8px 8px 0;
-  background: #e8eee6;
-  color: #304d37;
+  background: var(--store-success-bg);
+  color: var(--store-success-text);
 }
 
 table {
@@ -191,4 +191,12 @@ table {
 th,
 td {
   line-height: 1.5;
+}
+/* Los diálogos de confirmación utilizan el tema activo. */
+ion-alert {
+  --background: var(--store-surface);
+}
+
+ion-modal {
+  --background: var(--store-surface);
 }

@@ -65,7 +65,7 @@
     width: 58px;
     height: 58px;
     border-radius: 50%;
-    background: var(--ion-color-primary);
+    background: var(--store-selected-bg);
     color: #ffffff;
     font-family: var(--store-heading-font);
     font-size: 1.25rem;
@@ -160,7 +160,7 @@
   justify-content: center;
   width: 80px;
   height: 80px;
-  border: 1px solid #dfc7ce;
+  border: 1px solid var(--store-avatar-border);
   border-radius: 50%;
   background: var(--store-accent-soft);
   color: var(--ion-color-primary);

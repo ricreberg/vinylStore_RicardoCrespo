@@ -61,7 +61,7 @@
   height: 230px;
   padding: 25px;
   border: 1px solid #6a2738;
-  background: var(--ion-color-primary);
+  background: var(--store-selected-bg);
   color: #fff7ed;
   box-shadow: 0 15px 30px rgb(41 38 34 / 12%);
   transform: rotate(-7deg);
@@ -159,7 +159,7 @@
     width: 100%;
     min-height: 48px;
     padding: 0.75rem 0.9rem;
-    border: 1px solid #b8ad9f;
+    border: 1px solid var(--store-field-border);
     border-radius: 8px;
     background: var(--store-surface);
     color: var(--store-ink);
@@ -259,7 +259,7 @@
   aspect-ratio: 1;
   overflow: hidden;
   border-bottom: 1px solid var(--store-border);
-  background: #e9e1d5;
+  background: var(--store-placeholder);
 }
 
 .portada {
@@ -291,7 +291,7 @@
   gap: 1rem;
   height: 100%;
   padding: 1.5rem;
-  background: #e9e1d5;
+  background: var(--store-placeholder);
   color: #50473c;
   font-family: var(--store-heading-font);
   font-size: 1.25rem;
@@ -316,7 +316,7 @@
     position: absolute;
     inset: 34%;
     border-radius: 50%;
-    background: var(--ion-color-primary);
+    background: var(--store-selected-bg);
     content: '';
   }
 
@@ -413,7 +413,7 @@
 
 .estado-vacio {
   padding: 3rem 1rem;
-  border: 1px dashed #b8ad9f;
+  border: 1px dashed var(--store-field-border);
   border-radius: 14px;
   text-align: center;
 

@@ -71,11 +71,11 @@
 
     &.seleccionado {
       border-color: var(--ion-color-primary);
-      background: var(--ion-color-primary);
+      background: var(--store-selected-bg);
       color: #ffffff;
 
       span {
-        color: #f4e7e9;
+        color: var(--store-selected-muted);
       }
     }
 
@@ -132,7 +132,7 @@
     width: 100%;
     min-height: 46px;
     padding: 0.7rem 0.85rem;
-    border: 1px solid #b8ad9f;
+    border: 1px solid var(--store-field-border);
     border-radius: 8px;
     background: var(--store-surface);
     color: var(--store-ink);
@@ -221,13 +221,13 @@
 }
 
 .estado-pendiente {
-  background: #f4ead4;
-  color: #78521f;
+  background: var(--store-warning-bg);
+  color: var(--store-warning-text);
 }
 
 .estado-recogida {
-  background: #e8eee6;
-  color: #304d37;
+  background: var(--store-success-bg);
+  color: var(--store-success-text);
 }
 
 .estado-cancelada {
@@ -260,7 +260,7 @@
   overflow: hidden;
   border: 1px solid var(--store-border);
   border-radius: 8px;
-  background: #e9e1d5;
+  background: var(--store-placeholder);
 
   img {
     display: block;
@@ -287,7 +287,7 @@
     position: absolute;
     inset: 34%;
     border-radius: 50%;
-    background: var(--ion-color-primary);
+    background: var(--store-selected-bg);
     content: '';
   }
 
