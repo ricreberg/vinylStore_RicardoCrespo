@@ -12,97 +12,176 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <h1>Mis reservas</h1>
-  <p>Consulta tus reservas y cancela las que todavía estén pendientes.</p>
+  <div class="pagina-reservas">
+    <header class="pagina-cabecera">
+      <div>
+        <p class="etiqueta-editorial">Vinyl Store · Tu colección</p>
+        <h1>Mis reservas</h1>
+        <p class="introduccion">
+          Revisa tus discos reservados y el historial de solicitudes.
+        </p>
+      </div>
 
-  <ion-button
-    type="button"
-    fill="outline"
-    (click)="cargarReservas()"
-    [disabled]="loading() || procesandoId() !== null"
-  >
-    Actualizar listado
-  </ion-button>
+      <div class="cabecera-acciones">
+        <ion-button routerLink="/catalogo">
+          Explorar catálogo
+        </ion-button>
 
-  @if (actionError()) {
-    <p role="alert">{{ actionError() }}</p>
-  }
+        <ion-button
+          type="button"
+          fill="outline"
+          (click)="cargarReservas()"
+          [disabled]="bloqueado()"
+        >
+          {{ loading() ? 'Actualizando…' : 'Actualizar' }}
+        </ion-button>
+      </div>
+    </header>
 
-  @if (successMessage()) {
-    <p role="status">{{ successMessage() }}</p>
-  }
+    @if (actionError()) {
+      <p role="alert">{{ actionError() }}</p>
+    }
 
-  @if (loading()) {
-    <p role="status">Cargando tus reservas…</p>
-  } @else if (loadError()) {
-    <p role="alert">{{ loadError() }}</p>
-  } @else if (reservas().length === 0) {
-    <p>Todavía no tienes reservas. Puedes hacer una desde el catálogo.</p>
-  } @else {
-    <ion-grid>
-      <ion-row>
-        @for (reserva of reservas(); track reserva.id) {
-          <ion-col size="12" size-md="6" size-xl="4">
-            <ion-card>
-              @if (reserva.producto; as producto) {
-                @if (producto.imagen_path; as ruta) {
-                  <img
-                    class="portada"
-                    [src]="portadas.obtenerUrl(ruta)"
-                    [alt]="'Portada de ' + producto.titulo"
-                    width="240"
-                    height="240"
-                    loading="lazy"
-                  />
-                }
-              }
+    @if (successMessage()) {
+      <p role="status">{{ successMessage() }}</p>
+    }
 
-              <ion-card-header>
-                <ion-card-title>
-                  {{
-                    reserva.producto?.titulo
-                      ?? 'Producto retirado del catálogo'
-                  }}
-                </ion-card-title>
+    @if (loading()) {
+      <p role="status">Cargando tus reservas…</p>
+    } @else if (loadError()) {
+      <p role="alert">{{ loadError() }}</p>
+    } @else if (reservas().length === 0) {
+      <section class="estado-vacio">
+        <span class="vinilo-vacio" aria-hidden="true"></span>
+        <h2>Todavía no tienes reservas</h2>
+        <p>
+          Elige un vinilo en el catálogo y reserva las unidades
+          que quieras recoger en tienda.
+        </p>
 
-                @if (reserva.producto; as producto) {
-                  <ion-card-subtitle>
-                    {{ producto.artista }}
-                  </ion-card-subtitle>
-                }
-              </ion-card-header>
+        <ion-button routerLink="/catalogo">
+          Ver el catálogo
+        </ion-button>
+      </section>
+    } @else {
+      <div class="selector-vista" role="group" aria-label="Mostrar reservas">
+        @for (opcion of opciones; track opcion.valor) {
+          <button
+            type="button"
+            [class.activo]="vista() === opcion.valor"
+            [attr.aria-pressed]="vista() === opcion.valor"
+            [disabled]="bloqueado()"
+            (click)="cambiarVista(opcion.valor)"
+          >
+            {{ opcion.etiqueta }}
+            <span>{{ conteos()[opcion.valor] }}</span>
+          </button>
+        }
+      </div>
 
-              <ion-card-content>
-                <p>Referencia: {{ reserva.id.slice(0, 8) }}</p>
-                <p>
-                  Fecha:
-                  {{ reserva.created_at | date:'dd/MM/yyyy HH:mm' }}
-                </p>
-                <p>Estado: {{ reserva.estado }}</p>
-                <p>Unidades: {{ reserva.cantidad }}</p>
+      @if (reservasFiltradas().length === 0) {
+        <section class="estado-vacio">
+          <h2>
+            {{
+              vista() === 'pendientes'
+                ? 'No tienes reservas pendientes'
+                : 'Tu historial está vacío'
+            }}
+          </h2>
 
-                <p>
-                  Precio por unidad al reservar:
-                  {{
-                    reserva.precio_unitario
-                      | currency:'EUR':'symbol':'1.2-2'
-                  }}
-                </p>
+          <p>
+            Las reservas recogidas o canceladas se conservan en el historial.
+          </p>
+        </section>
+      } @else {
+        <div class="reservas-lista">
+          @for (reserva of reservasFiltradas(); track reserva.id) {
+            <article
+              class="reserva"
+              [attr.aria-busy]="procesandoId() === reserva.id"
+            >
+              <header class="reserva-cabecera">
+                <span>Ref. {{ reserva.id.slice(0, 8) }}</span>
 
-                <p>
-                  Total:
-                  {{
-                    reserva.precio_unitario * reserva.cantidad
-                      | currency:'EUR':'symbol':'1.2-2'
-                  }}
-                </p>
+                <span
+                  class="etiqueta-estado"
+                  [class.estado-pendiente]="reserva.estado === 'pendiente'"
+                  [class.estado-recogida]="reserva.estado === 'recogida'"
+                  [class.estado-cancelada]="reserva.estado === 'cancelada'"
+                >
+                  {{ nombreEstado(reserva.estado) }}
+                </span>
+              </header>
 
-                @if (reserva.estado === 'pendiente') {
+              <div class="reserva-contenido">
+                <div class="portada-marco">
+                  @if (reserva.producto?.imagen_path; as ruta) {
+                    <img
+                      [src]="portadas.obtenerUrl(ruta)"
+                      [alt]="'Portada de ' + reserva.producto.titulo"
+                      width="140"
+                      height="140"
+                      loading="lazy"
+                    />
+                  } @else {
+                    <span class="vinilo-alternativo" aria-hidden="true"></span>
+                    <span class="solo-lectores">Sin portada disponible</span>
+                  }
+                </div>
+
+                <div class="reserva-informacion">
+                  @if (reserva.producto; as producto) {
+                    <p class="artista">{{ producto.artista }}</p>
+                  }
+
+                  <h2>
+                    {{
+                      reserva.producto?.titulo ??
+                      'Producto retirado del catálogo'
+                    }}
+                  </h2>
+
+                  <p class="fecha">
+                    Reservado el {{ formatearFecha(reserva.created_at) }}
+                  </p>
+
+                  <p class="detalle-precio">
+                    {{ reserva.cantidad }}
+                    {{ reserva.cantidad === 1 ? 'unidad' : 'unidades' }}
+                    · {{ formatearPrecio(reserva.precio_unitario) }}
+                    por unidad al reservar
+                  </p>
+
+                  <p class="explicacion-estado">
+                    @switch (reserva.estado) {
+                      @case ('pendiente') {
+                        Tus unidades están reservadas para recoger en tienda.
+                      }
+                      @case ('recogida') {
+                        La tienda ha confirmado la recogida.
+                      }
+                      @case ('cancelada') {
+                        La solicitud está cancelada.
+                      }
+                    }
+                  </p>
+                </div>
+
+                <div class="reserva-importe">
+                  <span>Importe reservado</span>
+                  <strong>{{ formatearTotal(reserva) }}</strong>
+                </div>
+              </div>
+
+              @if (reserva.estado === 'pendiente') {
+                <footer class="reserva-acciones">
+                  <p>Puedes cancelar mientras la reserva esté pendiente.</p>
+
                   <ion-button
                     type="button"
                     fill="outline"
                     (click)="cancelarReserva(reserva)"
-                    [disabled]="procesandoId() !== null"
+                    [disabled]="bloqueado()"
                     [attr.aria-label]="
                       'Cancelar reserva de ' +
                       (reserva.producto?.titulo ?? 'producto retirado')
@@ -114,12 +193,17 @@
                         : 'Cancelar reserva'
                     }}
                   </ion-button>
-                }
-              </ion-card-content>
-            </ion-card>
-          </ion-col>
-        }
-      </ion-row>
-    </ion-grid>
-  }
+                </footer>
+              }
+            </article>
+          }
+        </div>
+      }
+
+      <p class="nota-reservas">
+        Las reservas son para recoger en tienda.
+        Esta aplicación no realiza pagos ni envíos.
+      </p>
+    }
+  </div>
 </ion-content>

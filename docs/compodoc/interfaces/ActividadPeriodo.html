@@ -1,0 +1,645 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Vinyl Store</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">Vinyl Store</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search">
+    <input type="text" placeholder="Escribe para buscar">
+    <button type="button"
+        class="search-input-clear"
+        aria-label="Clear search"
+        data-search-input-clear>&times;</button>
+</div>
+            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content interface">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Interfaces</li>
+  <li class="breadcrumb-item"
+  >
+  ActividadPeriodo</li>
+</ol>
+
+<div class="io-file io-file-path" data-compodoc="entity-file-path">
+    <span class="icon ion-ios-document" aria-hidden="true"></span>
+    <code>src/app/core/utils/dashboard-calculos.ts</code>
+</div>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" 
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#api" 
+                class="nav-link"
+                
+                role="tab" id="api-tab" data-bs-toggle="tab" data-link="api">API</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" 
+                class="nav-link"
+                
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+
+
+
+            </div>
+
+    <div class="tab-pane fade " id="api"><section data-compodoc="block-index">
+    <h3 id="index">Índice</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+            <tr>
+                <td class="col-md-3">
+                    <h6><b>Propiedades</b></h6>
+                </td>
+                <td class="col-md-9">
+                    <ul class="index-list">
+                        <li>
+                                <a href="#cantidad" class="reference-link ">
+                                    <span class="reference-badge reference-badge--property" aria-hidden="true">P</span><span class="reference-link-label">cantidad</span>
+                                </a>
+                        </li>
+                        <li>
+                                <a href="#compras" class="reference-link ">
+                                    <span class="reference-badge reference-badge--property" aria-hidden="true">P</span><span class="reference-link-label">compras</span>
+                                </a>
+                        </li>
+                        <li>
+                                <a href="#fecha" class="reference-link ">
+                                    <span class="reference-badge reference-badge--property" aria-hidden="true">P</span><span class="reference-link-label">fecha</span>
+                                </a>
+                        </li>
+                        <li>
+                                <a href="#ventas" class="reference-link ">
+                                    <span class="reference-badge reference-badge--property" aria-hidden="true">P</span><span class="reference-link-label">ventas</span>
+                                </a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+
+
+    <section data-compodoc="block-properties">
+        <h3 id="inputs">Propiedades</h3>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                        <tr>
+                            <td class="col-md-4">
+                                <a name="cantidad"></a>
+                                <span class="name "><b>cantidad</b>
+                                    <a href="#cantidad">
+                                        <span class="icon ion-ios-link"></span>
+                                    </a>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <code>cantidad:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+</code>
+                            </td>
+                        </tr>
+
+
+                            <tr>
+                                <td class="col-md-4">
+                                    <i>Tipo : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                                </td>
+                            </tr>
+
+
+
+
+
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Definido en <a href="" data-line="13" class="link-to-prism">src/app/core/utils/dashboard-calculos.ts:13</a></div>
+                                </td>
+                            </tr>
+
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                        <tr>
+                            <td class="col-md-4">
+                                <a name="compras"></a>
+                                <span class="name "><b>compras</b>
+                                    <a href="#compras">
+                                        <span class="icon ion-ios-link"></span>
+                                    </a>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <code>compras:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+</code>
+                            </td>
+                        </tr>
+
+
+                            <tr>
+                                <td class="col-md-4">
+                                    <i>Tipo : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                                </td>
+                            </tr>
+
+
+
+
+
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Definido en <a href="" data-line="14" class="link-to-prism">src/app/core/utils/dashboard-calculos.ts:14</a></div>
+                                </td>
+                            </tr>
+
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                        <tr>
+                            <td class="col-md-4">
+                                <a name="fecha"></a>
+                                <span class="name "><b>fecha</b>
+                                    <a href="#fecha">
+                                        <span class="icon ion-ios-link"></span>
+                                    </a>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <code>fecha:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+</code>
+                            </td>
+                        </tr>
+
+
+                            <tr>
+                                <td class="col-md-4">
+                                    <i>Tipo : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                                </td>
+                            </tr>
+
+
+
+
+
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Definido en <a href="" data-line="12" class="link-to-prism">src/app/core/utils/dashboard-calculos.ts:12</a></div>
+                                </td>
+                            </tr>
+
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                        <tr>
+                            <td class="col-md-4">
+                                <a name="ventas"></a>
+                                <span class="name "><b>ventas</b>
+                                    <a href="#ventas">
+                                        <span class="icon ion-ios-link"></span>
+                                    </a>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <code>ventas:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+</code>
+                            </td>
+                        </tr>
+
+
+                            <tr>
+                                <td class="col-md-4">
+                                    <i>Tipo : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                                </td>
+                            </tr>
+
+
+
+
+
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Definido en <a href="" data-line="15" class="link-to-prism">src/app/core/utils/dashboard-calculos.ts:15</a></div>
+                                </td>
+                            </tr>
+
+                </tbody>
+            </table>
+    </section>
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import type { DatosDashboard } from &#x27;../services/dashboard.service&#x27;;
+
+export type PeriodoRapido &#x3D; 7 | 30 | 90 | 365 | &#x27;todo&#x27;;
+
+export interface PeriodoInforme {
+  desde: string;
+  hasta: string;
+  agrupacion: &#x27;diaria&#x27; | &#x27;mensual&#x27;;
+}
+
+export interface ActividadPeriodo {
+  fecha: string;
+  cantidad: number;
+  compras: number;
+  ventas: number;
+}
+
+export interface ResumenDashboard {
+  productos: number;
+  activos: number;
+  stock: number;
+  reservas: number;
+  pendientes: number;
+  compras: number;
+  cancelaciones: number;
+  importeRecogidas: number;
+}
+
+// Las fechas de los calendarios se interpretan en hora local, sin pasar por UTC.
+export function fechaLocal(fecha: Date): string {
+  return &#x60;${fecha.getFullYear()}-${String(fecha.getMonth() + 1).padStart(2, &#x27;0&#x27;)}-${String(fecha.getDate()).padStart(2, &#x27;0&#x27;)}&#x60;;
+}
+
+export function leerFechaLocal(valor: string): Date | null {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(valor)) return null;
+  const [anio, mes, dia] &#x3D; valor.split(&#x27;-&#x27;).map(Number);
+  const fecha &#x3D; new Date(0);
+  fecha.setFullYear(anio, mes - 1, dia);
+  fecha.setHours(0, 0, 0, 0);
+  return fecha.getFullYear() &#x3D;&#x3D;&#x3D; anio &amp;&amp; fecha.getMonth() &#x3D;&#x3D;&#x3D; mes - 1 &amp;&amp; fecha.getDate() &#x3D;&#x3D;&#x3D; dia
+    ? fecha : null;
+}
+
+export function validarPeriodo(desde: string, hasta: string, hoy &#x3D; new Date()): string {
+  if (!desde || !hasta) return &#x27;Selecciona la fecha inicial y la final.&#x27;;
+  const inicio &#x3D; leerFechaLocal(desde);
+  const final &#x3D; leerFechaLocal(hasta);
+  if (!inicio || !final) return &#x27;Introduce fechas válidas.&#x27;;
+  if (desde &gt; hasta) return &#x27;La fecha inicial no puede ser posterior a la final.&#x27;;
+  if (hasta &gt; fechaLocal(hoy)) return &#x27;No puedes seleccionar fechas futuras.&#x27;;
+  return &#x27;&#x27;;
+}
+
+export function crearPeriodo(desde: string, hasta: string): PeriodoInforme {
+  const inicio &#x3D; leerFechaLocal(desde);
+  const final &#x3D; leerFechaLocal(hasta);
+  if (!inicio || !final || desde &gt; hasta) throw new Error(&#x27;Intervalo no válido.&#x27;);
+  // Contamos días del calendario; los cambios de hora no alteran el resultado.
+  const dias &#x3D; (Date.UTC(final.getFullYear(), final.getMonth(), final.getDate())
+    - Date.UTC(inicio.getFullYear(), inicio.getMonth(), inicio.getDate())) / 86400000 + 1;
+  return { desde, hasta, agrupacion: dias &lt;&#x3D; 90 ? &#x27;diaria&#x27; : &#x27;mensual&#x27; };
+}
+
+export function periodoRapido(
+  opcion: PeriodoRapido,
+  reservas: DatosDashboard[&#x27;reservas&#x27;],
+  hoy &#x3D; new Date(),
+): PeriodoInforme {
+  const inicio &#x3D; new Date(hoy);
+  if (opcion &#x3D;&#x3D;&#x3D; &#x27;todo&#x27;) {
+    for (const reserva of reservas) {
+      const fecha &#x3D; new Date(reserva.created_at);
+      if (fecha &lt; inicio) inicio.setTime(fecha.getTime());
+    }
+  } else {
+    inicio.setDate(inicio.getDate() - opcion + 1);
+  }
+  return crearPeriodo(fechaLocal(inicio), fechaLocal(hoy));
+}
+
+export function etiquetaPeriodo(periodo: PeriodoInforme): string {
+  const mostrar &#x3D; (valor: string) &#x3D;&gt; valor.split(&#x27;-&#x27;).reverse().join(&#x27;/&#x27;);
+  return &#x60;${mostrar(periodo.desde)} - ${mostrar(periodo.hasta)}&#x60;;
+}
+
+export function calcularDashboard(datos: DatosDashboard, periodo: PeriodoInforme, umbralStockBajo &#x3D; 3) {
+  const inicio &#x3D; leerFechaLocal(periodo.desde);
+  const fin &#x3D; leerFechaLocal(periodo.hasta);
+  if (!inicio || !fin) throw new Error(&#x27;Intervalo no válido.&#x27;);
+  // El límite superior es el comienzo del día siguiente, también en hora local.
+  fin.setDate(fin.getDate() + 1);
+  const dentro &#x3D; (valor: string) &#x3D;&gt; {
+    const instante &#x3D; new Date(valor).getTime();
+    return instante &gt;&#x3D; inicio.getTime() &amp;&amp; instante &lt; fin.getTime();
+  };
+
+  const creadas &#x3D; datos.reservas.filter((reserva) &#x3D;&gt; dentro(reserva.created_at));
+  const compras &#x3D; datos.reservas.filter((reserva) &#x3D;&gt;
+    reserva.estado &#x3D;&#x3D;&#x3D; &#x27;recogida&#x27; &amp;&amp; dentro(reserva.updated_at));
+  const cancelaciones &#x3D; datos.reservas.filter((reserva) &#x3D;&gt;
+    reserva.estado &#x3D;&#x3D;&#x3D; &#x27;cancelada&#x27; &amp;&amp; dentro(reserva.updated_at));
+  const activos &#x3D; datos.productos.filter((producto) &#x3D;&gt; producto.activo);
+  const centimos &#x3D; (precio: number, cantidad: number) &#x3D;&gt; Math.round(precio * 100) * cantidad;
+
+  const resumen: ResumenDashboard &#x3D; {
+    productos: datos.productos.length,
+    activos: activos.length,
+    stock: activos.reduce((total, producto) &#x3D;&gt; total + producto.stock, 0),
+    reservas: creadas.length,
+    pendientes: creadas.filter((reserva) &#x3D;&gt; reserva.estado &#x3D;&#x3D;&#x3D; &#x27;pendiente&#x27;).length,
+    compras: compras.length,
+    cancelaciones: cancelaciones.length,
+    importeRecogidas: compras.reduce((total, reserva) &#x3D;&gt;
+      total + centimos(reserva.precio_unitario, reserva.cantidad), 0) / 100,
+  };
+
+  // El anillo describe el estado ACTUAL de las reservas creadas en el intervalo.
+  const estados &#x3D; [
+    { etiqueta: &#x27;Pendientes&#x27;, cantidad: resumen.pendientes },
+    { etiqueta: &#x27;Recogidas&#x27;, cantidad: creadas.filter((r) &#x3D;&gt; r.estado &#x3D;&#x3D;&#x3D; &#x27;recogida&#x27;).length },
+    { etiqueta: &#x27;Canceladas&#x27;, cantidad: creadas.filter((r) &#x3D;&gt; r.estado &#x3D;&#x3D;&#x3D; &#x27;cancelada&#x27;).length },
+  ];
+
+  const clave &#x3D; (fecha: Date) &#x3D;&gt; periodo.agrupacion &#x3D;&#x3D;&#x3D; &#x27;mensual&#x27;
+    ? fechaLocal(fecha).slice(0, 7) : fechaLocal(fecha);
+  const grupos &#x3D; new Map&lt;string, ActividadPeriodo&gt;();
+  const cursor &#x3D; new Date(inicio);
+  if (periodo.agrupacion &#x3D;&#x3D;&#x3D; &#x27;mensual&#x27;) cursor.setDate(1);
+  while (cursor &lt; fin) {
+    grupos.set(clave(cursor), {
+      fecha: cursor.toLocaleDateString(&#x27;es-ES&#x27;, periodo.agrupacion &#x3D;&#x3D;&#x3D; &#x27;mensual&#x27;
+        ? { month: &#x27;short&#x27;, year: &#x27;numeric&#x27; }
+        : { day: &#x27;2-digit&#x27;, month: &#x27;2-digit&#x27;, year: &#x27;numeric&#x27; }),
+      cantidad: 0, compras: 0, ventas: 0,
+    });
+    if (periodo.agrupacion &#x3D;&#x3D;&#x3D; &#x27;mensual&#x27;) cursor.setMonth(cursor.getMonth() + 1);
+    else cursor.setDate(cursor.getDate() + 1);
+  }
+  for (const reserva of creadas) {
+    const grupo &#x3D; grupos.get(clave(new Date(reserva.created_at)));
+    if (grupo) grupo.cantidad++;
+  }
+  // Acumular dinero en céntimos para evitar errores de coma flotante.
+  for (const reserva of compras) {
+    const grupo &#x3D; grupos.get(clave(new Date(reserva.updated_at)));
+    if (grupo) {
+      grupo.compras++;
+      grupo.ventas +&#x3D; centimos(reserva.precio_unitario, reserva.cantidad);
+    }
+  }
+  const actividad &#x3D; [...grupos.values()].map((grupo) &#x3D;&gt; ({
+    ...grupo, ventas: grupo.ventas / 100,
+  }));
+
+  const productosPorId &#x3D; new Map(datos.productos.map((producto) &#x3D;&gt; [producto.id, producto]));
+  const unidades &#x3D; new Map&lt;string, number&gt;();
+  for (const reserva of creadas) {
+    if (reserva.estado !&#x3D;&#x3D; &#x27;cancelada&#x27;) {
+      unidades.set(reserva.producto_id, (unidades.get(reserva.producto_id) ?? 0) + reserva.cantidad);
+    }
+  }
+  const masReservados &#x3D; [...unidades.entries()]
+    .map(([id, cantidad]) &#x3D;&gt; ({
+      id, titulo: productosPorId.get(id)?.titulo ?? &#x27;Producto no disponible&#x27;,
+      artista: productosPorId.get(id)?.artista ?? &#x27;&#x27;, unidades: cantidad,
+    }))
+    .sort((a, b) &#x3D;&gt; b.unidades - a.unidades || a.titulo.localeCompare(b.titulo, &#x27;es&#x27;))
+    .slice(0, 5);
+  const recientes &#x3D; [...creadas]
+    .sort((a, b) &#x3D;&gt; b.created_at.localeCompare(a.created_at))
+    .slice(0, 5)
+    .map((reserva) &#x3D;&gt; ({
+      id: reserva.id,
+      titulo: productosPorId.get(reserva.producto_id)?.titulo ?? &#x27;Producto no disponible&#x27;,
+      cantidad: reserva.cantidad, estado: reserva.estado, fecha: reserva.created_at,
+    }));
+
+  return {
+    resumen, estados, actividad, masReservados, recientes,
+    stockBajo: activos.filter((producto) &#x3D;&gt; producto.stock &lt;&#x3D; umbralStockBajo)
+      .sort((a, b) &#x3D;&gt; a.stock - b.stock || a.titulo.localeCompare(b.titulo, &#x27;es&#x27;)),
+  };
+}
+</code></pre>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> comparación de resultados "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No hay resultados que coincidan "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'interface';
+            var COMPODOC_CURRENT_PAGE_URL = 'ActividadPeriodo.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var updateDarkModeSwitchOffset = function () {
+                    var content = document.querySelector('.content');
+                    var scrollbarWidth = 0;
+
+                    if (content) {
+                         scrollbarWidth = Math.max(0, content.offsetWidth - content.clientWidth);
+                    }
+
+                    document.documentElement.style.setProperty(
+                         '--content-scrollbar-width',
+                         scrollbarWidth + 'px'
+                    );
+               };
+
+               updateDarkModeSwitchOffset();
+               requestAnimationFrame(updateDarkModeSwitchOffset);
+               window.addEventListener('resize', updateDarkModeSwitchOffset);
+
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

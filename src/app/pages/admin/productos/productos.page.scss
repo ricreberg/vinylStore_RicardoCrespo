@@ -1,9 +1,507 @@
-.portada {
-  display: block;
-  width: 100%;
-  max-width: 480px;
-  height: auto;
-  aspect-ratio: 1;
-  object-fit: contain;
+.inventario {
+  max-width: 1440px;
   margin-inline: auto;
+}
+
+
+.pagina-cabecera ion-button {
+  flex-shrink: 0;
+  margin: 0;
+}
+
+
+.resumen-inventario {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-bottom: 1.75rem;
+  border: 1px solid var(--store-border);
+  border-radius: 14px;
+  background: var(--store-surface);
+
+  > div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1.25rem;
+    border-right: 1px solid var(--store-border);
+
+    &:last-child {
+      border-right: 0;
+    }
+  }
+
+  span {
+    color: var(--store-muted);
+    font-size: 0.75rem;
+  }
+
+  strong {
+    font-size: 2rem;
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.05em;
+  }
+
+  small {
+    color: var(--store-muted);
+    font-size: 0.65rem;
+  }
+}
+
+.panel-listado {
+  padding: clamp(1rem, 2vw, 1.5rem);
+  border: 1px solid var(--store-border);
+  border-radius: 14px;
+  background: var(--store-surface);
+}
+
+.listado-cabecera {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+
+  h2 {
+    margin: 0;
+  }
+
+  ion-button {
+    margin: 0;
+  }
+}
+
+.filtros {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.contador {
+  margin-block: 1.25rem 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--store-muted);
+  font-size: 0.75rem;
+}
+
+.fila-producto {
+  display: grid;
+  grid-template-columns:
+    64px minmax(130px, 1fr) 90px 100px 90px 80px;
+  align-items: center;
+  gap: 1rem;
+  padding-block: 1rem;
+  border-bottom: 1px solid var(--store-border);
+
+  &:last-child {
+    border-bottom: 0;
+  }
+
+  > ion-button {
+    margin: 0;
+    font-size: 0.75rem;
+  }
+}
+
+.miniatura {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  overflow: hidden;
+  border: 1px solid var(--store-border);
+  border-radius: 8px;
+  background: var(--store-placeholder);
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+}
+
+.mini-vinilo,
+.vinilo-editor {
+  position: relative;
+  display: block;
+  width: 45px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: repeating-radial-gradient(
+    circle,
+    #292622 0,
+    #292622 4px,
+    #454039 5px,
+    #292622 6px
+  );
+
+  &::before {
+    position: absolute;
+    inset: 34%;
+    border-radius: 50%;
+    background: var(--store-selected-bg);
+    content: '';
+  }
+
+  &::after {
+    position: absolute;
+    inset: 47%;
+    border-radius: 50%;
+    background: var(--store-paper);
+    content: '';
+  }
+}
+
+.producto-identidad {
+  min-width: 0;
+
+  h3 {
+    margin: 0 0 0.3rem;
+    font-size: 1.3rem;
+    overflow-wrap: anywhere;
+  }
+
+  p {
+    margin: 0;
+    color: var(--store-muted);
+    font-size: 0.8rem;
+    overflow-wrap: anywhere;
+  }
+}
+
+.genero {
+  display: inline-block;
+  margin-top: 0.4rem;
+  color: var(--store-muted);
+  font-size: 0.65rem;
+}
+
+.dato-producto {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.4rem;
+
+  strong {
+    font-size: 0.85rem;
+  }
+}
+
+.dato-etiqueta {
+  color: var(--store-muted);
+  font-size: 0.65rem;
+}
+
+.estado-stock,
+.estado-publicacion {
+  display: inline-block;
+  padding: 0.35rem 0.6rem;
+  border-radius: 30px;
+  font-size: 0.65rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.estado-stock {
+  background: var(--store-success-bg);
+  color: var(--store-success-text);
+}
+
+.stock-bajo {
+  background: var(--store-warning-bg);
+  color: var(--store-warning-text);
+}
+
+.sin-stock {
+  background: var(--store-accent-soft);
+  color: var(--ion-color-primary);
+}
+
+.estado-publicacion {
+  justify-self: start;
+  background: var(--store-neutral-bg);
+  color: var(--store-muted);
+
+  &.publicado {
+    background: var(--store-success-bg);
+    color: var(--store-success-text);
+  }
+}
+
+.producto-retirado .miniatura {
+  filter: grayscale(1);
+}
+
+ion-modal.editor-producto {
+  --width: min(880px, 94vw);
+  --height: 90vh;
+  --border-radius: 16px;
+  --box-shadow: 0 20px 80px rgb(0 0 0 / 20%);
+}
+
+.editor-contenido {
+  max-width: 800px;
+  margin-inline: auto;
+
+  > h2 {
+    margin: 0;
+    overflow-wrap: anywhere;
+  }
+}
+
+.editor-introduccion {
+  margin-bottom: 1.5rem;
+  color: var(--store-muted);
+  font-size: 0.85rem;
+}
+
+.formulario-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem 1rem;
+
+  ion-input,
+  ion-textarea {
+    min-width: 0;
+    margin: 0;
+    font-size: 0.9rem;
+  }
+}
+
+.campo-completo {
+  grid-column: 1 / -1;
+}
+
+.nota-stock {
+  align-self: center;
+  color: var(--store-muted);
+  font-size: 0.75rem;
+
+  strong {
+    color: var(--store-ink);
+    font-weight: 600;
+  }
+
+  p {
+    margin: 0.35rem 0 0;
+    line-height: 1.5;
+  }
+}
+
+.editor-portada {
+  display: grid;
+  grid-template-columns: 150px minmax(0, 1fr);
+  align-items: center;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+  padding: 1rem;
+  border: 1px solid var(--store-border);
+  border-radius: 12px;
+  background: var(--store-surface);
+}
+
+.previsualizacion {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 150px;
+  height: 150px;
+  overflow: hidden;
+  border-radius: 8px;
+  background: var(--store-placeholder);
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+}
+
+.vinilo-editor {
+  width: 90px;
+}
+
+.sin-portada {
+  color: var(--store-muted);
+  font-size: 0.7rem;
+}
+
+.portada-controles {
+  min-width: 0;
+
+  h3 {
+    margin: 0;
+    font-size: 1.3rem;
+  }
+
+  p {
+    color: var(--store-muted);
+    font-size: 0.75rem;
+  }
+
+  input[type='file'] {
+    display: block;
+    width: 100%;
+    margin-top: 0.5rem;
+    color: var(--store-muted);
+    font: inherit;
+    font-size: 0.75rem;
+
+    &::file-selector-button {
+      min-height: 40px;
+      margin-right: 0.75rem;
+      padding: 0.5rem 0.75rem;
+      border: 1px solid var(--ion-color-primary);
+      border-radius: 6px;
+      background: var(--store-surface);
+      color: var(--ion-color-primary);
+      cursor: pointer;
+    }
+  }
+
+  .archivo-nombre {
+    overflow-wrap: anywhere;
+  }
+}
+
+.selector-archivo {
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.publicacion-control {
+  margin-top: 1.5rem;
+
+  p {
+    margin-top: 0.6rem;
+    color: var(--store-muted);
+    font-size: 0.75rem;
+  }
+}
+
+.editor-acciones {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--store-border);
+
+  ion-button {
+    margin: 0;
+  }
+}
+
+@media (max-width: 1100px) {
+  .fila-producto {
+    grid-template-columns: 64px minmax(0, 1fr) 100px 90px;
+  }
+
+  .estado-publicacion {
+    grid-column: 2;
+  }
+
+  .fila-producto > ion-button {
+    grid-column: 4;
+  }
+}
+
+@media (max-width: 700px) {
+  .pagina-cabecera {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .resumen-inventario {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    > div {
+      border-bottom: 1px solid var(--store-border);
+
+      &:nth-child(2) {
+        border-right: 0;
+      }
+
+      &:nth-child(n + 3) {
+        border-bottom: 0;
+      }
+    }
+  }
+
+  .filtros {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .campo-busqueda {
+    grid-column: 1 / -1;
+  }
+
+  .fila-producto {
+    grid-template-columns: 56px minmax(0, 1fr) auto;
+    gap: 0.75rem;
+  }
+
+  .miniatura {
+    width: 56px;
+    height: 56px;
+  }
+
+  .producto-identidad {
+    grid-column: 2 / -1;
+  }
+
+  .dato-producto {
+    grid-row: 2;
+  }
+
+  .dato-producto:nth-of-type(3) {
+    grid-column: 2;
+  }
+
+  .dato-producto:nth-of-type(4) {
+    grid-column: 3;
+  }
+
+  .estado-publicacion {
+    grid-column: 2;
+    grid-row: 3;
+  }
+
+  .fila-producto > ion-button {
+    grid-column: 3;
+    grid-row: 3;
+  }
+
+  .formulario-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .editor-portada {
+    grid-template-columns: 1fr;
+  }
+
+  .previsualizacion {
+    margin-inline: auto;
+  }
+}
+
+@media (max-width: 430px) {
+  .filtros {
+    grid-template-columns: 1fr;
+  }
+
+  ion-modal.editor-producto {
+    --width: 100%;
+    --height: 100%;
+    --border-radius: 0;
+  }
 }

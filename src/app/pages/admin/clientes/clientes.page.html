@@ -12,52 +12,129 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <h1>Clientes</h1>
-  <p>Consulta las cuentas de clientes y accede a sus fichas.</p>
+  <div class="pagina-clientes">
+    <header class="pagina-cabecera">
+      <div>
+        <p class="etiqueta-editorial">Administración · Clientes</p>
+        <h1>Clientes</h1>
+        <p class="introduccion">
+          Consulta las cuentas registradas y su historial de reservas.
+        </p>
+      </div>
 
-  <ion-button
-    type="button"
-    fill="outline"
-    (click)="cargarClientes()"
-    [disabled]="loading()"
-  >
-    Actualizar listado
-  </ion-button>
+      <ion-button
+        type="button"
+        fill="outline"
+        (click)="cargarClientes()"
+        [disabled]="loading()"
+      >
+        {{ loading() ? 'Actualizando…' : 'Actualizar listado' }}
+      </ion-button>
+    </header>
 
-  @if (loading()) {
-    <p role="status">Cargando clientes…</p>
-  } @else if (errorMessage()) {
-    <p role="alert">{{ errorMessage() }}</p>
-  } @else if (clientes().length === 0) {
-    <p>Todavía no hay cuentas de clientes registradas.</p>
-  } @else {
-    <ion-grid>
-      <ion-row>
-        @for (cliente of clientes(); track cliente.id) {
-          <ion-col size="12" size-md="6" size-xl="4">
-            <ion-card>
-              <ion-card-header>
-                <ion-card-title>{{ cliente.nombre }}</ion-card-title>
-              </ion-card-header>
+    <section class="panel" aria-labelledby="titulo-clientes">
+      <div class="seccion-cabecera">
+        <div>
+          <p class="etiqueta-editorial">Cuentas con rol cliente</p>
+          <h2 id="titulo-clientes">Listado de clientes</h2>
+        </div>
 
-              <ion-card-content>
-                <p>Correo: {{ cliente.correo ?? 'Sin correo' }}</p>
-                <p>
-                  Fecha de alta:
-                  {{ cliente.created_at | date:'dd/MM/yyyy HH:mm' }}
-                </p>
-
-                <ion-button
-                  [routerLink]="['/admin/clientes', cliente.id]"
-                  [attr.aria-label]="'Ver ficha de ' + cliente.nombre"
-                >
-                  Ver ficha
-                </ion-button>
-              </ion-card-content>
-            </ion-card>
-          </ion-col>
+        @if (!loading() && !errorMessage()) {
+          <span class="distintivo">
+            {{ clientes().length }}
+            {{ clientes().length === 1 ? 'cliente' : 'clientes' }}
+          </span>
         }
-      </ion-row>
-    </ion-grid>
-  }
+      </div>
+
+      <div class="filtros">
+        <div class="campo-filtro">
+          <label for="buscar-clientes">Buscar cliente</label>
+          <input
+            id="buscar-clientes"
+            type="search"
+            placeholder="Nombre o correo electrónico"
+            [value]="busqueda()"
+            (input)="actualizarBusqueda($event)"
+          />
+        </div>
+
+        <div class="campo-filtro">
+          <label for="orden-clientes">Ordenar por</label>
+          <select
+            id="orden-clientes"
+            [value]="orden()"
+            (change)="actualizarOrden($event)"
+          >
+            <option value="nombre">Nombre: A–Z</option>
+            <option value="recientes">Altas más recientes</option>
+            <option value="antiguos">Altas más antiguas</option>
+          </select>
+        </div>
+      </div>
+
+      @if (loading()) {
+        <p role="status">Cargando clientes…</p>
+      } @else if (errorMessage()) {
+        <p role="alert">{{ errorMessage() }}</p>
+      } @else if (clientes().length === 0) {
+        <div class="estado-vacio">
+          <h3>No hay clientes registrados</h3>
+          <p>Las cuentas con rol cliente aparecerán en este listado.</p>
+        </div>
+      } @else if (clientesFiltrados().length === 0) {
+        <div class="estado-vacio">
+          <h3>No hay coincidencias</h3>
+          <p>Prueba con otro nombre o correo.</p>
+
+          <ion-button
+            type="button"
+            fill="outline"
+            (click)="limpiarBusqueda()"
+          >
+            Ver todos los clientes
+          </ion-button>
+        </div>
+      } @else {
+        <p class="contador" role="status">
+          {{ clientesFiltrados().length }}
+          de {{ clientes().length }} clientes
+        </p>
+
+        <div class="lista-clientes">
+          @for (cliente of clientesFiltrados(); track cliente.id) {
+            <article class="fila-cliente">
+              <div class="avatar" aria-hidden="true">
+                {{ iniciales(cliente.nombre) }}
+              </div>
+
+              <div class="identidad-cliente">
+                <h3>{{ cliente.nombre }}</h3>
+                <p>{{ cliente.correo ?? 'Sin correo electrónico' }}</p>
+              </div>
+
+              <div class="fecha-alta">
+                <span>Fecha de alta</span>
+                <strong>{{ formatearFecha(cliente.created_at) }}</strong>
+              </div>
+
+              <ion-button
+                type="button"
+                fill="outline"
+                [routerLink]="['/admin/clientes', cliente.id]"
+                [attr.aria-label]="'Ver ficha de ' + cliente.nombre"
+              >
+                Ver ficha
+              </ion-button>
+            </article>
+          }
+        </div>
+      }
+    </section>
+
+    <p class="nota-pagina">
+      Las fichas son de consulta. Esta sección no permite modificar
+      contraseñas, roles ni datos de las cuentas.
+    </p>
+  </div>
 </ion-content>

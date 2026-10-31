@@ -1,26 +1,21 @@
-import { CurrencyPipe } from '@angular/common';
 import {
   ChangeDetectorRef,
   Component,
   ElementRef,
   OnDestroy,
   ViewChild,
+  computed,
   inject,
   signal,
+  HostListener,
 } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import {
   IonButton,
   IonButtons,
-  IonCard,
-  IonCardContent,
-  IonCardHeader,
-  IonCardTitle,
-  IonCol,
   IonContent,
-  IonGrid,
   IonHeader,
   IonMenuButton,
-  IonRow,
   IonTitle,
   IonToolbar,
 } from '@ionic/angular';
@@ -41,6 +36,35 @@ import { DashboardService } from '../../../core/services/dashboard.service';
 import type { DatosDashboard } from '../../../core/services/dashboard.service';
 import { InformesService } from '../../../core/services/informes.service';
 import type { DatosInforme } from '../../../core/services/informes.service';
+import {
+  calcularDashboard,
+  crearPeriodo,
+  etiquetaPeriodo,
+  fechaLocal,
+  periodoRapido,
+  validarPeriodo,
+} from '../../../core/utils/dashboard-calculos';
+import type {
+  ActividadPeriodo,
+  PeriodoInforme,
+  PeriodoRapido,
+  ResumenDashboard,
+} from '../../../core/utils/dashboard-calculos';
+
+interface ProductoDestacado {
+  id: string;
+  titulo: string;
+  artista: string;
+  unidades: number;
+}
+
+interface ReservaReciente {
+  id: string;
+  titulo: string;
+  cantidad: number;
+  estado: string;
+  fecha: string;
+}
 
 Chart.register(
   ArcElement,
@@ -59,19 +83,12 @@ Chart.register(
   templateUrl: './dashboard.page.html',
   styleUrls: ['./dashboard.page.scss'],
   imports: [
-    CurrencyPipe,
+    FormsModule,
     IonButton,
     IonButtons,
-    IonCard,
-    IonCardContent,
-    IonCardHeader,
-    IonCardTitle,
-    IonCol,
     IonContent,
-    IonGrid,
     IonHeader,
     IonMenuButton,
-    IonRow,
     IonTitle,
     IonToolbar,
   ],
@@ -79,10 +96,12 @@ Chart.register(
 export class DashboardPage implements OnDestroy {
   private readonly servicio = inject(DashboardService);
   private readonly informes = inject(InformesService);
-
-  readonly exportando = signal(false);
-  readonly exportError = signal('');
   private readonly detector = inject(ChangeDetectorRef);
+
+  private readonly moneda = new Intl.NumberFormat('es-ES', {
+    style: 'currency',
+    currency: 'EUR',
+  });
 
   @ViewChild('canvasActividad', { static: true })
   private canvasActividad!: ElementRef<HTMLCanvasElement>;
@@ -97,26 +116,102 @@ export class DashboardPage implements OnDestroy {
   private activa = false;
   private peticion = 0;
 
+  readonly periodos: { valor: PeriodoRapido; etiqueta: string }[] = [
+    { valor: 7, etiqueta: '7 días' },
+    { valor: 30, etiqueta: '30 días' },
+    { valor: 90, etiqueta: '90 días' },
+    { valor: 365, etiqueta: 'Último año' },
+    { valor: 'todo', etiqueta: 'Todo el historial' },
+  ];
+  readonly seleccionPeriodo = signal<PeriodoRapido | 'personalizado'>(7);
+  readonly periodo = signal<PeriodoInforme>(periodoRapido(7, []));
+  readonly errorPeriodo = signal('');
+  readonly textoPeriodo = computed(() => etiquetaPeriodo(this.periodo()));
+  readonly agrupacion = computed(() => this.periodo().agrupacion);
+  desde = this.periodo().desde;
+  hasta = this.periodo().hasta;
+
+  get fechaHoy(): string {
+    return fechaLocal(new Date());
+  }
+  readonly umbralStockBajo = 3;
+  get coloresEstados(): string[] {
+    return [
+      this.colorTema('--store-chart-pending', '#956615'),
+      this.colorTema('--store-chart-collected', '#455b4c'),
+      this.colorTema('--store-chart-cancelled', '#782c40'),
+    ];
+  }
+
   readonly loading = signal(true);
   readonly errorMessage = signal('');
-  readonly dias = signal(7);
+  readonly exportando = signal(false);
+  readonly exportError = signal('');
+  readonly ultimaActualizacion = signal('');
 
-  readonly resumen = signal({
+  readonly resumen = signal<ResumenDashboard>({
     productos: 0,
     activos: 0,
     stock: 0,
     reservas: 0,
     pendientes: 0,
     importeRecogidas: 0,
+    compras: 0,
+    cancelaciones: 0,
   });
 
-  readonly actividad = signal<
-    { fecha: string; cantidad: number }[]
-  >([]);
+  readonly actividad = signal<ActividadPeriodo[]>([]);
 
   readonly estados = signal<
     { etiqueta: string; cantidad: number }[]
   >([]);
+
+  readonly stockBajo = signal<DatosDashboard['productos']>([]);
+  readonly masReservados = signal<ProductoDestacado[]>([]);
+  readonly recientes = signal<ReservaReciente[]>([]);
+
+  readonly indicadores = computed(() => {
+    const resumen = this.resumen();
+
+    return [
+      {
+        titulo: 'Reservas creadas',
+        valor: String(resumen.reservas),
+        detalle: this.textoPeriodo(),
+        destacada: true,
+      },
+      {
+        titulo: 'Todavía pendientes',
+        valor: String(resumen.pendientes),
+        detalle: 'De las reservas creadas en el periodo',
+        destacada: false,
+      },
+      {
+        titulo: 'Ventas',
+        valor: this.moneda.format(resumen.importeRecogidas),
+        detalle: `${resumen.compras} compras por fecha de recogida`,
+        destacada: false,
+      },
+      {
+        titulo: 'Unidades disponibles',
+        valor: String(resumen.stock),
+        detalle: 'Stock actual de productos publicados',
+        destacada: false,
+      },
+      {
+        titulo: 'Discos publicados',
+        valor: String(resumen.activos),
+        detalle: 'Productos visibles en el catálogo',
+        destacada: false,
+      },
+      {
+        titulo: 'Productos registrados',
+        valor: String(resumen.productos),
+        detalle: 'Incluye publicados y retirados',
+        destacada: false,
+      },
+    ];
+  });
 
   async ionViewDidEnter(): Promise<void> {
     this.activa = true;
@@ -134,7 +229,7 @@ export class DashboardPage implements OnDestroy {
   }
 
   async cargarDashboard(): Promise<void> {
-    if (!this.activa) {
+    if (!this.activa || this.exportando()) {
       return;
     }
 
@@ -142,6 +237,7 @@ export class DashboardPage implements OnDestroy {
 
     this.loading.set(true);
     this.errorMessage.set('');
+    this.exportError.set('');
     this.destruirGraficos();
 
     try {
@@ -152,17 +248,29 @@ export class DashboardPage implements OnDestroy {
       }
 
       this.datos = datos;
+      const seleccion = this.seleccionPeriodo();
+      if (seleccion !== 'personalizado') {
+        this.establecerPeriodo(periodoRapido(seleccion, datos.reservas));
+      }
       this.recalcular();
-      this.loading.set(false);
 
-      // Actualizar la vista antes de medir los contenedores de los gráficos.
+      this.ultimaActualizacion.set(
+        new Date().toLocaleString('es-ES', {
+          day: '2-digit',
+          month: '2-digit',
+          hour: '2-digit',
+          minute: '2-digit',
+        }),
+      );
+
+      this.loading.set(false);
       this.detector.detectChanges();
       this.dibujarGraficos();
     } catch {
       if (this.activa && peticion === this.peticion) {
         this.destruirGraficos();
         this.errorMessage.set(
-          'No se ha podido cargar el dashboard. Inténtalo de nuevo.',
+          'No se han podido cargar las estadísticas. Comprueba la conexión y vuelve a actualizar.',
         );
       }
     } finally {
@@ -172,35 +280,79 @@ export class DashboardPage implements OnDestroy {
     }
   }
 
-  cambiarPeriodo(event: Event): void {
-    const selector = event.target;
-
-    if (
-      !(selector instanceof HTMLSelectElement) ||
-      this.loading() ||
-      !this.activa ||
-      !this.datos
-    ) {
-      return;
-    }
-
-    const dias = Number(selector.value);
-
-    if (![7, 14, 30].includes(dias)) {
-      return;
-    }
-
-    this.dias.set(dias);
+  cambiarPeriodo(opcion: PeriodoRapido): void {
+    if (!this.puedeActualizarPeriodo()) return;
+    this.seleccionPeriodo.set(opcion);
+    this.establecerPeriodo(periodoRapido(opcion, this.datos!.reservas));
     this.recalcular();
     this.dibujarGraficos();
   }
 
-    descargarCsv(): void {
+  aplicarFechas(): void {
+    if (!this.puedeActualizarPeriodo()) return;
+    const error = validarPeriodo(this.desde, this.hasta);
+    this.errorPeriodo.set(error);
+    if (error) return;
+    this.seleccionPeriodo.set('personalizado');
+    this.establecerPeriodo(crearPeriodo(this.desde, this.hasta));
+    this.recalcular();
+    this.dibujarGraficos();
+  }
+
+  private puedeActualizarPeriodo(): boolean {
+    return this.activa && !!this.datos && !this.loading()
+      && !this.exportando() && !this.errorMessage();
+  }
+
+  private establecerPeriodo(periodo: PeriodoInforme): void {
+    this.periodo.set(periodo);
+    this.desde = periodo.desde;
+    this.hasta = periodo.hasta;
+    this.errorPeriodo.set('');
+    this.exportError.set('');
+  }
+
+  porcentaje(cantidad: number): string {
+    const total = this.resumen().reservas;
+
+    return total === 0
+      ? '0 %'
+      : `${Math.round((cantidad / total) * 100)} %`;
+  }
+
+  nombreEstado(estado: string): string {
+    switch (estado) {
+      case 'pendiente':
+        return 'Pendiente';
+      case 'recogida':
+        return 'Recogida';
+      case 'cancelada':
+        return 'Cancelada';
+      default:
+        return estado;
+    }
+  }
+
+  formatearPrecio(importe: number): string {
+    return this.moneda.format(importe);
+  }
+
+  formatearFecha(fecha: string): string {
+    return new Date(fecha).toLocaleString('es-ES', {
+      day: '2-digit',
+      month: 'short',
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+  }
+
+  descargarCsv(): void {
     if (
       this.loading() ||
       this.errorMessage() ||
       this.exportando() ||
-      !this.datos
+      !this.datos ||
+      this.errorPeriodo() !== ''
     ) {
       return;
     }
@@ -219,7 +371,8 @@ export class DashboardPage implements OnDestroy {
       this.loading() ||
       this.errorMessage() ||
       this.exportando() ||
-      !this.datos
+      !this.datos ||
+      this.errorPeriodo() !== ''
     ) {
       return;
     }
@@ -238,100 +391,48 @@ export class DashboardPage implements OnDestroy {
 
   private prepararInforme(): DatosInforme {
     return {
-      dias: this.dias(),
-      resumen: this.resumen(),
-      actividad: this.actividad(),
-      estados: this.estados(),
+      periodo: { ...this.periodo() },
+      actualizado: this.ultimaActualizacion(),
+      resumen: { ...this.resumen() },
+      actividad: this.actividad().map((fila) => ({ ...fila })),
+      estados: this.estados().map((fila) => ({ ...fila })),
     };
   }
 
   private recalcular(): void {
-    const datos = this.datos;
+    if (!this.datos) return;
+    const calculo = calcularDashboard(this.datos, this.periodo(), this.umbralStockBajo);
+    this.resumen.set(calculo.resumen);
+    this.actividad.set(calculo.actividad);
+    this.estados.set(calculo.estados);
+    this.stockBajo.set(calculo.stockBajo);
+    this.masReservados.set(calculo.masReservados);
+    this.recientes.set(calculo.recientes);
+  }
 
-    if (!datos) {
-      return;
+  @HostListener('document:vinylstore:tema')
+  actualizarTema(): void {
+    if (this.activa && this.datos && !this.loading() && !this.errorMessage()) {
+      this.detector.detectChanges();
+      this.dibujarGraficos();
     }
+  }
 
-    const hoy = new Date();
-    hoy.setHours(0, 0, 0, 0);
-
-    const inicio = new Date(hoy);
-    inicio.setDate(inicio.getDate() - this.dias() + 1);
-
-    const fin = new Date(hoy);
-    fin.setDate(fin.getDate() + 1);
-
-    const reservas = datos.reservas.filter((reserva) => {
-      const fecha = new Date(reserva.created_at).getTime();
-      return fecha >= inicio.getTime() && fecha < fin.getTime();
-    });
-
-    const activos = datos.productos.filter((producto) => producto.activo);
-
-    const importeCentimos = reservas
-      .filter((reserva) => reserva.estado === 'recogida')
-      .reduce(
-        (total, reserva) =>
-          total +
-          Math.round(reserva.precio_unitario * 100) * reserva.cantidad,
-        0,
-      );
-
-    this.resumen.set({
-      productos: datos.productos.length,
-      activos: activos.length,
-      stock: activos.reduce((total, producto) => total + producto.stock, 0),
-      reservas: reservas.length,
-      pendientes: reservas.filter(
-        (reserva) => reserva.estado === 'pendiente',
-      ).length,
-      importeRecogidas: importeCentimos / 100,
-    });
-
-    this.estados.set([
-      {
-        etiqueta: 'Pendientes',
-        cantidad: reservas.filter(
-          (reserva) => reserva.estado === 'pendiente',
-        ).length,
-      },
-      {
-        etiqueta: 'Recogidas',
-        cantidad: reservas.filter(
-          (reserva) => reserva.estado === 'recogida',
-        ).length,
-      },
-      {
-        etiqueta: 'Canceladas',
-        cantidad: reservas.filter(
-          (reserva) => reserva.estado === 'cancelada',
-        ).length,
-      },
-    ]);
-
-    this.actividad.set(
-      Array.from({ length: this.dias() }, (_, indice) => {
-        const fecha = new Date(inicio);
-        fecha.setDate(fecha.getDate() + indice);
-
-        return {
-          fecha: fecha.toLocaleDateString('es-ES'),
-          cantidad: reservas.filter(
-            (reserva) =>
-              new Date(reserva.created_at).toDateString() ===
-              fecha.toDateString(),
-          ).length,
-        };
-      }),
-    );
+  private colorTema(variable: string, alternativa: string): string {
+    return getComputedStyle(document.documentElement)
+      .getPropertyValue(variable)
+      .trim() || alternativa;
   }
 
   private dibujarGraficos(): void {
     this.destruirGraficos();
 
-    const colorTexto = getComputedStyle(
+    const estilos = getComputedStyle(
       this.canvasActividad.nativeElement,
-    ).color;
+    );
+
+    const colorTexto = estilos.color;
+    const fuente = estilos.fontFamily;
 
     this.graficoActividad = new Chart<'line', number[], string>(
       this.canvasActividad.nativeElement,
@@ -343,9 +444,26 @@ export class DashboardPage implements OnDestroy {
             {
               label: 'Reservas creadas',
               data: this.actividad().map((dia) => dia.cantidad),
-              borderColor: '#3880ff',
-              backgroundColor: '#3880ff',
-              tension: 0.2,
+              borderColor: this.colorTema('--store-chart-primary', '#782c40'),
+              backgroundColor: this.colorTema('--store-chart-primary', '#782c40'),
+              borderWidth: 3,
+              pointRadius: this.actividad().length > 31 ? 1.5 : 3,
+              pointHoverRadius: 6,
+              pointBackgroundColor: this.colorTema('--store-surface', '#fffdf9'),
+              pointBorderColor: this.colorTema('--store-chart-primary', '#782c40'),
+              pointBorderWidth: 2,
+              tension: 0.25,
+            },
+            {
+              label: 'Compras completadas',
+              data: this.actividad().map((fila) => fila.compras),
+              borderColor: this.colorTema('--store-chart-collected', '#455b4c'),
+              backgroundColor: this.colorTema('--store-chart-collected', '#455b4c'),
+              borderWidth: 2,
+              borderDash: [6, 4],
+              pointRadius: this.actividad().length > 31 ? 1.5 : 3,
+              pointHoverRadius: 6,
+              tension: 0.25,
             },
           ],
         },
@@ -353,23 +471,62 @@ export class DashboardPage implements OnDestroy {
           responsive: true,
           maintainAspectRatio: false,
           animation: false,
+          interaction: {
+            intersect: false,
+            mode: 'index',
+          },
           plugins: {
-            legend: { labels: { color: colorTexto } },
+            legend: {
+              display: true,
+              labels: {
+                color: colorTexto,
+                font: { family: fuente, size: 11 },
+                boxWidth: 20,
+                padding: 16,
+              },
+            },
+            tooltip: {
+              backgroundColor: '#292622',
+              titleFont: { family: fuente },
+              bodyFont: { family: fuente },
+              padding: 12,
+              cornerRadius: 8,
+              displayColors: false,
+            },
           },
           scales: {
             x: {
-              ticks: { color: colorTexto, maxTicksLimit: 7 },
+              border: { display: false },
+              grid: { display: false },
+              ticks: {
+                color: colorTexto,
+                maxTicksLimit: 7,
+                maxRotation: 0,
+                font: { family: fuente, size: 11 },
+              },
             },
             y: {
               beginAtZero: true,
-              ticks: { color: colorTexto, precision: 0 },
+              border: { display: false },
+              grid: {
+                color: this.colorTema('--store-border', '#ded5c9'),
+              },
+              ticks: {
+                color: colorTexto,
+                precision: 0,
+                font: { family: fuente, size: 11 },
+              },
             },
           },
         },
       },
     );
 
-    this.graficoEstados = new Chart<'doughnut', number[], string>(
+    this.graficoEstados = new Chart<
+      'doughnut',
+      number[],
+      string
+    >(
       this.canvasEstados.nativeElement,
       {
         type: 'doughnut',
@@ -378,7 +535,10 @@ export class DashboardPage implements OnDestroy {
           datasets: [
             {
               data: this.estados().map((estado) => estado.cantidad),
-              backgroundColor: ['#d99a00', '#198754', '#cf3c4f'],
+              backgroundColor: this.coloresEstados,
+              borderColor: this.colorTema('--store-surface', '#fffdf9'),
+              borderWidth: 5,
+              hoverOffset: 5,
             },
           ],
         },
@@ -386,8 +546,21 @@ export class DashboardPage implements OnDestroy {
           responsive: true,
           maintainAspectRatio: false,
           animation: false,
+          cutout: '76%',
+          layout: {
+            padding: 8,
+          },
           plugins: {
-            legend: { labels: { color: colorTexto } },
+            legend: {
+              display: false,
+            },
+            tooltip: {
+              backgroundColor: '#292622',
+              titleFont: { family: fuente },
+              bodyFont: { family: fuente },
+              padding: 12,
+              cornerRadius: 8,
+            },
           },
         },
       },
@@ -397,6 +570,7 @@ export class DashboardPage implements OnDestroy {
   private destruirGraficos(): void {
     this.graficoActividad?.destroy();
     this.graficoEstados?.destroy();
+
     this.graficoActividad = null;
     this.graficoEstados = null;
   }

@@ -1,0 +1,1866 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Vinyl Store</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">Vinyl Store</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search">
+    <input type="text" placeholder="Escribe para buscar">
+    <button type="button"
+        class="search-input-clear"
+        aria-label="Clear search"
+        data-search-input-clear>&times;</button>
+</div>
+            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Componentes</li>
+  <li class="breadcrumb-item"
+  >
+  ClientesPage</li>
+</ol>
+
+<div class="io-file io-file-path" data-compodoc="entity-file-path">
+    <span class="icon ion-ios-document" aria-hidden="true"></span>
+    <code>src/app/pages/admin/clientes/clientes.page.ts</code>
+</div>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#api" class="nav-link"
+                role="tab" id="api-tab" data-bs-toggle="tab" data-link="api">API</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+
+
+
+
+<section data-compodoc="block-metadata">
+    <h3>Meta datos</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+            <tr>
+                <td class="col-md-3">changeDetection</td>
+                <td class="col-md-9"><code>ChangeDetectionStrategy.OnPush</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-clientes</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                        <div>        <code><a href="https://angular.dev/api/router/RouterLink" target="_blank" >RouterLink</a></code>
+</div>
+                        <div>    <code>IonButton</code>
+</div>
+                        <div>    <code>IonButtons</code>
+</div>
+                        <div>    <code>IonContent</code>
+</div>
+                        <div>    <code>IonHeader</code>
+</div>
+                        <div>    <code>IonMenuButton</code>
+</div>
+                        <div>    <code>IonTitle</code>
+</div>
+                        <div>    <code>IonToolbar</code>
+</div>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./clientes.page.scss</code></td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./clientes.page.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+        <section data-compodoc="block-relationships">
+            <h3>Relationships</h3>
+
+            <div class="row pt-3">
+                <div class="col-sm-6">
+                    <h4>Used by</h4>
+                        <p class="comment"><i>No hay resultados que coincidan.</i></p>
+                </div>
+
+                <div class="col-sm-6">
+                    <h4>Depends on</h4>
+                        <ul class="list-unstyled relationships-list">
+                                <li>
+                                            <code><a href="https://angular.dev/api/router/RouterLink" target="_blank" >RouterLink</a></code>
+                                </li>
+                                <li>
+                                        <code>IonButton</code>
+                                </li>
+                                <li>
+                                        <code>IonButtons</code>
+                                </li>
+                                <li>
+                                        <code>IonContent</code>
+                                </li>
+                                <li>
+                                        <code>IonHeader</code>
+                                </li>
+                                <li>
+                                        <code>IonMenuButton</code>
+                                </li>
+                                <li>
+                                        <code>IonTitle</code>
+                                </li>
+                                <li>
+                                        <code>IonToolbar</code>
+                                </li>
+                        </ul>
+                </div>
+            </div>
+        </section>
+</div>
+
+    <div class="tab-pane fade " id="api">    <section data-compodoc="block-index">
+    <h3 id="index">Índice</h3>
+        <table class="table table-sm table-bordered index-table">
+            <tbody>
+                <tr>
+                    <td class="col-md-3">
+                        <h6><b>Propiedades</b></h6>
+                    </td>
+                    <td class="col-md-9">
+                        <ul class="index-list">
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#busqueda" >busqueda</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#clientes" >clientes</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#clientesFiltrados" >clientesFiltrados</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#errorMessage" >errorMessage</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#loading" >loading</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#orden" >orden</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Private</span>
+                                <a href="#peticion" >peticion</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#servicio" >servicio</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table class="table table-sm table-bordered index-table">
+            <tbody>
+                <tr>
+                    <td class="col-md-3">
+                        <h6><b>Métodos</b></h6>
+                    </td>
+                    <td class="col-md-9">
+                        <ul class="index-list">
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#actualizarBusqueda" >actualizarBusqueda</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#actualizarOrden" >actualizarOrden</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#cargarClientes" >cargarClientes</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#formatearFecha" >formatearFecha</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#iniciales" >iniciales</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#ionViewWillEnter" >ionViewWillEnter</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#ionViewWillLeave" >ionViewWillLeave</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#limpiarBusqueda" >limpiarBusqueda</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                    <span class="modifier">Private</span>
+                                <a href="#normalizar" >normalizar</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+
+
+
+
+</section>
+
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Métodos
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="actualizarBusqueda"></a>
+                    <span class="name">
+                        <span ><b>actualizarBusqueda</b></span>
+                        <a href="#actualizarBusqueda"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>actualizarBusqueda(event: <a href="https://angular.dev/api/router/Event" target="_blank">Event</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="105"
+                                    class="link-to-prism">src/app/pages/admin/clientes/clientes.page.ts:105</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>event</td>
+                                            <td>
+                                                            <code><a href="https://angular.dev/api/router/Event" target="_blank" >Event</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="actualizarOrden"></a>
+                    <span class="name">
+                        <span ><b>actualizarOrden</b></span>
+                        <a href="#actualizarOrden"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>actualizarOrden(event: <a href="https://angular.dev/api/router/Event" target="_blank">Event</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="113"
+                                    class="link-to-prism">src/app/pages/admin/clientes/clientes.page.ts:113</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>event</td>
+                                            <td>
+                                                            <code><a href="https://angular.dev/api/router/Event" target="_blank" >Event</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="cargarClientes"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>cargarClientes</b></span>
+                        <a href="#cargarClientes"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>cargarClientes()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="78"
+                                    class="link-to-prism">src/app/pages/admin/clientes/clientes.page.ts:78</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Devuelve : </b>    <code>Promise&lt;void&gt;</code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="formatearFecha"></a>
+                    <span class="name">
+                        <span ><b>formatearFecha</b></span>
+                        <a href="#formatearFecha"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>formatearFecha(fecha: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="147"
+                                    class="link-to-prism">src/app/pages/admin/clientes/clientes.page.ts:147</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>fecha</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="iniciales"></a>
+                    <span class="name">
+                        <span ><b>iniciales</b></span>
+                        <a href="#iniciales"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>iniciales(nombre: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="136"
+                                    class="link-to-prism">src/app/pages/admin/clientes/clientes.page.ts:136</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>nombre</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ionViewWillEnter"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>ionViewWillEnter</b></span>
+                        <a href="#ionViewWillEnter"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>ionViewWillEnter()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="70"
+                                    class="link-to-prism">src/app/pages/admin/clientes/clientes.page.ts:70</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Devuelve : </b>    <code>Promise&lt;void&gt;</code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ionViewWillLeave"></a>
+                    <span class="name">
+                        <span ><b>ionViewWillLeave</b></span>
+                        <a href="#ionViewWillLeave"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ionViewWillLeave()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="74"
+                                    class="link-to-prism">src/app/pages/admin/clientes/clientes.page.ts:74</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="limpiarBusqueda"></a>
+                    <span class="name">
+                        <span ><b>limpiarBusqueda</b></span>
+                        <a href="#limpiarBusqueda"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>limpiarBusqueda()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="131"
+                                    class="link-to-prism">src/app/pages/admin/clientes/clientes.page.ts:131</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="normalizar"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>normalizar</b></span>
+                        <a href="#normalizar"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>normalizar(texto: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="155"
+                                    class="link-to-prism">src/app/pages/admin/clientes/clientes.page.ts:155</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>texto</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Propiedades
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="busqueda"></a>
+                    <span class="name">
+                            <span class="modifier">Readonly</span>
+                        <span ><b>busqueda</b></span>
+                        <a href="#busqueda"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>signal(&#x27;&#x27;)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="40" class="link-to-prism">src/app/pages/admin/clientes/clientes.page.ts:40</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="clientes"></a>
+                    <span class="name">
+                            <span class="modifier">Readonly</span>
+                        <span ><b>clientes</b></span>
+                        <a href="#clientes"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>signal&lt;Cliente[]&gt;([])</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="37" class="link-to-prism">src/app/pages/admin/clientes/clientes.page.ts:37</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="clientesFiltrados"></a>
+                    <span class="name">
+                            <span class="modifier">Readonly</span>
+                        <span ><b>clientesFiltrados</b></span>
+                        <a href="#clientesFiltrados"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>computed(() &#x3D;&gt; {
+    const consulta &#x3D; this.normalizar(this.busqueda().trim());
+
+    const resultado &#x3D; this.clientes().filter((cliente) &#x3D;&gt;
+      this.normalizar(
+        &#x60;${cliente.nombre} ${cliente.correo ?? &#x27;&#x27;}&#x60;,
+      ).includes(consulta),
+    );
+
+    switch (this.orden()) {
+      case &#x27;recientes&#x27;:
+        return resultado.sort((a, b) &#x3D;&gt;
+          b.created_at.localeCompare(a.created_at),
+        );
+
+      case &#x27;antiguos&#x27;:
+        return resultado.sort((a, b) &#x3D;&gt;
+          a.created_at.localeCompare(b.created_at),
+        );
+
+      default:
+        return resultado.sort((a, b) &#x3D;&gt;
+          a.nombre.localeCompare(b.nombre, &#x27;es&#x27;),
+        );
+    }
+  })</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="43" class="link-to-prism">src/app/pages/admin/clientes/clientes.page.ts:43</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="errorMessage"></a>
+                    <span class="name">
+                            <span class="modifier">Readonly</span>
+                        <span ><b>errorMessage</b></span>
+                        <a href="#errorMessage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>signal(&#x27;&#x27;)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="39" class="link-to-prism">src/app/pages/admin/clientes/clientes.page.ts:39</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loading"></a>
+                    <span class="name">
+                            <span class="modifier">Readonly</span>
+                        <span ><b>loading</b></span>
+                        <a href="#loading"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>signal(true)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="38" class="link-to-prism">src/app/pages/admin/clientes/clientes.page.ts:38</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="orden"></a>
+                    <span class="name">
+                            <span class="modifier">Readonly</span>
+                        <span ><b>orden</b></span>
+                        <a href="#orden"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>signal&lt;OrdenClientes&gt;(&#x27;nombre&#x27;)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="41" class="link-to-prism">src/app/pages/admin/clientes/clientes.page.ts:41</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="peticion"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>peticion</b></span>
+                        <a href="#peticion"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>0</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="35" class="link-to-prism">src/app/pages/admin/clientes/clientes.page.ts:35</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="servicio"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>servicio</b></span>
+                        <a href="#servicio"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>inject(ClientesService)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="34" class="link-to-prism">src/app/pages/admin/clientes/clientes.page.ts:34</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, computed, inject, signal } from &#x27;@angular/core&#x27;;
+import { RouterLink } from &#x27;@angular/router&#x27;;
+import {
+  IonButton,
+  IonButtons,
+  IonContent,
+  IonHeader,
+  IonMenuButton,
+  IonTitle,
+  IonToolbar,
+} from &#x27;@ionic/angular&#x27;;
+
+import { ClientesService } from &#x27;../../../core/services/clientes.service&#x27;;
+import type { Cliente } from &#x27;../../../core/services/clientes.service&#x27;;
+
+type OrdenClientes &#x3D; &#x27;nombre&#x27; | &#x27;recientes&#x27; | &#x27;antiguos&#x27;;
+
+@Component({
+  selector: &#x27;app-clientes&#x27;,
+  templateUrl: &#x27;./clientes.page.html&#x27;,
+  styleUrls: [&#x27;./clientes.page.scss&#x27;],
+  imports: [
+    RouterLink,
+    IonButton,
+    IonButtons,
+    IonContent,
+    IonHeader,
+    IonMenuButton,
+    IonTitle,
+    IonToolbar,
+  ],
+})
+export class ClientesPage {
+  private readonly servicio &#x3D; inject(ClientesService);
+  private peticion &#x3D; 0;
+
+  readonly clientes &#x3D; signal&lt;Cliente[]&gt;([]);
+  readonly loading &#x3D; signal(true);
+  readonly errorMessage &#x3D; signal(&#x27;&#x27;);
+  readonly busqueda &#x3D; signal(&#x27;&#x27;);
+  readonly orden &#x3D; signal&lt;OrdenClientes&gt;(&#x27;nombre&#x27;);
+
+  readonly clientesFiltrados &#x3D; computed(() &#x3D;&gt; {
+    const consulta &#x3D; this.normalizar(this.busqueda().trim());
+
+    const resultado &#x3D; this.clientes().filter((cliente) &#x3D;&gt;
+      this.normalizar(
+        &#x60;${cliente.nombre} ${cliente.correo ?? &#x27;&#x27;}&#x60;,
+      ).includes(consulta),
+    );
+
+    switch (this.orden()) {
+      case &#x27;recientes&#x27;:
+        return resultado.sort((a, b) &#x3D;&gt;
+          b.created_at.localeCompare(a.created_at),
+        );
+
+      case &#x27;antiguos&#x27;:
+        return resultado.sort((a, b) &#x3D;&gt;
+          a.created_at.localeCompare(b.created_at),
+        );
+
+      default:
+        return resultado.sort((a, b) &#x3D;&gt;
+          a.nombre.localeCompare(b.nombre, &#x27;es&#x27;),
+        );
+    }
+  });
+
+  async ionViewWillEnter(): Promise&lt;void&gt; {
+    await this.cargarClientes();
+  }
+
+  ionViewWillLeave(): void {
+    ++this.peticion;
+  }
+
+  async cargarClientes(): Promise&lt;void&gt; {
+    const peticion &#x3D; ++this.peticion;
+
+    this.loading.set(true);
+    this.errorMessage.set(&#x27;&#x27;);
+
+    try {
+      const clientes &#x3D; await this.servicio.listar();
+
+      if (peticion &#x3D;&#x3D;&#x3D; this.peticion) {
+        this.clientes.set(clientes);
+      }
+    } catch (error: unknown) {
+      if (peticion &#x3D;&#x3D;&#x3D; this.peticion) {
+        this.errorMessage.set(
+          error instanceof Error
+            ? error.message
+            : &#x27;No se han podido cargar los clientes.&#x27;,
+        );
+      }
+    } finally {
+      if (peticion &#x3D;&#x3D;&#x3D; this.peticion) {
+        this.loading.set(false);
+      }
+    }
+  }
+
+  actualizarBusqueda(event: Event): void {
+    const campo &#x3D; event.target;
+
+    if (campo instanceof HTMLInputElement) {
+      this.busqueda.set(campo.value);
+    }
+  }
+
+  actualizarOrden(event: Event): void {
+    const selector &#x3D; event.target;
+
+    if (!(selector instanceof HTMLSelectElement)) {
+      return;
+    }
+
+    const valor &#x3D; selector.value;
+
+    if (
+      valor &#x3D;&#x3D;&#x3D; &#x27;nombre&#x27; ||
+      valor &#x3D;&#x3D;&#x3D; &#x27;recientes&#x27; ||
+      valor &#x3D;&#x3D;&#x3D; &#x27;antiguos&#x27;
+    ) {
+      this.orden.set(valor);
+    }
+  }
+
+  limpiarBusqueda(): void {
+    this.busqueda.set(&#x27;&#x27;);
+    this.orden.set(&#x27;nombre&#x27;);
+  }
+
+  iniciales(nombre: string): string {
+    return nombre
+      .trim()
+      .split(/\s+/)
+      .filter(Boolean)
+      .slice(0, 2)
+      .map((parte) &#x3D;&gt; parte.charAt(0))
+      .join(&#x27;&#x27;)
+      .toLocaleUpperCase(&#x27;es&#x27;) || &#x27;CL&#x27;;
+  }
+
+  formatearFecha(fecha: string): string {
+    return new Date(fecha).toLocaleDateString(&#x27;es-ES&#x27;, {
+      day: &#x27;2-digit&#x27;,
+      month: &#x27;short&#x27;,
+      year: &#x27;numeric&#x27;,
+    });
+  }
+
+  private normalizar(texto: string): string {
+    return texto
+      .normalize(&#x27;NFD&#x27;)
+      .replace(/[\u0300-\u036f]/g, &#x27;&#x27;)
+      .toLocaleLowerCase(&#x27;es&#x27;);
+  }
+}</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;ion-header&gt;
+  &lt;ion-toolbar&gt;
+    &lt;ion-buttons slot&#x3D;&quot;start&quot;&gt;
+      &lt;ion-menu-button
+        menu&#x3D;&quot;main-menu&quot;
+        aria-label&#x3D;&quot;Abrir menú principal&quot;
+      &gt;&lt;/ion-menu-button&gt;
+    &lt;/ion-buttons&gt;
+
+    &lt;ion-title&gt;Clientes&lt;/ion-title&gt;
+  &lt;/ion-toolbar&gt;
+&lt;/ion-header&gt;
+
+&lt;ion-content class&#x3D;&quot;ion-padding&quot;&gt;
+  &lt;div class&#x3D;&quot;pagina-clientes&quot;&gt;
+    &lt;header class&#x3D;&quot;pagina-cabecera&quot;&gt;
+      &lt;div&gt;
+        &lt;p class&#x3D;&quot;etiqueta-editorial&quot;&gt;Administración · Clientes&lt;/p&gt;
+        &lt;h1&gt;Clientes&lt;/h1&gt;
+        &lt;p class&#x3D;&quot;introduccion&quot;&gt;
+          Consulta las cuentas registradas y su historial de reservas.
+        &lt;/p&gt;
+      &lt;/div&gt;
+
+      &lt;ion-button
+        type&#x3D;&quot;button&quot;
+        fill&#x3D;&quot;outline&quot;
+        (click)&#x3D;&quot;cargarClientes()&quot;
+        [disabled]&#x3D;&quot;loading()&quot;
+      &gt;
+        {{ loading() ? &#x27;Actualizando…&#x27; : &#x27;Actualizar listado&#x27; }}
+      &lt;/ion-button&gt;
+    &lt;/header&gt;
+
+    &lt;section class&#x3D;&quot;panel&quot; aria-labelledby&#x3D;&quot;titulo-clientes&quot;&gt;
+      &lt;div class&#x3D;&quot;seccion-cabecera&quot;&gt;
+        &lt;div&gt;
+          &lt;p class&#x3D;&quot;etiqueta-editorial&quot;&gt;Cuentas con rol cliente&lt;/p&gt;
+          &lt;h2 id&#x3D;&quot;titulo-clientes&quot;&gt;Listado de clientes&lt;/h2&gt;
+        &lt;/div&gt;
+
+        @if (!loading() &amp;&amp; !errorMessage()) {
+          &lt;span class&#x3D;&quot;distintivo&quot;&gt;
+            {{ clientes().length }}
+            {{ clientes().length &#x3D;&#x3D;&#x3D; 1 ? &#x27;cliente&#x27; : &#x27;clientes&#x27; }}
+          &lt;/span&gt;
+        }
+      &lt;/div&gt;
+
+      &lt;div class&#x3D;&quot;filtros&quot;&gt;
+        &lt;div class&#x3D;&quot;campo-filtro&quot;&gt;
+          &lt;label for&#x3D;&quot;buscar-clientes&quot;&gt;Buscar cliente&lt;/label&gt;
+          &lt;input
+            id&#x3D;&quot;buscar-clientes&quot;
+            type&#x3D;&quot;search&quot;
+            placeholder&#x3D;&quot;Nombre o correo electrónico&quot;
+            [value]&#x3D;&quot;busqueda()&quot;
+            (input)&#x3D;&quot;actualizarBusqueda($event)&quot;
+          /&gt;
+        &lt;/div&gt;
+
+        &lt;div class&#x3D;&quot;campo-filtro&quot;&gt;
+          &lt;label for&#x3D;&quot;orden-clientes&quot;&gt;Ordenar por&lt;/label&gt;
+          &lt;select
+            id&#x3D;&quot;orden-clientes&quot;
+            [value]&#x3D;&quot;orden()&quot;
+            (change)&#x3D;&quot;actualizarOrden($event)&quot;
+          &gt;
+            &lt;option value&#x3D;&quot;nombre&quot;&gt;Nombre: A–Z&lt;/option&gt;
+            &lt;option value&#x3D;&quot;recientes&quot;&gt;Altas más recientes&lt;/option&gt;
+            &lt;option value&#x3D;&quot;antiguos&quot;&gt;Altas más antiguas&lt;/option&gt;
+          &lt;/select&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      @if (loading()) {
+        &lt;p role&#x3D;&quot;status&quot;&gt;Cargando clientes…&lt;/p&gt;
+      } @else if (errorMessage()) {
+        &lt;p role&#x3D;&quot;alert&quot;&gt;{{ errorMessage() }}&lt;/p&gt;
+      } @else if (clientes().length &#x3D;&#x3D;&#x3D; 0) {
+        &lt;div class&#x3D;&quot;estado-vacio&quot;&gt;
+          &lt;h3&gt;No hay clientes registrados&lt;/h3&gt;
+          &lt;p&gt;Las cuentas con rol cliente aparecerán en este listado.&lt;/p&gt;
+        &lt;/div&gt;
+      } @else if (clientesFiltrados().length &#x3D;&#x3D;&#x3D; 0) {
+        &lt;div class&#x3D;&quot;estado-vacio&quot;&gt;
+          &lt;h3&gt;No hay coincidencias&lt;/h3&gt;
+          &lt;p&gt;Prueba con otro nombre o correo.&lt;/p&gt;
+
+          &lt;ion-button
+            type&#x3D;&quot;button&quot;
+            fill&#x3D;&quot;outline&quot;
+            (click)&#x3D;&quot;limpiarBusqueda()&quot;
+          &gt;
+            Ver todos los clientes
+          &lt;/ion-button&gt;
+        &lt;/div&gt;
+      } @else {
+        &lt;p class&#x3D;&quot;contador&quot; role&#x3D;&quot;status&quot;&gt;
+          {{ clientesFiltrados().length }}
+          de {{ clientes().length }} clientes
+        &lt;/p&gt;
+
+        &lt;div class&#x3D;&quot;lista-clientes&quot;&gt;
+          @for (cliente of clientesFiltrados(); track cliente.id) {
+            &lt;article class&#x3D;&quot;fila-cliente&quot;&gt;
+              &lt;div class&#x3D;&quot;avatar&quot; aria-hidden&#x3D;&quot;true&quot;&gt;
+                {{ iniciales(cliente.nombre) }}
+              &lt;/div&gt;
+
+              &lt;div class&#x3D;&quot;identidad-cliente&quot;&gt;
+                &lt;h3&gt;{{ cliente.nombre }}&lt;/h3&gt;
+                &lt;p&gt;{{ cliente.correo ?? &#x27;Sin correo electrónico&#x27; }}&lt;/p&gt;
+              &lt;/div&gt;
+
+              &lt;div class&#x3D;&quot;fecha-alta&quot;&gt;
+                &lt;span&gt;Fecha de alta&lt;/span&gt;
+                &lt;strong&gt;{{ formatearFecha(cliente.created_at) }}&lt;/strong&gt;
+              &lt;/div&gt;
+
+              &lt;ion-button
+                type&#x3D;&quot;button&quot;
+                fill&#x3D;&quot;outline&quot;
+                [routerLink]&#x3D;&quot;[&#x27;/admin/clientes&#x27;, cliente.id]&quot;
+                [attr.aria-label]&#x3D;&quot;&#x27;Ver ficha de &#x27; + cliente.nombre&quot;
+              &gt;
+                Ver ficha
+              &lt;/ion-button&gt;
+            &lt;/article&gt;
+          }
+        &lt;/div&gt;
+      }
+    &lt;/section&gt;
+
+    &lt;p class&#x3D;&quot;nota-pagina&quot;&gt;
+      Las fichas son de consulta. Esta sección no permite modificar
+      contraseñas, roles ni datos de las cuentas.
+    &lt;/p&gt;
+  &lt;/div&gt;
+&lt;/ion-content&gt;</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="styleData">
+                <p class="comment">
+                    <code>./clientes.page.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">.pagina-clientes {
+  max-width: 1320px;
+  margin-inline: auto;
+}
+
+.etiqueta-editorial {
+  margin: 0 0 0.6rem;
+  color: var(--ion-color-primary);
+  font-size: 0.65rem;
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.pagina-cabecera {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  padding-block: 0.75rem 1.75rem;
+
+  h1 {
+    margin: 0;
+    font-size: clamp(2rem, 3vw, 2.75rem);
+  }
+
+  ion-button {
+    margin: 0;
+  }
+}
+
+.introduccion {
+  margin: 0.75rem 0 0;
+  color: var(--store-muted);
+}
+
+.panel {
+  min-width: 0;
+  padding: clamp(1rem, 2vw, 1.5rem);
+  border: 1px solid var(--store-border);
+  border-radius: 14px;
+  background: var(--store-surface);
+}
+
+.seccion-cabecera {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+
+  h2 {
+    margin: 0;
+    font-size: 1.8rem;
+  }
+}
+
+.distintivo {
+  padding: 0.4rem 0.7rem;
+  border: 1px solid var(--store-border);
+  border-radius: 30px;
+  color: var(--store-muted);
+  font-size: 0.7rem;
+}
+
+.filtros {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  gap: 1rem;
+}
+
+.campo-filtro {
+  min-width: 0;
+
+  label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+
+  input,
+  select {
+    width: 100%;
+    min-height: 46px;
+    padding: 0.7rem 0.85rem;
+    border: 1px solid var(--store-field-border);
+    border-radius: 8px;
+    background: var(--store-surface);
+    color: var(--store-ink);
+    font: inherit;
+    font-size: 0.85rem;
+  }
+
+  input::placeholder {
+    color: var(--store-muted);
+    opacity: 1;
+  }
+}
+
+.contador {
+  margin: 1.25rem 0 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--store-muted);
+  font-size: 0.75rem;
+}
+
+.fila-cliente {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr) 150px auto;
+  align-items: center;
+  gap: 1rem;
+  padding-block: 1.25rem;
+  border-bottom: 1px solid var(--store-border);
+
+  &amp;:last-child {
+    border-bottom: 0;
+  }
+
+  ion-button {
+    margin: 0;
+    font-size: 0.8rem;
+  }
+}
+
+.avatar {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border: 1px solid var(--store-avatar-border);
+  border-radius: 50%;
+  background: var(--store-accent-soft);
+  color: var(--ion-color-primary);
+  font-family: var(--store-heading-font);
+  font-size: 1.25rem;
+}
+
+.identidad-cliente {
+  min-width: 0;
+
+  h3 {
+    margin: 0 0 0.35rem;
+    font-size: 1.35rem;
+    overflow-wrap: anywhere;
+  }
+
+  p {
+    margin: 0;
+    color: var(--store-muted);
+    font-size: 0.8rem;
+    overflow-wrap: anywhere;
+  }
+}
+
+.fecha-alta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+
+  span {
+    color: var(--store-muted);
+    font-size: 0.65rem;
+  }
+
+  strong {
+    font-size: 0.8rem;
+    font-weight: 500;
+  }
+}
+
+.estado-vacio {
+  padding: 3rem 1rem;
+  text-align: center;
+
+  h3 {
+    margin-top: 0;
+  }
+
+  p {
+    color: var(--store-muted);
+  }
+}
+
+.nota-pagina {
+  margin-top: 1rem;
+  color: var(--store-muted);
+  font-size: 0.75rem;
+}
+
+@media (max-width: 700px) {
+  .fila-cliente {
+    grid-template-columns: 52px minmax(0, 1fr) auto;
+  }
+
+  .fecha-alta {
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+  .fila-cliente ion-button {
+    grid-column: 3;
+    grid-row: 1 / 3;
+  }
+}
+
+@media (max-width: 480px) {
+  .filtros {
+    grid-template-columns: 1fr;
+  }
+
+  .fila-cliente {
+    grid-template-columns: 45px minmax(0, 1fr);
+  }
+
+  .avatar {
+    width: 45px;
+    height: 45px;
+  }
+
+  .fila-cliente ion-button {
+    grid-column: 2;
+    grid-row: 3;
+    justify-self: start;
+  }
+}</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Leyenda</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Elemento Html</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Componente</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Elemento Html con directiva</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis-network.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><ion-header>  <ion-toolbar>    <ion-buttons slot="start">      <ion-menu-button        menu="main-menu"        aria-label="Abrir menú principal"      ></ion-menu-button>    </ion-buttons>    <ion-title>Clientes</ion-title>  </ion-toolbar></ion-header><ion-content class="ion-padding">  <div class="pagina-clientes">    <header class="pagina-cabecera">      <div>        <p class="etiqueta-editorial">Administración · Clientes</p>        <h1>Clientes</h1>        <p class="introduccion">          Consulta las cuentas registradas y su historial de reservas.        </p>      </div>      <ion-button        type="button"        fill="outline"        (click)="cargarClientes()"        [disabled]="loading()"      >        {{ loading() ? \'Actualizando…\' : \'Actualizar listado\' }}      </ion-button>    </header>    <section class="panel" aria-labelledby="titulo-clientes">      <div class="seccion-cabecera">        <div>          <p class="etiqueta-editorial">Cuentas con rol cliente</p>          <h2 id="titulo-clientes">Listado de clientes</h2>        </div>        @if (!loading() && !errorMessage()) {          <span class="distintivo">            {{ clientes().length }}            {{ clientes().length === 1 ? \'cliente\' : \'clientes\' }}          </span>        }      </div>      <div class="filtros">        <div class="campo-filtro">          <label for="buscar-clientes">Buscar cliente</label>          <input            id="buscar-clientes"            type="search"            placeholder="Nombre o correo electrónico"            [value]="busqueda()"            (input)="actualizarBusqueda($event)"          />        </div>        <div class="campo-filtro">          <label for="orden-clientes">Ordenar por</label>          <select            id="orden-clientes"            [value]="orden()"            (change)="actualizarOrden($event)"          >            <option value="nombre">Nombre: A–Z</option>            <option value="recientes">Altas más recientes</option>            <option value="antiguos">Altas más antiguas</option>          </select>        </div>      </div>      @if (loading()) {        <p role="status">Cargando clientes…</p>      } @else if (errorMessage()) {        <p role="alert">{{ errorMessage() }}</p>      } @else if (clientes().length === 0) {        <div class="estado-vacio">          <h3>No hay clientes registrados</h3>          <p>Las cuentas con rol cliente aparecerán en este listado.</p>        </div>      } @else if (clientesFiltrados().length === 0) {        <div class="estado-vacio">          <h3>No hay coincidencias</h3>          <p>Prueba con otro nombre o correo.</p>          <ion-button            type="button"            fill="outline"            (click)="limpiarBusqueda()"          >            Ver todos los clientes          </ion-button>        </div>      } @else {        <p class="contador" role="status">          {{ clientesFiltrados().length }}          de {{ clientes().length }} clientes        </p>        <div class="lista-clientes">          @for (cliente of clientesFiltrados(); track cliente.id) {            <article class="fila-cliente">              <div class="avatar" aria-hidden="true">                {{ iniciales(cliente.nombre) }}              </div>              <div class="identidad-cliente">                <h3>{{ cliente.nombre }}</h3>                <p>{{ cliente.correo ?? \'Sin correo electrónico\' }}</p>              </div>              <div class="fecha-alta">                <span>Fecha de alta</span>                <strong>{{ formatearFecha(cliente.created_at) }}</strong>              </div>              <ion-button                type="button"                fill="outline"                [routerLink]="[\'/admin/clientes\', cliente.id]"                [attr.aria-label]="\'Ver ficha de \' + cliente.nombre"              >                Ver ficha              </ion-button>            </article>          }        </div>      }    </section>    <p class="nota-pagina">      Las fichas son de consulta. Esta sección no permite modificar      contraseñas, roles ni datos de las cuentas.    </p>  </div></ion-content></div>'
+    var COMPONENTS = [{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AyudaPage', 'selector': 'app-ayuda'},{'name': 'CatalogoPage', 'selector': 'app-catalogo'},{'name': 'ClienteDetallePage', 'selector': 'app-cliente-detalle'},{'name': 'ClientesPage', 'selector': 'app-clientes'},{'name': 'DashboardPage', 'selector': 'app-dashboard'},{'name': 'LoginPage', 'selector': 'app-login'},{'name': 'MisReservasPage', 'selector': 'app-mis-reservas'},{'name': 'ProductosPage', 'selector': 'app-productos'},{'name': 'ReservasPage', 'selector': 'app-reservas'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'ClientesPage'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> comparación de resultados "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No hay resultados que coincidan "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'ClientesPage.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var updateDarkModeSwitchOffset = function () {
+                    var content = document.querySelector('.content');
+                    var scrollbarWidth = 0;
+
+                    if (content) {
+                         scrollbarWidth = Math.max(0, content.offsetWidth - content.clientWidth);
+                    }
+
+                    document.documentElement.style.setProperty(
+                         '--content-scrollbar-width',
+                         scrollbarWidth + 'px'
+                    );
+               };
+
+               updateDarkModeSwitchOffset();
+               requestAnimationFrame(updateDarkModeSwitchOffset);
+               window.addEventListener('resize', updateDarkModeSwitchOffset);
+
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

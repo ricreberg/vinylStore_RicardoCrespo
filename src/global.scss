@@ -1,37 +1,313 @@
-/*
- * App Global CSS
- * ----------------------------------------------------------------------------
- * Put style rules here that you want to apply globally. These styles are for
- * the entire app and not just one component. Additionally, this file can be
- * used as an entry point to import other CSS/Sass files to be included in the
- * output CSS.
- * For more information on global stylesheets, visit the documentation:
- * https://ionicframework.com/docs/layout/global-stylesheets
- */
-
-/* Core CSS required for Ionic components to work properly */
+/* Estilos necesarios de Ionic. */
 @import "@ionic/angular/css/core.css";
-
-/* Basic CSS for apps built with Ionic */
 @import "@ionic/angular/css/normalize.css";
 @import "@ionic/angular/css/structure.css";
 @import "@ionic/angular/css/typography.css";
 @import "@ionic/angular/css/display.css";
 
-/* Optional CSS utils that can be commented out */
+/* Utilidades de Ionic. */
 @import "@ionic/angular/css/padding.css";
 @import "@ionic/angular/css/float-elements.css";
 @import "@ionic/angular/css/text-alignment.css";
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
 
-/**
- * Ionic Dark Mode
- * -----------------------------------------------------
- * For more info, please see:
- * https://ionicframework.com/docs/theming/dark-mode
- */
+/* Tema editorial. */
+html {
+  color-scheme: var(--store-color-scheme);
+}
 
-/* @import "@ionic/angular/css/palettes/dark.always.css"; */
-/* @import "@ionic/angular/css/palettes/dark.class.css"; */
-@import '@ionic/angular/css/palettes/dark.system.css';
+body {
+  font-family: var(--ion-font-family);
+}
+
+h1,
+h2,
+h3 {
+  color: var(--store-ink);
+  font-family: var(--store-heading-font);
+  font-weight: 400;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+
+h1 {
+  margin-block: 0.5rem 1rem;
+  font-size: clamp(2.2rem, 4vw, 3.5rem);
+  letter-spacing: -0.045em;
+}
+
+h2 {
+  margin-block: 1.75rem 0.75rem;
+  font-size: clamp(1.65rem, 3vw, 2.2rem);
+  letter-spacing: -0.025em;
+}
+
+h3 {
+  font-size: 1.4rem;
+}
+
+p,
+li,
+dd {
+  line-height: 1.65;
+}
+
+a {
+  color: var(--ion-color-primary);
+  text-underline-offset: 0.2em;
+}
+
+a:hover {
+  text-decoration-thickness: 2px;
+}
+
+:focus-visible {
+  outline: 3px solid var(--ion-color-primary);
+  outline-offset: 4px;
+}
+
+ion-content {
+  --background: var(--store-paper);
+  --color: var(--store-ink);
+}
+
+ion-content.ion-padding {
+  --padding-top: clamp(1.25rem, 3vw, 2.5rem);
+  --padding-bottom: 2.5rem;
+  --padding-start: clamp(1rem, 3vw, 2.5rem);
+  --padding-end: clamp(1rem, 3vw, 2.5rem);
+}
+
+ion-toolbar {
+  --background: var(--store-surface);
+  --color: var(--store-ink);
+  --border-color: var(--store-border);
+  --min-height: 64px;
+}
+
+ion-toolbar ion-title {
+  font-family: var(--store-heading-font);
+  font-size: 1.3rem;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+
+ion-menu-button {
+  --color: var(--ion-color-primary);
+}
+
+ion-card {
+  --background: var(--store-surface);
+  --color: var(--store-ink);
+
+  margin: 0.6rem;
+  border: 1px solid var(--store-border);
+  border-radius: 14px;
+  box-shadow: 0 6px 20px rgb(41 38 34 / 4%);
+}
+
+ion-card-header {
+  padding: 1.25rem 1.25rem 0.75rem;
+}
+
+ion-card-title {
+  --color: var(--store-ink);
+
+  font-family: var(--store-heading-font);
+  font-size: 1.65rem;
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+ion-card-subtitle {
+  --color: var(--store-muted);
+
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  line-height: 1.5;
+  text-transform: none;
+}
+
+ion-card-content {
+  padding: 0.5rem 1.25rem 1.25rem;
+  font-size: 1rem;
+}
+
+ion-button {
+  --border-radius: 8px;
+  --box-shadow: none;
+  --padding-top: 0.75rem;
+  --padding-bottom: 0.75rem;
+
+  min-height: 44px;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+ion-button[fill='outline'] {
+  --border-width: 1px;
+}
+
+ion-input,
+ion-textarea,
+ion-select {
+  --color: var(--store-ink);
+  --placeholder-color: var(--store-muted);
+  --highlight-color-focused: var(--ion-color-primary);
+
+  margin-block: 0.5rem;
+}
+
+ion-checkbox {
+  --checkbox-background: var(--store-surface);
+  --checkbox-background-checked: var(--ion-color-primary);
+  --border-color: var(--store-muted);
+  --border-color-checked: var(--ion-color-primary);
+}
+
+p[role='alert'] {
+  padding: 0.85rem 1rem;
+  border-inline-start: 3px solid var(--ion-color-danger);
+  border-radius: 0 8px 8px 0;
+  background: var(--store-error-bg);
+  color: var(--store-error-text);
+}
+
+p[role='status'] {
+  padding: 0.85rem 1rem;
+  border-inline-start: 3px solid var(--ion-color-secondary);
+  border-radius: 0 8px 8px 0;
+  background: var(--store-success-bg);
+  color: var(--store-success-text);
+}
+
+table {
+  color: var(--store-ink);
+}
+
+th,
+td {
+  line-height: 1.5;
+}
+/* Los diálogos de confirmación utilizan el tema activo. */
+ion-alert {
+  --background: var(--store-surface);
+}
+
+ion-modal {
+  --background: var(--store-surface);
+}
+/* Texto de cabecera compartido por estas páginas administrativas. */
+app-productos,
+app-reservas,
+app-dashboard {
+  .etiqueta-editorial {
+    margin: 0 0 0.6rem;
+    color: var(--ion-color-primary);
+    font-size: 0.65rem;
+    font-weight: 700;
+    line-height: 1.5;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .introduccion {
+    margin: 0.75rem 0 0;
+    color: var(--store-muted);
+  }
+}
+
+/* Filtros compartidos por productos y reservas. */
+app-productos,
+app-reservas {
+  .campo-filtro {
+    min-width: 0;
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    input,
+    select {
+      width: 100%;
+      min-height: 46px;
+      padding: 0.7rem 0.85rem;
+      border: 1px solid var(--store-field-border);
+      border-radius: 8px;
+      background: var(--store-surface);
+      color: var(--store-ink);
+      font: inherit;
+      font-size: 0.85rem;
+    }
+
+    input::placeholder {
+      color: var(--store-muted);
+      opacity: 1;
+    }
+  }
+
+  .limpiar-filtros {
+    min-height: 44px;
+    margin-top: 0.5rem;
+    padding: 0.5rem 0;
+    border: 0;
+    background: transparent;
+    color: var(--ion-color-primary);
+    font: inherit;
+    font-size: 0.8rem;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    cursor: pointer;
+  }
+}
+
+/* Estructura compartida de las páginas administrativas. */
+app-productos,
+app-reservas,
+app-dashboard {
+  .pagina-cabecera,
+  .panel-cabecera {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding-block: 0.75rem 1.75rem;
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2rem, 3vw, 2.75rem);
+    }
+  }
+}
+
+/* Presentes en productos y reservas. */
+app-productos,
+app-reservas {
+  .estado-vacio {
+    padding: 3rem 1rem;
+    text-align: center;
+
+    h3 {
+      margin-top: 0;
+    }
+
+    p {
+      color: var(--store-muted);
+    }
+  }
+
+  .solo-lectores {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}

@@ -1,0 +1,388 @@
+.gestion-reservas {
+  max-width: 1440px;
+  margin-inline: auto;
+}
+
+
+
+.resumen-estados {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.75rem;
+
+  button {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+    min-width: 0;
+    padding: 1.25rem;
+    border: 1px solid var(--store-border);
+    border-radius: 12px;
+    background: var(--store-surface);
+    color: var(--store-ink);
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+
+    span {
+      color: var(--store-muted);
+      font-size: 0.8rem;
+    }
+
+    strong {
+      font-size: 2rem;
+      font-weight: 600;
+      line-height: 1.1;
+      letter-spacing: -0.05em;
+    }
+
+    &.seleccionado {
+      border-color: var(--ion-color-primary);
+      background: var(--ion-color-primary);
+      color: #ffffff;
+
+      span {
+        color: #f4e7e9;
+      }
+    }
+
+    &:disabled {
+      cursor: default;
+    }
+  }
+}
+
+.panel-reservas {
+  padding: clamp(1rem, 2vw, 1.5rem);
+  border: 1px solid var(--store-border);
+  border-radius: 14px;
+  background: var(--store-surface);
+}
+
+.listado-cabecera {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+
+  h2 {
+    margin: 0;
+    font-size: 1.8rem;
+  }
+}
+
+.nota-estados {
+  color: var(--store-muted);
+  font-size: 0.75rem;
+}
+
+.filtros {
+  display: grid;
+  grid-template-columns: minmax(0, 1.7fr) repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.campo-filtro {
+  input:disabled,
+  select:disabled {
+    opacity: 0.65;
+  }
+}
+
+.contador {
+  margin: 1.25rem 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--store-muted);
+  font-size: 0.75rem;
+}
+
+.lista-reservas {
+  display: grid;
+  gap: 1rem;
+}
+
+.reserva {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--store-border);
+  border-radius: 12px;
+}
+
+.reserva-cabecera {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding: 0.85rem 1.15rem;
+  border-bottom: 1px solid var(--store-border);
+  background: var(--store-paper);
+}
+
+.referencia-fecha {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.25rem;
+  color: var(--store-muted);
+  font-size: 0.7rem;
+}
+
+.referencia {
+  color: var(--store-ink);
+  font-weight: 600;
+  letter-spacing: 0.025em;
+}
+
+.etiqueta-estado {
+  padding: 0.35rem 0.65rem;
+  border-radius: 30px;
+  font-size: 0.65rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.estado-pendiente {
+  background: #f4ead4;
+  color: #78521f;
+}
+
+.estado-recogida {
+  background: #e8eee6;
+  color: #304d37;
+}
+
+.estado-cancelada {
+  background: var(--store-accent-soft);
+  color: var(--ion-color-primary);
+}
+
+.reserva-contenido {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.25rem 1.15rem;
+}
+
+.producto-reservado {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  min-width: 0;
+}
+
+.miniatura {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 72px;
+  height: 72px;
+  overflow: hidden;
+  border: 1px solid var(--store-border);
+  border-radius: 8px;
+  background: #e9e1d5;
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+}
+
+.mini-vinilo {
+  position: relative;
+  width: 48px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: repeating-radial-gradient(
+    circle,
+    #292622 0,
+    #292622 4px,
+    #454039 5px,
+    #292622 6px
+  );
+
+  &::before {
+    position: absolute;
+    inset: 34%;
+    border-radius: 50%;
+    background: var(--ion-color-primary);
+    content: '';
+  }
+
+  &::after {
+    position: absolute;
+    inset: 47%;
+    border-radius: 50%;
+    background: var(--store-paper);
+    content: '';
+  }
+}
+
+.producto-texto {
+  min-width: 0;
+
+  h3 {
+    margin: 0 0 0.35rem;
+    font-size: 1.3rem;
+    overflow-wrap: anywhere;
+  }
+
+  p {
+    margin: 0 0 0.35rem;
+    color: var(--store-muted);
+    font-size: 0.8rem;
+    overflow-wrap: anywhere;
+  }
+
+  > span {
+    color: var(--store-muted);
+    font-size: 0.7rem;
+  }
+}
+
+.cliente-reserva,
+.importe-reserva {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  min-width: 0;
+}
+
+.dato-etiqueta {
+  color: var(--store-muted);
+  font-size: 0.65rem;
+}
+
+.cliente-reserva {
+  strong {
+    font-size: 0.85rem;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+  }
+
+  a {
+    align-self: flex-start;
+    padding-block: 0.35rem;
+    font-size: 0.75rem;
+  }
+}
+
+.correo {
+  color: var(--store-muted);
+  font-size: 0.75rem;
+  overflow-wrap: anywhere;
+}
+
+.importe-reserva {
+  align-items: flex-end;
+
+  strong {
+    font-size: 1.4rem;
+    font-weight: 600;
+    letter-spacing: -0.04em;
+    white-space: nowrap;
+  }
+}
+
+.reserva-acciones {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding: 0.9rem 1.15rem;
+  border-top: 1px solid var(--store-border);
+
+  > p {
+    max-width: 48ch;
+    margin: 0;
+    color: var(--store-muted);
+    font-size: 0.7rem;
+  }
+
+  > div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  ion-button {
+    margin: 0;
+    font-size: 0.75rem;
+  }
+}
+
+.mensaje-proceso {
+  margin: 0.75rem 1.15rem;
+}
+
+
+
+
+
+@media (max-width: 1100px) {
+  .reserva-contenido {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .producto-reservado {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 700px) {
+  .pagina-cabecera {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .resumen-estados {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .filtros {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .campo-busqueda {
+    grid-column: 1 / -1;
+  }
+
+  .reserva-acciones {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 430px) {
+  .filtros,
+  .reserva-contenido {
+    grid-template-columns: 1fr;
+  }
+
+  .importe-reserva {
+    align-items: flex-start;
+  }
+
+  .reserva-acciones > div {
+    width: 100%;
+
+    ion-button {
+      flex: 1;
+    }
+  }
+}
+.pagina-cabecera ion-button {
+  flex-shrink: 0;
+  margin: 0;
+}

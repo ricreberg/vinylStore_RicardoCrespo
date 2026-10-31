@@ -7,56 +7,165 @@
       ></ion-menu-button>
     </ion-buttons>
 
-    <ion-title>Acceso y sesión</ion-title>
+    <ion-title>{{ session() ? 'Mi cuenta' : 'Iniciar sesión' }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
-  @if (checkingSession()) {
-    <p role="status">Comprobando sesión…</p>
-  } @else {
-    @if (session(); as currentSession) {
-      <h1>Tu sesión</h1>
-      <p>Has iniciado sesión con {{ currentSession.user.email }}.</p>
-
-      <ion-button
-        type="button"
-        (click)="signOut()"
-        [disabled]="loading()"
-      >
-        {{ loading() ? 'Cerrando sesión…' : 'Cerrar sesión' }}
-      </ion-button>
+  <div class="pagina-cuenta">
+    @if (checkingSession()) {
+      <p role="status">Comprobando tu sesión…</p>
     } @else {
-      <h1>Accede a Vinyl Store</h1>
-      <p>Introduce tu correo y contraseña.</p>
+      @if (session(); as currentSession) {
+        <header class="cabecera-cuenta">
+          <p class="etiqueta-editorial">Vinyl Store · Tu espacio</p>
+          <h1>Mi cuenta</h1>
+          <p>Consulta tu sesión y accede a tus reservas.</p>
+        </header>
 
-      <form [formGroup]="form" (ngSubmit)="signIn()">
-        <ion-input
-          class="ion-margin-bottom"
-          label="Correo electrónico"
-          labelPlacement="stacked"
-          type="email"
-          autocomplete="username"
-          formControlName="email"
-          errorText="Introduce un correo electrónico válido."
-          [required]="true"
-        ></ion-input>
+        <section class="ficha-cuenta" aria-labelledby="titulo-cuenta">
+          <div class="cuenta-identidad">
+            <div class="avatar-cuenta" aria-hidden="true">
+              {{ inicialCorreo(currentSession.user.email) }}
+            </div>
 
-        <ion-input
-          class="ion-margin-bottom"
-          label="Contraseña"
-          labelPlacement="stacked"
-          type="password"
-          autocomplete="current-password"
-          formControlName="password"
-          errorText="Introduce tu contraseña."
-          [required]="true"
-        ></ion-input>
+            <div>
+              <p class="etiqueta-editorial">Sesión iniciada</p>
+              <h2 id="titulo-cuenta">Tu cuenta de Vinyl Store</h2>
+              <p class="correo-cuenta">{{ currentSession.user.email }}</p>
+            </div>
+          </div>
 
-        <ion-button type="submit" [disabled]="loading()">
-          {{ loading() ? 'Accediendo…' : 'Iniciar sesión' }}
-        </ion-button>
-      </form>
+          <dl class="datos-cuenta">
+            <div>
+              <dt>Tipo de cuenta</dt>
+              <dd>
+                {{
+                  auth.role() === 'admin'
+                    ? 'Administración'
+                    : auth.role() === 'cliente'
+                      ? 'Cliente'
+                      : 'Rol no disponible'
+                }}
+              </dd>
+            </div>
+
+            <div>
+              <dt>Fecha de alta</dt>
+              <dd>{{ formatearFecha(currentSession.user.created_at) }}</dd>
+            </div>
+          </dl>
+
+          <div class="accesos-cuenta">
+            <ion-button routerLink="/mis-reservas">
+              Ver mis reservas
+            </ion-button>
+
+            <ion-button routerLink="/catalogo" fill="outline">
+              Explorar catálogo
+            </ion-button>
+
+            @if (auth.role() === 'admin') {
+              <ion-button routerLink="/admin/dashboard" fill="outline">
+                Abrir estadísticas
+              </ion-button>
+            }
+          </div>
+
+          <div class="cierre-cuenta">
+            <p>
+              Si utilizas un equipo compartido, cierra la sesión al terminar.
+            </p>
+
+            <ion-button
+              type="button"
+              fill="outline"
+              (click)="signOut()"
+              [disabled]="loading()"
+            >
+              {{ loading() ? 'Cerrando sesión…' : 'Cerrar sesión' }}
+            </ion-button>
+          </div>
+        </section>
+      } @else {
+        <div class="acceso-grid">
+          <section class="presentacion-acceso">
+            <p class="etiqueta-editorial">Vinyl Store</p>
+
+            <h1>Tu colección,<br />a un paso.</h1>
+
+            <p>
+              Accede para reservar tus discos y consultar las solicitudes
+              de recogida.
+            </p>
+
+            <div class="disco-acceso" aria-hidden="true">
+              <span>VS</span>
+            </div>
+
+            <a routerLink="/catalogo">
+              Seguir explorando el catálogo
+            </a>
+          </section>
+
+          <section class="formulario-acceso" aria-labelledby="titulo-acceso">
+            <p class="etiqueta-editorial">Acceso a tu cuenta</p>
+            <h2 id="titulo-acceso">Iniciar sesión</h2>
+
+            <p class="instruccion-acceso">
+              Introduce el correo y la contraseña de tu cuenta.
+            </p>
+
+            <form [formGroup]="form" (ngSubmit)="signIn()">
+              <ion-input
+                label="Correo electrónico"
+                labelPlacement="stacked"
+                fill="outline"
+                type="email"
+                autocomplete="username"
+                formControlName="email"
+                errorText="Introduce un correo electrónico válido."
+                [required]="true"
+              ></ion-input>
+
+              <ion-input
+                label="Contraseña"
+                labelPlacement="stacked"
+                fill="outline"
+                [type]="mostrarPassword() ? 'text' : 'password'"
+                autocomplete="current-password"
+                formControlName="password"
+                errorText="Introduce tu contraseña."
+                [required]="true"
+              ></ion-input>
+
+              <button
+                class="mostrar-password"
+                type="button"
+                [attr.aria-pressed]="mostrarPassword()"
+                (click)="alternarPassword()"
+                [disabled]="loading()"
+              >
+                {{ mostrarPassword() ? 'Ocultar contraseña' : 'Mostrar contraseña' }}
+              </button>
+
+              <ion-button
+                class="boton-acceso"
+                type="submit"
+                expand="block"
+                [disabled]="loading()"
+              >
+                {{ loading() ? 'Accediendo…' : 'Iniciar sesión' }}
+              </ion-button>
+            </form>
+
+            <p class="nota-acceso">
+              Actualmente el acceso se realiza con las cuentas
+              facilitadas por la administración.
+            </p>
+          </section>
+        </div>
+      }
     }
 
     @if (errorMessage()) {
@@ -66,5 +175,5 @@
     @if (successMessage()) {
       <p role="status">{{ successMessage() }}</p>
     }
-  }
+  </div>
 </ion-content>
