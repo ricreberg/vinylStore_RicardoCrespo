@@ -5,7 +5,7 @@ import { createClient } from '@supabase/supabase-js';
 const marca = 'vinylstore-demo-v1';
 
 const nombres = [
-  'Lucía Martín',
+  'Roberto Martín',
   'Daniel Romero',
   'Sara Molina',
   'Adrián Navarro',
