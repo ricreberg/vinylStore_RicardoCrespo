@@ -1,0 +1,1054 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Vinyl Store</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">Vinyl Store</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search">
+    <input type="text" placeholder="Escribe para buscar">
+    <button type="button"
+        class="search-input-clear"
+        aria-label="Clear search"
+        data-search-input-clear>&times;</button>
+</div>
+            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Componentes</li>
+  <li class="breadcrumb-item"
+  >
+  AppComponent</li>
+</ol>
+
+<div class="io-file io-file-path" data-compodoc="entity-file-path">
+    <span class="icon ion-ios-document" aria-hidden="true"></span>
+    <code>src/app/app.component.ts</code>
+</div>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#api" class="nav-link"
+                role="tab" id="api-tab" data-bs-toggle="tab" data-link="api">API</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+
+
+
+
+<section data-compodoc="block-metadata">
+    <h3>Meta datos</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+            <tr>
+                <td class="col-md-3">changeDetection</td>
+                <td class="col-md-9"><code>ChangeDetectionStrategy.OnPush</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-root</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                        <div>        <code><a href="https://angular.dev/api/router/RouterLink" target="_blank" >RouterLink</a></code>
+</div>
+                        <div>        <code><a href="https://angular.dev/api/router/RouterLinkActive" target="_blank" >RouterLinkActive</a></code>
+</div>
+                        <div>    <code>IonApp</code>
+</div>
+                        <div>    <code>IonContent</code>
+</div>
+                        <div>    <code>IonHeader</code>
+</div>
+                        <div>    <code>IonItem</code>
+</div>
+                        <div>    <code>IonLabel</code>
+</div>
+                        <div>    <code>IonList</code>
+</div>
+                        <div>    <code>IonListHeader</code>
+</div>
+                        <div>    <code>IonMenu</code>
+</div>
+                        <div>    <code>IonMenuToggle</code>
+</div>
+                        <div>    <code>IonRouterOutlet</code>
+</div>
+                        <div>    <code>IonSplitPane</code>
+</div>
+                        <div>    <code>IonTitle</code>
+</div>
+                        <div>    <code>IonToolbar</code>
+</div>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>app.component.scss</code></td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>app.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+        <section data-compodoc="block-relationships">
+            <h3>Relationships</h3>
+
+            <div class="row pt-3">
+                <div class="col-sm-6">
+                    <h4>Used by</h4>
+                        <p class="comment"><i>No hay resultados que coincidan.</i></p>
+                </div>
+
+                <div class="col-sm-6">
+                    <h4>Depends on</h4>
+                        <ul class="list-unstyled relationships-list">
+                                <li>
+                                            <code><a href="https://angular.dev/api/router/RouterLink" target="_blank" >RouterLink</a></code>
+                                </li>
+                                <li>
+                                            <code><a href="https://angular.dev/api/router/RouterLinkActive" target="_blank" >RouterLinkActive</a></code>
+                                </li>
+                                <li>
+                                        <code>IonApp</code>
+                                </li>
+                                <li>
+                                        <code>IonContent</code>
+                                </li>
+                                <li>
+                                        <code>IonHeader</code>
+                                </li>
+                                <li>
+                                        <code>IonItem</code>
+                                </li>
+                                <li>
+                                        <code>IonLabel</code>
+                                </li>
+                                <li>
+                                        <code>IonList</code>
+                                </li>
+                                <li>
+                                        <code>IonListHeader</code>
+                                </li>
+                                <li>
+                                        <code>IonMenu</code>
+                                </li>
+                                <li>
+                                        <code>IonMenuToggle</code>
+                                </li>
+                                <li>
+                                        <code>IonRouterOutlet</code>
+                                </li>
+                                <li>
+                                        <code>IonSplitPane</code>
+                                </li>
+                                <li>
+                                        <code>IonTitle</code>
+                                </li>
+                                <li>
+                                        <code>IonToolbar</code>
+                                </li>
+                        </ul>
+                </div>
+            </div>
+        </section>
+</div>
+
+    <div class="tab-pane fade " id="api">    <section data-compodoc="block-index">
+    <h3 id="index">Índice</h3>
+        <table class="table table-sm table-bordered index-table">
+            <tbody>
+                <tr>
+                    <td class="col-md-3">
+                        <h6><b>Propiedades</b></h6>
+                    </td>
+                    <td class="col-md-9">
+                        <ul class="index-list">
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#auth" >auth</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#menuSections" >menuSections</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#tema" >tema</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+
+
+
+
+
+</section>
+
+
+
+
+
+
+
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Propiedades
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="auth"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>auth</b></span>
+                        <a href="#auth"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>inject(AuthService)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="45" class="link-to-prism">src/app/app.component.ts:45</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="menuSections"></a>
+                    <span class="name">
+                            <span class="modifier">Readonly</span>
+                        <span ><b>menuSections</b></span>
+                        <a href="#menuSections"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>computed(() &#x3D;&gt; {
+    const sections &#x3D; [
+      {
+        title: &#x27;Tienda&#x27;,
+        links: [
+          { title: &#x27;Catálogo&#x27;, url: &#x27;/catalogo&#x27; },
+          { title: &#x27;Mis reservas&#x27;, url: &#x27;/mis-reservas&#x27; },
+          { title: &#x27;Ayuda&#x27;, url: &#x27;/ayuda&#x27; },
+          {
+            title: this.auth.session() ? &#x27;Mi cuenta&#x27; : &#x27;Iniciar sesión&#x27;,
+            url: &#x27;/login&#x27;,
+          },
+        ],
+      },
+    ];
+
+    if (this.auth.role() &#x3D;&#x3D;&#x3D; &#x27;admin&#x27;) {
+      sections.push({
+        title: &#x27;Administración&#x27;,
+        links: [
+          { title: &#x27;Estadísticas&#x27;, url: &#x27;/admin/dashboard&#x27; },
+          { title: &#x27;Productos y existencias&#x27;, url: &#x27;/admin/productos&#x27; },
+          { title: &#x27;Gestión de reservas&#x27;, url: &#x27;/admin/reservas&#x27; },
+          { title: &#x27;Clientes&#x27;, url: &#x27;/admin/clientes&#x27; },
+        ],
+      });
+    }
+
+    return sections;
+  })</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="49" class="link-to-prism">src/app/app.component.ts:49</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="tema"></a>
+                    <span class="name">
+                            <span class="modifier">Readonly</span>
+                        <span ><b>tema</b></span>
+                        <a href="#tema"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>inject(TemaService)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="47" class="link-to-prism">src/app/app.component.ts:47</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, computed, inject } from &#x27;@angular/core&#x27;;
+import { RouterLink, RouterLinkActive } from &#x27;@angular/router&#x27;;
+import {
+  IonApp,
+  IonContent,
+  IonHeader,
+  IonItem,
+  IonLabel,
+  IonList,
+  IonListHeader,
+  IonMenu,
+  IonMenuToggle,
+  IonRouterOutlet,
+  IonSplitPane,
+  IonTitle,
+  IonToolbar,
+} from &#x27;@ionic/angular&#x27;;
+
+import { AuthService } from &#x27;./core/services/auth.service&#x27;;
+import { TemaService } from &#x27;./core/services/tema.service&#x27;;
+
+@Component({
+  selector: &#x27;app-root&#x27;,
+  templateUrl: &#x27;app.component.html&#x27;,
+  styleUrls: [&#x27;app.component.scss&#x27;],
+  imports: [
+    RouterLink,
+    RouterLinkActive,
+    IonApp,
+    IonContent,
+    IonHeader,
+    IonItem,
+    IonLabel,
+    IonList,
+    IonListHeader,
+    IonMenu,
+    IonMenuToggle,
+    IonRouterOutlet,
+    IonSplitPane,
+    IonTitle,
+    IonToolbar,
+  ],
+})
+export class AppComponent {
+  private readonly auth &#x3D; inject(AuthService);
+
+  readonly tema &#x3D; inject(TemaService);
+
+  readonly menuSections &#x3D; computed(() &#x3D;&gt; {
+    const sections &#x3D; [
+      {
+        title: &#x27;Tienda&#x27;,
+        links: [
+          { title: &#x27;Catálogo&#x27;, url: &#x27;/catalogo&#x27; },
+          { title: &#x27;Mis reservas&#x27;, url: &#x27;/mis-reservas&#x27; },
+          { title: &#x27;Ayuda&#x27;, url: &#x27;/ayuda&#x27; },
+          {
+            title: this.auth.session() ? &#x27;Mi cuenta&#x27; : &#x27;Iniciar sesión&#x27;,
+            url: &#x27;/login&#x27;,
+          },
+        ],
+      },
+    ];
+
+    if (this.auth.role() &#x3D;&#x3D;&#x3D; &#x27;admin&#x27;) {
+      sections.push({
+        title: &#x27;Administración&#x27;,
+        links: [
+          { title: &#x27;Estadísticas&#x27;, url: &#x27;/admin/dashboard&#x27; },
+          { title: &#x27;Productos y existencias&#x27;, url: &#x27;/admin/productos&#x27; },
+          { title: &#x27;Gestión de reservas&#x27;, url: &#x27;/admin/reservas&#x27; },
+          { title: &#x27;Clientes&#x27;, url: &#x27;/admin/clientes&#x27; },
+        ],
+      });
+    }
+
+    return sections;
+  });
+}</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;ion-app&gt;
+  &lt;ion-split-pane contentId&#x3D;&quot;main-content&quot; when&#x3D;&quot;lg&quot;&gt;
+    &lt;ion-menu
+      menuId&#x3D;&quot;main-menu&quot;
+      contentId&#x3D;&quot;main-content&quot;
+      type&#x3D;&quot;overlay&quot;
+    &gt;
+      &lt;ion-header class&#x3D;&quot;menu-header&quot;&gt;
+        &lt;ion-toolbar&gt;
+          &lt;ion-title&gt;
+            &lt;span class&#x3D;&quot;brand&quot;&gt;
+              &lt;span class&#x3D;&quot;brand-record&quot; aria-hidden&#x3D;&quot;true&quot;&gt;&lt;/span&gt;
+
+              &lt;span class&#x3D;&quot;brand-copy&quot;&gt;
+                &lt;span class&#x3D;&quot;brand-name&quot;&gt;Vinyl Store&lt;/span&gt;
+                &lt;span class&#x3D;&quot;brand-caption&quot;&gt;Discos para tu colección&lt;/span&gt;
+              &lt;/span&gt;
+            &lt;/span&gt;
+          &lt;/ion-title&gt;
+        &lt;/ion-toolbar&gt;
+      &lt;/ion-header&gt;
+
+      &lt;ion-content&gt;
+        &lt;div class&#x3D;&quot;menu-layout&quot;&gt;
+          &lt;nav aria-label&#x3D;&quot;Navegación principal&quot;&gt;
+            @for (section of menuSections(); track section.title) {
+              &lt;ion-list&gt;
+                &lt;ion-list-header&gt;
+                  &lt;ion-label&gt;{{ section.title }}&lt;/ion-label&gt;
+                &lt;/ion-list-header&gt;
+
+                @for (link of section.links; track link.url) {
+                  &lt;ion-menu-toggle
+                    menu&#x3D;&quot;main-menu&quot;
+                    [autoHide]&#x3D;&quot;false&quot;
+                  &gt;
+                    &lt;ion-item
+                      [routerLink]&#x3D;&quot;link.url&quot;
+                      routerDirection&#x3D;&quot;root&quot;
+                      routerLinkActive&#x3D;&quot;selected&quot;
+                      [routerLinkActiveOptions]&#x3D;&quot;{ exact: true }&quot;
+                      ariaCurrentWhenActive&#x3D;&quot;page&quot;
+                      [detail]&#x3D;&quot;false&quot;
+                      lines&#x3D;&quot;none&quot;
+                    &gt;
+                      &lt;ion-label&gt;{{ link.title }}&lt;/ion-label&gt;
+                    &lt;/ion-item&gt;
+                  &lt;/ion-menu-toggle&gt;
+                }
+              &lt;/ion-list&gt;
+            }
+          &lt;/nav&gt;
+
+          &lt;div class&#x3D;&quot;menu-note&quot;&gt;
+            &lt;button
+              class&#x3D;&quot;theme-toggle&quot;
+              type&#x3D;&quot;button&quot;
+              aria-label&#x3D;&quot;Modo oscuro&quot;
+              [attr.aria-pressed]&#x3D;&quot;tema.esOscuro()&quot;
+              [title]&#x3D;&quot;tema.esOscuro() ? &#x27;Activar modo claro&#x27; : &#x27;Activar modo oscuro&#x27;&quot;
+              (click)&#x3D;&quot;tema.alternar()&quot;
+            &gt;
+              &lt;span class&#x3D;&quot;theme-toggle-copy&quot;&gt;
+                @if (tema.esOscuro()) {
+                  &lt;svg
+                    viewBox&#x3D;&quot;0 0 24 24&quot;
+                    fill&#x3D;&quot;none&quot;
+                    stroke&#x3D;&quot;currentColor&quot;
+                    stroke-width&#x3D;&quot;1.7&quot;
+                    stroke-linecap&#x3D;&quot;round&quot;
+                    stroke-linejoin&#x3D;&quot;round&quot;
+                    aria-hidden&#x3D;&quot;true&quot;
+                  &gt;
+                    &lt;path d&#x3D;&quot;M20.8 13.1A9 9 0 0 1 10.9 3.2 9 9 0 1 0 20.8 13.1Z&quot; /&gt;
+                  &lt;/svg&gt;
+                } @else {
+                  &lt;svg
+                    viewBox&#x3D;&quot;0 0 24 24&quot;
+                    fill&#x3D;&quot;none&quot;
+                    stroke&#x3D;&quot;currentColor&quot;
+                    stroke-width&#x3D;&quot;1.7&quot;
+                    stroke-linecap&#x3D;&quot;round&quot;
+                    aria-hidden&#x3D;&quot;true&quot;
+                  &gt;
+                    &lt;circle cx&#x3D;&quot;12&quot; cy&#x3D;&quot;12&quot; r&#x3D;&quot;4&quot; /&gt;
+                    &lt;path d&#x3D;&quot;M12 2v2m0 16v2M2 12h2m16 0h2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4&quot; /&gt;
+                  &lt;/svg&gt;
+                }
+
+                &lt;span&gt;{{ tema.esOscuro() ? &#x27;Modo oscuro&#x27; : &#x27;Modo claro&#x27; }}&lt;/span&gt;
+              &lt;/span&gt;
+
+              &lt;span class&#x3D;&quot;theme-toggle-track&quot; aria-hidden&#x3D;&quot;true&quot;&gt;
+                &lt;span&gt;&lt;/span&gt;
+              &lt;/span&gt;
+            &lt;/button&gt;
+
+            &lt;span class&#x3D;&quot;menu-note-label&quot;&gt;Tu próxima escucha&lt;/span&gt;
+            &lt;p&gt;Explora el catálogo y reserva para recoger en tienda.&lt;/p&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/ion-content&gt;
+    &lt;/ion-menu&gt;
+
+    &lt;ion-router-outlet id&#x3D;&quot;main-content&quot;&gt;&lt;/ion-router-outlet&gt;
+  &lt;/ion-split-pane&gt;
+&lt;/ion-app&gt;</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="styleData">
+                <p class="comment">
+                    <code>app.component.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">ion-split-pane {
+  --side-width: 272px;
+  --side-min-width: 272px;
+  --side-max-width: 272px;
+  --border: 1px solid var(--store-border);
+}
+
+ion-menu {
+  --width: 272px;
+  --background: var(--store-surface);
+
+  ion-content {
+    --background: var(--store-surface);
+  }
+}
+
+.menu-header {
+  box-shadow: none;
+
+  ion-toolbar {
+    --min-height: 116px;
+    --border-width: 0;
+  }
+
+  ion-title {
+    padding-inline: 22px;
+  }
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  white-space: normal;
+}
+
+.brand-record {
+  position: relative;
+  display: block;
+  flex: 0 0 42px;
+  width: 42px;
+  height: 42px;
+  border: 1px solid var(--store-ink);
+  border-radius: 50%;
+  background: repeating-radial-gradient(
+    circle,
+    #292622 0,
+    #292622 3px,
+    #454039 4px,
+    #292622 5px
+  );
+
+  &amp;::before {
+    position: absolute;
+    inset: 13px;
+    border-radius: 50%;
+    background: var(--ion-color-primary);
+    content: &#x27;&#x27;;
+  }
+
+  &amp;::after {
+    position: absolute;
+    inset: 19px;
+    border-radius: 50%;
+    background: var(--store-surface);
+    content: &#x27;&#x27;;
+  }
+}
+
+.brand-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.brand-name {
+  font-family: var(--store-heading-font);
+  font-size: 1.75rem;
+  line-height: 1;
+  letter-spacing: -0.05em;
+}
+
+.brand-caption {
+  color: var(--store-muted);
+  font-family: var(--ion-font-family);
+  font-size: 0.65rem;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: 0.025em;
+}
+
+.menu-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+nav {
+  padding: 0.5rem 14px 1.5rem;
+}
+
+ion-list {
+  margin: 0;
+  padding: 0 0 1rem;
+  background: transparent;
+}
+
+ion-list-header {
+  min-height: 38px;
+  padding-inline: 13px;
+  color: var(--store-muted);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+ion-item {
+  --background: transparent;
+  --background-hover: var(--store-accent-soft);
+  --background-hover-opacity: 0.65;
+  --background-focused: var(--store-accent-soft);
+  --background-focused-opacity: 1;
+  --color: var(--store-ink);
+  --min-height: 48px;
+  --padding-start: 13px;
+  --inner-padding-end: 13px;
+  --border-radius: 8px;
+
+  margin-block: 4px;
+  font-size: 0.9rem;
+
+  ion-label {
+    white-space: normal;
+    line-height: 1.4;
+  }
+
+  &amp;.selected {
+    --background: var(--store-accent-soft);
+    --color: var(--ion-color-primary);
+
+    font-weight: 700;
+  }
+
+  &amp;:focus-within {
+    outline: 2px solid var(--ion-color-primary);
+    outline-offset: 2px;
+    border-radius: 8px;
+  }
+}
+
+.menu-note {
+  margin: auto 22px 0;
+  padding-block: 20px 26px;
+  border-top: 1px solid var(--store-border);
+
+  p {
+    margin: 8px 0 0;
+    color: var(--store-muted);
+    font-size: 0.8rem;
+    line-height: 1.6;
+  }
+}
+
+.menu-note-label {
+  color: var(--ion-color-primary);
+  font-family: var(--store-heading-font);
+  font-size: 1.2rem;
+}
+/* Selector de tema */
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  min-height: 48px;
+  margin-bottom: 20px;
+  padding: 10px 12px;
+  border: 1px solid var(--store-border);
+  border-radius: 10px;
+  background: var(--store-paper);
+  color: var(--store-ink);
+  font: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.theme-toggle:hover {
+  border-color: var(--ion-color-primary);
+}
+
+.theme-toggle-copy {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.theme-toggle-copy svg {
+  width: 20px;
+  height: 20px;
+  color: var(--ion-color-primary);
+}
+
+.theme-toggle-track {
+  display: flex;
+  align-items: center;
+  flex: 0 0 36px;
+  height: 22px;
+  padding: 3px;
+  border-radius: 999px;
+  background: var(--store-field-border);
+}
+
+.theme-toggle-track span {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--store-surface);
+}
+
+.theme-toggle[aria-pressed&#x3D;&#x27;true&#x27;] .theme-toggle-track {
+  background: var(--ion-color-primary);
+}
+
+.theme-toggle[aria-pressed&#x3D;&#x27;true&#x27;] .theme-toggle-track span {
+  transform: translateX(14px);
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Leyenda</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Elemento Html</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Componente</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Elemento Html con directiva</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis-network.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><ion-app>  <ion-split-pane contentId="main-content" when="lg">    <ion-menu      menuId="main-menu"      contentId="main-content"      type="overlay"    >      <ion-header class="menu-header">        <ion-toolbar>          <ion-title>            <span class="brand">              <span class="brand-record" aria-hidden="true"></span>              <span class="brand-copy">                <span class="brand-name">Vinyl Store</span>                <span class="brand-caption">Discos para tu colección</span>              </span>            </span>          </ion-title>        </ion-toolbar>      </ion-header>      <ion-content>        <div class="menu-layout">          <nav aria-label="Navegación principal">            @for (section of menuSections(); track section.title) {              <ion-list>                <ion-list-header>                  <ion-label>{{ section.title }}</ion-label>                </ion-list-header>                @for (link of section.links; track link.url) {                  <ion-menu-toggle                    menu="main-menu"                    [autoHide]="false"                  >                    <ion-item                      [routerLink]="link.url"                      routerDirection="root"                      routerLinkActive="selected"                      [routerLinkActiveOptions]="{ exact: true }"                      ariaCurrentWhenActive="page"                      [detail]="false"                      lines="none"                    >                      <ion-label>{{ link.title }}</ion-label>                    </ion-item>                  </ion-menu-toggle>                }              </ion-list>            }          </nav>          <div class="menu-note">            <button              class="theme-toggle"              type="button"              aria-label="Modo oscuro"              [attr.aria-pressed]="tema.esOscuro()"              [title]="tema.esOscuro() ? \'Activar modo claro\' : \'Activar modo oscuro\'"              (click)="tema.alternar()"            >              <span class="theme-toggle-copy">                @if (tema.esOscuro()) {                  <svg                    viewBox="0 0 24 24"                    fill="none"                    stroke="currentColor"                    stroke-width="1.7"                    stroke-linecap="round"                    stroke-linejoin="round"                    aria-hidden="true"                  >                    <path d="M20.8 13.1A9 9 0 0 1 10.9 3.2 9 9 0 1 0 20.8 13.1Z" />                  </svg>                } @else {                  <svg                    viewBox="0 0 24 24"                    fill="none"                    stroke="currentColor"                    stroke-width="1.7"                    stroke-linecap="round"                    aria-hidden="true"                  >                    <circle cx="12" cy="12" r="4" />                    <path d="M12 2v2m0 16v2M2 12h2m16 0h2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />                  </svg>                }                <span>{{ tema.esOscuro() ? \'Modo oscuro\' : \'Modo claro\' }}</span>              </span>              <span class="theme-toggle-track" aria-hidden="true">                <span></span>              </span>            </button>            <span class="menu-note-label">Tu próxima escucha</span>            <p>Explora el catálogo y reserva para recoger en tienda.</p>          </div>        </div>      </ion-content>    </ion-menu>    <ion-router-outlet id="main-content"></ion-router-outlet>  </ion-split-pane></ion-app></div>'
+    var COMPONENTS = [{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AyudaPage', 'selector': 'app-ayuda'},{'name': 'CatalogoPage', 'selector': 'app-catalogo'},{'name': 'ClienteDetallePage', 'selector': 'app-cliente-detalle'},{'name': 'ClientesPage', 'selector': 'app-clientes'},{'name': 'DashboardPage', 'selector': 'app-dashboard'},{'name': 'LoginPage', 'selector': 'app-login'},{'name': 'MisReservasPage', 'selector': 'app-mis-reservas'},{'name': 'ProductosPage', 'selector': 'app-productos'},{'name': 'ReservasPage', 'selector': 'app-reservas'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'AppComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> comparación de resultados "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No hay resultados que coincidan "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'AppComponent.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var updateDarkModeSwitchOffset = function () {
+                    var content = document.querySelector('.content');
+                    var scrollbarWidth = 0;
+
+                    if (content) {
+                         scrollbarWidth = Math.max(0, content.offsetWidth - content.clientWidth);
+                    }
+
+                    document.documentElement.style.setProperty(
+                         '--content-scrollbar-width',
+                         scrollbarWidth + 'px'
+                    );
+               };
+
+               updateDarkModeSwitchOffset();
+               requestAnimationFrame(updateDarkModeSwitchOffset);
+               window.addEventListener('resize', updateDarkModeSwitchOffset);
+
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

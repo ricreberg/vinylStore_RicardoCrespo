@@ -1,0 +1,1745 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Vinyl Store</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">Vinyl Store</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search">
+    <input type="text" placeholder="Escribe para buscar">
+    <button type="button"
+        class="search-input-clear"
+        aria-label="Clear search"
+        data-search-input-clear>&times;</button>
+</div>
+            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Componentes</li>
+  <li class="breadcrumb-item"
+  >
+  LoginPage</li>
+</ol>
+
+<div class="io-file io-file-path" data-compodoc="entity-file-path">
+    <span class="icon ion-ios-document" aria-hidden="true"></span>
+    <code>src/app/pages/login/login.page.ts</code>
+</div>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#api" class="nav-link"
+                role="tab" id="api-tab" data-bs-toggle="tab" data-link="api">API</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+
+
+
+
+<section data-compodoc="block-metadata">
+    <h3>Meta datos</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+            <tr>
+                <td class="col-md-3">changeDetection</td>
+                <td class="col-md-9"><code>ChangeDetectionStrategy.OnPush</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-login</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                        <div>        <code><a href="https://angular.dev/api/forms/ReactiveFormsModule" target="_blank" >ReactiveFormsModule</a></code>
+</div>
+                        <div>        <code><a href="https://angular.dev/api/router/RouterLink" target="_blank" >RouterLink</a></code>
+</div>
+                        <div>    <code>IonButton</code>
+</div>
+                        <div>    <code>IonButtons</code>
+</div>
+                        <div>    <code>IonContent</code>
+</div>
+                        <div>    <code>IonHeader</code>
+</div>
+                        <div>    <code>IonInput</code>
+</div>
+                        <div>    <code>IonMenuButton</code>
+</div>
+                        <div>    <code>IonTitle</code>
+</div>
+                        <div>    <code>IonToolbar</code>
+</div>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./login.page.scss</code></td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./login.page.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+        <section data-compodoc="block-relationships">
+            <h3>Relationships</h3>
+
+            <div class="row pt-3">
+                <div class="col-sm-6">
+                    <h4>Used by</h4>
+                        <p class="comment"><i>No hay resultados que coincidan.</i></p>
+                </div>
+
+                <div class="col-sm-6">
+                    <h4>Depends on</h4>
+                        <ul class="list-unstyled relationships-list">
+                                <li>
+                                            <code><a href="https://angular.dev/api/forms/ReactiveFormsModule" target="_blank" >ReactiveFormsModule</a></code>
+                                </li>
+                                <li>
+                                            <code><a href="https://angular.dev/api/router/RouterLink" target="_blank" >RouterLink</a></code>
+                                </li>
+                                <li>
+                                        <code>IonButton</code>
+                                </li>
+                                <li>
+                                        <code>IonButtons</code>
+                                </li>
+                                <li>
+                                        <code>IonContent</code>
+                                </li>
+                                <li>
+                                        <code>IonHeader</code>
+                                </li>
+                                <li>
+                                        <code>IonInput</code>
+                                </li>
+                                <li>
+                                        <code>IonMenuButton</code>
+                                </li>
+                                <li>
+                                        <code>IonTitle</code>
+                                </li>
+                                <li>
+                                        <code>IonToolbar</code>
+                                </li>
+                        </ul>
+                </div>
+            </div>
+        </section>
+</div>
+
+    <div class="tab-pane fade " id="api">    <section data-compodoc="block-index">
+    <h3 id="index">Índice</h3>
+        <table class="table table-sm table-bordered index-table">
+            <tbody>
+                <tr>
+                    <td class="col-md-3">
+                        <h6><b>Propiedades</b></h6>
+                    </td>
+                    <td class="col-md-9">
+                        <ul class="index-list">
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#auth" >auth</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#checkingSession" >checkingSession</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#errorMessage" >errorMessage</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#fb" >fb</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#form" >form</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#loading" >loading</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#mostrarPassword" >mostrarPassword</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#session" >session</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#successMessage" >successMessage</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table class="table table-sm table-bordered index-table">
+            <tbody>
+                <tr>
+                    <td class="col-md-3">
+                        <h6><b>Métodos</b></h6>
+                    </td>
+                    <td class="col-md-9">
+                        <ul class="index-list">
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#alternarPassword" >alternarPassword</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#formatearFecha" >formatearFecha</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#inicialCorreo" >inicialCorreo</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#ionViewWillEnter" >ionViewWillEnter</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#signIn" >signIn</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#signOut" >signOut</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+
+
+
+
+</section>
+
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Métodos
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="alternarPassword"></a>
+                    <span class="name">
+                        <span ><b>alternarPassword</b></span>
+                        <a href="#alternarPassword"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>alternarPassword()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="78"
+                                    class="link-to-prism">src/app/pages/login/login.page.ts:78</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="formatearFecha"></a>
+                    <span class="name">
+                        <span ><b>formatearFecha</b></span>
+                        <a href="#formatearFecha"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>formatearFecha(fecha: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="86"
+                                    class="link-to-prism">src/app/pages/login/login.page.ts:86</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>fecha</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="inicialCorreo"></a>
+                    <span class="name">
+                        <span ><b>inicialCorreo</b></span>
+                        <a href="#inicialCorreo"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>inicialCorreo(correo: string | undefined)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="82"
+                                    class="link-to-prism">src/app/pages/login/login.page.ts:82</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>correo</td>
+                                            <td>
+                                                        <code>string | undefined</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ionViewWillEnter"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>ionViewWillEnter</b></span>
+                        <a href="#ionViewWillEnter"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>ionViewWillEnter()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="55"
+                                    class="link-to-prism">src/app/pages/login/login.page.ts:55</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Devuelve : </b>    <code>Promise&lt;void&gt;</code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="signIn"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>signIn</b></span>
+                        <a href="#signIn"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>signIn()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="94"
+                                    class="link-to-prism">src/app/pages/login/login.page.ts:94</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Devuelve : </b>    <code>Promise&lt;void&gt;</code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="signOut"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>signOut</b></span>
+                        <a href="#signOut"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>signOut()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="138"
+                                    class="link-to-prism">src/app/pages/login/login.page.ts:138</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Devuelve : </b>    <code>Promise&lt;void&gt;</code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Propiedades
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="auth"></a>
+                    <span class="name">
+                            <span class="modifier">Readonly</span>
+                        <span ><b>auth</b></span>
+                        <a href="#auth"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>inject(AuthService)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="39" class="link-to-prism">src/app/pages/login/login.page.ts:39</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="checkingSession"></a>
+                    <span class="name">
+                            <span class="modifier">Readonly</span>
+                        <span ><b>checkingSession</b></span>
+                        <a href="#checkingSession"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>signal(true)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="44" class="link-to-prism">src/app/pages/login/login.page.ts:44</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="errorMessage"></a>
+                    <span class="name">
+                            <span class="modifier">Readonly</span>
+                        <span ><b>errorMessage</b></span>
+                        <a href="#errorMessage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>signal(&#x27;&#x27;)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="47" class="link-to-prism">src/app/pages/login/login.page.ts:47</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="fb"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>fb</b></span>
+                        <a href="#fb"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>inject(FormBuilder)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="41" class="link-to-prism">src/app/pages/login/login.page.ts:41</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="form"></a>
+                    <span class="name">
+                            <span class="modifier">Readonly</span>
+                        <span ><b>form</b></span>
+                        <a href="#form"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>this.fb.nonNullable.group({
+    email: [&#x27;&#x27;, [Validators.required, Validators.email]],
+    password: [&#x27;&#x27;, Validators.required],
+  })</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="50" class="link-to-prism">src/app/pages/login/login.page.ts:50</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loading"></a>
+                    <span class="name">
+                            <span class="modifier">Readonly</span>
+                        <span ><b>loading</b></span>
+                        <a href="#loading"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>signal(false)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="45" class="link-to-prism">src/app/pages/login/login.page.ts:45</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="mostrarPassword"></a>
+                    <span class="name">
+                            <span class="modifier">Readonly</span>
+                        <span ><b>mostrarPassword</b></span>
+                        <a href="#mostrarPassword"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>signal(false)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="46" class="link-to-prism">src/app/pages/login/login.page.ts:46</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="session"></a>
+                    <span class="name">
+                            <span class="modifier">Readonly</span>
+                        <span ><b>session</b></span>
+                        <a href="#session"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>this.auth.session</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="43" class="link-to-prism">src/app/pages/login/login.page.ts:43</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="successMessage"></a>
+                    <span class="name">
+                            <span class="modifier">Readonly</span>
+                        <span ><b>successMessage</b></span>
+                        <a href="#successMessage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>signal(&#x27;&#x27;)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="48" class="link-to-prism">src/app/pages/login/login.page.ts:48</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, inject, signal } from &#x27;@angular/core&#x27;;
+import {
+  FormBuilder,
+  ReactiveFormsModule,
+  Validators,
+} from &#x27;@angular/forms&#x27;;
+import { RouterLink } from &#x27;@angular/router&#x27;;
+import {
+  IonButton,
+  IonButtons,
+  IonContent,
+  IonHeader,
+  IonInput,
+  IonMenuButton,
+  IonTitle,
+  IonToolbar,
+} from &#x27;@ionic/angular&#x27;;
+
+import { AuthService } from &#x27;../../core/services/auth.service&#x27;;
+
+@Component({
+  selector: &#x27;app-login&#x27;,
+  templateUrl: &#x27;./login.page.html&#x27;,
+  styleUrls: [&#x27;./login.page.scss&#x27;],
+  imports: [
+    ReactiveFormsModule,
+    RouterLink,
+    IonButton,
+    IonButtons,
+    IonContent,
+    IonHeader,
+    IonInput,
+    IonMenuButton,
+    IonTitle,
+    IonToolbar,
+  ],
+})
+export class LoginPage {
+  readonly auth &#x3D; inject(AuthService);
+
+  private readonly fb &#x3D; inject(FormBuilder);
+
+  readonly session &#x3D; this.auth.session;
+  readonly checkingSession &#x3D; signal(true);
+  readonly loading &#x3D; signal(false);
+  readonly mostrarPassword &#x3D; signal(false);
+  readonly errorMessage &#x3D; signal(&#x27;&#x27;);
+  readonly successMessage &#x3D; signal(&#x27;&#x27;);
+
+  readonly form &#x3D; this.fb.nonNullable.group({
+    email: [&#x27;&#x27;, [Validators.required, Validators.email]],
+    password: [&#x27;&#x27;, Validators.required],
+  });
+
+  async ionViewWillEnter(): Promise&lt;void&gt; {
+    if (this.loading()) {
+      return;
+    }
+
+    this.checkingSession.set(true);
+    this.errorMessage.set(&#x27;&#x27;);
+    this.successMessage.set(&#x27;&#x27;);
+    this.mostrarPassword.set(false);
+
+    try {
+      const { error } &#x3D; await this.auth.getSession();
+
+      if (error) {
+        this.errorMessage.set(&#x27;No se ha podido recuperar la sesión.&#x27;);
+      }
+    } catch {
+      this.errorMessage.set(&#x27;No se ha podido comprobar la sesión.&#x27;);
+    } finally {
+      this.checkingSession.set(false);
+    }
+  }
+
+  alternarPassword(): void {
+    this.mostrarPassword.update((valor) &#x3D;&gt; !valor);
+  }
+
+  inicialCorreo(correo: string | undefined): string {
+    return correo?.trim().charAt(0).toLocaleUpperCase(&#x27;es&#x27;) || &#x27;VS&#x27;;
+  }
+
+  formatearFecha(fecha: string): string {
+    return new Date(fecha).toLocaleDateString(&#x27;es-ES&#x27;, {
+      day: &#x27;2-digit&#x27;,
+      month: &#x27;long&#x27;,
+      year: &#x27;numeric&#x27;,
+    });
+  }
+
+  async signIn(): Promise&lt;void&gt; {
+    if (
+      this.loading() ||
+      this.checkingSession() ||
+      this.session()
+    ) {
+      return;
+    }
+
+    this.errorMessage.set(&#x27;&#x27;);
+    this.successMessage.set(&#x27;&#x27;);
+
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
+
+    const { email, password } &#x3D; this.form.getRawValue();
+
+    this.loading.set(true);
+    this.form.disable();
+
+    try {
+      const { error } &#x3D; await this.auth.signIn(email, password);
+
+      if (error) {
+        this.errorMessage.set(
+          &#x27;No se ha podido iniciar sesión. Comprueba el correo y la contraseña.&#x27;,
+        );
+        return;
+      }
+
+      this.form.reset();
+      this.mostrarPassword.set(false);
+    } catch {
+      this.errorMessage.set(
+        &#x27;No se ha podido conectar con el servicio. Inténtalo de nuevo.&#x27;,
+      );
+    } finally {
+      this.form.enable();
+      this.loading.set(false);
+    }
+  }
+
+  async signOut(): Promise&lt;void&gt; {
+    if (this.loading() || this.checkingSession()) {
+      return;
+    }
+
+    this.loading.set(true);
+    this.errorMessage.set(&#x27;&#x27;);
+    this.successMessage.set(&#x27;&#x27;);
+
+    try {
+      const { error } &#x3D; await this.auth.signOut();
+
+      if (error) {
+        this.errorMessage.set(&#x27;No se ha podido cerrar la sesión.&#x27;);
+        return;
+      }
+
+      this.form.reset();
+      this.mostrarPassword.set(false);
+      this.successMessage.set(&#x27;Has cerrado la sesión.&#x27;);
+    } catch {
+      this.errorMessage.set(
+        &#x27;No se ha podido conectar con el servicio. Inténtalo de nuevo.&#x27;,
+      );
+    } finally {
+      this.loading.set(false);
+    }
+  }
+}</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;ion-header&gt;
+  &lt;ion-toolbar&gt;
+    &lt;ion-buttons slot&#x3D;&quot;start&quot;&gt;
+      &lt;ion-menu-button
+        menu&#x3D;&quot;main-menu&quot;
+        aria-label&#x3D;&quot;Abrir menú principal&quot;
+      &gt;&lt;/ion-menu-button&gt;
+    &lt;/ion-buttons&gt;
+
+    &lt;ion-title&gt;{{ session() ? &#x27;Mi cuenta&#x27; : &#x27;Iniciar sesión&#x27; }}&lt;/ion-title&gt;
+  &lt;/ion-toolbar&gt;
+&lt;/ion-header&gt;
+
+&lt;ion-content class&#x3D;&quot;ion-padding&quot;&gt;
+  &lt;div class&#x3D;&quot;pagina-cuenta&quot;&gt;
+    @if (checkingSession()) {
+      &lt;p role&#x3D;&quot;status&quot;&gt;Comprobando tu sesión…&lt;/p&gt;
+    } @else {
+      @if (session(); as currentSession) {
+        &lt;header class&#x3D;&quot;cabecera-cuenta&quot;&gt;
+          &lt;p class&#x3D;&quot;etiqueta-editorial&quot;&gt;Vinyl Store · Tu espacio&lt;/p&gt;
+          &lt;h1&gt;Mi cuenta&lt;/h1&gt;
+          &lt;p&gt;Consulta tu sesión y accede a tus reservas.&lt;/p&gt;
+        &lt;/header&gt;
+
+        &lt;section class&#x3D;&quot;ficha-cuenta&quot; aria-labelledby&#x3D;&quot;titulo-cuenta&quot;&gt;
+          &lt;div class&#x3D;&quot;cuenta-identidad&quot;&gt;
+            &lt;div class&#x3D;&quot;avatar-cuenta&quot; aria-hidden&#x3D;&quot;true&quot;&gt;
+              {{ inicialCorreo(currentSession.user.email) }}
+            &lt;/div&gt;
+
+            &lt;div&gt;
+              &lt;p class&#x3D;&quot;etiqueta-editorial&quot;&gt;Sesión iniciada&lt;/p&gt;
+              &lt;h2 id&#x3D;&quot;titulo-cuenta&quot;&gt;Tu cuenta de Vinyl Store&lt;/h2&gt;
+              &lt;p class&#x3D;&quot;correo-cuenta&quot;&gt;{{ currentSession.user.email }}&lt;/p&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+
+          &lt;dl class&#x3D;&quot;datos-cuenta&quot;&gt;
+            &lt;div&gt;
+              &lt;dt&gt;Tipo de cuenta&lt;/dt&gt;
+              &lt;dd&gt;
+                {{
+                  auth.role() &#x3D;&#x3D;&#x3D; &#x27;admin&#x27;
+                    ? &#x27;Administración&#x27;
+                    : auth.role() &#x3D;&#x3D;&#x3D; &#x27;cliente&#x27;
+                      ? &#x27;Cliente&#x27;
+                      : &#x27;Rol no disponible&#x27;
+                }}
+              &lt;/dd&gt;
+            &lt;/div&gt;
+
+            &lt;div&gt;
+              &lt;dt&gt;Fecha de alta&lt;/dt&gt;
+              &lt;dd&gt;{{ formatearFecha(currentSession.user.created_at) }}&lt;/dd&gt;
+            &lt;/div&gt;
+          &lt;/dl&gt;
+
+          &lt;div class&#x3D;&quot;accesos-cuenta&quot;&gt;
+            &lt;ion-button routerLink&#x3D;&quot;/mis-reservas&quot;&gt;
+              Ver mis reservas
+            &lt;/ion-button&gt;
+
+            &lt;ion-button routerLink&#x3D;&quot;/catalogo&quot; fill&#x3D;&quot;outline&quot;&gt;
+              Explorar catálogo
+            &lt;/ion-button&gt;
+
+            @if (auth.role() &#x3D;&#x3D;&#x3D; &#x27;admin&#x27;) {
+              &lt;ion-button routerLink&#x3D;&quot;/admin/dashboard&quot; fill&#x3D;&quot;outline&quot;&gt;
+                Abrir estadísticas
+              &lt;/ion-button&gt;
+            }
+          &lt;/div&gt;
+
+          &lt;div class&#x3D;&quot;cierre-cuenta&quot;&gt;
+            &lt;p&gt;
+              Si utilizas un equipo compartido, cierra la sesión al terminar.
+            &lt;/p&gt;
+
+            &lt;ion-button
+              type&#x3D;&quot;button&quot;
+              fill&#x3D;&quot;outline&quot;
+              (click)&#x3D;&quot;signOut()&quot;
+              [disabled]&#x3D;&quot;loading()&quot;
+            &gt;
+              {{ loading() ? &#x27;Cerrando sesión…&#x27; : &#x27;Cerrar sesión&#x27; }}
+            &lt;/ion-button&gt;
+          &lt;/div&gt;
+        &lt;/section&gt;
+      } @else {
+        &lt;div class&#x3D;&quot;acceso-grid&quot;&gt;
+          &lt;section class&#x3D;&quot;presentacion-acceso&quot;&gt;
+            &lt;p class&#x3D;&quot;etiqueta-editorial&quot;&gt;Vinyl Store&lt;/p&gt;
+
+            &lt;h1&gt;Tu colección,&lt;br /&gt;a un paso.&lt;/h1&gt;
+
+            &lt;p&gt;
+              Accede para reservar tus discos y consultar las solicitudes
+              de recogida.
+            &lt;/p&gt;
+
+            &lt;div class&#x3D;&quot;disco-acceso&quot; aria-hidden&#x3D;&quot;true&quot;&gt;
+              &lt;span&gt;VS&lt;/span&gt;
+            &lt;/div&gt;
+
+            &lt;a routerLink&#x3D;&quot;/catalogo&quot;&gt;
+              Seguir explorando el catálogo
+            &lt;/a&gt;
+          &lt;/section&gt;
+
+          &lt;section class&#x3D;&quot;formulario-acceso&quot; aria-labelledby&#x3D;&quot;titulo-acceso&quot;&gt;
+            &lt;p class&#x3D;&quot;etiqueta-editorial&quot;&gt;Acceso a tu cuenta&lt;/p&gt;
+            &lt;h2 id&#x3D;&quot;titulo-acceso&quot;&gt;Iniciar sesión&lt;/h2&gt;
+
+            &lt;p class&#x3D;&quot;instruccion-acceso&quot;&gt;
+              Introduce el correo y la contraseña de tu cuenta.
+            &lt;/p&gt;
+
+            &lt;form [formGroup]&#x3D;&quot;form&quot; (ngSubmit)&#x3D;&quot;signIn()&quot;&gt;
+              &lt;ion-input
+                label&#x3D;&quot;Correo electrónico&quot;
+                labelPlacement&#x3D;&quot;stacked&quot;
+                fill&#x3D;&quot;outline&quot;
+                type&#x3D;&quot;email&quot;
+                autocomplete&#x3D;&quot;username&quot;
+                formControlName&#x3D;&quot;email&quot;
+                errorText&#x3D;&quot;Introduce un correo electrónico válido.&quot;
+                [required]&#x3D;&quot;true&quot;
+              &gt;&lt;/ion-input&gt;
+
+              &lt;ion-input
+                label&#x3D;&quot;Contraseña&quot;
+                labelPlacement&#x3D;&quot;stacked&quot;
+                fill&#x3D;&quot;outline&quot;
+                [type]&#x3D;&quot;mostrarPassword() ? &#x27;text&#x27; : &#x27;password&#x27;&quot;
+                autocomplete&#x3D;&quot;current-password&quot;
+                formControlName&#x3D;&quot;password&quot;
+                errorText&#x3D;&quot;Introduce tu contraseña.&quot;
+                [required]&#x3D;&quot;true&quot;
+              &gt;&lt;/ion-input&gt;
+
+              &lt;button
+                class&#x3D;&quot;mostrar-password&quot;
+                type&#x3D;&quot;button&quot;
+                [attr.aria-pressed]&#x3D;&quot;mostrarPassword()&quot;
+                (click)&#x3D;&quot;alternarPassword()&quot;
+                [disabled]&#x3D;&quot;loading()&quot;
+              &gt;
+                {{ mostrarPassword() ? &#x27;Ocultar contraseña&#x27; : &#x27;Mostrar contraseña&#x27; }}
+              &lt;/button&gt;
+
+              &lt;ion-button
+                class&#x3D;&quot;boton-acceso&quot;
+                type&#x3D;&quot;submit&quot;
+                expand&#x3D;&quot;block&quot;
+                [disabled]&#x3D;&quot;loading()&quot;
+              &gt;
+                {{ loading() ? &#x27;Accediendo…&#x27; : &#x27;Iniciar sesión&#x27; }}
+              &lt;/ion-button&gt;
+            &lt;/form&gt;
+
+            &lt;p class&#x3D;&quot;nota-acceso&quot;&gt;
+              Actualmente el acceso se realiza con las cuentas
+              facilitadas por la administración.
+            &lt;/p&gt;
+          &lt;/section&gt;
+        &lt;/div&gt;
+      }
+    }
+
+    @if (errorMessage()) {
+      &lt;p role&#x3D;&quot;alert&quot;&gt;{{ errorMessage() }}&lt;/p&gt;
+    }
+
+    @if (successMessage()) {
+      &lt;p role&#x3D;&quot;status&quot;&gt;{{ successMessage() }}&lt;/p&gt;
+    }
+  &lt;/div&gt;
+&lt;/ion-content&gt;</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="styleData">
+                <p class="comment">
+                    <code>./login.page.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">.pagina-cuenta {
+  max-width: 1100px;
+  margin-inline: auto;
+  padding-block: 1rem;
+}
+
+.etiqueta-editorial {
+  margin: 0 0 0.75rem;
+  color: var(--ion-color-primary);
+  font-size: 0.65rem;
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.acceso-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(2rem, 6vw, 5rem);
+  min-height: 65vh;
+}
+
+.presentacion-acceso {
+  h1 {
+    margin: 0 0 1.25rem;
+    font-size: clamp(2.7rem, 4.5vw, 4.4rem);
+    line-height: 1.05;
+  }
+
+  &gt; p:not(.etiqueta-editorial) {
+    max-width: 38ch;
+    color: var(--store-muted);
+  }
+
+  &gt; a {
+    display: inline-block;
+    padding-block: 0.75rem;
+    font-size: 0.85rem;
+  }
+}
+
+.disco-acceso {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 170px;
+  aspect-ratio: 1;
+  margin-block: 1.75rem 1rem;
+  border-radius: 50%;
+  background: repeating-radial-gradient(
+    circle,
+    #292622 0,
+    #292622 5px,
+    #454039 6px,
+    #292622 7px
+  );
+  box-shadow: 6px 12px 25px rgb(41 38 34 / 12%);
+
+  span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    background: var(--store-selected-bg);
+    color: #ffffff;
+    font-family: var(--store-heading-font);
+    font-size: 1.25rem;
+  }
+}
+
+.formulario-acceso {
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+  border: 1px solid var(--store-border);
+  border-radius: 16px;
+  background: var(--store-surface);
+
+  h2 {
+    margin: 0;
+    font-size: 2rem;
+  }
+
+  ion-input {
+    margin-top: 1rem;
+  }
+}
+
+.instruccion-acceso,
+.nota-acceso {
+  color: var(--store-muted);
+  font-size: 0.8rem;
+}
+
+.nota-acceso {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--store-border);
+  font-size: 0.75rem;
+}
+
+.mostrar-password {
+  display: block;
+  min-height: 44px;
+  margin-top: 0.25rem;
+  padding: 0.5rem 0;
+  border: 0;
+  background: transparent;
+  color: var(--ion-color-primary);
+  font: inherit;
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+.boton-acceso {
+  margin: 0.75rem 0 0;
+}
+
+.cabecera-cuenta {
+  margin-bottom: 1.75rem;
+
+  h1 {
+    margin: 0;
+    font-size: clamp(2rem, 3vw, 2.75rem);
+  }
+
+  &gt; p:last-child {
+    color: var(--store-muted);
+  }
+}
+
+.ficha-cuenta {
+  padding: clamp(1.25rem, 3vw, 2rem);
+  border: 1px solid var(--store-border);
+  border-radius: 16px;
+  background: var(--store-surface);
+}
+
+.cuenta-identidad {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+
+  &gt; div:last-child {
+    min-width: 0;
+  }
+
+  h2 {
+    margin: 0;
+    font-size: 1.9rem;
+  }
+}
+
+.avatar-cuenta {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  border: 1px solid var(--store-avatar-border);
+  border-radius: 50%;
+  background: var(--store-accent-soft);
+  color: var(--ion-color-primary);
+  font-family: var(--store-heading-font);
+  font-size: 2rem;
+}
+
+.correo-cuenta {
+  margin-bottom: 0;
+  color: var(--store-muted);
+  overflow-wrap: anywhere;
+}
+
+.datos-cuenta {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.5rem;
+  margin-block: 1.75rem;
+  padding-block: 1.25rem;
+  border-top: 1px solid var(--store-border);
+  border-bottom: 1px solid var(--store-border);
+
+  dt {
+    margin-bottom: 0.5rem;
+    color: var(--store-muted);
+    font-size: 0.75rem;
+  }
+
+  dd {
+    margin: 0;
+    font-size: 0.9rem;
+  }
+}
+
+.accesos-cuenta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+
+  ion-button {
+    margin: 0;
+  }
+}
+
+.cierre-cuenta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--store-border);
+
+  p {
+    margin: 0;
+    color: var(--store-muted);
+    font-size: 0.75rem;
+  }
+
+  ion-button {
+    margin: 0;
+  }
+}
+
+@media (max-width: 700px) {
+  .acceso-grid {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+
+  .disco-acceso {
+    width: 110px;
+    margin-block: 1rem;
+
+    span {
+      width: 40px;
+      height: 40px;
+      font-size: 1rem;
+    }
+  }
+}
+
+@media (max-width: 430px) {
+  .cuenta-identidad {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .datos-cuenta {
+    grid-template-columns: 1fr;
+  }
+}</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Leyenda</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Elemento Html</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Componente</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Elemento Html con directiva</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis-network.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><ion-header>  <ion-toolbar>    <ion-buttons slot="start">      <ion-menu-button        menu="main-menu"        aria-label="Abrir menú principal"      ></ion-menu-button>    </ion-buttons>    <ion-title>{{ session() ? \'Mi cuenta\' : \'Iniciar sesión\' }}</ion-title>  </ion-toolbar></ion-header><ion-content class="ion-padding">  <div class="pagina-cuenta">    @if (checkingSession()) {      <p role="status">Comprobando tu sesión…</p>    } @else {      @if (session(); as currentSession) {        <header class="cabecera-cuenta">          <p class="etiqueta-editorial">Vinyl Store · Tu espacio</p>          <h1>Mi cuenta</h1>          <p>Consulta tu sesión y accede a tus reservas.</p>        </header>        <section class="ficha-cuenta" aria-labelledby="titulo-cuenta">          <div class="cuenta-identidad">            <div class="avatar-cuenta" aria-hidden="true">              {{ inicialCorreo(currentSession.user.email) }}            </div>            <div>              <p class="etiqueta-editorial">Sesión iniciada</p>              <h2 id="titulo-cuenta">Tu cuenta de Vinyl Store</h2>              <p class="correo-cuenta">{{ currentSession.user.email }}</p>            </div>          </div>          <dl class="datos-cuenta">            <div>              <dt>Tipo de cuenta</dt>              <dd>                {{                  auth.role() === \'admin\'                    ? \'Administración\'                    : auth.role() === \'cliente\'                      ? \'Cliente\'                      : \'Rol no disponible\'                }}              </dd>            </div>            <div>              <dt>Fecha de alta</dt>              <dd>{{ formatearFecha(currentSession.user.created_at) }}</dd>            </div>          </dl>          <div class="accesos-cuenta">            <ion-button routerLink="/mis-reservas">              Ver mis reservas            </ion-button>            <ion-button routerLink="/catalogo" fill="outline">              Explorar catálogo            </ion-button>            @if (auth.role() === \'admin\') {              <ion-button routerLink="/admin/dashboard" fill="outline">                Abrir estadísticas              </ion-button>            }          </div>          <div class="cierre-cuenta">            <p>              Si utilizas un equipo compartido, cierra la sesión al terminar.            </p>            <ion-button              type="button"              fill="outline"              (click)="signOut()"              [disabled]="loading()"            >              {{ loading() ? \'Cerrando sesión…\' : \'Cerrar sesión\' }}            </ion-button>          </div>        </section>      } @else {        <div class="acceso-grid">          <section class="presentacion-acceso">            <p class="etiqueta-editorial">Vinyl Store</p>            <h1>Tu colección,<br />a un paso.</h1>            <p>              Accede para reservar tus discos y consultar las solicitudes              de recogida.            </p>            <div class="disco-acceso" aria-hidden="true">              <span>VS</span>            </div>            <a routerLink="/catalogo">              Seguir explorando el catálogo            </a>          </section>          <section class="formulario-acceso" aria-labelledby="titulo-acceso">            <p class="etiqueta-editorial">Acceso a tu cuenta</p>            <h2 id="titulo-acceso">Iniciar sesión</h2>            <p class="instruccion-acceso">              Introduce el correo y la contraseña de tu cuenta.            </p>            <form [formGroup]="form" (ngSubmit)="signIn()">              <ion-input                label="Correo electrónico"                labelPlacement="stacked"                fill="outline"                type="email"                autocomplete="username"                formControlName="email"                errorText="Introduce un correo electrónico válido."                [required]="true"              ></ion-input>              <ion-input                label="Contraseña"                labelPlacement="stacked"                fill="outline"                [type]="mostrarPassword() ? \'text\' : \'password\'"                autocomplete="current-password"                formControlName="password"                errorText="Introduce tu contraseña."                [required]="true"              ></ion-input>              <button                class="mostrar-password"                type="button"                [attr.aria-pressed]="mostrarPassword()"                (click)="alternarPassword()"                [disabled]="loading()"              >                {{ mostrarPassword() ? \'Ocultar contraseña\' : \'Mostrar contraseña\' }}              </button>              <ion-button                class="boton-acceso"                type="submit"                expand="block"                [disabled]="loading()"              >                {{ loading() ? \'Accediendo…\' : \'Iniciar sesión\' }}              </ion-button>            </form>            <p class="nota-acceso">              Actualmente el acceso se realiza con las cuentas              facilitadas por la administración.            </p>          </section>        </div>      }    }    @if (errorMessage()) {      <p role="alert">{{ errorMessage() }}</p>    }    @if (successMessage()) {      <p role="status">{{ successMessage() }}</p>    }  </div></ion-content></div>'
+    var COMPONENTS = [{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AyudaPage', 'selector': 'app-ayuda'},{'name': 'CatalogoPage', 'selector': 'app-catalogo'},{'name': 'ClienteDetallePage', 'selector': 'app-cliente-detalle'},{'name': 'ClientesPage', 'selector': 'app-clientes'},{'name': 'DashboardPage', 'selector': 'app-dashboard'},{'name': 'LoginPage', 'selector': 'app-login'},{'name': 'MisReservasPage', 'selector': 'app-mis-reservas'},{'name': 'ProductosPage', 'selector': 'app-productos'},{'name': 'ReservasPage', 'selector': 'app-reservas'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'LoginPage'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> comparación de resultados "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No hay resultados que coincidan "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'LoginPage.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var updateDarkModeSwitchOffset = function () {
+                    var content = document.querySelector('.content');
+                    var scrollbarWidth = 0;
+
+                    if (content) {
+                         scrollbarWidth = Math.max(0, content.offsetWidth - content.clientWidth);
+                    }
+
+                    document.documentElement.style.setProperty(
+                         '--content-scrollbar-width',
+                         scrollbarWidth + 'px'
+                    );
+               };
+
+               updateDarkModeSwitchOffset();
+               requestAnimationFrame(updateDarkModeSwitchOffset);
+               window.addEventListener('resize', updateDarkModeSwitchOffset);
+
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

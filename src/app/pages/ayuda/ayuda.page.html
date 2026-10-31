@@ -10,7 +10,190 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
-  <h1>Ayuda</h1>
-  <p>Aquí encontrarás las instrucciones para utilizar la aplicación.</p>
+<ion-content>
+  <main class="manual">
+    <header class="manual-cabecera">
+      <p class="etiqueta">GUÍA DE USO</p>
+      <h1>Ayuda</h1>
+      <p>Consulta cómo reservar discos y utilizar las opciones de gestión.</p>
+
+      <nav class="accesos" aria-label="Accesos de ayuda">
+        <a routerLink="/catalogo">Ir al catálogo</a>
+        <a routerLink="/login">Acceder a mi cuenta</a>
+        <a routerLink="/mis-reservas">Consultar mis reservas</a>
+      </nav>
+    </header>
+
+    <div class="manual-secciones">
+      <section class="panel" aria-labelledby="ayuda-reservas">
+        <p class="etiqueta">CLIENTES</p>
+        <h2 id="ayuda-reservas">Consultar y reservar</h2>
+
+        <ol>
+          <li>
+            <strong>Encuentra un disco.</strong>
+            Busca por título o artista, filtra por género y selecciona
+            «Solo con existencias» si quieres ver únicamente los disponibles.
+          </li>
+          <li>
+            <strong>Inicia sesión.</strong>
+            Accede con tu correo y contraseña. Si permaneces en la pantalla
+            de cuenta, vuelve al catálogo desde el menú.
+          </li>
+          <li>
+            <strong>Elige las unidades.</strong>
+            Pulsa «Reservar», introduce la cantidad y sal del campo para
+            comprobar la disponibilidad.
+          </li>
+          <li>
+            <strong>Confirma la reserva.</strong>
+            Espera a que termine la comprobación. Si la operación se completa,
+            podrás consultarla en «Mis reservas».
+          </li>
+        </ol>
+
+        <p class="aviso">
+          La disponibilidad puede cambiar mientras eliges las unidades.
+          Las existencias se comprueban de nuevo al confirmar.
+        </p>
+      </section>
+
+      <section class="panel" aria-labelledby="ayuda-estados">
+        <p class="etiqueta">SEGUIMIENTO</p>
+        <h2 id="ayuda-estados">Estados de una reserva</h2>
+
+        <dl>
+          <dt>Pendiente</dt>
+          <dd>
+            Las unidades están apartadas para su recogida.
+            Puedes cancelar la reserva desde «Mis reservas».
+          </dd>
+
+          <dt>Recogida</dt>
+          <dd>
+            El administrador ha confirmado la entrega en tienda.
+            La aplicación la considera una compra completada y cobrada.
+          </dd>
+
+          <dt>Cancelada</dt>
+          <dd>
+            La reserva ha terminado y las unidades vuelven a estar disponibles.
+          </dd>
+        </dl>
+
+        <p class="aviso">
+          Las reservas recogidas y canceladas son estados finales.
+          La aplicación no realiza pagos por Internet.
+        </p>
+      </section>
+
+      <section class="panel" aria-labelledby="ayuda-admin">
+        <p class="etiqueta">ADMINISTRACIÓN</p>
+        <h2 id="ayuda-admin">Gestionar la tienda</h2>
+        <p>Estas opciones requieren una cuenta con rol administrador.</p>
+
+        <ul>
+          <li>
+            <strong>Productos y existencias:</strong>
+            crear y editar discos, gestionar sus portadas y modificar
+            su publicación. Retirar un producto del catálogo conserva
+            su historial.
+          </li>
+          <li>
+            <strong>Gestión de reservas:</strong>
+            buscar y filtrar reservas y confirmar la recogida o cancelación
+            de las pendientes.
+          </li>
+          <li>
+            <strong>Clientes:</strong>
+            consultar las fichas, el historial de reservas y el gasto
+            acumulado de las compras recogidas.
+          </li>
+        </ul>
+
+        <p class="aviso">
+          Si las existencias cambian mientras editas un producto,
+          actualiza el listado y vuelve a abrir la edición para revisarlas.
+        </p>
+      </section>
+
+      <section class="panel" aria-labelledby="ayuda-informes">
+        <p class="etiqueta">ESTADÍSTICAS</p>
+        <h2 id="ayuda-informes">Consultar y descargar informes</h2>
+
+        <ol>
+          <li>
+            Abre «Estadísticas» y selecciona un periodo rápido,
+            todo el historial o un intervalo personalizado.
+          </li>
+          <li>
+            Consulta los indicadores, los gráficos y sus tablas de datos.
+            Utiliza «Actualizar datos» para solicitar una nueva carga.
+          </li>
+          <li>
+            Pulsa la opción de PDF o CSV para descargar el informe
+            del periodo seleccionado.
+          </li>
+        </ol>
+
+        <p class="aviso">
+          Las ventas se sitúan en la fecha de recogida y conservan
+          el precio de la reserva. Los indicadores de productos y existencias
+          muestran la situación actual.
+        </p>
+      </section>
+    </div>
+
+    <section class="panel preguntas" aria-labelledby="ayuda-problemas">
+      <p class="etiqueta">DUDAS HABITUALES</p>
+      <h2 id="ayuda-problemas">Si algo no funciona</h2>
+
+      <details>
+        <summary>No puedo confirmar una reserva</summary>
+        <p>
+          Comprueba la cantidad y espera a que termine la validación.
+          Si aparece un error de conexión, revisa tu conexión y vuelve
+          a comprobar la disponibilidad.
+        </p>
+      </details>
+
+      <details>
+        <summary>No sé si la reserva se ha guardado</summary>
+        <p>
+          Si se interrumpe la conexión al confirmar, consulta «Mis reservas»
+          y actualiza el listado antes de iniciar otra reserva.
+        </p>
+      </details>
+
+      <details>
+        <summary>No aparece el menú de administración</summary>
+        <p>
+          Las opciones de gestión solo aparecen con una cuenta administradora.
+          Comprueba la cuenta con la que has iniciado sesión.
+        </p>
+      </details>
+
+      <details>
+        <summary>Los datos no reflejan un cambio reciente</summary>
+        <p>
+          Utiliza el botón de actualización de la pantalla.
+          Si la carga falla, se mostrará un mensaje para volver a intentarlo.
+        </p>
+      </details>
+
+      <details>
+        <summary>¿Puedo crear una cuenta o recuperar mi contraseña?</summary>
+        <p>
+          Esta versión de demostración utiliza cuentas previamente creadas.
+          No incluye registro público ni recuperación de contraseña
+          desde la aplicación.
+        </p>
+      </details>
+    </section>
+
+    <footer class="manual-pie">
+      Aplicación académica de demostración. Los clientes y las operaciones
+      del historial son datos ficticios de prueba.
+    </footer>
+  </main>
 </ion-content>

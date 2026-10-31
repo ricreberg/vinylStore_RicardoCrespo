@@ -1,0 +1,771 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Vinyl Store</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">Vinyl Store</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search">
+    <input type="text" placeholder="Escribe para buscar">
+    <button type="button"
+        class="search-input-clear"
+        aria-label="Clear search"
+        data-search-input-clear>&times;</button>
+</div>
+            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Componentes</li>
+  <li class="breadcrumb-item"
+  >
+  AyudaPage</li>
+</ol>
+
+<div class="io-file io-file-path" data-compodoc="entity-file-path">
+    <span class="icon ion-ios-document" aria-hidden="true"></span>
+    <code>src/app/pages/ayuda/ayuda.page.ts</code>
+</div>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+
+
+
+
+<section data-compodoc="block-metadata">
+    <h3>Meta datos</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+            <tr>
+                <td class="col-md-3">changeDetection</td>
+                <td class="col-md-9"><code>ChangeDetectionStrategy.OnPush</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-ayuda</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                        <div>        <code><a href="https://angular.dev/api/router/RouterLink" target="_blank" >RouterLink</a></code>
+</div>
+                        <div>    <code>IonButtons</code>
+</div>
+                        <div>    <code>IonContent</code>
+</div>
+                        <div>    <code>IonHeader</code>
+</div>
+                        <div>    <code>IonMenuButton</code>
+</div>
+                        <div>    <code>IonTitle</code>
+</div>
+                        <div>    <code>IonToolbar</code>
+</div>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./ayuda.page.scss</code></td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./ayuda.page.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+        <section data-compodoc="block-relationships">
+            <h3>Relationships</h3>
+
+            <div class="row pt-3">
+                <div class="col-sm-6">
+                    <h4>Used by</h4>
+                        <p class="comment"><i>No hay resultados que coincidan.</i></p>
+                </div>
+
+                <div class="col-sm-6">
+                    <h4>Depends on</h4>
+                        <ul class="list-unstyled relationships-list">
+                                <li>
+                                            <code><a href="https://angular.dev/api/router/RouterLink" target="_blank" >RouterLink</a></code>
+                                </li>
+                                <li>
+                                        <code>IonButtons</code>
+                                </li>
+                                <li>
+                                        <code>IonContent</code>
+                                </li>
+                                <li>
+                                        <code>IonHeader</code>
+                                </li>
+                                <li>
+                                        <code>IonMenuButton</code>
+                                </li>
+                                <li>
+                                        <code>IonTitle</code>
+                                </li>
+                                <li>
+                                        <code>IonToolbar</code>
+                                </li>
+                        </ul>
+                </div>
+            </div>
+        </section>
+</div>
+
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component } from &#x27;@angular/core&#x27;;
+import { RouterLink } from &#x27;@angular/router&#x27;;
+import {
+  IonButtons,
+  IonContent,
+  IonHeader,
+  IonMenuButton,
+  IonTitle,
+  IonToolbar,
+} from &#x27;@ionic/angular&#x27;;
+
+@Component({
+  selector: &#x27;app-ayuda&#x27;,
+  templateUrl: &#x27;./ayuda.page.html&#x27;,
+  styleUrls: [&#x27;./ayuda.page.scss&#x27;],
+  imports: [
+    RouterLink,
+    IonButtons,
+    IonContent,
+    IonHeader,
+    IonMenuButton,
+    IonTitle,
+    IonToolbar,
+  ],
+})
+export class AyudaPage {}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;ion-header&gt;
+  &lt;ion-toolbar&gt;
+    &lt;ion-buttons slot&#x3D;&quot;start&quot;&gt;
+      &lt;ion-menu-button
+        menu&#x3D;&quot;main-menu&quot;
+        aria-label&#x3D;&quot;Abrir menú principal&quot;
+      &gt;&lt;/ion-menu-button&gt;
+    &lt;/ion-buttons&gt;
+    &lt;ion-title&gt;Ayuda&lt;/ion-title&gt;
+  &lt;/ion-toolbar&gt;
+&lt;/ion-header&gt;
+
+&lt;ion-content&gt;
+  &lt;main class&#x3D;&quot;manual&quot;&gt;
+    &lt;header class&#x3D;&quot;manual-cabecera&quot;&gt;
+      &lt;p class&#x3D;&quot;etiqueta&quot;&gt;GUÍA DE USO&lt;/p&gt;
+      &lt;h1&gt;Ayuda&lt;/h1&gt;
+      &lt;p&gt;Consulta cómo reservar discos y utilizar las opciones de gestión.&lt;/p&gt;
+
+      &lt;nav class&#x3D;&quot;accesos&quot; aria-label&#x3D;&quot;Accesos de ayuda&quot;&gt;
+        &lt;a routerLink&#x3D;&quot;/catalogo&quot;&gt;Ir al catálogo&lt;/a&gt;
+        &lt;a routerLink&#x3D;&quot;/login&quot;&gt;Acceder a mi cuenta&lt;/a&gt;
+        &lt;a routerLink&#x3D;&quot;/mis-reservas&quot;&gt;Consultar mis reservas&lt;/a&gt;
+      &lt;/nav&gt;
+    &lt;/header&gt;
+
+    &lt;div class&#x3D;&quot;manual-secciones&quot;&gt;
+      &lt;section class&#x3D;&quot;panel&quot; aria-labelledby&#x3D;&quot;ayuda-reservas&quot;&gt;
+        &lt;p class&#x3D;&quot;etiqueta&quot;&gt;CLIENTES&lt;/p&gt;
+        &lt;h2 id&#x3D;&quot;ayuda-reservas&quot;&gt;Consultar y reservar&lt;/h2&gt;
+
+        &lt;ol&gt;
+          &lt;li&gt;
+            &lt;strong&gt;Encuentra un disco.&lt;/strong&gt;
+            Busca por título o artista, filtra por género y selecciona
+            «Solo con existencias» si quieres ver únicamente los disponibles.
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;strong&gt;Inicia sesión.&lt;/strong&gt;
+            Accede con tu correo y contraseña. Si permaneces en la pantalla
+            de cuenta, vuelve al catálogo desde el menú.
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;strong&gt;Elige las unidades.&lt;/strong&gt;
+            Pulsa «Reservar», introduce la cantidad y sal del campo para
+            comprobar la disponibilidad.
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;strong&gt;Confirma la reserva.&lt;/strong&gt;
+            Espera a que termine la comprobación. Si la operación se completa,
+            podrás consultarla en «Mis reservas».
+          &lt;/li&gt;
+        &lt;/ol&gt;
+
+        &lt;p class&#x3D;&quot;aviso&quot;&gt;
+          La disponibilidad puede cambiar mientras eliges las unidades.
+          Las existencias se comprueban de nuevo al confirmar.
+        &lt;/p&gt;
+      &lt;/section&gt;
+
+      &lt;section class&#x3D;&quot;panel&quot; aria-labelledby&#x3D;&quot;ayuda-estados&quot;&gt;
+        &lt;p class&#x3D;&quot;etiqueta&quot;&gt;SEGUIMIENTO&lt;/p&gt;
+        &lt;h2 id&#x3D;&quot;ayuda-estados&quot;&gt;Estados de una reserva&lt;/h2&gt;
+
+        &lt;dl&gt;
+          &lt;dt&gt;Pendiente&lt;/dt&gt;
+          &lt;dd&gt;
+            Las unidades están apartadas para su recogida.
+            Puedes cancelar la reserva desde «Mis reservas».
+          &lt;/dd&gt;
+
+          &lt;dt&gt;Recogida&lt;/dt&gt;
+          &lt;dd&gt;
+            El administrador ha confirmado la entrega en tienda.
+            La aplicación la considera una compra completada y cobrada.
+          &lt;/dd&gt;
+
+          &lt;dt&gt;Cancelada&lt;/dt&gt;
+          &lt;dd&gt;
+            La reserva ha terminado y las unidades vuelven a estar disponibles.
+          &lt;/dd&gt;
+        &lt;/dl&gt;
+
+        &lt;p class&#x3D;&quot;aviso&quot;&gt;
+          Las reservas recogidas y canceladas son estados finales.
+          La aplicación no realiza pagos por Internet.
+        &lt;/p&gt;
+      &lt;/section&gt;
+
+      &lt;section class&#x3D;&quot;panel&quot; aria-labelledby&#x3D;&quot;ayuda-admin&quot;&gt;
+        &lt;p class&#x3D;&quot;etiqueta&quot;&gt;ADMINISTRACIÓN&lt;/p&gt;
+        &lt;h2 id&#x3D;&quot;ayuda-admin&quot;&gt;Gestionar la tienda&lt;/h2&gt;
+        &lt;p&gt;Estas opciones requieren una cuenta con rol administrador.&lt;/p&gt;
+
+        &lt;ul&gt;
+          &lt;li&gt;
+            &lt;strong&gt;Productos y existencias:&lt;/strong&gt;
+            crear y editar discos, gestionar sus portadas y modificar
+            su publicación. Retirar un producto del catálogo conserva
+            su historial.
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;strong&gt;Gestión de reservas:&lt;/strong&gt;
+            buscar y filtrar reservas y confirmar la recogida o cancelación
+            de las pendientes.
+          &lt;/li&gt;
+          &lt;li&gt;
+            &lt;strong&gt;Clientes:&lt;/strong&gt;
+            consultar las fichas, el historial de reservas y el gasto
+            acumulado de las compras recogidas.
+          &lt;/li&gt;
+        &lt;/ul&gt;
+
+        &lt;p class&#x3D;&quot;aviso&quot;&gt;
+          Si las existencias cambian mientras editas un producto,
+          actualiza el listado y vuelve a abrir la edición para revisarlas.
+        &lt;/p&gt;
+      &lt;/section&gt;
+
+      &lt;section class&#x3D;&quot;panel&quot; aria-labelledby&#x3D;&quot;ayuda-informes&quot;&gt;
+        &lt;p class&#x3D;&quot;etiqueta&quot;&gt;ESTADÍSTICAS&lt;/p&gt;
+        &lt;h2 id&#x3D;&quot;ayuda-informes&quot;&gt;Consultar y descargar informes&lt;/h2&gt;
+
+        &lt;ol&gt;
+          &lt;li&gt;
+            Abre «Estadísticas» y selecciona un periodo rápido,
+            todo el historial o un intervalo personalizado.
+          &lt;/li&gt;
+          &lt;li&gt;
+            Consulta los indicadores, los gráficos y sus tablas de datos.
+            Utiliza «Actualizar datos» para solicitar una nueva carga.
+          &lt;/li&gt;
+          &lt;li&gt;
+            Pulsa la opción de PDF o CSV para descargar el informe
+            del periodo seleccionado.
+          &lt;/li&gt;
+        &lt;/ol&gt;
+
+        &lt;p class&#x3D;&quot;aviso&quot;&gt;
+          Las ventas se sitúan en la fecha de recogida y conservan
+          el precio de la reserva. Los indicadores de productos y existencias
+          muestran la situación actual.
+        &lt;/p&gt;
+      &lt;/section&gt;
+    &lt;/div&gt;
+
+    &lt;section class&#x3D;&quot;panel preguntas&quot; aria-labelledby&#x3D;&quot;ayuda-problemas&quot;&gt;
+      &lt;p class&#x3D;&quot;etiqueta&quot;&gt;DUDAS HABITUALES&lt;/p&gt;
+      &lt;h2 id&#x3D;&quot;ayuda-problemas&quot;&gt;Si algo no funciona&lt;/h2&gt;
+
+      &lt;details&gt;
+        &lt;summary&gt;No puedo confirmar una reserva&lt;/summary&gt;
+        &lt;p&gt;
+          Comprueba la cantidad y espera a que termine la validación.
+          Si aparece un error de conexión, revisa tu conexión y vuelve
+          a comprobar la disponibilidad.
+        &lt;/p&gt;
+      &lt;/details&gt;
+
+      &lt;details&gt;
+        &lt;summary&gt;No sé si la reserva se ha guardado&lt;/summary&gt;
+        &lt;p&gt;
+          Si se interrumpe la conexión al confirmar, consulta «Mis reservas»
+          y actualiza el listado antes de iniciar otra reserva.
+        &lt;/p&gt;
+      &lt;/details&gt;
+
+      &lt;details&gt;
+        &lt;summary&gt;No aparece el menú de administración&lt;/summary&gt;
+        &lt;p&gt;
+          Las opciones de gestión solo aparecen con una cuenta administradora.
+          Comprueba la cuenta con la que has iniciado sesión.
+        &lt;/p&gt;
+      &lt;/details&gt;
+
+      &lt;details&gt;
+        &lt;summary&gt;Los datos no reflejan un cambio reciente&lt;/summary&gt;
+        &lt;p&gt;
+          Utiliza el botón de actualización de la pantalla.
+          Si la carga falla, se mostrará un mensaje para volver a intentarlo.
+        &lt;/p&gt;
+      &lt;/details&gt;
+
+      &lt;details&gt;
+        &lt;summary&gt;¿Puedo crear una cuenta o recuperar mi contraseña?&lt;/summary&gt;
+        &lt;p&gt;
+          Esta versión de demostración utiliza cuentas previamente creadas.
+          No incluye registro público ni recuperación de contraseña
+          desde la aplicación.
+        &lt;/p&gt;
+      &lt;/details&gt;
+    &lt;/section&gt;
+
+    &lt;footer class&#x3D;&quot;manual-pie&quot;&gt;
+      Aplicación académica de demostración. Los clientes y las operaciones
+      del historial son datos ficticios de prueba.
+    &lt;/footer&gt;
+  &lt;/main&gt;
+&lt;/ion-content&gt;
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="styleData">
+                <p class="comment">
+                    <code>./ayuda.page.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">:host {
+  display: block;
+}
+
+.manual {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: clamp(20px, 4vw, 48px);
+}
+
+.manual-cabecera {
+  margin-bottom: 28px;
+
+  h1 {
+    margin: 8px 0 16px;
+    font-size: clamp(2rem, 4vw, 3rem);
+  }
+
+  &gt; p:last-of-type {
+    line-height: 1.6;
+  }
+}
+
+.etiqueta {
+  color: var(--ion-color-primary);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+.accesos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  margin-top: 24px;
+}
+
+a {
+  color: var(--ion-color-primary);
+  text-underline-offset: 4px;
+}
+
+.manual-secciones {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.panel {
+  padding: clamp(20px, 3vw, 30px);
+  border: 1px solid var(--ion-color-step-200, #d8d1c8);
+  border-radius: 18px;
+  background: var(--ion-card-background, var(--ion-background-color));
+
+  h2 {
+    margin: 10px 0 20px;
+    font-size: 1.6rem;
+  }
+
+  p,
+  li,
+  dd {
+    line-height: 1.7;
+  }
+
+  ol,
+  ul {
+    padding-left: 22px;
+  }
+
+  li + li {
+    margin-top: 14px;
+  }
+}
+
+dt {
+  margin-top: 18px;
+  font-weight: 700;
+}
+
+dd {
+  margin: 6px 0 0;
+}
+
+.aviso {
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid var(--ion-color-step-200, #d8d1c8);
+  font-size: 0.94rem;
+}
+
+.preguntas {
+  margin-top: 20px;
+}
+
+details {
+  padding: 16px 0;
+  border-top: 1px solid var(--ion-color-step-200, #d8d1c8);
+
+  p {
+    margin-bottom: 0;
+  }
+}
+
+summary {
+  cursor: pointer;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+a:focus-visible,
+summary:focus-visible {
+  outline: 3px solid var(--ion-color-primary);
+  outline-offset: 5px;
+}
+
+.manual-pie {
+  margin-top: 24px;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+@media (max-width: 760px) {
+  .manual-secciones {
+    grid-template-columns: 1fr;
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Leyenda</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Elemento Html</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Componente</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Elemento Html con directiva</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis-network.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><ion-header>  <ion-toolbar>    <ion-buttons slot="start">      <ion-menu-button        menu="main-menu"        aria-label="Abrir menú principal"      ></ion-menu-button>    </ion-buttons>    <ion-title>Ayuda</ion-title>  </ion-toolbar></ion-header><ion-content>  <main class="manual">    <header class="manual-cabecera">      <p class="etiqueta">GUÍA DE USO</p>      <h1>Ayuda</h1>      <p>Consulta cómo reservar discos y utilizar las opciones de gestión.</p>      <nav class="accesos" aria-label="Accesos de ayuda">        <a routerLink="/catalogo">Ir al catálogo</a>        <a routerLink="/login">Acceder a mi cuenta</a>        <a routerLink="/mis-reservas">Consultar mis reservas</a>      </nav>    </header>    <div class="manual-secciones">      <section class="panel" aria-labelledby="ayuda-reservas">        <p class="etiqueta">CLIENTES</p>        <h2 id="ayuda-reservas">Consultar y reservar</h2>        <ol>          <li>            <strong>Encuentra un disco.</strong>            Busca por título o artista, filtra por género y selecciona            «Solo con existencias» si quieres ver únicamente los disponibles.          </li>          <li>            <strong>Inicia sesión.</strong>            Accede con tu correo y contraseña. Si permaneces en la pantalla            de cuenta, vuelve al catálogo desde el menú.          </li>          <li>            <strong>Elige las unidades.</strong>            Pulsa «Reservar», introduce la cantidad y sal del campo para            comprobar la disponibilidad.          </li>          <li>            <strong>Confirma la reserva.</strong>            Espera a que termine la comprobación. Si la operación se completa,            podrás consultarla en «Mis reservas».          </li>        </ol>        <p class="aviso">          La disponibilidad puede cambiar mientras eliges las unidades.          Las existencias se comprueban de nuevo al confirmar.        </p>      </section>      <section class="panel" aria-labelledby="ayuda-estados">        <p class="etiqueta">SEGUIMIENTO</p>        <h2 id="ayuda-estados">Estados de una reserva</h2>        <dl>          <dt>Pendiente</dt>          <dd>            Las unidades están apartadas para su recogida.            Puedes cancelar la reserva desde «Mis reservas».          </dd>          <dt>Recogida</dt>          <dd>            El administrador ha confirmado la entrega en tienda.            La aplicación la considera una compra completada y cobrada.          </dd>          <dt>Cancelada</dt>          <dd>            La reserva ha terminado y las unidades vuelven a estar disponibles.          </dd>        </dl>        <p class="aviso">          Las reservas recogidas y canceladas son estados finales.          La aplicación no realiza pagos por Internet.        </p>      </section>      <section class="panel" aria-labelledby="ayuda-admin">        <p class="etiqueta">ADMINISTRACIÓN</p>        <h2 id="ayuda-admin">Gestionar la tienda</h2>        <p>Estas opciones requieren una cuenta con rol administrador.</p>        <ul>          <li>            <strong>Productos y existencias:</strong>            crear y editar discos, gestionar sus portadas y modificar            su publicación. Retirar un producto del catálogo conserva            su historial.          </li>          <li>            <strong>Gestión de reservas:</strong>            buscar y filtrar reservas y confirmar la recogida o cancelación            de las pendientes.          </li>          <li>            <strong>Clientes:</strong>            consultar las fichas, el historial de reservas y el gasto            acumulado de las compras recogidas.          </li>        </ul>        <p class="aviso">          Si las existencias cambian mientras editas un producto,          actualiza el listado y vuelve a abrir la edición para revisarlas.        </p>      </section>      <section class="panel" aria-labelledby="ayuda-informes">        <p class="etiqueta">ESTADÍSTICAS</p>        <h2 id="ayuda-informes">Consultar y descargar informes</h2>        <ol>          <li>            Abre «Estadísticas» y selecciona un periodo rápido,            todo el historial o un intervalo personalizado.          </li>          <li>            Consulta los indicadores, los gráficos y sus tablas de datos.            Utiliza «Actualizar datos» para solicitar una nueva carga.          </li>          <li>            Pulsa la opción de PDF o CSV para descargar el informe            del periodo seleccionado.          </li>        </ol>        <p class="aviso">          Las ventas se sitúan en la fecha de recogida y conservan          el precio de la reserva. Los indicadores de productos y existencias          muestran la situación actual.        </p>      </section>    </div>    <section class="panel preguntas" aria-labelledby="ayuda-problemas">      <p class="etiqueta">DUDAS HABITUALES</p>      <h2 id="ayuda-problemas">Si algo no funciona</h2>      <details>        <summary>No puedo confirmar una reserva</summary>        <p>          Comprueba la cantidad y espera a que termine la validación.          Si aparece un error de conexión, revisa tu conexión y vuelve          a comprobar la disponibilidad.        </p>      </details>      <details>        <summary>No sé si la reserva se ha guardado</summary>        <p>          Si se interrumpe la conexión al confirmar, consulta «Mis reservas»          y actualiza el listado antes de iniciar otra reserva.        </p>      </details>      <details>        <summary>No aparece el menú de administración</summary>        <p>          Las opciones de gestión solo aparecen con una cuenta administradora.          Comprueba la cuenta con la que has iniciado sesión.        </p>      </details>      <details>        <summary>Los datos no reflejan un cambio reciente</summary>        <p>          Utiliza el botón de actualización de la pantalla.          Si la carga falla, se mostrará un mensaje para volver a intentarlo.        </p>      </details>      <details>        <summary>¿Puedo crear una cuenta o recuperar mi contraseña?</summary>        <p>          Esta versión de demostración utiliza cuentas previamente creadas.          No incluye registro público ni recuperación de contraseña          desde la aplicación.        </p>      </details>    </section>    <footer class="manual-pie">      Aplicación académica de demostración. Los clientes y las operaciones      del historial son datos ficticios de prueba.    </footer>  </main></ion-content></div>'
+    var COMPONENTS = [{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AyudaPage', 'selector': 'app-ayuda'},{'name': 'CatalogoPage', 'selector': 'app-catalogo'},{'name': 'ClienteDetallePage', 'selector': 'app-cliente-detalle'},{'name': 'ClientesPage', 'selector': 'app-clientes'},{'name': 'DashboardPage', 'selector': 'app-dashboard'},{'name': 'LoginPage', 'selector': 'app-login'},{'name': 'MisReservasPage', 'selector': 'app-mis-reservas'},{'name': 'ProductosPage', 'selector': 'app-productos'},{'name': 'ReservasPage', 'selector': 'app-reservas'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'AyudaPage'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> comparación de resultados "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No hay resultados que coincidan "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'AyudaPage.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var updateDarkModeSwitchOffset = function () {
+                    var content = document.querySelector('.content');
+                    var scrollbarWidth = 0;
+
+                    if (content) {
+                         scrollbarWidth = Math.max(0, content.offsetWidth - content.clientWidth);
+                    }
+
+                    document.documentElement.style.setProperty(
+                         '--content-scrollbar-width',
+                         scrollbarWidth + 'px'
+                    );
+               };
+
+               updateDarkModeSwitchOffset();
+               requestAnimationFrame(updateDarkModeSwitchOffset);
+               window.addEventListener('resize', updateDarkModeSwitchOffset);
+
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

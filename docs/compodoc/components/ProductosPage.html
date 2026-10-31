@@ -1,0 +1,3970 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Vinyl Store</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">Vinyl Store</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search">
+    <input type="text" placeholder="Escribe para buscar">
+    <button type="button"
+        class="search-input-clear"
+        aria-label="Clear search"
+        data-search-input-clear>&times;</button>
+</div>
+            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Componentes</li>
+  <li class="breadcrumb-item"
+  >
+  ProductosPage</li>
+</ol>
+
+<div class="io-file io-file-path" data-compodoc="entity-file-path">
+    <span class="icon ion-ios-document" aria-hidden="true"></span>
+    <code>src/app/pages/admin/productos/productos.page.ts</code>
+</div>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#api" class="nav-link"
+                role="tab" id="api-tab" data-bs-toggle="tab" data-link="api">API</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+
+
+    <p class="comment">
+        <h3>Implementa</h3>
+    </p>
+    <p class="comment">
+                    <code><a href="https://angular.dev/api/core/OnDestroy" target="_blank" >OnDestroy</a></code>
+    </p>
+
+
+<section data-compodoc="block-metadata">
+    <h3>Meta datos</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+            <tr>
+                <td class="col-md-3">changeDetection</td>
+                <td class="col-md-9"><code>ChangeDetectionStrategy.OnPush</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-productos</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                        <div>        <code><a href="https://angular.dev/api/forms/ReactiveFormsModule" target="_blank" >ReactiveFormsModule</a></code>
+</div>
+                        <div>    <code>IonButton</code>
+</div>
+                        <div>    <code>IonButtons</code>
+</div>
+                        <div>    <code>IonCheckbox</code>
+</div>
+                        <div>    <code>IonContent</code>
+</div>
+                        <div>    <code>IonHeader</code>
+</div>
+                        <div>    <code>IonInput</code>
+</div>
+                        <div>    <code>IonMenuButton</code>
+</div>
+                        <div>    <code>IonModal</code>
+</div>
+                        <div>    <code>IonTextarea</code>
+</div>
+                        <div>    <code>IonTitle</code>
+</div>
+                        <div>    <code>IonToolbar</code>
+</div>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./productos.page.scss</code></td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./productos.page.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+        <section data-compodoc="block-relationships">
+            <h3>Relationships</h3>
+
+            <div class="row pt-3">
+                <div class="col-sm-6">
+                    <h4>Used by</h4>
+                        <p class="comment"><i>No hay resultados que coincidan.</i></p>
+                </div>
+
+                <div class="col-sm-6">
+                    <h4>Depends on</h4>
+                        <ul class="list-unstyled relationships-list">
+                                <li>
+                                            <code><a href="https://angular.dev/api/forms/ReactiveFormsModule" target="_blank" >ReactiveFormsModule</a></code>
+                                </li>
+                                <li>
+                                        <code>IonButton</code>
+                                </li>
+                                <li>
+                                        <code>IonButtons</code>
+                                </li>
+                                <li>
+                                        <code>IonCheckbox</code>
+                                </li>
+                                <li>
+                                        <code>IonContent</code>
+                                </li>
+                                <li>
+                                        <code>IonHeader</code>
+                                </li>
+                                <li>
+                                        <code>IonInput</code>
+                                </li>
+                                <li>
+                                        <code>IonMenuButton</code>
+                                </li>
+                                <li>
+                                        <code>IonModal</code>
+                                </li>
+                                <li>
+                                        <code>IonTextarea</code>
+                                </li>
+                                <li>
+                                        <code>IonTitle</code>
+                                </li>
+                                <li>
+                                        <code>IonToolbar</code>
+                                </li>
+                                <li>
+                                            <code><a href="https://angular.dev/api/core/OnDestroy" target="_blank" >OnDestroy</a></code>
+                                </li>
+                        </ul>
+                </div>
+            </div>
+        </section>
+</div>
+
+    <div class="tab-pane fade " id="api">    <section data-compodoc="block-index">
+    <h3 id="index">Índice</h3>
+        <table class="table table-sm table-bordered index-table">
+            <tbody>
+                <tr>
+                    <td class="col-md-3">
+                        <h6><b>Propiedades</b></h6>
+                    </td>
+                    <td class="col-md-9">
+                        <ul class="index-list">
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#alertas" >alertas</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#archivoSeleccionado" >archivoSeleccionado</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#busqueda" >busqueda</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Private</span>
+                                <a href="#cierreTrasGuardar" >cierreTrasGuardar</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#editando" >editando</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#editorAbierto" >editorAbierto</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#fb" >fb</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#filtroStock" >filtroStock</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#form" >form</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#hayFiltros" >hayFiltros</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#loadError" >loadError</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#loading" >loading</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Opcional</span>
+                                <a href="#modal" >modal</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#moneda" >moneda</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#portadas" >portadas</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#productos" >productos</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#productosFiltrados" >productosFiltrados</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#publicacion" >publicacion</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#puedeCerrarEditor" >puedeCerrarEditor</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#resumen" >resumen</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Private</span>
+                                <a href="#rutaSubidaPendiente" >rutaSubidaPendiente</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#saveError" >saveError</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#saving" >saving</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#servicio" >servicio</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#successMessage" >successMessage</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#umbralStockBajo" >umbralStockBajo</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#vistaPrevia" >vistaPrevia</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table class="table table-sm table-bordered index-table">
+            <tbody>
+                <tr>
+                    <td class="col-md-3">
+                        <h6><b>Métodos</b></h6>
+                    </td>
+                    <td class="col-md-9">
+                        <ul class="index-list">
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#actualizarBusqueda" >actualizarBusqueda</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#actualizarPublicacion" >actualizarPublicacion</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#actualizarStock" >actualizarStock</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#cargarProductos" >cargarProductos</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#cerrarEditor" >cerrarEditor</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#descartarSeleccion" >descartarSeleccion</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#editarProducto" >editarProducto</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#editorCerrado" >editorCerrado</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#formatearPrecio" >formatearPrecio</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#guardarProducto" >guardarProducto</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#ionViewWillEnter" >ionViewWillEnter</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                    <span class="modifier">Private</span>
+                                <a href="#liberarVistaPrevia" >liberarVistaPrevia</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#limpiarFiltros" >limpiarFiltros</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#ngOnDestroy" >ngOnDestroy</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                    <span class="modifier">Private</span>
+                                <a href="#normalizar" >normalizar</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#nuevoProducto" >nuevoProducto</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#seleccionarPortada" >seleccionarPortada</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+
+
+
+
+</section>
+
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Métodos
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="actualizarBusqueda"></a>
+                    <span class="name">
+                        <span ><b>actualizarBusqueda</b></span>
+                        <a href="#actualizarBusqueda"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>actualizarBusqueda(event: <a href="https://angular.dev/api/router/Event" target="_blank">Event</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="230"
+                                    class="link-to-prism">src/app/pages/admin/productos/productos.page.ts:230</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>event</td>
+                                            <td>
+                                                            <code><a href="https://angular.dev/api/router/Event" target="_blank" >Event</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="actualizarPublicacion"></a>
+                    <span class="name">
+                        <span ><b>actualizarPublicacion</b></span>
+                        <a href="#actualizarPublicacion"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>actualizarPublicacion(event: <a href="https://angular.dev/api/router/Event" target="_blank">Event</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="238"
+                                    class="link-to-prism">src/app/pages/admin/productos/productos.page.ts:238</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>event</td>
+                                            <td>
+                                                            <code><a href="https://angular.dev/api/router/Event" target="_blank" >Event</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="actualizarStock"></a>
+                    <span class="name">
+                        <span ><b>actualizarStock</b></span>
+                        <a href="#actualizarStock"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>actualizarStock(event: <a href="https://angular.dev/api/router/Event" target="_blank">Event</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="256"
+                                    class="link-to-prism">src/app/pages/admin/productos/productos.page.ts:256</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>event</td>
+                                            <td>
+                                                            <code><a href="https://angular.dev/api/router/Event" target="_blank" >Event</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="cargarProductos"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>cargarProductos</b></span>
+                        <a href="#cargarProductos"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>cargarProductos()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="211"
+                                    class="link-to-prism">src/app/pages/admin/productos/productos.page.ts:211</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Devuelve : </b>    <code>Promise&lt;void&gt;</code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="cerrarEditor"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>cerrarEditor</b></span>
+                        <a href="#cerrarEditor"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>cerrarEditor()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="321"
+                                    class="link-to-prism">src/app/pages/admin/productos/productos.page.ts:321</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Devuelve : </b>    <code>Promise&lt;void&gt;</code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="descartarSeleccion"></a>
+                    <span class="name">
+                        <span ><b>descartarSeleccion</b></span>
+                        <a href="#descartarSeleccion"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>descartarSeleccion()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="371"
+                                    class="link-to-prism">src/app/pages/admin/productos/productos.page.ts:371</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="editarProducto"></a>
+                    <span class="name">
+                        <span ><b>editarProducto</b></span>
+                        <a href="#editarProducto"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>editarProducto(producto: <a href="../interfaces/Producto.html" target="_self">Producto</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="298"
+                                    class="link-to-prism">src/app/pages/admin/productos/productos.page.ts:298</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>producto</td>
+                                            <td>
+                                                            <code><a href="../interfaces/Producto.html" target="_self" >Producto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="editorCerrado"></a>
+                    <span class="name">
+                        <span ><b>editorCerrado</b></span>
+                        <a href="#editorCerrado"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>editorCerrado()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="327"
+                                    class="link-to-prism">src/app/pages/admin/productos/productos.page.ts:327</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="formatearPrecio"></a>
+                    <span class="name">
+                        <span ><b>formatearPrecio</b></span>
+                        <a href="#formatearPrecio"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>formatearPrecio(precio: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="281"
+                                    class="link-to-prism">src/app/pages/admin/productos/productos.page.ts:281</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>precio</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="guardarProducto"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>guardarProducto</b></span>
+                        <a href="#guardarProducto"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>guardarProducto()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="381"
+                                    class="link-to-prism">src/app/pages/admin/productos/productos.page.ts:381</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Devuelve : </b>    <code>Promise&lt;void&gt;</code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ionViewWillEnter"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>ionViewWillEnter</b></span>
+                        <a href="#ionViewWillEnter"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>ionViewWillEnter()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="203"
+                                    class="link-to-prism">src/app/pages/admin/productos/productos.page.ts:203</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Devuelve : </b>    <code>Promise&lt;void&gt;</code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="liberarVistaPrevia"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>liberarVistaPrevia</b></span>
+                        <a href="#liberarVistaPrevia"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>liberarVistaPrevia()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="476"
+                                    class="link-to-prism">src/app/pages/admin/productos/productos.page.ts:476</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="limpiarFiltros"></a>
+                    <span class="name">
+                        <span ><b>limpiarFiltros</b></span>
+                        <a href="#limpiarFiltros"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>limpiarFiltros()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="275"
+                                    class="link-to-prism">src/app/pages/admin/productos/productos.page.ts:275</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnDestroy"></a>
+                    <span class="name">
+                        <span ><b>ngOnDestroy</b></span>
+                        <a href="#ngOnDestroy"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnDestroy()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="207"
+                                    class="link-to-prism">src/app/pages/admin/productos/productos.page.ts:207</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="normalizar"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>normalizar</b></span>
+                        <a href="#normalizar"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>normalizar(texto: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="485"
+                                    class="link-to-prism">src/app/pages/admin/productos/productos.page.ts:485</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>texto</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="nuevoProducto"></a>
+                    <span class="name">
+                        <span ><b>nuevoProducto</b></span>
+                        <a href="#nuevoProducto"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>nuevoProducto()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="285"
+                                    class="link-to-prism">src/app/pages/admin/productos/productos.page.ts:285</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="seleccionarPortada"></a>
+                    <span class="name">
+                        <span ><b>seleccionarPortada</b></span>
+                        <a href="#seleccionarPortada"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>seleccionarPortada(event: <a href="https://angular.dev/api/router/Event" target="_blank">Event</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="338"
+                                    class="link-to-prism">src/app/pages/admin/productos/productos.page.ts:338</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>event</td>
+                                            <td>
+                                                            <code><a href="https://angular.dev/api/router/Event" target="_blank" >Event</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Propiedades
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="alertas"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>alertas</b></span>
+                        <a href="#alertas"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>inject(AlertController)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="57" class="link-to-prism">src/app/pages/admin/productos/productos.page.ts:57</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="archivoSeleccionado"></a>
+                    <span class="name">
+                            <span class="modifier">Readonly</span>
+                        <span ><b>archivoSeleccionado</b></span>
+                        <a href="#archivoSeleccionado"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>signal&lt;File | null&gt;(null)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="75" class="link-to-prism">src/app/pages/admin/productos/productos.page.ts:75</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="busqueda"></a>
+                    <span class="name">
+                            <span class="modifier">Readonly</span>
+                        <span ><b>busqueda</b></span>
+                        <a href="#busqueda"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>signal(&#x27;&#x27;)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="85" class="link-to-prism">src/app/pages/admin/productos/productos.page.ts:85</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="cierreTrasGuardar"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>cierreTrasGuardar</b></span>
+                        <a href="#cierreTrasGuardar"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="66" class="link-to-prism">src/app/pages/admin/productos/productos.page.ts:66</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="editando"></a>
+                    <span class="name">
+                            <span class="modifier">Readonly</span>
+                        <span ><b>editando</b></span>
+                        <a href="#editando"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>signal&lt;Producto | null&gt;(null)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="74" class="link-to-prism">src/app/pages/admin/productos/productos.page.ts:74</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="editorAbierto"></a>
+                    <span class="name">
+                            <span class="modifier">Readonly</span>
+                        <span ><b>editorAbierto</b></span>
+                        <a href="#editorAbierto"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>signal(false)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="77" class="link-to-prism">src/app/pages/admin/productos/productos.page.ts:77</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="fb"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>fb</b></span>
+                        <a href="#fb"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>inject(FormBuilder)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="58" class="link-to-prism">src/app/pages/admin/productos/productos.page.ts:58</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="filtroStock"></a>
+                    <span class="name">
+                            <span class="modifier">Readonly</span>
+                        <span ><b>filtroStock</b></span>
+                        <a href="#filtroStock"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>signal&lt;FiltroStock&gt;(&#x27;todos&#x27;)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="87" class="link-to-prism">src/app/pages/admin/productos/productos.page.ts:87</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="form"></a>
+                    <span class="name">
+                            <span class="modifier">Readonly</span>
+                        <span ><b>form</b></span>
+                        <a href="#form"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>this.fb.nonNullable.group({
+    titulo: [&#x27;&#x27;, [Validators.required, Validators.pattern(/\S/)]],
+    artista: [&#x27;&#x27;, [Validators.required, Validators.pattern(/\S/)]],
+    genero: [&#x27;&#x27;, [Validators.required, Validators.pattern(/\S/)]],
+    precio: [
+      0,
+      [
+        Validators.required,
+        Validators.min(0),
+        Validators.max(99999999.99),
+        Validators.pattern(/^\d+(\.\d{1,2})?$/),
+      ],
+    ],
+    stock: [
+      0,
+      [
+        Validators.required,
+        Validators.min(0),
+        Validators.max(2147483647),
+        Validators.pattern(/^\d+$/),
+      ],
+    ],
+    descripcion: [&#x27;&#x27;],
+    activo: [true],
+  })</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="142" class="link-to-prism">src/app/pages/admin/productos/productos.page.ts:142</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="hayFiltros"></a>
+                    <span class="name">
+                            <span class="modifier">Readonly</span>
+                        <span ><b>hayFiltros</b></span>
+                        <a href="#hayFiltros"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>computed(() &#x3D;&gt;
+    this.busqueda().trim() !&#x3D;&#x3D; &#x27;&#x27; ||
+    this.publicacion() !&#x3D;&#x3D; &#x27;todos&#x27; ||
+    this.filtroStock() !&#x3D;&#x3D; &#x27;todos&#x27;,
+  )</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="136" class="link-to-prism">src/app/pages/admin/productos/productos.page.ts:136</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadError"></a>
+                    <span class="name">
+                            <span class="modifier">Readonly</span>
+                        <span ><b>loadError</b></span>
+                        <a href="#loadError"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>signal(&#x27;&#x27;)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="81" class="link-to-prism">src/app/pages/admin/productos/productos.page.ts:81</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loading"></a>
+                    <span class="name">
+                            <span class="modifier">Readonly</span>
+                        <span ><b>loading</b></span>
+                        <a href="#loading"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>signal(true)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="79" class="link-to-prism">src/app/pages/admin/productos/productos.page.ts:79</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="modal"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Opcional</span>
+                        <span ><b>modal</b></span>
+                        <a href="#modal"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>IonModal</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decoradores : </b>
+                        <br />
+                        <code>
+                            @ViewChild(IonModal)<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="63" class="link-to-prism">src/app/pages/admin/productos/productos.page.ts:63</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="moneda"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>moneda</b></span>
+                        <a href="#moneda"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>new Intl.NumberFormat(&#x27;es-ES&#x27;, {
+    style: &#x27;currency&#x27;,
+    currency: &#x27;EUR&#x27;,
+  })</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="68" class="link-to-prism">src/app/pages/admin/productos/productos.page.ts:68</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="portadas"></a>
+                    <span class="name">
+                            <span class="modifier">Readonly</span>
+                        <span ><b>portadas</b></span>
+                        <a href="#portadas"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>inject(PortadasService)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="60" class="link-to-prism">src/app/pages/admin/productos/productos.page.ts:60</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="productos"></a>
+                    <span class="name">
+                            <span class="modifier">Readonly</span>
+                        <span ><b>productos</b></span>
+                        <a href="#productos"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>signal&lt;Producto[]&gt;([])</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="73" class="link-to-prism">src/app/pages/admin/productos/productos.page.ts:73</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="productosFiltrados"></a>
+                    <span class="name">
+                            <span class="modifier">Readonly</span>
+                        <span ><b>productosFiltrados</b></span>
+                        <a href="#productosFiltrados"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>computed(() &#x3D;&gt; {
+    const consulta &#x3D; this.normalizar(this.busqueda().trim());
+
+    return this.productos().filter((producto) &#x3D;&gt; {
+      const coincideBusqueda &#x3D;
+        !consulta ||
+        this.normalizar(
+          &#x60;${producto.titulo} ${producto.artista} ${producto.genero}&#x60;,
+        ).includes(consulta);
+
+      const coincidePublicacion &#x3D;
+        this.publicacion() &#x3D;&#x3D;&#x3D; &#x27;todos&#x27; ||
+        (this.publicacion() &#x3D;&#x3D;&#x3D; &#x27;publicados&#x27; &amp;&amp; producto.activo) ||
+        (this.publicacion() &#x3D;&#x3D;&#x3D; &#x27;retirados&#x27; &amp;&amp; !producto.activo);
+
+      const filtro &#x3D; this.filtroStock();
+
+      const coincideStock &#x3D;
+        filtro &#x3D;&#x3D;&#x3D; &#x27;todos&#x27; ||
+        (filtro &#x3D;&#x3D;&#x3D; &#x27;disponibles&#x27; &amp;&amp; producto.stock &gt; 0) ||
+        (filtro &#x3D;&#x3D;&#x3D; &#x27;bajo&#x27; &amp;&amp;
+          producto.stock &gt; 0 &amp;&amp;
+          producto.stock &lt;&#x3D; this.umbralStockBajo) ||
+        (filtro &#x3D;&#x3D;&#x3D; &#x27;agotados&#x27; &amp;&amp; producto.stock &#x3D;&#x3D;&#x3D; 0);
+
+      return coincideBusqueda &amp;&amp; coincidePublicacion &amp;&amp; coincideStock;
+    });
+  })</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="107" class="link-to-prism">src/app/pages/admin/productos/productos.page.ts:107</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="publicacion"></a>
+                    <span class="name">
+                            <span class="modifier">Readonly</span>
+                        <span ><b>publicacion</b></span>
+                        <a href="#publicacion"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>signal&lt;FiltroPublicacion&gt;(&#x27;todos&#x27;)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="86" class="link-to-prism">src/app/pages/admin/productos/productos.page.ts:86</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="puedeCerrarEditor"></a>
+                    <span class="name">
+                            <span class="modifier">Readonly</span>
+                        <span ><b>puedeCerrarEditor</b></span>
+                        <a href="#puedeCerrarEditor"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>() &#x3D;&gt; {...}</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="168" class="link-to-prism">src/app/pages/admin/productos/productos.page.ts:168</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="resumen"></a>
+                    <span class="name">
+                            <span class="modifier">Readonly</span>
+                        <span ><b>resumen</b></span>
+                        <a href="#resumen"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>computed(() &#x3D;&gt; {
+    const productos &#x3D; this.productos();
+    const publicados &#x3D; productos.filter((producto) &#x3D;&gt; producto.activo);
+
+    return {
+      total: productos.length,
+      publicados: publicados.length,
+      unidades: publicados.reduce(
+        (total, producto) &#x3D;&gt; total + producto.stock,
+        0,
+      ),
+      stockBajo: publicados.filter(
+        (producto) &#x3D;&gt; producto.stock &lt;&#x3D; this.umbralStockBajo,
+      ).length,
+    };
+  })</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="90" class="link-to-prism">src/app/pages/admin/productos/productos.page.ts:90</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="rutaSubidaPendiente"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>rutaSubidaPendiente</b></span>
+                        <a href="#rutaSubidaPendiente"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>string | null</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>null</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="65" class="link-to-prism">src/app/pages/admin/productos/productos.page.ts:65</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="saveError"></a>
+                    <span class="name">
+                            <span class="modifier">Readonly</span>
+                        <span ><b>saveError</b></span>
+                        <a href="#saveError"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>signal(&#x27;&#x27;)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="82" class="link-to-prism">src/app/pages/admin/productos/productos.page.ts:82</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="saving"></a>
+                    <span class="name">
+                            <span class="modifier">Readonly</span>
+                        <span ><b>saving</b></span>
+                        <a href="#saving"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>signal(false)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="80" class="link-to-prism">src/app/pages/admin/productos/productos.page.ts:80</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="servicio"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>servicio</b></span>
+                        <a href="#servicio"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>inject(ProductosService)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="56" class="link-to-prism">src/app/pages/admin/productos/productos.page.ts:56</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="successMessage"></a>
+                    <span class="name">
+                            <span class="modifier">Readonly</span>
+                        <span ><b>successMessage</b></span>
+                        <a href="#successMessage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>signal(&#x27;&#x27;)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="83" class="link-to-prism">src/app/pages/admin/productos/productos.page.ts:83</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="umbralStockBajo"></a>
+                    <span class="name">
+                            <span class="modifier">Readonly</span>
+                        <span ><b>umbralStockBajo</b></span>
+                        <a href="#umbralStockBajo"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>3</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="88" class="link-to-prism">src/app/pages/admin/productos/productos.page.ts:88</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="vistaPrevia"></a>
+                    <span class="name">
+                            <span class="modifier">Readonly</span>
+                        <span ><b>vistaPrevia</b></span>
+                        <a href="#vistaPrevia"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>signal&lt;string | null&gt;(null)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="76" class="link-to-prism">src/app/pages/admin/productos/productos.page.ts:76</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
+  Component,
+  OnDestroy,
+  ViewChild,
+  computed,
+  inject,
+  signal,
+} from &#x27;@angular/core&#x27;;
+import {
+  FormBuilder,
+  ReactiveFormsModule,
+  Validators,
+} from &#x27;@angular/forms&#x27;;
+import {
+  AlertController,
+  IonButton,
+  IonButtons,
+  IonCheckbox,
+  IonContent,
+  IonHeader,
+  IonInput,
+  IonMenuButton,
+  IonModal,
+  IonTextarea,
+  IonTitle,
+  IonToolbar,
+} from &#x27;@ionic/angular&#x27;;
+
+import { PortadasService } from &#x27;../../../core/services/portadas.service&#x27;;
+import { ProductosService } from &#x27;../../../core/services/productos.service&#x27;;
+import type { Producto } from &#x27;../../../core/services/productos.service&#x27;;
+
+type FiltroPublicacion &#x3D; &#x27;todos&#x27; | &#x27;publicados&#x27; | &#x27;retirados&#x27;;
+type FiltroStock &#x3D; &#x27;todos&#x27; | &#x27;disponibles&#x27; | &#x27;bajo&#x27; | &#x27;agotados&#x27;;
+
+@Component({
+  selector: &#x27;app-productos&#x27;,
+  templateUrl: &#x27;./productos.page.html&#x27;,
+  styleUrls: [&#x27;./productos.page.scss&#x27;],
+  imports: [
+    ReactiveFormsModule,
+    IonButton,
+    IonButtons,
+    IonCheckbox,
+    IonContent,
+    IonHeader,
+    IonInput,
+    IonMenuButton,
+    IonModal,
+    IonTextarea,
+    IonTitle,
+    IonToolbar,
+  ],
+})
+export class ProductosPage implements OnDestroy {
+  private readonly servicio &#x3D; inject(ProductosService);
+  private readonly alertas &#x3D; inject(AlertController);
+  private readonly fb &#x3D; inject(FormBuilder);
+
+  readonly portadas &#x3D; inject(PortadasService);
+
+  @ViewChild(IonModal)
+  private modal?: IonModal;
+
+  private rutaSubidaPendiente: string | null &#x3D; null;
+  private cierreTrasGuardar &#x3D; false;
+
+  private readonly moneda &#x3D; new Intl.NumberFormat(&#x27;es-ES&#x27;, {
+    style: &#x27;currency&#x27;,
+    currency: &#x27;EUR&#x27;,
+  });
+
+  readonly productos &#x3D; signal&lt;Producto[]&gt;([]);
+  readonly editando &#x3D; signal&lt;Producto | null&gt;(null);
+  readonly archivoSeleccionado &#x3D; signal&lt;File | null&gt;(null);
+  readonly vistaPrevia &#x3D; signal&lt;string | null&gt;(null);
+  readonly editorAbierto &#x3D; signal(false);
+
+  readonly loading &#x3D; signal(true);
+  readonly saving &#x3D; signal(false);
+  readonly loadError &#x3D; signal(&#x27;&#x27;);
+  readonly saveError &#x3D; signal(&#x27;&#x27;);
+  readonly successMessage &#x3D; signal(&#x27;&#x27;);
+
+  readonly busqueda &#x3D; signal(&#x27;&#x27;);
+  readonly publicacion &#x3D; signal&lt;FiltroPublicacion&gt;(&#x27;todos&#x27;);
+  readonly filtroStock &#x3D; signal&lt;FiltroStock&gt;(&#x27;todos&#x27;);
+  readonly umbralStockBajo &#x3D; 3;
+
+  readonly resumen &#x3D; computed(() &#x3D;&gt; {
+    const productos &#x3D; this.productos();
+    const publicados &#x3D; productos.filter((producto) &#x3D;&gt; producto.activo);
+
+    return {
+      total: productos.length,
+      publicados: publicados.length,
+      unidades: publicados.reduce(
+        (total, producto) &#x3D;&gt; total + producto.stock,
+        0,
+      ),
+      stockBajo: publicados.filter(
+        (producto) &#x3D;&gt; producto.stock &lt;&#x3D; this.umbralStockBajo,
+      ).length,
+    };
+  });
+
+  readonly productosFiltrados &#x3D; computed(() &#x3D;&gt; {
+    const consulta &#x3D; this.normalizar(this.busqueda().trim());
+
+    return this.productos().filter((producto) &#x3D;&gt; {
+      const coincideBusqueda &#x3D;
+        !consulta ||
+        this.normalizar(
+          &#x60;${producto.titulo} ${producto.artista} ${producto.genero}&#x60;,
+        ).includes(consulta);
+
+      const coincidePublicacion &#x3D;
+        this.publicacion() &#x3D;&#x3D;&#x3D; &#x27;todos&#x27; ||
+        (this.publicacion() &#x3D;&#x3D;&#x3D; &#x27;publicados&#x27; &amp;&amp; producto.activo) ||
+        (this.publicacion() &#x3D;&#x3D;&#x3D; &#x27;retirados&#x27; &amp;&amp; !producto.activo);
+
+      const filtro &#x3D; this.filtroStock();
+
+      const coincideStock &#x3D;
+        filtro &#x3D;&#x3D;&#x3D; &#x27;todos&#x27; ||
+        (filtro &#x3D;&#x3D;&#x3D; &#x27;disponibles&#x27; &amp;&amp; producto.stock &gt; 0) ||
+        (filtro &#x3D;&#x3D;&#x3D; &#x27;bajo&#x27; &amp;&amp;
+          producto.stock &gt; 0 &amp;&amp;
+          producto.stock &lt;&#x3D; this.umbralStockBajo) ||
+        (filtro &#x3D;&#x3D;&#x3D; &#x27;agotados&#x27; &amp;&amp; producto.stock &#x3D;&#x3D;&#x3D; 0);
+
+      return coincideBusqueda &amp;&amp; coincidePublicacion &amp;&amp; coincideStock;
+    });
+  });
+
+  readonly hayFiltros &#x3D; computed(() &#x3D;&gt;
+    this.busqueda().trim() !&#x3D;&#x3D; &#x27;&#x27; ||
+    this.publicacion() !&#x3D;&#x3D; &#x27;todos&#x27; ||
+    this.filtroStock() !&#x3D;&#x3D; &#x27;todos&#x27;,
+  );
+
+  readonly form &#x3D; this.fb.nonNullable.group({
+    titulo: [&#x27;&#x27;, [Validators.required, Validators.pattern(/\S/)]],
+    artista: [&#x27;&#x27;, [Validators.required, Validators.pattern(/\S/)]],
+    genero: [&#x27;&#x27;, [Validators.required, Validators.pattern(/\S/)]],
+    precio: [
+      0,
+      [
+        Validators.required,
+        Validators.min(0),
+        Validators.max(99999999.99),
+        Validators.pattern(/^\d+(\.\d{1,2})?$/),
+      ],
+    ],
+    stock: [
+      0,
+      [
+        Validators.required,
+        Validators.min(0),
+        Validators.max(2147483647),
+        Validators.pattern(/^\d+$/),
+      ],
+    ],
+    descripcion: [&#x27;&#x27;],
+    activo: [true],
+  });
+
+  readonly puedeCerrarEditor &#x3D; async (): Promise&lt;boolean&gt; &#x3D;&gt; {
+    if (this.cierreTrasGuardar) {
+      return true;
+    }
+
+    if (this.saving()) {
+      return false;
+    }
+
+    if (!this.form.dirty &amp;&amp; !this.archivoSeleccionado()) {
+      return true;
+    }
+
+    const alerta &#x3D; await this.alertas.create({
+      header: &#x27;¿Descartar los cambios?&#x27;,
+      message: &#x27;Los cambios del formulario no se han guardado.&#x27;,
+      buttons: [
+        {
+          text: &#x27;Seguir editando&#x27;,
+          role: &#x27;cancel&#x27;,
+        },
+        {
+          text: &#x27;Descartar&#x27;,
+          role: &#x27;destructive&#x27;,
+        },
+      ],
+    });
+
+    await alerta.present();
+
+    const { role } &#x3D; await alerta.onDidDismiss();
+
+    return role &#x3D;&#x3D;&#x3D; &#x27;destructive&#x27;;
+  };
+
+  async ionViewWillEnter(): Promise&lt;void&gt; {
+    await this.cargarProductos();
+  }
+
+  ngOnDestroy(): void {
+    this.liberarVistaPrevia();
+  }
+
+  async cargarProductos(): Promise&lt;void&gt; {
+    if (this.saving() || this.editorAbierto()) {
+      return;
+    }
+
+    this.loading.set(true);
+    this.loadError.set(&#x27;&#x27;);
+
+    try {
+      this.productos.set(await this.servicio.listar(false));
+    } catch {
+      this.loadError.set(
+        &#x27;No se han podido cargar los productos. Comprueba la conexión y vuelve a actualizar.&#x27;,
+      );
+    } finally {
+      this.loading.set(false);
+    }
+  }
+
+  actualizarBusqueda(event: Event): void {
+    const campo &#x3D; event.target;
+
+    if (campo instanceof HTMLInputElement) {
+      this.busqueda.set(campo.value);
+    }
+  }
+
+  actualizarPublicacion(event: Event): void {
+    const selector &#x3D; event.target;
+
+    if (!(selector instanceof HTMLSelectElement)) {
+      return;
+    }
+
+    const valor &#x3D; selector.value;
+
+    if (
+      valor &#x3D;&#x3D;&#x3D; &#x27;todos&#x27; ||
+      valor &#x3D;&#x3D;&#x3D; &#x27;publicados&#x27; ||
+      valor &#x3D;&#x3D;&#x3D; &#x27;retirados&#x27;
+    ) {
+      this.publicacion.set(valor);
+    }
+  }
+
+  actualizarStock(event: Event): void {
+    const selector &#x3D; event.target;
+
+    if (!(selector instanceof HTMLSelectElement)) {
+      return;
+    }
+
+    const valor &#x3D; selector.value;
+
+    if (
+      valor &#x3D;&#x3D;&#x3D; &#x27;todos&#x27; ||
+      valor &#x3D;&#x3D;&#x3D; &#x27;disponibles&#x27; ||
+      valor &#x3D;&#x3D;&#x3D; &#x27;bajo&#x27; ||
+      valor &#x3D;&#x3D;&#x3D; &#x27;agotados&#x27;
+    ) {
+      this.filtroStock.set(valor);
+    }
+  }
+
+  limpiarFiltros(): void {
+    this.busqueda.set(&#x27;&#x27;);
+    this.publicacion.set(&#x27;todos&#x27;);
+    this.filtroStock.set(&#x27;todos&#x27;);
+  }
+
+  formatearPrecio(precio: number): string {
+    return this.moneda.format(precio);
+  }
+
+  nuevoProducto(): void {
+    if (this.saving() || this.loading() || this.editorAbierto()) {
+      return;
+    }
+
+    this.editando.set(null);
+    this.form.reset();
+    this.descartarSeleccion();
+    this.saveError.set(&#x27;&#x27;);
+    this.successMessage.set(&#x27;&#x27;);
+    this.editorAbierto.set(true);
+  }
+
+  editarProducto(producto: Producto): void {
+    if (this.saving() || this.loading() || this.editorAbierto()) {
+      return;
+    }
+
+    this.editando.set(producto);
+    this.descartarSeleccion();
+    this.saveError.set(&#x27;&#x27;);
+    this.successMessage.set(&#x27;&#x27;);
+
+    this.form.reset({
+      titulo: producto.titulo,
+      artista: producto.artista,
+      genero: producto.genero,
+      precio: producto.precio,
+      stock: producto.stock,
+      descripcion: producto.descripcion,
+      activo: producto.activo,
+    });
+
+    this.editorAbierto.set(true);
+  }
+
+  async cerrarEditor(): Promise&lt;void&gt; {
+    if (!this.saving()) {
+      await this.modal?.dismiss();
+    }
+  }
+
+  editorCerrado(): void {
+    this.editorAbierto.set(false);
+    this.editando.set(null);
+    this.form.reset();
+    this.archivoSeleccionado.set(null);
+    this.rutaSubidaPendiente &#x3D; null;
+    this.liberarVistaPrevia();
+    this.saveError.set(&#x27;&#x27;);
+    this.cierreTrasGuardar &#x3D; false;
+  }
+
+  seleccionarPortada(event: Event): void {
+    const input &#x3D; event.target;
+
+    if (!(input instanceof HTMLInputElement) || this.saving()) {
+      return;
+    }
+
+    const archivo &#x3D; input.files?.[0];
+    input.value &#x3D; &#x27;&#x27;;
+
+    if (!archivo) {
+      return;
+    }
+
+    const formatos &#x3D; [&#x27;image/jpeg&#x27;, &#x27;image/png&#x27;, &#x27;image/webp&#x27;];
+
+    if (!formatos.includes(archivo.type)) {
+      this.saveError.set(&#x27;Selecciona una imagen JPEG, PNG o WebP.&#x27;);
+      return;
+    }
+
+    if (archivo.size &gt; 2097152) {
+      this.saveError.set(&#x27;La portada no puede superar los 2 MiB.&#x27;);
+      return;
+    }
+
+    this.liberarVistaPrevia();
+    this.archivoSeleccionado.set(archivo);
+    this.vistaPrevia.set(URL.createObjectURL(archivo));
+    this.rutaSubidaPendiente &#x3D; null;
+    this.saveError.set(&#x27;&#x27;);
+  }
+
+  descartarSeleccion(): void {
+    if (this.saving()) {
+      return;
+    }
+
+    this.archivoSeleccionado.set(null);
+    this.rutaSubidaPendiente &#x3D; null;
+    this.liberarVistaPrevia();
+  }
+
+  async guardarProducto(): Promise&lt;void&gt; {
+    if (
+      this.saving() ||
+      this.loading() ||
+      !this.editorAbierto()
+    ) {
+      return;
+    }
+
+    this.saveError.set(&#x27;&#x27;);
+    this.successMessage.set(&#x27;&#x27;);
+
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
+
+    const valores &#x3D; this.form.getRawValue();
+    const original &#x3D; this.editando();
+    const archivo &#x3D; this.archivoSeleccionado();
+
+    this.saving.set(true);
+    this.form.disable();
+
+    let fase: &#x27;imagen&#x27; | &#x27;producto&#x27; &#x3D; &#x27;imagen&#x27;;
+
+    try {
+      let imagenPath &#x3D; original?.imagen_path ?? null;
+
+      if (archivo) {
+        if (!this.rutaSubidaPendiente) {
+          this.rutaSubidaPendiente &#x3D; await this.portadas.subir(archivo);
+        }
+
+        imagenPath &#x3D; this.rutaSubidaPendiente;
+      }
+
+      fase &#x3D; &#x27;producto&#x27;;
+
+      const datos &#x3D; {
+        titulo: valores.titulo.trim(),
+        artista: valores.artista.trim(),
+        genero: valores.genero.trim(),
+        precio: Number(valores.precio),
+        stock: Number(valores.stock),
+        descripcion: valores.descripcion.trim(),
+        activo: valores.activo,
+        imagen_path: imagenPath,
+      };
+
+      const producto &#x3D; original
+        ? await this.servicio.actualizar(
+            original.id,
+            datos,
+            original.stock,
+          )
+        : await this.servicio.crear(datos);
+
+      this.productos.update((actuales) &#x3D;&gt;
+        original
+          ? actuales.map((actual) &#x3D;&gt;
+              actual.id &#x3D;&#x3D;&#x3D; producto.id ? producto : actual,
+            )
+          : [producto, ...actuales],
+      );
+
+      this.successMessage.set(
+        original
+          ? &#x60;Producto «${producto.titulo}» actualizado.&#x60;
+          : &#x60;Producto «${producto.titulo}» creado.&#x60;,
+      );
+
+      this.cierreTrasGuardar &#x3D; true;
+      await this.modal?.dismiss();
+    } catch (error: unknown) {
+      if (fase &#x3D;&#x3D;&#x3D; &#x27;imagen&#x27;) {
+        this.saveError.set(
+          error instanceof Error
+            ? &#x60;No se ha podido subir la portada: ${error.message}&#x60;
+            : &#x27;No se ha podido subir la portada.&#x27;,
+        );
+      } else {
+        this.saveError.set(
+          error instanceof Error
+            ? error.message
+            : &#x27;No se ha podido guardar el producto. Revisa su estado antes de volver a intentarlo.&#x27;,
+        );
+      }
+    } finally {
+      this.form.enable();
+      this.saving.set(false);
+      this.cierreTrasGuardar &#x3D; false;
+    }
+  }
+
+  private liberarVistaPrevia(): void {
+    const url &#x3D; this.vistaPrevia();
+
+    if (url) {
+      URL.revokeObjectURL(url);
+      this.vistaPrevia.set(null);
+    }
+  }
+
+  private normalizar(texto: string): string {
+    return texto
+      .normalize(&#x27;NFD&#x27;)
+      .replace(/[\u0300-\u036f]/g, &#x27;&#x27;)
+      .toLocaleLowerCase(&#x27;es&#x27;);
+  }
+}</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;ion-header&gt;
+  &lt;ion-toolbar&gt;
+    &lt;ion-buttons slot&#x3D;&quot;start&quot;&gt;
+      &lt;ion-menu-button
+        menu&#x3D;&quot;main-menu&quot;
+        aria-label&#x3D;&quot;Abrir menú principal&quot;
+      &gt;&lt;/ion-menu-button&gt;
+    &lt;/ion-buttons&gt;
+
+    &lt;ion-title&gt;Productos y existencias&lt;/ion-title&gt;
+  &lt;/ion-toolbar&gt;
+&lt;/ion-header&gt;
+
+&lt;ion-content class&#x3D;&quot;ion-padding&quot;&gt;
+  &lt;div class&#x3D;&quot;inventario&quot;&gt;
+    &lt;header class&#x3D;&quot;pagina-cabecera&quot;&gt;
+      &lt;div&gt;
+        &lt;p class&#x3D;&quot;etiqueta-editorial&quot;&gt;Administración · Inventario&lt;/p&gt;
+        &lt;h1&gt;Productos y existencias&lt;/h1&gt;
+        &lt;p class&#x3D;&quot;introduccion&quot;&gt;
+          Consulta y modifica los productos, su publicación y el stock disponible.
+        &lt;/p&gt;
+      &lt;/div&gt;
+
+      &lt;ion-button
+        type&#x3D;&quot;button&quot;
+        (click)&#x3D;&quot;nuevoProducto()&quot;
+        [disabled]&#x3D;&quot;loading() || saving()&quot;
+      &gt;
+        Añadir vinilo
+      &lt;/ion-button&gt;
+    &lt;/header&gt;
+
+    @if (successMessage()) {
+      &lt;p role&#x3D;&quot;status&quot;&gt;{{ successMessage() }}&lt;/p&gt;
+    }
+
+    @if (!loading() &amp;&amp; !loadError()) {
+      &lt;section class&#x3D;&quot;resumen-inventario&quot; aria-label&#x3D;&quot;Resumen del inventario&quot;&gt;
+        &lt;div&gt;
+          &lt;span&gt;Registrados&lt;/span&gt;
+          &lt;strong&gt;{{ resumen().total }}&lt;/strong&gt;
+        &lt;/div&gt;
+
+        &lt;div&gt;
+          &lt;span&gt;Publicados&lt;/span&gt;
+          &lt;strong&gt;{{ resumen().publicados }}&lt;/strong&gt;
+        &lt;/div&gt;
+
+        &lt;div&gt;
+          &lt;span&gt;Unidades en catálogo&lt;/span&gt;
+          &lt;strong&gt;{{ resumen().unidades }}&lt;/strong&gt;
+        &lt;/div&gt;
+
+        &lt;div&gt;
+          &lt;span&gt;Stock bajo o agotado&lt;/span&gt;
+          &lt;strong&gt;{{ resumen().stockBajo }}&lt;/strong&gt;
+          &lt;small&gt;Solo productos publicados&lt;/small&gt;
+        &lt;/div&gt;
+      &lt;/section&gt;
+    }
+
+    &lt;section class&#x3D;&quot;panel-listado&quot; aria-labelledby&#x3D;&quot;titulo-listado&quot;&gt;
+      &lt;div class&#x3D;&quot;listado-cabecera&quot;&gt;
+        &lt;div&gt;
+          &lt;p class&#x3D;&quot;etiqueta-editorial&quot;&gt;Catálogo y almacén&lt;/p&gt;
+          &lt;h2 id&#x3D;&quot;titulo-listado&quot;&gt;Productos registrados&lt;/h2&gt;
+        &lt;/div&gt;
+
+        &lt;ion-button
+          type&#x3D;&quot;button&quot;
+          fill&#x3D;&quot;outline&quot;
+          (click)&#x3D;&quot;cargarProductos()&quot;
+          [disabled]&#x3D;&quot;loading() || saving()&quot;
+        &gt;
+          {{ loading() ? &#x27;Actualizando…&#x27; : &#x27;Actualizar listado&#x27; }}
+        &lt;/ion-button&gt;
+      &lt;/div&gt;
+
+      &lt;div class&#x3D;&quot;filtros&quot;&gt;
+        &lt;div class&#x3D;&quot;campo-filtro campo-busqueda&quot;&gt;
+          &lt;label for&#x3D;&quot;buscar-productos&quot;&gt;Buscar producto&lt;/label&gt;
+          &lt;input
+            id&#x3D;&quot;buscar-productos&quot;
+            type&#x3D;&quot;search&quot;
+            placeholder&#x3D;&quot;Título, artista o género&quot;
+            [value]&#x3D;&quot;busqueda()&quot;
+            (input)&#x3D;&quot;actualizarBusqueda($event)&quot;
+          /&gt;
+        &lt;/div&gt;
+
+        &lt;div class&#x3D;&quot;campo-filtro&quot;&gt;
+          &lt;label for&#x3D;&quot;filtrar-publicacion&quot;&gt;Publicación&lt;/label&gt;
+          &lt;select
+            id&#x3D;&quot;filtrar-publicacion&quot;
+            [value]&#x3D;&quot;publicacion()&quot;
+            (change)&#x3D;&quot;actualizarPublicacion($event)&quot;
+          &gt;
+            &lt;option value&#x3D;&quot;todos&quot;&gt;Todos&lt;/option&gt;
+            &lt;option value&#x3D;&quot;publicados&quot;&gt;Publicados&lt;/option&gt;
+            &lt;option value&#x3D;&quot;retirados&quot;&gt;Retirados&lt;/option&gt;
+          &lt;/select&gt;
+        &lt;/div&gt;
+
+        &lt;div class&#x3D;&quot;campo-filtro&quot;&gt;
+          &lt;label for&#x3D;&quot;filtrar-stock&quot;&gt;Existencias&lt;/label&gt;
+          &lt;select
+            id&#x3D;&quot;filtrar-stock&quot;
+            [value]&#x3D;&quot;filtroStock()&quot;
+            (change)&#x3D;&quot;actualizarStock($event)&quot;
+          &gt;
+            &lt;option value&#x3D;&quot;todos&quot;&gt;Todas&lt;/option&gt;
+            &lt;option value&#x3D;&quot;disponibles&quot;&gt;Con existencias&lt;/option&gt;
+            &lt;option value&#x3D;&quot;bajo&quot;&gt;Stock bajo: 1–3 unidades&lt;/option&gt;
+            &lt;option value&#x3D;&quot;agotados&quot;&gt;Agotados&lt;/option&gt;
+          &lt;/select&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      @if (hayFiltros()) {
+        &lt;button
+          class&#x3D;&quot;limpiar-filtros&quot;
+          type&#x3D;&quot;button&quot;
+          (click)&#x3D;&quot;limpiarFiltros()&quot;
+        &gt;
+          Restablecer filtros
+        &lt;/button&gt;
+      }
+
+      @if (loading()) {
+        &lt;p role&#x3D;&quot;status&quot;&gt;Cargando el inventario…&lt;/p&gt;
+      } @else if (loadError()) {
+        &lt;p role&#x3D;&quot;alert&quot;&gt;{{ loadError() }}&lt;/p&gt;
+      } @else if (productos().length &#x3D;&#x3D;&#x3D; 0) {
+        &lt;div class&#x3D;&quot;estado-vacio&quot;&gt;
+          &lt;h3&gt;No hay productos registrados&lt;/h3&gt;
+          &lt;p&gt;Utiliza Añadir vinilo para crear el primer producto.&lt;/p&gt;
+
+          &lt;ion-button type&#x3D;&quot;button&quot; (click)&#x3D;&quot;nuevoProducto()&quot;&gt;
+            Añadir primer vinilo
+          &lt;/ion-button&gt;
+        &lt;/div&gt;
+      } @else if (productosFiltrados().length &#x3D;&#x3D;&#x3D; 0) {
+        &lt;div class&#x3D;&quot;estado-vacio&quot;&gt;
+          &lt;h3&gt;No hay coincidencias&lt;/h3&gt;
+          &lt;p&gt;Prueba otra búsqueda o modifica los filtros.&lt;/p&gt;
+
+          &lt;ion-button
+            type&#x3D;&quot;button&quot;
+            fill&#x3D;&quot;outline&quot;
+            (click)&#x3D;&quot;limpiarFiltros()&quot;
+          &gt;
+            Ver todos los productos
+          &lt;/ion-button&gt;
+        &lt;/div&gt;
+      } @else {
+        &lt;p class&#x3D;&quot;contador&quot; role&#x3D;&quot;status&quot;&gt;
+          {{ productosFiltrados().length }}
+          de {{ productos().length }} productos
+        &lt;/p&gt;
+
+        &lt;div class&#x3D;&quot;lista-productos&quot;&gt;
+          @for (producto of productosFiltrados(); track producto.id) {
+            &lt;article
+              class&#x3D;&quot;fila-producto&quot;
+              [class.producto-retirado]&#x3D;&quot;!producto.activo&quot;
+            &gt;
+              &lt;div class&#x3D;&quot;miniatura&quot;&gt;
+                @if (producto.imagen_path; as ruta) {
+                  &lt;img
+                    [src]&#x3D;&quot;portadas.obtenerUrl(ruta)&quot;
+                    [alt]&#x3D;&quot;&#x27;Portada de &#x27; + producto.titulo&quot;
+                    width&#x3D;&quot;80&quot;
+                    height&#x3D;&quot;80&quot;
+                    loading&#x3D;&quot;lazy&quot;
+                  /&gt;
+                } @else {
+                  &lt;span class&#x3D;&quot;mini-vinilo&quot; aria-hidden&#x3D;&quot;true&quot;&gt;&lt;/span&gt;
+                  &lt;span class&#x3D;&quot;solo-lectores&quot;&gt;Sin portada&lt;/span&gt;
+                }
+              &lt;/div&gt;
+
+              &lt;div class&#x3D;&quot;producto-identidad&quot;&gt;
+                &lt;h3&gt;{{ producto.titulo }}&lt;/h3&gt;
+                &lt;p&gt;{{ producto.artista }}&lt;/p&gt;
+                &lt;span class&#x3D;&quot;genero&quot;&gt;{{ producto.genero }}&lt;/span&gt;
+              &lt;/div&gt;
+
+              &lt;div class&#x3D;&quot;dato-producto&quot;&gt;
+                &lt;span class&#x3D;&quot;dato-etiqueta&quot;&gt;Precio&lt;/span&gt;
+                &lt;strong&gt;{{ formatearPrecio(producto.precio) }}&lt;/strong&gt;
+              &lt;/div&gt;
+
+              &lt;div class&#x3D;&quot;dato-producto&quot;&gt;
+                &lt;span class&#x3D;&quot;dato-etiqueta&quot;&gt;Existencias&lt;/span&gt;
+
+                &lt;span
+                  class&#x3D;&quot;estado-stock&quot;
+                  [class.stock-bajo]&#x3D;&quot;producto.stock &gt; 0 &amp;&amp; producto.stock &lt;&#x3D; umbralStockBajo&quot;
+                  [class.sin-stock]&#x3D;&quot;producto.stock &#x3D;&#x3D;&#x3D; 0&quot;
+                &gt;
+                  {{
+                    producto.stock &#x3D;&#x3D;&#x3D; 0
+                      ? &#x27;Agotado&#x27;
+                      : producto.stock + &#x27; uds.&#x27;
+                  }}
+                &lt;/span&gt;
+              &lt;/div&gt;
+
+              &lt;span
+                class&#x3D;&quot;estado-publicacion&quot;
+                [class.publicado]&#x3D;&quot;producto.activo&quot;
+              &gt;
+                {{ producto.activo ? &#x27;Publicado&#x27; : &#x27;Retirado&#x27; }}
+              &lt;/span&gt;
+
+              &lt;ion-button
+                type&#x3D;&quot;button&quot;
+                fill&#x3D;&quot;outline&quot;
+                (click)&#x3D;&quot;editarProducto(producto)&quot;
+                [disabled]&#x3D;&quot;saving() || loading()&quot;
+                [attr.aria-label]&#x3D;&quot;&#x27;Editar &#x27; + producto.titulo&quot;
+              &gt;
+                Editar
+              &lt;/ion-button&gt;
+            &lt;/article&gt;
+          }
+        &lt;/div&gt;
+      }
+    &lt;/section&gt;
+  &lt;/div&gt;
+
+  &lt;ion-modal
+    class&#x3D;&quot;editor-producto&quot;
+    [isOpen]&#x3D;&quot;editorAbierto()&quot;
+    [canDismiss]&#x3D;&quot;puedeCerrarEditor&quot;
+    [backdropDismiss]&#x3D;&quot;false&quot;
+    (didDismiss)&#x3D;&quot;editorCerrado()&quot;
+  &gt;
+    &lt;ng-template&gt;
+      &lt;ion-header&gt;
+        &lt;ion-toolbar&gt;
+          &lt;ion-title&gt;
+            {{ editando() ? &#x27;Editar vinilo&#x27; : &#x27;Añadir vinilo&#x27; }}
+          &lt;/ion-title&gt;
+
+          &lt;ion-buttons slot&#x3D;&quot;end&quot;&gt;
+            &lt;ion-button
+              type&#x3D;&quot;button&quot;
+              (click)&#x3D;&quot;cerrarEditor()&quot;
+              [disabled]&#x3D;&quot;saving()&quot;
+            &gt;
+              Cerrar
+            &lt;/ion-button&gt;
+          &lt;/ion-buttons&gt;
+        &lt;/ion-toolbar&gt;
+      &lt;/ion-header&gt;
+
+      &lt;ion-content class&#x3D;&quot;ion-padding&quot;&gt;
+        &lt;div class&#x3D;&quot;editor-contenido&quot;&gt;
+          &lt;p class&#x3D;&quot;etiqueta-editorial&quot;&gt;
+            {{ editando() ? &#x27;Edición de producto&#x27; : &#x27;Alta de producto&#x27; }}
+          &lt;/p&gt;
+
+          &lt;h2&gt;{{ editando()?.titulo ?? &#x27;Nuevo producto&#x27; }}&lt;/h2&gt;
+
+          &lt;p class&#x3D;&quot;editor-introduccion&quot;&gt;
+            Completa los datos del vinilo y decide si quieres publicarlo.
+            Título, artista, género, precio y existencias son obligatorios.
+          &lt;/p&gt;
+
+          &lt;form [formGroup]&#x3D;&quot;form&quot; (ngSubmit)&#x3D;&quot;guardarProducto()&quot;&gt;
+            &lt;div class&#x3D;&quot;formulario-grid&quot;&gt;
+              &lt;ion-input
+                label&#x3D;&quot;Título&quot;
+                labelPlacement&#x3D;&quot;stacked&quot;
+                fill&#x3D;&quot;outline&quot;
+                formControlName&#x3D;&quot;titulo&quot;
+                errorText&#x3D;&quot;Introduce el título del disco.&quot;
+                [required]&#x3D;&quot;true&quot;
+              &gt;&lt;/ion-input&gt;
+
+              &lt;ion-input
+                label&#x3D;&quot;Artista&quot;
+                labelPlacement&#x3D;&quot;stacked&quot;
+                fill&#x3D;&quot;outline&quot;
+                formControlName&#x3D;&quot;artista&quot;
+                errorText&#x3D;&quot;Introduce el artista o grupo.&quot;
+                [required]&#x3D;&quot;true&quot;
+              &gt;&lt;/ion-input&gt;
+
+              &lt;ion-input
+                label&#x3D;&quot;Género&quot;
+                labelPlacement&#x3D;&quot;stacked&quot;
+                fill&#x3D;&quot;outline&quot;
+                formControlName&#x3D;&quot;genero&quot;
+                errorText&#x3D;&quot;Introduce el género musical.&quot;
+                [required]&#x3D;&quot;true&quot;
+              &gt;&lt;/ion-input&gt;
+
+              &lt;ion-input
+                label&#x3D;&quot;Precio (€)&quot;
+                labelPlacement&#x3D;&quot;stacked&quot;
+                fill&#x3D;&quot;outline&quot;
+                type&#x3D;&quot;number&quot;
+                inputmode&#x3D;&quot;decimal&quot;
+                min&#x3D;&quot;0&quot;
+                step&#x3D;&quot;0.01&quot;
+                formControlName&#x3D;&quot;precio&quot;
+                errorText&#x3D;&quot;Introduce un precio no negativo con hasta dos decimales.&quot;
+                [required]&#x3D;&quot;true&quot;
+              &gt;&lt;/ion-input&gt;
+
+              &lt;ion-input
+                label&#x3D;&quot;Existencias&quot;
+                labelPlacement&#x3D;&quot;stacked&quot;
+                fill&#x3D;&quot;outline&quot;
+                type&#x3D;&quot;number&quot;
+                inputmode&#x3D;&quot;numeric&quot;
+                min&#x3D;&quot;0&quot;
+                step&#x3D;&quot;1&quot;
+                formControlName&#x3D;&quot;stock&quot;
+                errorText&#x3D;&quot;Introduce una cantidad entera y no negativa.&quot;
+                [required]&#x3D;&quot;true&quot;
+              &gt;&lt;/ion-input&gt;
+
+              &lt;div class&#x3D;&quot;nota-stock&quot;&gt;
+                &lt;strong&gt;Existencias disponibles&lt;/strong&gt;
+                &lt;p&gt;
+                  Las reservas descuentan unidades automáticamente.
+                  Si cambian mientras editas el stock, tendrás que
+                  revisar la cantidad antes de guardar.
+                &lt;/p&gt;
+              &lt;/div&gt;
+
+              &lt;ion-textarea
+                class&#x3D;&quot;campo-completo&quot;
+                label&#x3D;&quot;Descripción&quot;
+                labelPlacement&#x3D;&quot;stacked&quot;
+                fill&#x3D;&quot;outline&quot;
+                formControlName&#x3D;&quot;descripcion&quot;
+                [autoGrow]&#x3D;&quot;true&quot;
+              &gt;&lt;/ion-textarea&gt;
+            &lt;/div&gt;
+
+            &lt;section class&#x3D;&quot;editor-portada&quot; aria-labelledby&#x3D;&quot;titulo-portada&quot;&gt;
+              &lt;div class&#x3D;&quot;previsualizacion&quot;&gt;
+                @if (vistaPrevia(); as previa) {
+                  &lt;img
+                    [src]&#x3D;&quot;previa&quot;
+                    alt&#x3D;&quot;Vista previa de la nueva portada&quot;
+                    width&#x3D;&quot;180&quot;
+                    height&#x3D;&quot;180&quot;
+                  /&gt;
+                } @else if (editando()?.imagen_path; as actual) {
+                  &lt;img
+                    [src]&#x3D;&quot;portadas.obtenerUrl(actual)&quot;
+                    alt&#x3D;&quot;Portada actual del vinilo&quot;
+                    width&#x3D;&quot;180&quot;
+                    height&#x3D;&quot;180&quot;
+                  /&gt;
+                } @else {
+                  &lt;span class&#x3D;&quot;vinilo-editor&quot; aria-hidden&#x3D;&quot;true&quot;&gt;&lt;/span&gt;
+                  &lt;span class&#x3D;&quot;sin-portada&quot;&gt;Sin portada&lt;/span&gt;
+                }
+              &lt;/div&gt;
+
+              &lt;div class&#x3D;&quot;portada-controles&quot;&gt;
+                &lt;h3 id&#x3D;&quot;titulo-portada&quot;&gt;Portada del disco&lt;/h3&gt;
+
+                &lt;p id&#x3D;&quot;ayuda-portada&quot;&gt;
+                  JPEG, PNG o WebP de hasta 2 MiB.
+                  Se subirá al guardar.
+                  Si no eliges otra, se conservará la portada actual.
+                &lt;/p&gt;
+
+                &lt;label class&#x3D;&quot;selector-archivo&quot; for&#x3D;&quot;portada-producto&quot;&gt;
+                  Seleccionar imagen
+                &lt;/label&gt;
+
+                &lt;input
+                  id&#x3D;&quot;portada-producto&quot;
+                  type&#x3D;&quot;file&quot;
+                  accept&#x3D;&quot;image/jpeg,image/png,image/webp&quot;
+                  aria-describedby&#x3D;&quot;ayuda-portada&quot;
+                  (change)&#x3D;&quot;seleccionarPortada($event)&quot;
+                  [disabled]&#x3D;&quot;saving()&quot;
+                /&gt;
+
+                @if (archivoSeleccionado(); as archivo) {
+                  &lt;p class&#x3D;&quot;archivo-nombre&quot;&gt;{{ archivo.name }}&lt;/p&gt;
+
+                  &lt;ion-button
+                    type&#x3D;&quot;button&quot;
+                    fill&#x3D;&quot;outline&quot;
+                    size&#x3D;&quot;small&quot;
+                    (click)&#x3D;&quot;descartarSeleccion()&quot;
+                    [disabled]&#x3D;&quot;saving()&quot;
+                  &gt;
+                    Descartar imagen nueva
+                  &lt;/ion-button&gt;
+                }
+              &lt;/div&gt;
+            &lt;/section&gt;
+
+            &lt;div class&#x3D;&quot;publicacion-control&quot;&gt;
+              &lt;ion-checkbox formControlName&#x3D;&quot;activo&quot;&gt;
+                Visible en el catálogo
+              &lt;/ion-checkbox&gt;
+
+              &lt;p&gt;
+                Los productos retirados permanecen en administración
+                y conservan su historial.
+              &lt;/p&gt;
+            &lt;/div&gt;
+
+            @if (saveError()) {
+              &lt;p role&#x3D;&quot;alert&quot;&gt;{{ saveError() }}&lt;/p&gt;
+            }
+
+            &lt;div class&#x3D;&quot;editor-acciones&quot;&gt;
+              &lt;ion-button
+                type&#x3D;&quot;button&quot;
+                fill&#x3D;&quot;outline&quot;
+                (click)&#x3D;&quot;cerrarEditor()&quot;
+                [disabled]&#x3D;&quot;saving()&quot;
+              &gt;
+                Cancelar
+              &lt;/ion-button&gt;
+
+              &lt;ion-button
+                type&#x3D;&quot;submit&quot;
+                [disabled]&#x3D;&quot;saving() || loading()&quot;
+              &gt;
+                {{
+                  saving()
+                    ? &#x27;Guardando…&#x27;
+                    : editando()
+                      ? &#x27;Guardar cambios&#x27;
+                      : &#x27;Crear vinilo&#x27;
+                }}
+              &lt;/ion-button&gt;
+            &lt;/div&gt;
+          &lt;/form&gt;
+        &lt;/div&gt;
+      &lt;/ion-content&gt;
+    &lt;/ng-template&gt;
+  &lt;/ion-modal&gt;
+&lt;/ion-content&gt;</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="styleData">
+                <p class="comment">
+                    <code>./productos.page.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">.inventario {
+  max-width: 1440px;
+  margin-inline: auto;
+}
+
+
+.pagina-cabecera ion-button {
+  flex-shrink: 0;
+  margin: 0;
+}
+
+
+.resumen-inventario {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-bottom: 1.75rem;
+  border: 1px solid var(--store-border);
+  border-radius: 14px;
+  background: var(--store-surface);
+
+  &gt; div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1.25rem;
+    border-right: 1px solid var(--store-border);
+
+    &amp;:last-child {
+      border-right: 0;
+    }
+  }
+
+  span {
+    color: var(--store-muted);
+    font-size: 0.75rem;
+  }
+
+  strong {
+    font-size: 2rem;
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.05em;
+  }
+
+  small {
+    color: var(--store-muted);
+    font-size: 0.65rem;
+  }
+}
+
+.panel-listado {
+  padding: clamp(1rem, 2vw, 1.5rem);
+  border: 1px solid var(--store-border);
+  border-radius: 14px;
+  background: var(--store-surface);
+}
+
+.listado-cabecera {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+
+  h2 {
+    margin: 0;
+  }
+
+  ion-button {
+    margin: 0;
+  }
+}
+
+.filtros {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.contador {
+  margin-block: 1.25rem 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--store-muted);
+  font-size: 0.75rem;
+}
+
+.fila-producto {
+  display: grid;
+  grid-template-columns:
+    64px minmax(130px, 1fr) 90px 100px 90px 80px;
+  align-items: center;
+  gap: 1rem;
+  padding-block: 1rem;
+  border-bottom: 1px solid var(--store-border);
+
+  &amp;:last-child {
+    border-bottom: 0;
+  }
+
+  &gt; ion-button {
+    margin: 0;
+    font-size: 0.75rem;
+  }
+}
+
+.miniatura {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  overflow: hidden;
+  border: 1px solid var(--store-border);
+  border-radius: 8px;
+  background: var(--store-placeholder);
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+}
+
+.mini-vinilo,
+.vinilo-editor {
+  position: relative;
+  display: block;
+  width: 45px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: repeating-radial-gradient(
+    circle,
+    #292622 0,
+    #292622 4px,
+    #454039 5px,
+    #292622 6px
+  );
+
+  &amp;::before {
+    position: absolute;
+    inset: 34%;
+    border-radius: 50%;
+    background: var(--store-selected-bg);
+    content: &#x27;&#x27;;
+  }
+
+  &amp;::after {
+    position: absolute;
+    inset: 47%;
+    border-radius: 50%;
+    background: var(--store-paper);
+    content: &#x27;&#x27;;
+  }
+}
+
+.producto-identidad {
+  min-width: 0;
+
+  h3 {
+    margin: 0 0 0.3rem;
+    font-size: 1.3rem;
+    overflow-wrap: anywhere;
+  }
+
+  p {
+    margin: 0;
+    color: var(--store-muted);
+    font-size: 0.8rem;
+    overflow-wrap: anywhere;
+  }
+}
+
+.genero {
+  display: inline-block;
+  margin-top: 0.4rem;
+  color: var(--store-muted);
+  font-size: 0.65rem;
+}
+
+.dato-producto {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.4rem;
+
+  strong {
+    font-size: 0.85rem;
+  }
+}
+
+.dato-etiqueta {
+  color: var(--store-muted);
+  font-size: 0.65rem;
+}
+
+.estado-stock,
+.estado-publicacion {
+  display: inline-block;
+  padding: 0.35rem 0.6rem;
+  border-radius: 30px;
+  font-size: 0.65rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.estado-stock {
+  background: var(--store-success-bg);
+  color: var(--store-success-text);
+}
+
+.stock-bajo {
+  background: var(--store-warning-bg);
+  color: var(--store-warning-text);
+}
+
+.sin-stock {
+  background: var(--store-accent-soft);
+  color: var(--ion-color-primary);
+}
+
+.estado-publicacion {
+  justify-self: start;
+  background: var(--store-neutral-bg);
+  color: var(--store-muted);
+
+  &amp;.publicado {
+    background: var(--store-success-bg);
+    color: var(--store-success-text);
+  }
+}
+
+.producto-retirado .miniatura {
+  filter: grayscale(1);
+}
+
+ion-modal.editor-producto {
+  --width: min(880px, 94vw);
+  --height: 90vh;
+  --border-radius: 16px;
+  --box-shadow: 0 20px 80px rgb(0 0 0 / 20%);
+}
+
+.editor-contenido {
+  max-width: 800px;
+  margin-inline: auto;
+
+  &gt; h2 {
+    margin: 0;
+    overflow-wrap: anywhere;
+  }
+}
+
+.editor-introduccion {
+  margin-bottom: 1.5rem;
+  color: var(--store-muted);
+  font-size: 0.85rem;
+}
+
+.formulario-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem 1rem;
+
+  ion-input,
+  ion-textarea {
+    min-width: 0;
+    margin: 0;
+    font-size: 0.9rem;
+  }
+}
+
+.campo-completo {
+  grid-column: 1 / -1;
+}
+
+.nota-stock {
+  align-self: center;
+  color: var(--store-muted);
+  font-size: 0.75rem;
+
+  strong {
+    color: var(--store-ink);
+    font-weight: 600;
+  }
+
+  p {
+    margin: 0.35rem 0 0;
+    line-height: 1.5;
+  }
+}
+
+.editor-portada {
+  display: grid;
+  grid-template-columns: 150px minmax(0, 1fr);
+  align-items: center;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+  padding: 1rem;
+  border: 1px solid var(--store-border);
+  border-radius: 12px;
+  background: var(--store-surface);
+}
+
+.previsualizacion {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 150px;
+  height: 150px;
+  overflow: hidden;
+  border-radius: 8px;
+  background: var(--store-placeholder);
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+}
+
+.vinilo-editor {
+  width: 90px;
+}
+
+.sin-portada {
+  color: var(--store-muted);
+  font-size: 0.7rem;
+}
+
+.portada-controles {
+  min-width: 0;
+
+  h3 {
+    margin: 0;
+    font-size: 1.3rem;
+  }
+
+  p {
+    color: var(--store-muted);
+    font-size: 0.75rem;
+  }
+
+  input[type&#x3D;&#x27;file&#x27;] {
+    display: block;
+    width: 100%;
+    margin-top: 0.5rem;
+    color: var(--store-muted);
+    font: inherit;
+    font-size: 0.75rem;
+
+    &amp;::file-selector-button {
+      min-height: 40px;
+      margin-right: 0.75rem;
+      padding: 0.5rem 0.75rem;
+      border: 1px solid var(--ion-color-primary);
+      border-radius: 6px;
+      background: var(--store-surface);
+      color: var(--ion-color-primary);
+      cursor: pointer;
+    }
+  }
+
+  .archivo-nombre {
+    overflow-wrap: anywhere;
+  }
+}
+
+.selector-archivo {
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.publicacion-control {
+  margin-top: 1.5rem;
+
+  p {
+    margin-top: 0.6rem;
+    color: var(--store-muted);
+    font-size: 0.75rem;
+  }
+}
+
+.editor-acciones {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--store-border);
+
+  ion-button {
+    margin: 0;
+  }
+}
+
+@media (max-width: 1100px) {
+  .fila-producto {
+    grid-template-columns: 64px minmax(0, 1fr) 100px 90px;
+  }
+
+  .estado-publicacion {
+    grid-column: 2;
+  }
+
+  .fila-producto &gt; ion-button {
+    grid-column: 4;
+  }
+}
+
+@media (max-width: 700px) {
+  .pagina-cabecera {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .resumen-inventario {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    &gt; div {
+      border-bottom: 1px solid var(--store-border);
+
+      &amp;:nth-child(2) {
+        border-right: 0;
+      }
+
+      &amp;:nth-child(n + 3) {
+        border-bottom: 0;
+      }
+    }
+  }
+
+  .filtros {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .campo-busqueda {
+    grid-column: 1 / -1;
+  }
+
+  .fila-producto {
+    grid-template-columns: 56px minmax(0, 1fr) auto;
+    gap: 0.75rem;
+  }
+
+  .miniatura {
+    width: 56px;
+    height: 56px;
+  }
+
+  .producto-identidad {
+    grid-column: 2 / -1;
+  }
+
+  .dato-producto {
+    grid-row: 2;
+  }
+
+  .dato-producto:nth-of-type(3) {
+    grid-column: 2;
+  }
+
+  .dato-producto:nth-of-type(4) {
+    grid-column: 3;
+  }
+
+  .estado-publicacion {
+    grid-column: 2;
+    grid-row: 3;
+  }
+
+  .fila-producto &gt; ion-button {
+    grid-column: 3;
+    grid-row: 3;
+  }
+
+  .formulario-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .editor-portada {
+    grid-template-columns: 1fr;
+  }
+
+  .previsualizacion {
+    margin-inline: auto;
+  }
+}
+
+@media (max-width: 430px) {
+  .filtros {
+    grid-template-columns: 1fr;
+  }
+
+  ion-modal.editor-producto {
+    --width: 100%;
+    --height: 100%;
+    --border-radius: 0;
+  }
+}</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Leyenda</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Elemento Html</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Componente</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Elemento Html con directiva</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis-network.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><ion-header>  <ion-toolbar>    <ion-buttons slot="start">      <ion-menu-button        menu="main-menu"        aria-label="Abrir menú principal"      ></ion-menu-button>    </ion-buttons>    <ion-title>Productos y existencias</ion-title>  </ion-toolbar></ion-header><ion-content class="ion-padding">  <div class="inventario">    <header class="pagina-cabecera">      <div>        <p class="etiqueta-editorial">Administración · Inventario</p>        <h1>Productos y existencias</h1>        <p class="introduccion">          Consulta y modifica los productos, su publicación y el stock disponible.        </p>      </div>      <ion-button        type="button"        (click)="nuevoProducto()"        [disabled]="loading() || saving()"      >        Añadir vinilo      </ion-button>    </header>    @if (successMessage()) {      <p role="status">{{ successMessage() }}</p>    }    @if (!loading() && !loadError()) {      <section class="resumen-inventario" aria-label="Resumen del inventario">        <div>          <span>Registrados</span>          <strong>{{ resumen().total }}</strong>        </div>        <div>          <span>Publicados</span>          <strong>{{ resumen().publicados }}</strong>        </div>        <div>          <span>Unidades en catálogo</span>          <strong>{{ resumen().unidades }}</strong>        </div>        <div>          <span>Stock bajo o agotado</span>          <strong>{{ resumen().stockBajo }}</strong>          <small>Solo productos publicados</small>        </div>      </section>    }    <section class="panel-listado" aria-labelledby="titulo-listado">      <div class="listado-cabecera">        <div>          <p class="etiqueta-editorial">Catálogo y almacén</p>          <h2 id="titulo-listado">Productos registrados</h2>        </div>        <ion-button          type="button"          fill="outline"          (click)="cargarProductos()"          [disabled]="loading() || saving()"        >          {{ loading() ? \'Actualizando…\' : \'Actualizar listado\' }}        </ion-button>      </div>      <div class="filtros">        <div class="campo-filtro campo-busqueda">          <label for="buscar-productos">Buscar producto</label>          <input            id="buscar-productos"            type="search"            placeholder="Título, artista o género"            [value]="busqueda()"            (input)="actualizarBusqueda($event)"          />        </div>        <div class="campo-filtro">          <label for="filtrar-publicacion">Publicación</label>          <select            id="filtrar-publicacion"            [value]="publicacion()"            (change)="actualizarPublicacion($event)"          >            <option value="todos">Todos</option>            <option value="publicados">Publicados</option>            <option value="retirados">Retirados</option>          </select>        </div>        <div class="campo-filtro">          <label for="filtrar-stock">Existencias</label>          <select            id="filtrar-stock"            [value]="filtroStock()"            (change)="actualizarStock($event)"          >            <option value="todos">Todas</option>            <option value="disponibles">Con existencias</option>            <option value="bajo">Stock bajo: 1–3 unidades</option>            <option value="agotados">Agotados</option>          </select>        </div>      </div>      @if (hayFiltros()) {        <button          class="limpiar-filtros"          type="button"          (click)="limpiarFiltros()"        >          Restablecer filtros        </button>      }      @if (loading()) {        <p role="status">Cargando el inventario…</p>      } @else if (loadError()) {        <p role="alert">{{ loadError() }}</p>      } @else if (productos().length === 0) {        <div class="estado-vacio">          <h3>No hay productos registrados</h3>          <p>Utiliza Añadir vinilo para crear el primer producto.</p>          <ion-button type="button" (click)="nuevoProducto()">            Añadir primer vinilo          </ion-button>        </div>      } @else if (productosFiltrados().length === 0) {        <div class="estado-vacio">          <h3>No hay coincidencias</h3>          <p>Prueba otra búsqueda o modifica los filtros.</p>          <ion-button            type="button"            fill="outline"            (click)="limpiarFiltros()"          >            Ver todos los productos          </ion-button>        </div>      } @else {        <p class="contador" role="status">          {{ productosFiltrados().length }}          de {{ productos().length }} productos        </p>        <div class="lista-productos">          @for (producto of productosFiltrados(); track producto.id) {            <article              class="fila-producto"              [class.producto-retirado]="!producto.activo"            >              <div class="miniatura">                @if (producto.imagen_path; as ruta) {                  <img                    [src]="portadas.obtenerUrl(ruta)"                    [alt]="\'Portada de \' + producto.titulo"                    width="80"                    height="80"                    loading="lazy"                  />                } @else {                  <span class="mini-vinilo" aria-hidden="true"></span>                  <span class="solo-lectores">Sin portada</span>                }              </div>              <div class="producto-identidad">                <h3>{{ producto.titulo }}</h3>                <p>{{ producto.artista }}</p>                <span class="genero">{{ producto.genero }}</span>              </div>              <div class="dato-producto">                <span class="dato-etiqueta">Precio</span>                <strong>{{ formatearPrecio(producto.precio) }}</strong>              </div>              <div class="dato-producto">                <span class="dato-etiqueta">Existencias</span>                <span                  class="estado-stock"                  [class.stock-bajo]="producto.stock > 0 && producto.stock <= umbralStockBajo"                  [class.sin-stock]="producto.stock === 0"                >                  {{                    producto.stock === 0                      ? \'Agotado\'                      : producto.stock + \' uds.\'                  }}                </span>              </div>              <span                class="estado-publicacion"                [class.publicado]="producto.activo"              >                {{ producto.activo ? \'Publicado\' : \'Retirado\' }}              </span>              <ion-button                type="button"                fill="outline"                (click)="editarProducto(producto)"                [disabled]="saving() || loading()"                [attr.aria-label]="\'Editar \' + producto.titulo"              >                Editar              </ion-button>            </article>          }        </div>      }    </section>  </div>  <ion-modal    class="editor-producto"    [isOpen]="editorAbierto()"    [canDismiss]="puedeCerrarEditor"    [backdropDismiss]="false"    (didDismiss)="editorCerrado()"  >    <ng-template>      <ion-header>        <ion-toolbar>          <ion-title>            {{ editando() ? \'Editar vinilo\' : \'Añadir vinilo\' }}          </ion-title>          <ion-buttons slot="end">            <ion-button              type="button"              (click)="cerrarEditor()"              [disabled]="saving()"            >              Cerrar            </ion-button>          </ion-buttons>        </ion-toolbar>      </ion-header>      <ion-content class="ion-padding">        <div class="editor-contenido">          <p class="etiqueta-editorial">            {{ editando() ? \'Edición de producto\' : \'Alta de producto\' }}          </p>          <h2>{{ editando()?.titulo ?? \'Nuevo producto\' }}</h2>          <p class="editor-introduccion">            Completa los datos del vinilo y decide si quieres publicarlo.            Título, artista, género, precio y existencias son obligatorios.          </p>          <form [formGroup]="form" (ngSubmit)="guardarProducto()">            <div class="formulario-grid">              <ion-input                label="Título"                labelPlacement="stacked"                fill="outline"                formControlName="titulo"                errorText="Introduce el título del disco."                [required]="true"              ></ion-input>              <ion-input                label="Artista"                labelPlacement="stacked"                fill="outline"                formControlName="artista"                errorText="Introduce el artista o grupo."                [required]="true"              ></ion-input>              <ion-input                label="Género"                labelPlacement="stacked"                fill="outline"                formControlName="genero"                errorText="Introduce el género musical."                [required]="true"              ></ion-input>              <ion-input                label="Precio (€)"                labelPlacement="stacked"                fill="outline"                type="number"                inputmode="decimal"                min="0"                step="0.01"                formControlName="precio"                errorText="Introduce un precio no negativo con hasta dos decimales."                [required]="true"              ></ion-input>              <ion-input                label="Existencias"                labelPlacement="stacked"                fill="outline"                type="number"                inputmode="numeric"                min="0"                step="1"                formControlName="stock"                errorText="Introduce una cantidad entera y no negativa."                [required]="true"              ></ion-input>              <div class="nota-stock">                <strong>Existencias disponibles</strong>                <p>                  Las reservas descuentan unidades automáticamente.                  Si cambian mientras editas el stock, tendrás que                  revisar la cantidad antes de guardar.                </p>              </div>              <ion-textarea                class="campo-completo"                label="Descripción"                labelPlacement="stacked"                fill="outline"                formControlName="descripcion"                [autoGrow]="true"              ></ion-textarea>            </div>            <section class="editor-portada" aria-labelledby="titulo-portada">              <div class="previsualizacion">                @if (vistaPrevia(); as previa) {                  <img                    [src]="previa"                    alt="Vista previa de la nueva portada"                    width="180"                    height="180"                  />                } @else if (editando()?.imagen_path; as actual) {                  <img                    [src]="portadas.obtenerUrl(actual)"                    alt="Portada actual del vinilo"                    width="180"                    height="180"                  />                } @else {                  <span class="vinilo-editor" aria-hidden="true"></span>                  <span class="sin-portada">Sin portada</span>                }              </div>              <div class="portada-controles">                <h3 id="titulo-portada">Portada del disco</h3>                <p id="ayuda-portada">                  JPEG, PNG o WebP de hasta 2 MiB.                  Se subirá al guardar.                  Si no eliges otra, se conservará la portada actual.                </p>                <label class="selector-archivo" for="portada-producto">                  Seleccionar imagen                </label>                <input                  id="portada-producto"                  type="file"                  accept="image/jpeg,image/png,image/webp"                  aria-describedby="ayuda-portada"                  (change)="seleccionarPortada($event)"                  [disabled]="saving()"                />                @if (archivoSeleccionado(); as archivo) {                  <p class="archivo-nombre">{{ archivo.name }}</p>                  <ion-button                    type="button"                    fill="outline"                    size="small"                    (click)="descartarSeleccion()"                    [disabled]="saving()"                  >                    Descartar imagen nueva                  </ion-button>                }              </div>            </section>            <div class="publicacion-control">              <ion-checkbox formControlName="activo">                Visible en el catálogo              </ion-checkbox>              <p>                Los productos retirados permanecen en administración                y conservan su historial.              </p>            </div>            @if (saveError()) {              <p role="alert">{{ saveError() }}</p>            }            <div class="editor-acciones">              <ion-button                type="button"                fill="outline"                (click)="cerrarEditor()"                [disabled]="saving()"              >                Cancelar              </ion-button>              <ion-button                type="submit"                [disabled]="saving() || loading()"              >                {{                  saving()                    ? \'Guardando…\'                    : editando()                      ? \'Guardar cambios\'                      : \'Crear vinilo\'                }}              </ion-button>            </div>          </form>        </div>      </ion-content>    </ng-template>  </ion-modal></ion-content></div>'
+    var COMPONENTS = [{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AyudaPage', 'selector': 'app-ayuda'},{'name': 'CatalogoPage', 'selector': 'app-catalogo'},{'name': 'ClienteDetallePage', 'selector': 'app-cliente-detalle'},{'name': 'ClientesPage', 'selector': 'app-clientes'},{'name': 'DashboardPage', 'selector': 'app-dashboard'},{'name': 'LoginPage', 'selector': 'app-login'},{'name': 'MisReservasPage', 'selector': 'app-mis-reservas'},{'name': 'ProductosPage', 'selector': 'app-productos'},{'name': 'ReservasPage', 'selector': 'app-reservas'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'ProductosPage'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> comparación de resultados "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No hay resultados que coincidan "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'ProductosPage.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var updateDarkModeSwitchOffset = function () {
+                    var content = document.querySelector('.content');
+                    var scrollbarWidth = 0;
+
+                    if (content) {
+                         scrollbarWidth = Math.max(0, content.offsetWidth - content.clientWidth);
+                    }
+
+                    document.documentElement.style.setProperty(
+                         '--content-scrollbar-width',
+                         scrollbarWidth + 'px'
+                    );
+               };
+
+               updateDarkModeSwitchOffset();
+               requestAnimationFrame(updateDarkModeSwitchOffset);
+               window.addEventListener('resize', updateDarkModeSwitchOffset);
+
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>
