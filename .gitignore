@@ -68,3 +68,9 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+# Resultados locales generados por los scripts de demostración.
+/datos-importacion/
+
+# Archivo accidental de la terminal.
+/tatus --short --branch
