@@ -3,38 +3,7 @@
   margin-inline: auto;
 }
 
-.etiqueta-editorial {
-  margin: 0 0 0.6rem;
-  color: var(--ion-color-primary);
-  font-size: 0.65rem;
-  font-weight: 700;
-  line-height: 1.5;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-}
 
-.pagina-cabecera {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1.5rem;
-  padding-block: 0.75rem 1.75rem;
-
-  h1 {
-    margin: 0;
-    font-size: clamp(2rem, 3vw, 2.75rem);
-  }
-
-  ion-button {
-    flex-shrink: 0;
-    margin: 0;
-  }
-}
-
-.introduccion {
-  margin: 0.75rem 0 0;
-  color: var(--store-muted);
-}
 
 .resumen-estados {
   display: grid;
@@ -71,11 +40,11 @@
 
     &.seleccionado {
       border-color: var(--ion-color-primary);
-      background: var(--store-selected-bg);
+      background: var(--ion-color-primary);
       color: #ffffff;
 
       span {
-        color: var(--store-selected-muted);
+        color: #f4e7e9;
       }
     }
 
@@ -118,51 +87,10 @@
 }
 
 .campo-filtro {
-  min-width: 0;
-
-  label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-size: 0.75rem;
-    font-weight: 600;
-  }
-
-  input,
-  select {
-    width: 100%;
-    min-height: 46px;
-    padding: 0.7rem 0.85rem;
-    border: 1px solid var(--store-field-border);
-    border-radius: 8px;
-    background: var(--store-surface);
-    color: var(--store-ink);
-    font: inherit;
-    font-size: 0.85rem;
-  }
-
-  input::placeholder {
-    color: var(--store-muted);
-    opacity: 1;
-  }
-
   input:disabled,
   select:disabled {
     opacity: 0.65;
   }
-}
-
-.limpiar-filtros {
-  min-height: 44px;
-  margin-top: 0.5rem;
-  padding: 0.5rem 0;
-  border: 0;
-  background: transparent;
-  color: var(--ion-color-primary);
-  font: inherit;
-  font-size: 0.8rem;
-  text-decoration: underline;
-  text-underline-offset: 4px;
-  cursor: pointer;
 }
 
 .contador {
@@ -221,13 +149,13 @@
 }
 
 .estado-pendiente {
-  background: var(--store-warning-bg);
-  color: var(--store-warning-text);
+  background: #f4ead4;
+  color: #78521f;
 }
 
 .estado-recogida {
-  background: var(--store-success-bg);
-  color: var(--store-success-text);
+  background: #e8eee6;
+  color: #304d37;
 }
 
 .estado-cancelada {
@@ -260,7 +188,7 @@
   overflow: hidden;
   border: 1px solid var(--store-border);
   border-radius: 8px;
-  background: var(--store-placeholder);
+  background: #e9e1d5;
 
   img {
     display: block;
@@ -287,7 +215,7 @@
     position: absolute;
     inset: 34%;
     border-radius: 50%;
-    background: var(--store-selected-bg);
+    background: var(--ion-color-primary);
     content: '';
   }
 
@@ -398,27 +326,9 @@
   margin: 0.75rem 1.15rem;
 }
 
-.estado-vacio {
-  padding: 3rem 1rem;
-  text-align: center;
 
-  h3 {
-    margin-top: 0;
-  }
 
-  p {
-    color: var(--store-muted);
-  }
-}
 
-.solo-lectores {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip-path: inset(50%);
-  white-space: nowrap;
-}
 
 @media (max-width: 1100px) {
   .reserva-contenido {
@@ -471,4 +381,8 @@
       flex: 1;
     }
   }
+}
+.pagina-cabecera ion-button {
+  flex-shrink: 0;
+  margin: 0;
 }

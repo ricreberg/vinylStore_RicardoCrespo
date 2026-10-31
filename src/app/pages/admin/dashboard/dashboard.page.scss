@@ -3,33 +3,7 @@
   margin-inline: auto;
 }
 
-.etiqueta-editorial {
-  margin: 0 0 0.6rem;
-  color: var(--ion-color-primary);
-  font-size: 0.65rem;
-  font-weight: 700;
-  line-height: 1.5;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-}
 
-.panel-cabecera {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1.5rem;
-  padding-block: 0.75rem 1.75rem;
-
-  h1 {
-    margin: 0;
-    font-size: clamp(2rem, 3vw, 2.75rem);
-  }
-}
-
-.introduccion {
-  margin: 0.75rem 0 0;
-  color: var(--store-muted);
-}
 
 .cabecera-acciones {
   display: flex;
