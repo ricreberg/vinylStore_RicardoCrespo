@@ -1,0 +1,216 @@
+@use '../clientes/clientes.page.scss';
+
+.cabecera-acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.perfil-cliente {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.avatar-grande {
+  width: 76px;
+  height: 76px;
+  font-size: 1.9rem;
+}
+
+.perfil-identidad {
+  flex: 1;
+  min-width: 0;
+
+  h2 {
+    margin: 0;
+    font-size: 2rem;
+    overflow-wrap: anywhere;
+  }
+}
+
+.perfil-correo {
+  margin: 0.6rem 0 0;
+  color: var(--store-muted);
+  font-size: 0.85rem;
+  overflow-wrap: anywhere;
+}
+
+.resumen-cliente {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 1.25rem;
+
+  > div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    min-width: 0;
+    padding: 1.25rem;
+    border: 1px solid var(--store-border);
+    border-radius: 12px;
+    background: var(--store-surface);
+  }
+
+  span {
+    color: var(--store-muted);
+    font-size: 0.75rem;
+  }
+
+  strong {
+    font-size: 2rem;
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.05em;
+  }
+}
+
+.importe-historico {
+  margin-block: 1rem 1.75rem;
+  color: var(--store-muted);
+  font-size: 0.75rem;
+
+  strong {
+    color: var(--store-ink);
+  }
+}
+
+.filtro-historial {
+  min-width: 180px;
+}
+
+.historial {
+  display: grid;
+  gap: 0.85rem;
+  margin-top: 1rem;
+}
+
+.reserva-historial {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--store-border);
+  border-radius: 10px;
+}
+
+.reserva-cabecera {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--store-border);
+  background: var(--store-paper);
+  font-size: 0.7rem;
+}
+
+.etiqueta-estado {
+  padding: 0.3rem 0.6rem;
+  border-radius: 30px;
+  font-size: 0.65rem;
+  font-weight: 600;
+}
+
+.estado-pendiente {
+  background: #f4ead4;
+  color: #78521f;
+}
+
+.estado-recogida {
+  background: #e8eee6;
+  color: #304d37;
+}
+
+.estado-cancelada {
+  background: var(--store-accent-soft);
+  color: var(--ion-color-primary);
+}
+
+.reserva-datos {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1rem;
+}
+
+.reserva-producto {
+  min-width: 0;
+
+  h3 {
+    margin: 0 0 0.4rem;
+    font-size: 1.3rem;
+    overflow-wrap: anywhere;
+  }
+
+  p {
+    margin: 0 0 0.4rem;
+    color: var(--store-muted);
+    font-size: 0.8rem;
+  }
+
+  > span {
+    color: var(--store-muted);
+    font-size: 0.7rem;
+  }
+}
+
+.reserva-cantidad {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+
+  small {
+    color: var(--store-muted);
+    font-size: 0.7rem;
+  }
+}
+
+.reserva-total {
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  white-space: nowrap;
+}
+
+@media (max-width: 700px) {
+  .resumen-cliente {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .reserva-datos {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .reserva-producto {
+    grid-column: 1 / -1;
+  }
+
+  .reserva-total {
+    text-align: right;
+  }
+}
+
+@media (max-width: 480px) {
+  .perfil-cliente {
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .perfil-identidad {
+    flex-basis: calc(100% - 92px);
+  }
+
+  .perfil-cliente > .fecha-alta {
+    width: 100%;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--store-border);
+  }
+
+  .filtro-historial {
+    width: 100%;
+  }
+}
