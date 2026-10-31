@@ -1,0 +1,864 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Vinyl Store</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">Vinyl Store</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search">
+    <input type="text" placeholder="Escribe para buscar">
+    <button type="button"
+        class="search-input-clear"
+        aria-label="Clear search"
+        data-search-input-clear>&times;</button>
+</div>
+            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content interface">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Interfaces</li>
+  <li class="breadcrumb-item"
+  >
+  Reserva</li>
+</ol>
+
+<div class="io-file io-file-path" data-compodoc="entity-file-path">
+    <span class="icon ion-ios-document" aria-hidden="true"></span>
+    <code>src/app/core/services/reservas.service.ts</code>
+</div>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" 
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#api" 
+                class="nav-link"
+                
+                role="tab" id="api-tab" data-bs-toggle="tab" data-link="api">API</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" 
+                class="nav-link"
+                
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+
+
+
+                <section data-compodoc="block-relationships">
+            <h3>Relationships</h3>
+
+            <div class="row pt-3">
+                <div class="col-sm-6">
+                    <h4>Used by</h4>
+                        <ul class="list-unstyled relationships-list">
+                                <li>
+                                            <code><a href="../interfaces/ReservaDetalle.html" target="_self" >ReservaDetalle</a></code>
+                                </li>
+                        </ul>
+                </div>
+
+                <div class="col-sm-6">
+                    <h4>Depends on</h4>
+                        <p class="comment"><i>No hay resultados que coincidan.</i></p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div class="tab-pane fade " id="api"><section data-compodoc="block-index">
+    <h3 id="index">Índice</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+            <tr>
+                <td class="col-md-3">
+                    <h6><b>Propiedades</b></h6>
+                </td>
+                <td class="col-md-9">
+                    <ul class="index-list">
+                        <li>
+                                <a href="#cantidad" class="reference-link ">
+                                    <span class="reference-badge reference-badge--property" aria-hidden="true">P</span><span class="reference-link-label">cantidad</span>
+                                </a>
+                        </li>
+                        <li>
+                                <a href="#created_at" class="reference-link ">
+                                    <span class="reference-badge reference-badge--property" aria-hidden="true">P</span><span class="reference-link-label">created_at</span>
+                                </a>
+                        </li>
+                        <li>
+                                <a href="#estado" class="reference-link ">
+                                    <span class="reference-badge reference-badge--property" aria-hidden="true">P</span><span class="reference-link-label">estado</span>
+                                </a>
+                        </li>
+                        <li>
+                                <a href="#id" class="reference-link ">
+                                    <span class="reference-badge reference-badge--property" aria-hidden="true">P</span><span class="reference-link-label">id</span>
+                                </a>
+                        </li>
+                        <li>
+                                <a href="#precio_unitario" class="reference-link ">
+                                    <span class="reference-badge reference-badge--property" aria-hidden="true">P</span><span class="reference-link-label">precio_unitario</span>
+                                </a>
+                        </li>
+                        <li>
+                                <a href="#producto_id" class="reference-link ">
+                                    <span class="reference-badge reference-badge--property" aria-hidden="true">P</span><span class="reference-link-label">producto_id</span>
+                                </a>
+                        </li>
+                        <li>
+                                <a href="#solicitud_id" class="reference-link ">
+                                    <span class="reference-badge reference-badge--property" aria-hidden="true">P</span><span class="reference-link-label">solicitud_id</span>
+                                </a>
+                        </li>
+                        <li>
+                                <a href="#updated_at" class="reference-link ">
+                                    <span class="reference-badge reference-badge--property" aria-hidden="true">P</span><span class="reference-link-label">updated_at</span>
+                                </a>
+                        </li>
+                        <li>
+                                <a href="#usuario_id" class="reference-link ">
+                                    <span class="reference-badge reference-badge--property" aria-hidden="true">P</span><span class="reference-link-label">usuario_id</span>
+                                </a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+
+
+    <section data-compodoc="block-properties">
+        <h3 id="inputs">Propiedades</h3>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                        <tr>
+                            <td class="col-md-4">
+                                <a name="cantidad"></a>
+                                <span class="name "><b>cantidad</b>
+                                    <a href="#cantidad">
+                                        <span class="icon ion-ios-link"></span>
+                                    </a>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <code>cantidad:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+</code>
+                            </td>
+                        </tr>
+
+
+                            <tr>
+                                <td class="col-md-4">
+                                    <i>Tipo : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                                </td>
+                            </tr>
+
+
+
+
+
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Definido en <a href="" data-line="11" class="link-to-prism">src/app/core/services/reservas.service.ts:11</a></div>
+                                </td>
+                            </tr>
+
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                        <tr>
+                            <td class="col-md-4">
+                                <a name="created_at"></a>
+                                <span class="name "><b>created_at</b>
+                                    <a href="#created_at">
+                                        <span class="icon ion-ios-link"></span>
+                                    </a>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <code>created_at:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+</code>
+                            </td>
+                        </tr>
+
+
+                            <tr>
+                                <td class="col-md-4">
+                                    <i>Tipo : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                                </td>
+                            </tr>
+
+
+
+
+
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Definido en <a href="" data-line="15" class="link-to-prism">src/app/core/services/reservas.service.ts:15</a></div>
+                                </td>
+                            </tr>
+
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                        <tr>
+                            <td class="col-md-4">
+                                <a name="estado"></a>
+                                <span class="name "><b>estado</b>
+                                    <a href="#estado">
+                                        <span class="icon ion-ios-link"></span>
+                                    </a>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <code>estado:         <code><a href="../miscellaneous/typealiases.html#EstadoReserva" target="_self" >EstadoReserva</a></code>
+</code>
+                            </td>
+                        </tr>
+
+
+                            <tr>
+                                <td class="col-md-4">
+                                    <i>Tipo : </i>        <code><a href="../miscellaneous/typealiases.html#EstadoReserva" target="_self" >EstadoReserva</a></code>
+
+                                </td>
+                            </tr>
+
+
+
+
+
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Definido en <a href="" data-line="13" class="link-to-prism">src/app/core/services/reservas.service.ts:13</a></div>
+                                </td>
+                            </tr>
+
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                        <tr>
+                            <td class="col-md-4">
+                                <a name="id"></a>
+                                <span class="name "><b>id</b>
+                                    <a href="#id">
+                                        <span class="icon ion-ios-link"></span>
+                                    </a>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <code>id:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+</code>
+                            </td>
+                        </tr>
+
+
+                            <tr>
+                                <td class="col-md-4">
+                                    <i>Tipo : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                                </td>
+                            </tr>
+
+
+
+
+
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Definido en <a href="" data-line="8" class="link-to-prism">src/app/core/services/reservas.service.ts:8</a></div>
+                                </td>
+                            </tr>
+
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                        <tr>
+                            <td class="col-md-4">
+                                <a name="precio_unitario"></a>
+                                <span class="name "><b>precio_unitario</b>
+                                    <a href="#precio_unitario">
+                                        <span class="icon ion-ios-link"></span>
+                                    </a>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <code>precio_unitario:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+</code>
+                            </td>
+                        </tr>
+
+
+                            <tr>
+                                <td class="col-md-4">
+                                    <i>Tipo : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                                </td>
+                            </tr>
+
+
+
+
+
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Definido en <a href="" data-line="12" class="link-to-prism">src/app/core/services/reservas.service.ts:12</a></div>
+                                </td>
+                            </tr>
+
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                        <tr>
+                            <td class="col-md-4">
+                                <a name="producto_id"></a>
+                                <span class="name "><b>producto_id</b>
+                                    <a href="#producto_id">
+                                        <span class="icon ion-ios-link"></span>
+                                    </a>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <code>producto_id:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+</code>
+                            </td>
+                        </tr>
+
+
+                            <tr>
+                                <td class="col-md-4">
+                                    <i>Tipo : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                                </td>
+                            </tr>
+
+
+
+
+
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Definido en <a href="" data-line="10" class="link-to-prism">src/app/core/services/reservas.service.ts:10</a></div>
+                                </td>
+                            </tr>
+
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                        <tr>
+                            <td class="col-md-4">
+                                <a name="solicitud_id"></a>
+                                <span class="name "><b>solicitud_id</b>
+                                    <a href="#solicitud_id">
+                                        <span class="icon ion-ios-link"></span>
+                                    </a>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <code>solicitud_id:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+</code>
+                            </td>
+                        </tr>
+
+
+                            <tr>
+                                <td class="col-md-4">
+                                    <i>Tipo : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                                </td>
+                            </tr>
+
+
+
+
+
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Definido en <a href="" data-line="14" class="link-to-prism">src/app/core/services/reservas.service.ts:14</a></div>
+                                </td>
+                            </tr>
+
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                        <tr>
+                            <td class="col-md-4">
+                                <a name="updated_at"></a>
+                                <span class="name "><b>updated_at</b>
+                                    <a href="#updated_at">
+                                        <span class="icon ion-ios-link"></span>
+                                    </a>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <code>updated_at:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+</code>
+                            </td>
+                        </tr>
+
+
+                            <tr>
+                                <td class="col-md-4">
+                                    <i>Tipo : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                                </td>
+                            </tr>
+
+
+
+
+
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Definido en <a href="" data-line="16" class="link-to-prism">src/app/core/services/reservas.service.ts:16</a></div>
+                                </td>
+                            </tr>
+
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                        <tr>
+                            <td class="col-md-4">
+                                <a name="usuario_id"></a>
+                                <span class="name "><b>usuario_id</b>
+                                    <a href="#usuario_id">
+                                        <span class="icon ion-ios-link"></span>
+                                    </a>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <code>usuario_id:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+</code>
+                            </td>
+                        </tr>
+
+
+                            <tr>
+                                <td class="col-md-4">
+                                    <i>Tipo : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                                </td>
+                            </tr>
+
+
+
+
+
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Definido en <a href="" data-line="9" class="link-to-prism">src/app/core/services/reservas.service.ts:9</a></div>
+                                </td>
+                            </tr>
+
+                </tbody>
+            </table>
+    </section>
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable, inject } from &#x27;@angular/core&#x27;;
+
+import { SupabaseService } from &#x27;./supabase.service&#x27;;
+
+export type EstadoReserva &#x3D; &#x27;pendiente&#x27; | &#x27;recogida&#x27; | &#x27;cancelada&#x27;;
+
+export interface Reserva {
+  id: string;
+  usuario_id: string;
+  producto_id: string;
+  cantidad: number;
+  precio_unitario: number;
+  estado: EstadoReserva;
+  solicitud_id: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface ReservaDetalle extends Reserva {
+  producto: {
+    titulo: string;
+    artista: string;
+    imagen_path: string | null;
+  } | null;
+}
+
+@Injectable({
+  providedIn: &#x27;root&#x27;,
+})
+export class ReservasService {
+  private readonly supabase &#x3D; inject(SupabaseService).client;
+
+  async listarPropias(): Promise&lt;ReservaDetalle[]&gt; {
+    const { data, error } &#x3D; await this.supabase.auth.getSession();
+
+    if (error) {
+      throw error;
+    }
+
+    if (!data.session) {
+      throw new Error(&#x27;Debes iniciar sesión para consultar tus reservas.&#x27;);
+    }
+
+    return this.consultarReservas(data.session.user.id);
+  }
+
+  async listarTodas(): Promise&lt;ReservaDetalle[]&gt; {
+    return this.consultarReservas();
+  }
+    async listarDeCliente(clienteId: string): Promise&lt;ReservaDetalle[]&gt; {
+    return this.consultarReservas(clienteId);
+  }
+
+    async reservar(
+    productoId: string,
+    cantidad: number,
+    solicitudId: string,
+  ): Promise&lt;Reserva&gt; {
+    const { data, error } &#x3D; await this.supabase.rpc(&#x27;crear_reserva&#x27;, {
+      p_producto_id: productoId,
+      p_cantidad: cantidad,
+      p_solicitud_id: solicitudId,
+    });
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    return this.extraerReserva(data);
+  }
+
+  async cambiarEstado(
+    reservaId: string,
+    estado: &#x27;cancelada&#x27; | &#x27;recogida&#x27;,
+  ): Promise&lt;Reserva&gt; {
+    const { data, error } &#x3D; await this.supabase.rpc(
+      &#x27;cambiar_estado_reserva&#x27;,
+      {
+        p_reserva_id: reservaId,
+        p_estado: estado,
+      },
+    );
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    return this.extraerReserva(data);
+  }
+
+  private async consultarReservas(
+    usuarioId?: string,
+  ): Promise&lt;ReservaDetalle[]&gt; {
+    let consulta &#x3D; this.supabase
+      .from(&#x27;reservas&#x27;)
+      .select(&#x60;
+        *,
+        producto:productos (
+          titulo,
+          artista,
+          imagen_path
+        )
+      &#x60;)
+      .order(&#x27;created_at&#x27;, { ascending: false });
+
+    if (usuarioId) {
+      consulta &#x3D; consulta.eq(&#x27;usuario_id&#x27;, usuarioId);
+    }
+
+    const { data, error } &#x3D; await consulta
+      .overrideTypes&lt;ReservaDetalle[], { merge: false }&gt;();
+
+    if (error) {
+      throw error;
+    }
+
+    return data;
+  }
+
+    private extraerReserva(datos: unknown): Reserva {
+    const fila: unknown &#x3D; Array.isArray(datos)
+      ? datos.length &#x3D;&#x3D;&#x3D; 1
+        ? datos[0]
+        : null
+      : datos;
+
+    if (!this.esReserva(fila)) {
+      throw new Error(
+        &#x27;La respuesta de la reserva no tiene el formato esperado. Comprueba el listado antes de repetir la operación.&#x27;,
+      );
+    }
+
+    return fila;
+  }
+
+  private esReserva(valor: unknown): valor is Reserva {
+    return (
+      typeof valor &#x3D;&#x3D;&#x3D; &#x27;object&#x27; &amp;&amp;
+      valor !&#x3D;&#x3D; null &amp;&amp;
+      &#x27;id&#x27; in valor &amp;&amp;
+      typeof valor.id &#x3D;&#x3D;&#x3D; &#x27;string&#x27; &amp;&amp;
+      &#x27;usuario_id&#x27; in valor &amp;&amp;
+      typeof valor.usuario_id &#x3D;&#x3D;&#x3D; &#x27;string&#x27; &amp;&amp;
+      &#x27;producto_id&#x27; in valor &amp;&amp;
+      typeof valor.producto_id &#x3D;&#x3D;&#x3D; &#x27;string&#x27; &amp;&amp;
+      &#x27;cantidad&#x27; in valor &amp;&amp;
+      typeof valor.cantidad &#x3D;&#x3D;&#x3D; &#x27;number&#x27; &amp;&amp;
+      &#x27;precio_unitario&#x27; in valor &amp;&amp;
+      typeof valor.precio_unitario &#x3D;&#x3D;&#x3D; &#x27;number&#x27; &amp;&amp;
+      &#x27;estado&#x27; in valor &amp;&amp;
+      (
+        valor.estado &#x3D;&#x3D;&#x3D; &#x27;pendiente&#x27; ||
+        valor.estado &#x3D;&#x3D;&#x3D; &#x27;recogida&#x27; ||
+        valor.estado &#x3D;&#x3D;&#x3D; &#x27;cancelada&#x27;
+      ) &amp;&amp;
+      &#x27;solicitud_id&#x27; in valor &amp;&amp;
+      typeof valor.solicitud_id &#x3D;&#x3D;&#x3D; &#x27;string&#x27; &amp;&amp;
+      &#x27;created_at&#x27; in valor &amp;&amp;
+      typeof valor.created_at &#x3D;&#x3D;&#x3D; &#x27;string&#x27; &amp;&amp;
+      &#x27;updated_at&#x27; in valor &amp;&amp;
+      typeof valor.updated_at &#x3D;&#x3D;&#x3D; &#x27;string&#x27;
+    );
+  }
+}</code></pre>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> comparación de resultados "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No hay resultados que coincidan "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'interface';
+            var COMPODOC_CURRENT_PAGE_URL = 'Reserva.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var updateDarkModeSwitchOffset = function () {
+                    var content = document.querySelector('.content');
+                    var scrollbarWidth = 0;
+
+                    if (content) {
+                         scrollbarWidth = Math.max(0, content.offsetWidth - content.clientWidth);
+                    }
+
+                    document.documentElement.style.setProperty(
+                         '--content-scrollbar-width',
+                         scrollbarWidth + 'px'
+                    );
+               };
+
+               updateDarkModeSwitchOffset();
+               requestAnimationFrame(updateDarkModeSwitchOffset);
+               window.addEventListener('resize', updateDarkModeSwitchOffset);
+
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

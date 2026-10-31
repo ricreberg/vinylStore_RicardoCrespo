@@ -1,0 +1,1083 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Vinyl Store</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">Vinyl Store</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search">
+    <input type="text" placeholder="Escribe para buscar">
+    <button type="button"
+        class="search-input-clear"
+        aria-label="Clear search"
+        data-search-input-clear>&times;</button>
+</div>
+            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content interface">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Interfaces</li>
+  <li class="breadcrumb-item"
+  >
+  ReservaReciente</li>
+</ol>
+
+<div class="io-file io-file-path" data-compodoc="entity-file-path">
+    <span class="icon ion-ios-document" aria-hidden="true"></span>
+    <code>src/app/pages/admin/dashboard/dashboard.page.ts</code>
+</div>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" 
+                class="nav-link"
+                class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#api" 
+                class="nav-link"
+                
+                role="tab" id="api-tab" data-bs-toggle="tab" data-link="api">API</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" 
+                class="nav-link"
+                
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+
+
+
+            </div>
+
+    <div class="tab-pane fade " id="api"><section data-compodoc="block-index">
+    <h3 id="index">Índice</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+            <tr>
+                <td class="col-md-3">
+                    <h6><b>Propiedades</b></h6>
+                </td>
+                <td class="col-md-9">
+                    <ul class="index-list">
+                        <li>
+                                <a href="#cantidad" class="reference-link ">
+                                    <span class="reference-badge reference-badge--property" aria-hidden="true">P</span><span class="reference-link-label">cantidad</span>
+                                </a>
+                        </li>
+                        <li>
+                                <a href="#estado" class="reference-link ">
+                                    <span class="reference-badge reference-badge--property" aria-hidden="true">P</span><span class="reference-link-label">estado</span>
+                                </a>
+                        </li>
+                        <li>
+                                <a href="#fecha" class="reference-link ">
+                                    <span class="reference-badge reference-badge--property" aria-hidden="true">P</span><span class="reference-link-label">fecha</span>
+                                </a>
+                        </li>
+                        <li>
+                                <a href="#id" class="reference-link ">
+                                    <span class="reference-badge reference-badge--property" aria-hidden="true">P</span><span class="reference-link-label">id</span>
+                                </a>
+                        </li>
+                        <li>
+                                <a href="#titulo" class="reference-link ">
+                                    <span class="reference-badge reference-badge--property" aria-hidden="true">P</span><span class="reference-link-label">titulo</span>
+                                </a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+
+
+    <section data-compodoc="block-properties">
+        <h3 id="inputs">Propiedades</h3>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                        <tr>
+                            <td class="col-md-4">
+                                <a name="cantidad"></a>
+                                <span class="name "><b>cantidad</b>
+                                    <a href="#cantidad">
+                                        <span class="icon ion-ios-link"></span>
+                                    </a>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <code>cantidad:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+</code>
+                            </td>
+                        </tr>
+
+
+                            <tr>
+                                <td class="col-md-4">
+                                    <i>Tipo : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                                </td>
+                            </tr>
+
+
+
+
+
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Definido en <a href="" data-line="64" class="link-to-prism">src/app/pages/admin/dashboard/dashboard.page.ts:64</a></div>
+                                </td>
+                            </tr>
+
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                        <tr>
+                            <td class="col-md-4">
+                                <a name="estado"></a>
+                                <span class="name "><b>estado</b>
+                                    <a href="#estado">
+                                        <span class="icon ion-ios-link"></span>
+                                    </a>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <code>estado:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+</code>
+                            </td>
+                        </tr>
+
+
+                            <tr>
+                                <td class="col-md-4">
+                                    <i>Tipo : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                                </td>
+                            </tr>
+
+
+
+
+
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Definido en <a href="" data-line="65" class="link-to-prism">src/app/pages/admin/dashboard/dashboard.page.ts:65</a></div>
+                                </td>
+                            </tr>
+
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                        <tr>
+                            <td class="col-md-4">
+                                <a name="fecha"></a>
+                                <span class="name "><b>fecha</b>
+                                    <a href="#fecha">
+                                        <span class="icon ion-ios-link"></span>
+                                    </a>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <code>fecha:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+</code>
+                            </td>
+                        </tr>
+
+
+                            <tr>
+                                <td class="col-md-4">
+                                    <i>Tipo : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                                </td>
+                            </tr>
+
+
+
+
+
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Definido en <a href="" data-line="66" class="link-to-prism">src/app/pages/admin/dashboard/dashboard.page.ts:66</a></div>
+                                </td>
+                            </tr>
+
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                        <tr>
+                            <td class="col-md-4">
+                                <a name="id"></a>
+                                <span class="name "><b>id</b>
+                                    <a href="#id">
+                                        <span class="icon ion-ios-link"></span>
+                                    </a>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <code>id:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+</code>
+                            </td>
+                        </tr>
+
+
+                            <tr>
+                                <td class="col-md-4">
+                                    <i>Tipo : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                                </td>
+                            </tr>
+
+
+
+
+
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Definido en <a href="" data-line="62" class="link-to-prism">src/app/pages/admin/dashboard/dashboard.page.ts:62</a></div>
+                                </td>
+                            </tr>
+
+                </tbody>
+            </table>
+            <table class="table table-sm table-bordered">
+                <tbody>
+                        <tr>
+                            <td class="col-md-4">
+                                <a name="titulo"></a>
+                                <span class="name "><b>titulo</b>
+                                    <a href="#titulo">
+                                        <span class="icon ion-ios-link"></span>
+                                    </a>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <code>titulo:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+</code>
+                            </td>
+                        </tr>
+
+
+                            <tr>
+                                <td class="col-md-4">
+                                    <i>Tipo : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                                </td>
+                            </tr>
+
+
+
+
+
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Definido en <a href="" data-line="63" class="link-to-prism">src/app/pages/admin/dashboard/dashboard.page.ts:63</a></div>
+                                </td>
+                            </tr>
+
+                </tbody>
+            </table>
+    </section>
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  OnDestroy,
+  ViewChild,
+  computed,
+  inject,
+  signal,
+  HostListener,
+} from &#x27;@angular/core&#x27;;
+import { FormsModule } from &#x27;@angular/forms&#x27;;
+import {
+  IonButton,
+  IonButtons,
+  IonContent,
+  IonHeader,
+  IonMenuButton,
+  IonTitle,
+  IonToolbar,
+} from &#x27;@ionic/angular&#x27;;
+import {
+  ArcElement,
+  CategoryScale,
+  Chart,
+  DoughnutController,
+  Legend,
+  LineController,
+  LineElement,
+  LinearScale,
+  PointElement,
+  Tooltip,
+} from &#x27;chart.js&#x27;;
+
+import { DashboardService } from &#x27;../../../core/services/dashboard.service&#x27;;
+import type { DatosDashboard } from &#x27;../../../core/services/dashboard.service&#x27;;
+import { InformesService } from &#x27;../../../core/services/informes.service&#x27;;
+import type { DatosInforme } from &#x27;../../../core/services/informes.service&#x27;;
+import {
+  calcularDashboard,
+  crearPeriodo,
+  etiquetaPeriodo,
+  fechaLocal,
+  periodoRapido,
+  validarPeriodo,
+} from &#x27;../../../core/utils/dashboard-calculos&#x27;;
+import type {
+  ActividadPeriodo,
+  PeriodoInforme,
+  PeriodoRapido,
+  ResumenDashboard,
+} from &#x27;../../../core/utils/dashboard-calculos&#x27;;
+
+interface ProductoDestacado {
+  id: string;
+  titulo: string;
+  artista: string;
+  unidades: number;
+}
+
+interface ReservaReciente {
+  id: string;
+  titulo: string;
+  cantidad: number;
+  estado: string;
+  fecha: string;
+}
+
+Chart.register(
+  ArcElement,
+  CategoryScale,
+  DoughnutController,
+  Legend,
+  LineController,
+  LineElement,
+  LinearScale,
+  PointElement,
+  Tooltip,
+);
+
+@Component({
+  selector: &#x27;app-dashboard&#x27;,
+  templateUrl: &#x27;./dashboard.page.html&#x27;,
+  styleUrls: [&#x27;./dashboard.page.scss&#x27;],
+  imports: [
+    FormsModule,
+    IonButton,
+    IonButtons,
+    IonContent,
+    IonHeader,
+    IonMenuButton,
+    IonTitle,
+    IonToolbar,
+  ],
+})
+export class DashboardPage implements OnDestroy {
+  private readonly servicio &#x3D; inject(DashboardService);
+  private readonly informes &#x3D; inject(InformesService);
+  private readonly detector &#x3D; inject(ChangeDetectorRef);
+
+  private readonly moneda &#x3D; new Intl.NumberFormat(&#x27;es-ES&#x27;, {
+    style: &#x27;currency&#x27;,
+    currency: &#x27;EUR&#x27;,
+  });
+
+  @ViewChild(&#x27;canvasActividad&#x27;, { static: true })
+  private canvasActividad!: ElementRef&lt;HTMLCanvasElement&gt;;
+
+  @ViewChild(&#x27;canvasEstados&#x27;, { static: true })
+  private canvasEstados!: ElementRef&lt;HTMLCanvasElement&gt;;
+
+  private graficoActividad: Chart&lt;&#x27;line&#x27;, number[], string&gt; | null &#x3D; null;
+  private graficoEstados: Chart&lt;&#x27;doughnut&#x27;, number[], string&gt; | null &#x3D; null;
+
+  private datos: DatosDashboard | null &#x3D; null;
+  private activa &#x3D; false;
+  private peticion &#x3D; 0;
+
+  readonly periodos: { valor: PeriodoRapido; etiqueta: string }[] &#x3D; [
+    { valor: 7, etiqueta: &#x27;7 días&#x27; },
+    { valor: 30, etiqueta: &#x27;30 días&#x27; },
+    { valor: 90, etiqueta: &#x27;90 días&#x27; },
+    { valor: 365, etiqueta: &#x27;Último año&#x27; },
+    { valor: &#x27;todo&#x27;, etiqueta: &#x27;Todo el historial&#x27; },
+  ];
+  readonly seleccionPeriodo &#x3D; signal&lt;PeriodoRapido | &#x27;personalizado&#x27;&gt;(7);
+  readonly periodo &#x3D; signal&lt;PeriodoInforme&gt;(periodoRapido(7, []));
+  readonly errorPeriodo &#x3D; signal(&#x27;&#x27;);
+  readonly textoPeriodo &#x3D; computed(() &#x3D;&gt; etiquetaPeriodo(this.periodo()));
+  readonly agrupacion &#x3D; computed(() &#x3D;&gt; this.periodo().agrupacion);
+  desde &#x3D; this.periodo().desde;
+  hasta &#x3D; this.periodo().hasta;
+
+  get fechaHoy(): string {
+    return fechaLocal(new Date());
+  }
+  readonly umbralStockBajo &#x3D; 3;
+  get coloresEstados(): string[] {
+    return [
+      this.colorTema(&#x27;--store-chart-pending&#x27;, &#x27;#956615&#x27;),
+      this.colorTema(&#x27;--store-chart-collected&#x27;, &#x27;#455b4c&#x27;),
+      this.colorTema(&#x27;--store-chart-cancelled&#x27;, &#x27;#782c40&#x27;),
+    ];
+  }
+
+  readonly loading &#x3D; signal(true);
+  readonly errorMessage &#x3D; signal(&#x27;&#x27;);
+  readonly exportando &#x3D; signal(false);
+  readonly exportError &#x3D; signal(&#x27;&#x27;);
+  readonly ultimaActualizacion &#x3D; signal(&#x27;&#x27;);
+
+  readonly resumen &#x3D; signal&lt;ResumenDashboard&gt;({
+    productos: 0,
+    activos: 0,
+    stock: 0,
+    reservas: 0,
+    pendientes: 0,
+    importeRecogidas: 0,
+    compras: 0,
+    cancelaciones: 0,
+  });
+
+  readonly actividad &#x3D; signal&lt;ActividadPeriodo[]&gt;([]);
+
+  readonly estados &#x3D; signal&lt;
+    { etiqueta: string; cantidad: number }[]
+  &gt;([]);
+
+  readonly stockBajo &#x3D; signal&lt;DatosDashboard[&#x27;productos&#x27;]&gt;([]);
+  readonly masReservados &#x3D; signal&lt;ProductoDestacado[]&gt;([]);
+  readonly recientes &#x3D; signal&lt;ReservaReciente[]&gt;([]);
+
+  readonly indicadores &#x3D; computed(() &#x3D;&gt; {
+    const resumen &#x3D; this.resumen();
+
+    return [
+      {
+        titulo: &#x27;Reservas creadas&#x27;,
+        valor: String(resumen.reservas),
+        detalle: this.textoPeriodo(),
+        destacada: true,
+      },
+      {
+        titulo: &#x27;Todavía pendientes&#x27;,
+        valor: String(resumen.pendientes),
+        detalle: &#x27;De las reservas creadas en el periodo&#x27;,
+        destacada: false,
+      },
+      {
+        titulo: &#x27;Ventas&#x27;,
+        valor: this.moneda.format(resumen.importeRecogidas),
+        detalle: &#x60;${resumen.compras} compras por fecha de recogida&#x60;,
+        destacada: false,
+      },
+      {
+        titulo: &#x27;Unidades disponibles&#x27;,
+        valor: String(resumen.stock),
+        detalle: &#x27;Stock actual de productos publicados&#x27;,
+        destacada: false,
+      },
+      {
+        titulo: &#x27;Discos publicados&#x27;,
+        valor: String(resumen.activos),
+        detalle: &#x27;Productos visibles en el catálogo&#x27;,
+        destacada: false,
+      },
+      {
+        titulo: &#x27;Productos registrados&#x27;,
+        valor: String(resumen.productos),
+        detalle: &#x27;Incluye publicados y retirados&#x27;,
+        destacada: false,
+      },
+    ];
+  });
+
+  async ionViewDidEnter(): Promise&lt;void&gt; {
+    this.activa &#x3D; true;
+    await this.cargarDashboard();
+  }
+
+  ionViewWillLeave(): void {
+    this.activa &#x3D; false;
+    ++this.peticion;
+    this.destruirGraficos();
+  }
+
+  ngOnDestroy(): void {
+    this.ionViewWillLeave();
+  }
+
+  async cargarDashboard(): Promise&lt;void&gt; {
+    if (!this.activa || this.exportando()) {
+      return;
+    }
+
+    const peticion &#x3D; ++this.peticion;
+
+    this.loading.set(true);
+    this.errorMessage.set(&#x27;&#x27;);
+    this.exportError.set(&#x27;&#x27;);
+    this.destruirGraficos();
+
+    try {
+      const datos &#x3D; await this.servicio.obtenerDatos();
+
+      if (!this.activa || peticion !&#x3D;&#x3D; this.peticion) {
+        return;
+      }
+
+      this.datos &#x3D; datos;
+      const seleccion &#x3D; this.seleccionPeriodo();
+      if (seleccion !&#x3D;&#x3D; &#x27;personalizado&#x27;) {
+        this.establecerPeriodo(periodoRapido(seleccion, datos.reservas));
+      }
+      this.recalcular();
+
+      this.ultimaActualizacion.set(
+        new Date().toLocaleString(&#x27;es-ES&#x27;, {
+          day: &#x27;2-digit&#x27;,
+          month: &#x27;2-digit&#x27;,
+          hour: &#x27;2-digit&#x27;,
+          minute: &#x27;2-digit&#x27;,
+        }),
+      );
+
+      this.loading.set(false);
+      this.detector.detectChanges();
+      this.dibujarGraficos();
+    } catch {
+      if (this.activa &amp;&amp; peticion &#x3D;&#x3D;&#x3D; this.peticion) {
+        this.destruirGraficos();
+        this.errorMessage.set(
+          &#x27;No se han podido cargar las estadísticas. Comprueba la conexión y vuelve a actualizar.&#x27;,
+        );
+      }
+    } finally {
+      if (this.activa &amp;&amp; peticion &#x3D;&#x3D;&#x3D; this.peticion) {
+        this.loading.set(false);
+      }
+    }
+  }
+
+  cambiarPeriodo(opcion: PeriodoRapido): void {
+    if (!this.puedeActualizarPeriodo()) return;
+    this.seleccionPeriodo.set(opcion);
+    this.establecerPeriodo(periodoRapido(opcion, this.datos!.reservas));
+    this.recalcular();
+    this.dibujarGraficos();
+  }
+
+  aplicarFechas(): void {
+    if (!this.puedeActualizarPeriodo()) return;
+    const error &#x3D; validarPeriodo(this.desde, this.hasta);
+    this.errorPeriodo.set(error);
+    if (error) return;
+    this.seleccionPeriodo.set(&#x27;personalizado&#x27;);
+    this.establecerPeriodo(crearPeriodo(this.desde, this.hasta));
+    this.recalcular();
+    this.dibujarGraficos();
+  }
+
+  private puedeActualizarPeriodo(): boolean {
+    return this.activa &amp;&amp; !!this.datos &amp;&amp; !this.loading()
+      &amp;&amp; !this.exportando() &amp;&amp; !this.errorMessage();
+  }
+
+  private establecerPeriodo(periodo: PeriodoInforme): void {
+    this.periodo.set(periodo);
+    this.desde &#x3D; periodo.desde;
+    this.hasta &#x3D; periodo.hasta;
+    this.errorPeriodo.set(&#x27;&#x27;);
+    this.exportError.set(&#x27;&#x27;);
+  }
+
+  porcentaje(cantidad: number): string {
+    const total &#x3D; this.resumen().reservas;
+
+    return total &#x3D;&#x3D;&#x3D; 0
+      ? &#x27;0 %&#x27;
+      : &#x60;${Math.round((cantidad / total) * 100)} %&#x60;;
+  }
+
+  nombreEstado(estado: string): string {
+    switch (estado) {
+      case &#x27;pendiente&#x27;:
+        return &#x27;Pendiente&#x27;;
+      case &#x27;recogida&#x27;:
+        return &#x27;Recogida&#x27;;
+      case &#x27;cancelada&#x27;:
+        return &#x27;Cancelada&#x27;;
+      default:
+        return estado;
+    }
+  }
+
+  formatearPrecio(importe: number): string {
+    return this.moneda.format(importe);
+  }
+
+  formatearFecha(fecha: string): string {
+    return new Date(fecha).toLocaleString(&#x27;es-ES&#x27;, {
+      day: &#x27;2-digit&#x27;,
+      month: &#x27;short&#x27;,
+      hour: &#x27;2-digit&#x27;,
+      minute: &#x27;2-digit&#x27;,
+    });
+  }
+
+  descargarCsv(): void {
+    if (
+      this.loading() ||
+      this.errorMessage() ||
+      this.exportando() ||
+      !this.datos ||
+      this.errorPeriodo() !&#x3D;&#x3D; &#x27;&#x27;
+    ) {
+      return;
+    }
+
+    this.exportError.set(&#x27;&#x27;);
+
+    try {
+      this.informes.descargarCsv(this.prepararInforme());
+    } catch {
+      this.exportError.set(&#x27;No se ha podido generar el CSV.&#x27;);
+    }
+  }
+
+  async descargarPdf(): Promise&lt;void&gt; {
+    if (
+      this.loading() ||
+      this.errorMessage() ||
+      this.exportando() ||
+      !this.datos ||
+      this.errorPeriodo() !&#x3D;&#x3D; &#x27;&#x27;
+    ) {
+      return;
+    }
+
+    this.exportError.set(&#x27;&#x27;);
+    this.exportando.set(true);
+
+    try {
+      await this.informes.descargarPdf(this.prepararInforme());
+    } catch {
+      this.exportError.set(&#x27;No se ha podido generar el PDF.&#x27;);
+    } finally {
+      this.exportando.set(false);
+    }
+  }
+
+  private prepararInforme(): DatosInforme {
+    return {
+      periodo: { ...this.periodo() },
+      actualizado: this.ultimaActualizacion(),
+      resumen: { ...this.resumen() },
+      actividad: this.actividad().map((fila) &#x3D;&gt; ({ ...fila })),
+      estados: this.estados().map((fila) &#x3D;&gt; ({ ...fila })),
+    };
+  }
+
+  private recalcular(): void {
+    if (!this.datos) return;
+    const calculo &#x3D; calcularDashboard(this.datos, this.periodo(), this.umbralStockBajo);
+    this.resumen.set(calculo.resumen);
+    this.actividad.set(calculo.actividad);
+    this.estados.set(calculo.estados);
+    this.stockBajo.set(calculo.stockBajo);
+    this.masReservados.set(calculo.masReservados);
+    this.recientes.set(calculo.recientes);
+  }
+
+  @HostListener(&#x27;document:vinylstore:tema&#x27;)
+  actualizarTema(): void {
+    if (this.activa &amp;&amp; this.datos &amp;&amp; !this.loading() &amp;&amp; !this.errorMessage()) {
+      this.detector.detectChanges();
+      this.dibujarGraficos();
+    }
+  }
+
+  private colorTema(variable: string, alternativa: string): string {
+    return getComputedStyle(document.documentElement)
+      .getPropertyValue(variable)
+      .trim() || alternativa;
+  }
+
+  private dibujarGraficos(): void {
+    this.destruirGraficos();
+
+    const estilos &#x3D; getComputedStyle(
+      this.canvasActividad.nativeElement,
+    );
+
+    const colorTexto &#x3D; estilos.color;
+    const fuente &#x3D; estilos.fontFamily;
+
+    this.graficoActividad &#x3D; new Chart&lt;&#x27;line&#x27;, number[], string&gt;(
+      this.canvasActividad.nativeElement,
+      {
+        type: &#x27;line&#x27;,
+        data: {
+          labels: this.actividad().map((dia) &#x3D;&gt; dia.fecha),
+          datasets: [
+            {
+              label: &#x27;Reservas creadas&#x27;,
+              data: this.actividad().map((dia) &#x3D;&gt; dia.cantidad),
+              borderColor: this.colorTema(&#x27;--store-chart-primary&#x27;, &#x27;#782c40&#x27;),
+              backgroundColor: this.colorTema(&#x27;--store-chart-primary&#x27;, &#x27;#782c40&#x27;),
+              borderWidth: 3,
+              pointRadius: this.actividad().length &gt; 31 ? 1.5 : 3,
+              pointHoverRadius: 6,
+              pointBackgroundColor: this.colorTema(&#x27;--store-surface&#x27;, &#x27;#fffdf9&#x27;),
+              pointBorderColor: this.colorTema(&#x27;--store-chart-primary&#x27;, &#x27;#782c40&#x27;),
+              pointBorderWidth: 2,
+              tension: 0.25,
+            },
+            {
+              label: &#x27;Compras completadas&#x27;,
+              data: this.actividad().map((fila) &#x3D;&gt; fila.compras),
+              borderColor: this.colorTema(&#x27;--store-chart-collected&#x27;, &#x27;#455b4c&#x27;),
+              backgroundColor: this.colorTema(&#x27;--store-chart-collected&#x27;, &#x27;#455b4c&#x27;),
+              borderWidth: 2,
+              borderDash: [6, 4],
+              pointRadius: this.actividad().length &gt; 31 ? 1.5 : 3,
+              pointHoverRadius: 6,
+              tension: 0.25,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          animation: false,
+          interaction: {
+            intersect: false,
+            mode: &#x27;index&#x27;,
+          },
+          plugins: {
+            legend: {
+              display: true,
+              labels: {
+                color: colorTexto,
+                font: { family: fuente, size: 11 },
+                boxWidth: 20,
+                padding: 16,
+              },
+            },
+            tooltip: {
+              backgroundColor: &#x27;#292622&#x27;,
+              titleFont: { family: fuente },
+              bodyFont: { family: fuente },
+              padding: 12,
+              cornerRadius: 8,
+              displayColors: false,
+            },
+          },
+          scales: {
+            x: {
+              border: { display: false },
+              grid: { display: false },
+              ticks: {
+                color: colorTexto,
+                maxTicksLimit: 7,
+                maxRotation: 0,
+                font: { family: fuente, size: 11 },
+              },
+            },
+            y: {
+              beginAtZero: true,
+              border: { display: false },
+              grid: {
+                color: this.colorTema(&#x27;--store-border&#x27;, &#x27;#ded5c9&#x27;),
+              },
+              ticks: {
+                color: colorTexto,
+                precision: 0,
+                font: { family: fuente, size: 11 },
+              },
+            },
+          },
+        },
+      },
+    );
+
+    this.graficoEstados &#x3D; new Chart&lt;
+      &#x27;doughnut&#x27;,
+      number[],
+      string
+    &gt;(
+      this.canvasEstados.nativeElement,
+      {
+        type: &#x27;doughnut&#x27;,
+        data: {
+          labels: this.estados().map((estado) &#x3D;&gt; estado.etiqueta),
+          datasets: [
+            {
+              data: this.estados().map((estado) &#x3D;&gt; estado.cantidad),
+              backgroundColor: this.coloresEstados,
+              borderColor: this.colorTema(&#x27;--store-surface&#x27;, &#x27;#fffdf9&#x27;),
+              borderWidth: 5,
+              hoverOffset: 5,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          animation: false,
+          cutout: &#x27;76%&#x27;,
+          layout: {
+            padding: 8,
+          },
+          plugins: {
+            legend: {
+              display: false,
+            },
+            tooltip: {
+              backgroundColor: &#x27;#292622&#x27;,
+              titleFont: { family: fuente },
+              bodyFont: { family: fuente },
+              padding: 12,
+              cornerRadius: 8,
+            },
+          },
+        },
+      },
+    );
+  }
+
+  private destruirGraficos(): void {
+    this.graficoActividad?.destroy();
+    this.graficoEstados?.destroy();
+
+    this.graficoActividad &#x3D; null;
+    this.graficoEstados &#x3D; null;
+  }
+}
+</code></pre>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> comparación de resultados "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No hay resultados que coincidan "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'interface';
+            var COMPODOC_CURRENT_PAGE_URL = 'ReservaReciente.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var updateDarkModeSwitchOffset = function () {
+                    var content = document.querySelector('.content');
+                    var scrollbarWidth = 0;
+
+                    if (content) {
+                         scrollbarWidth = Math.max(0, content.offsetWidth - content.clientWidth);
+                    }
+
+                    document.documentElement.style.setProperty(
+                         '--content-scrollbar-width',
+                         scrollbarWidth + 'px'
+                    );
+               };
+
+               updateDarkModeSwitchOffset();
+               requestAnimationFrame(updateDarkModeSwitchOffset);
+               window.addEventListener('resize', updateDarkModeSwitchOffset);
+
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

@@ -1,0 +1,479 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Vinyl Store</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
+	   <link rel="stylesheet" href="./styles/style.css">
+        <link rel="stylesheet" href="./styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="./" class="navbar-brand">Vinyl Store</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search">
+    <input type="text" placeholder="Escribe para buscar">
+    <button type="button"
+        class="search-input-clear"
+        aria-label="Clear search"
+        data-search-input-clear>&times;</button>
+</div>
+            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content readme">
+                   <div class="content-data">
+
+
+<h1>Vinyl Store — Ricardo Crespo</h1>
+<p>Aplicación académica de gestión de una tienda de vinilos desarrollada
+con Ionic y Angular Standalone.</p>
+<ul>
+<li><a href="https://vinyl-store-ricardo-crespo.vercel.app/catalogo">Aplicación en Vercel</a></li>
+<li><a href="https://github.com/ricreberg/vinylStore_RicardoCrespo">Repositorio GitHub</a></li>
+<li><a href="https://vinyl-store-ricardo-crespo.vercel.app/ayuda">Manual de usuario integrado</a></li>
+</ul>
+<p>Los cambios de desarrollo llegan a producción cuando se integran
+y despliegan desde main.</p>
+<h2>Funcionalidades</h2>
+<h3>Catálogo y clientes</h3>
+<ul>
+<li>Catálogo público con búsqueda por título o artista.</li>
+<li>Filtros por género y disponibilidad y opciones de ordenación.</li>
+<li>Portadas alojadas en Supabase Storage.</li>
+<li>Inicio y cierre de sesión y restauración de la sesión existente.</li>
+<li>Reservas con validación asíncrona de disponibilidad.</li>
+<li>Consulta y cancelación de reservas propias pendientes.</li>
+<li>Manual integrado en la página Ayuda.</li>
+<li>Diseño adaptable y selector de tema claro y oscuro.</li>
+</ul>
+<h3>Administración</h3>
+<ul>
+<li>Alta y edición de productos mediante formularios reactivos.</li>
+<li>Gestión de portadas, precios y existencias.</li>
+<li>Publicación y retirada de productos conservando el historial.</li>
+<li>Protección frente a sobrescrituras de existencias desactualizadas.</li>
+<li>Búsqueda, filtros y gestión de reservas pendientes.</li>
+<li>Confirmación de recogidas y cancelaciones.</li>
+<li>Fichas de clientes con historial y gasto acumulado.</li>
+<li>Estadísticas con gráficos de líneas y de anillo.</li>
+<li>Periodos de 7, 30, 90 y 365 días, todo el historial y fechas personalizadas.</li>
+<li>Tablas alternativas a los gráficos.</li>
+<li>Exportación de informes PDF y CSV.</li>
+</ul>
+<p>Se muestran estados de carga, errores, confirmaciones y listados vacíos.</p>
+<h2>Tecnologías y estructura</h2>
+<ul>
+<li>Ionic y Angular Standalone, sin AppModule.</li>
+<li>TypeScript, SCSS, formularios reactivos, signals y RxJS.</li>
+<li>Supabase Auth, PostgreSQL y Storage.</li>
+<li>Chart.js, jsPDF y jsPDF-AutoTable.</li>
+<li>Sharp para preparar imágenes.</li>
+<li>Compodoc para generar documentación técnica.</li>
+<li>Git, GitHub y Vercel.</li>
+</ul>
+<p>Las versiones se conservan en package-lock.json.</p>
+<p>Organización:</p>
+<ul>
+<li>src/app/pages/: páginas públicas, de cliente y de administración.</li>
+<li>src/app/core/services/: servicios y acceso a datos.</li>
+<li>src/app/core/guards/: protección de rutas.</li>
+<li>src/app/core/utils/: cálculos y utilidades.</li>
+<li>src/theme/ y src/global.scss: tema y estilos compartidos.</li>
+<li>supabase/migrations/: esquema, permisos y funciones PostgreSQL.</li>
+<li>scripts/: preparación de datos de demostración.</li>
+<li>docs/compodoc/: documentación técnica generada.</li>
+</ul>
+<p>Esta actividad utiliza SQL. NoSQL corresponde a otra actividad
+según la aclaración recibida del profesor.</p>
+<h2>Ejecución local</h2>
+<p>Desde la raíz del proyecto:</p>
+<b>Ejemplo :</b><div><pre class="line-numbers"><code class="language-none">npm ci
+ionic serve</code></pre></div><p>Comprobaciones:</p>
+<b>Ejemplo :</b><div><pre class="line-numbers"><code class="language-none">npm run lint
+npm run build
+npm test -- --watch=false
+npm audit --omit=dev</code></pre></div><p>La compilación de producción genera www/.</p>
+<h2>Configuración de Supabase</h2>
+<p>src/environments/environment.ts y environment.prod.ts contienen
+la URL del proyecto y su clave pública.</p>
+<p>No deben incorporarse claves secretas ni service_role al código
+del navegador ni al repositorio. La clave pública no sustituye
+las políticas de acceso.</p>
+<p>Las migraciones de supabase/migrations/ se aplican en el orden
+de sus nombres. En este proyecto se han ejecutado manualmente
+en el SQL Editor de Supabase.</p>
+<p>Definen perfiles, productos, reservas, Storage, políticas RLS
+y funciones de negocio. La aplicación no las ejecuta automáticamente.</p>
+<p>La migración 202610310001_clientes_fecha_alta.sql establece
+profiles.created_at como fecha de alta de negocio del cliente,
+conservando la fecha técnica de Auth.</p>
+<p>Las cuentas nuevas reciben el rol cliente. El administrador
+se asigna desde la administración de la base de datos.</p>
+<h2>Acceso y seguridad</h2>
+<p>El visitante consulta el catálogo activo. Reservar requiere sesión.</p>
+<p>El cliente consulta sus reservas y cancela las pendientes.
+El administrador gestiona productos, reservas, clientes e informes.</p>
+<p>La interfaz adapta sus opciones al rol; los guards protegen
+la navegación y PostgreSQL aplica los permisos mediante RLS
+y funciones que comprueban la identidad y la operación.</p>
+<p>AuthService centraliza sesión y rol. El SDK de Supabase gestiona
+los tokens y su renovación mediante sus propias peticiones fetch.
+No se utiliza un interceptor HTTP propio de Angular.</p>
+<p>No hay registro público, recuperación de contraseña ni edición
+del perfil desde la aplicación.</p>
+<p>Las credenciales de evaluación se facilitan en la memoria.
+No se publican contraseñas en este repositorio.</p>
+<h2>Productos y portadas</h2>
+<p>Los productos incluyen título, artista, género, precio,
+existencias, descripción, portada y estado de publicación.</p>
+<p>Retirar un producto conserva sus datos e historial y lo oculta
+del catálogo público. Los publicados sin existencias pueden
+seguir visibles como agotados.</p>
+<p>Al editar sin modificar existencias, el stock se omite de la
+actualización. Si se modifica, se exige que conserve el valor
+original del formulario para evitar sobrescribir cambios recientes.</p>
+<p>El bucket público portadas admite JPEG, PNG y WebP de hasta 2 MiB.
+imagen_path guarda la ruta del archivo.</p>
+<p>Al sustituir una imagen pueden quedar archivos sin referencia.
+Su limpieza automática está pendiente.</p>
+<h2>Reservas y compras recogidas</h2>
+<p>Una reserva corresponde a un producto y una cantidad para recoger
+en tienda. No hay caducidad automática.</p>
+<p>crear_reserva comprueba identidad, producto, cantidad y existencias
+y obtiene el precio desde PostgreSQL. La creación y el descuento
+se realizan en una transacción con bloqueo FOR UPDATE.</p>
+<p>Estados:</p>
+<ul>
+<li>pendiente: unidades apartadas y descontadas de las disponibles.</li>
+<li>recogida: entrega confirmada por el administrador, sin otro descuento.</li>
+<li>cancelada: devolución de las unidades a las existencias.</li>
+</ul>
+<p>La recogida equivale, en esta práctica, a una compra completada
+y cobrada en tienda. Su importe se incorpora al gasto del cliente
+y a las estadísticas. No existe pasarela de pago ni módulo de caja.</p>
+<p>Las reservas finalizadas no cambian de estado. Repetir una
+cancelación no devuelve existencias otra vez.</p>
+<p>Cada solicitud tiene un identificador. Reintentar la misma devuelve
+la reserva existente sin repetir el descuento. La última solicitud
+fallida se conserva en memoria, no tras una recarga completa.</p>
+<p>precio_unitario conserva el precio histórico aunque cambie el catálogo.</p>
+<p>Si se retira un producto, la reserva permanece. Si RLS impide
+consultar sus datos relacionados, se muestra un texto alternativo.</p>
+<h3>Validación asíncrona</h3>
+<p>La cantidad debe ser un entero mayor que cero. Al abandonar
+el campo se consulta la disponibilidad.</p>
+<p>Durante la comprobación se bloquea la confirmación. Se distingue
+entre falta de existencias y fallo de conexión, con un tiempo
+máximo de espera de diez segundos.</p>
+<p>Esta consulta no aparta unidades. La función PostgreSQL comprueba
+otra vez las existencias al confirmar.</p>
+<h2>Estadísticas e informes</h2>
+<p>Las métricas distinguen:</p>
+<ul>
+<li>Reservas creadas por created_at.</li>
+<li>Compras recogidas por updated_at de las recogidas.</li>
+<li>Cancelaciones por updated_at de las canceladas.</li>
+<li>Estado actual de las reservas creadas dentro del periodo.</li>
+<li>Productos y existencias actuales.</li>
+</ul>
+<p>Los intervalos incluyen ambos días según las fechas locales.
+La evolución se agrupa por día en periodos cortos y por mes
+en los largos.</p>
+<p>Las reservas se recuperan por páginas desde Supabase; después
+se calculan localmente los periodos. Los importes se acumulan
+en céntimos usando el precio histórico.</p>
+<p>Los gráficos incluyen tablas alternativas y sus instancias
+se destruyen al abandonar la página.</p>
+<p>PDF y CSV utilizan el periodo seleccionado. El PDF contiene
+tablas paginadas y carga sus bibliotecas mediante importación
+dinámica. El CSV utiliza UTF-8 con BOM y separador punto y coma.</p>
+<p>Los informes no incluyen correos ni fichas de clientes.</p>
+<h2>Datos de demostración</h2>
+<p>La carga preparada contiene:</p>
+<ul>
+<li>60 álbumes con portada WebP.</li>
+<li>15 clientes ficticios.</li>
+<li>400 reservas repartidas a lo largo de unos dos años:<ul>
+<li>320 recogidas: 370 unidades.</li>
+<li>60 canceladas: 67 unidades.</li>
+<li>20 pendientes: 22 unidades.</li>
+</ul>
+</li>
+</ul>
+<p>La selección inicial de álbumes se preparó con ayuda de IA.
+Los metadatos se contrastaron con MusicBrainz y las portadas
+se obtuvieron de Cover Art Archive.</p>
+<p>Precios, existencias e historial comercial son ficticios.
+Las imágenes conservan los derechos de sus titulares.</p>
+<p>La aplicación consulta Supabase durante su uso habitual.
+Las API musicales se utilizan durante la preparación.</p>
+<p>Sharp convirtió las 60 portadas a WebP: de 3,66 MiB a 1,84 MiB,
+una reducción del 49,8 %.</p>
+<p>Scripts:</p>
+<ul>
+<li>scripts/preparar-catalogo.mjs</li>
+<li>scripts/convertir-portadas.mjs</li>
+<li>scripts/importar-catalogo.mjs</li>
+<li>scripts/crear-clientes-demo.mjs</li>
+<li>scripts/preparar-historial.mjs</li>
+</ul>
+<p>Los resultados locales se excluyen mediante .gitignore.
+Los scripts no se ejecutan al arrancar la aplicación.
+No es necesario regenerar cuentas ni historial para utilizarla.</p>
+<h2>Manual y documentación técnica</h2>
+<p>La página /ayuda explica las reservas, los estados, la gestión,
+las estadísticas y la resolución de problemas habituales.</p>
+<p>Generar la documentación técnica:</p>
+<b>Ejemplo :</b><div><pre class="line-numbers"><code class="language-none">npm run docs</code></pre></div><p>La salida HTML se guarda en docs/compodoc/.</p>
+<p>Consultar mediante un servidor local:</p>
+<b>Ejemplo :</b><div><pre class="line-numbers"><code class="language-none">npm run docs:serve</code></pre></div><p>Abrir <a href="http://localhost:8080">http://localhost:8080</a>. Detener con Ctrl+C.</p>
+<p>tsconfig.doc.json selecciona el código y excluye las pruebas.
+Compodoc documenta la estructura técnica; Ayuda contiene
+las instrucciones de uso.</p>
+<h2>Comprobaciones y limitaciones</h2>
+<p>Se han realizado compilación, lint y una prueba básica de
+AppComponent. No representan cobertura completa de negocio.</p>
+<p>Se han comprobado manualmente navegación, sesiones, formularios,
+movimientos de existencias, listados y exportaciones.</p>
+<p>Las pruebas previas mediante API con una cuenta cliente incluyeron:</p>
+<ul>
+<li>Lectura del perfil propio y rechazo de su modificación.</li>
+<li>Rechazo de creación de productos y ausencia de actualizaciones autorizadas.</li>
+<li>Rechazo de subida de portadas.</li>
+<li>Reintento de reserva sin repetir el descuento.</li>
+<li>Cancelación repetida sin repetir la devolución.</li>
+<li>Rechazo de confirmación de recogida por el cliente.</li>
+<li>Rechazo de modificación directa de reservas.</li>
+<li>Rechazo de consulta administrativa de clientes.</li>
+</ul>
+<p>Revisar SQL local no certifica que todas las políticas desplegadas
+coincidan con las migraciones.</p>
+<p>Quedan pruebas adicionales de concurrencia, expiración y mala conexión.</p>
+<p>Browserslist se ha actualizado. Persisten tres avisos de tamaño CSS
+en catálogo, productos y dashboard, sin impedir la compilación.</p>
+<p>Lighthouse y la comprobación del despliegue definitivo se
+documentan en la memoria de entrega.</p>
+<h2>Mejoras futuras</h2>
+<ul>
+<li>Ampliar pruebas automatizadas y de concurrencia.</li>
+<li>Reducir CSS y extraer componentes reutilizables.</li>
+<li>Paginar o virtualizar listados extensos.</li>
+<li>Limpiar portadas sin referencia.</li>
+<li>Registro, recuperación de contraseña y edición del perfil.</li>
+<li>Contacto y gestión de incidencias.</li>
+<li>Pruebas y empaquetado Android con Capacitor.</li>
+<li>Evaluar instalación PWA y funcionamiento sin conexión.</li>
+</ul>
+<p>No se presenta como completada una versión Android ni una PWA
+con funcionamiento sin conexión.</p>
+<h2>Control de versiones y publicación</h2>
+<p>Se utilizan main, develop y ramas feature/* y fix/*.
+Los cambios se integran mediante pull requests.</p>
+<p>main se reserva para versiones estables. Vercel utiliza main
+para producción y genera despliegues Preview para desarrollo.</p>
+<p>Vercel publica la web; Supabase mantiene autenticación,
+base de datos y portadas.</p>
+<h2>Fuentes</h2>
+<ul>
+<li>Angular: <a href="https://angular.dev/">https://angular.dev/</a></li>
+<li>Ionic: <a href="https://ionicframework.com/docs">https://ionicframework.com/docs</a></li>
+<li>Supabase: <a href="https://supabase.com/docs">https://supabase.com/docs</a></li>
+<li>Chart.js: <a href="https://www.chartjs.org/docs/latest/">https://www.chartjs.org/docs/latest/</a></li>
+<li>MusicBrainz: <a href="https://musicbrainz.org/doc/MusicBrainz_API">https://musicbrainz.org/doc/MusicBrainz_API</a></li>
+<li>Cover Art Archive: <a href="https://coverartarchive.org/">https://coverartarchive.org/</a></li>
+<li>Compodoc: <a href="https://compodoc.app/">https://compodoc.app/</a></li>
+</ul>
+<p>Se ha utilizado IA como apoyo para explicación, desarrollo,
+revisión y preparación de datos de prueba. La memoria detalla su uso.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> comparación de resultados "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No hay resultados que coincidan "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 0;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'readme';
+            var COMPODOC_CURRENT_PAGE_URL = 'index.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var updateDarkModeSwitchOffset = function () {
+                    var content = document.querySelector('.content');
+                    var scrollbarWidth = 0;
+
+                    if (content) {
+                         scrollbarWidth = Math.max(0, content.offsetWidth - content.clientWidth);
+                    }
+
+                    document.documentElement.style.setProperty(
+                         '--content-scrollbar-width',
+                         scrollbarWidth + 'px'
+                    );
+               };
+
+               updateDarkModeSwitchOffset();
+               requestAnimationFrame(updateDarkModeSwitchOffset);
+               window.addEventListener('resize', updateDarkModeSwitchOffset);
+
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="./js/libs/custom-elements.min.js"></script>
+       <script src="./js/libs/lit-html.js"></script>
+
+       <script src="./js/menu-wc.js" defer></script>
+
+       <script src="./js/libs/bootstrap-native.js"></script>
+
+       <script src="./js/libs/es6-shim.min.js"></script>
+       <script src="./js/libs/EventDispatcher.js"></script>
+       <script src="./js/libs/promise.min.js"></script>
+
+       <script src="./js/compodoc.js"></script>
+
+       <script src="./js/tabs.js"></script>
+       <script src="./js/menu.js"></script>
+       <script src="./js/libs/clipboard.min.js"></script>
+       <script src="./js/libs/prism.js"></script>
+       <script src="./js/sourceCode.js"></script>
+          <script src="./js/search/search.js"></script>
+          <script src="./js/search/lunr.min.js"></script>
+          <script src="./js/search/search-lunr.js"></script>
+          <script src="./js/search/search_index.js"></script>
+       <script src="./js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

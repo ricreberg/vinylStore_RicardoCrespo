@@ -1,303 +1,340 @@
 # Vinyl Store — Ricardo Crespo
 
-Aplicación de gestión de una tienda de vinilos desarrollada con
-Ionic y Angular standalone.
+Aplicación académica de gestión de una tienda de vinilos desarrollada
+con Ionic y Angular Standalone.
 
-## Estado del proyecto
+- [Aplicación en Vercel](https://vinyl-store-ricardo-crespo.vercel.app/catalogo)
+- [Repositorio GitHub](https://github.com/ricreberg/vinylStore_RicardoCrespo)
+- [Manual de usuario integrado](https://vinyl-store-ricardo-crespo.vercel.app/ayuda)
 
-En desarrollo. Están implementadas la navegación, la autenticación,
-los productos y portadas, las reservas, la consulta administrativa
-de clientes y el dashboard con exportación de informes.
+Los cambios de desarrollo llegan a producción cuando se integran
+y despliegan desde main.
 
-Actualmente incluye:
+## Funcionalidades
 
-- Menú lateral adaptable a escritorio y móvil.
-- Nueve páginas con carga diferida.
-- Inicio, cierre y recuperación de sesión mediante Supabase Auth.
-- Perfiles con nombre y roles cliente y administrador.
-- Creación automática de perfiles con rol cliente.
-- Rutas protegidas según sesión y rol.
-- Menú actualizado automáticamente según la sesión.
+### Catálogo y clientes
+
+- Catálogo público con búsqueda por título o artista.
+- Filtros por género y disponibilidad y opciones de ordenación.
+- Portadas alojadas en Supabase Storage.
+- Inicio y cierre de sesión y restauración de la sesión existente.
+- Reservas con validación asíncrona de disponibilidad.
+- Consulta y cancelación de reservas propias pendientes.
+- Manual integrado en la página Ayuda.
+- Diseño adaptable y selector de tema claro y oscuro.
+
+### Administración
+
 - Alta y edición de productos mediante formularios reactivos.
-- Validación de campos obligatorios, precios y existencias.
-- Protección frente a sobrescrituras de stock al editar productos.
-- Publicación y retirada de productos del catálogo.
-- Catálogo público distribuido en cards.
-- Portadas almacenadas en Supabase Storage.
-- Reserva de unidades desde el catálogo.
-- Validación asíncrona de disponibilidad contra Supabase.
-- Consulta y cancelación de reservas propias.
-- Gestión administrativa de reservas y filtro por estado.
-- Descuento y devolución de existencias mediante funciones PostgreSQL.
-- Protección frente a reintentos de una misma solicitud de reserva.
-- Listado y ficha de clientes para el administrador.
-- Historial de reservas por cliente.
-- Identificación del cliente desde la gestión de reservas.
-- Dashboard con gráficos de líneas y de anillo.
-- Selector de periodos de 7, 14 y 30 días.
-- Tablas alternativas con los datos de los gráficos.
-- Exportación de estadísticas en PDF y CSV.
-- Estados de carga, errores, confirmaciones y listados vacíos.
+- Gestión de portadas, precios y existencias.
+- Publicación y retirada de productos conservando el historial.
+- Protección frente a sobrescrituras de existencias desactualizadas.
+- Búsqueda, filtros y gestión de reservas pendientes.
+- Confirmación de recogidas y cancelaciones.
+- Fichas de clientes con historial y gasto acumulado.
+- Estadísticas con gráficos de líneas y de anillo.
+- Periodos de 7, 30, 90 y 365 días, todo el historial y fechas personalizadas.
+- Tablas alternativas a los gráficos.
+- Exportación de informes PDF y CSV.
 
-La página de ayuda mantiene contenido provisional.
-El diseño visual y la revisión final de accesibilidad están pendientes.
+Se muestran estados de carga, errores, confirmaciones y listados vacíos.
 
-## Tecnologías
+## Tecnologías y estructura
 
-- Ionic y Angular standalone.
-- TypeScript y SCSS.
-- Formularios reactivos y binding bidireccional con ngModel.
-- RxJS.
+- Ionic y Angular Standalone, sin AppModule.
+- TypeScript, SCSS, formularios reactivos, signals y RxJS.
 - Supabase Auth, PostgreSQL y Storage.
-- Chart.js.
-- jsPDF y jsPDF-AutoTable.
-- Git y GitHub.
-- Vercel.
+- Chart.js, jsPDF y jsPDF-AutoTable.
+- Sharp para preparar imágenes.
+- Compodoc para generar documentación técnica.
+- Git, GitHub y Vercel.
 
-Esta actividad utiliza persistencia SQL. La integración NoSQL queda
-fuera de su alcance según las indicaciones del profesor.
+Las versiones se conservan en package-lock.json.
+
+Organización:
+
+- src/app/pages/: páginas públicas, de cliente y de administración.
+- src/app/core/services/: servicios y acceso a datos.
+- src/app/core/guards/: protección de rutas.
+- src/app/core/utils/: cálculos y utilidades.
+- src/theme/ y src/global.scss: tema y estilos compartidos.
+- supabase/migrations/: esquema, permisos y funciones PostgreSQL.
+- scripts/: preparación de datos de demostración.
+- docs/compodoc/: documentación técnica generada.
+
+Esta actividad utiliza SQL. NoSQL corresponde a otra actividad
+según la aclaración recibida del profesor.
 
 ## Ejecución local
 
-Instalar las dependencias:
+Desde la raíz del proyecto:
 
     npm ci
-
-Iniciar el servidor de desarrollo desde la raíz del proyecto:
-
     ionic serve
 
-Comprobar la compilación y el análisis estático:
+Comprobaciones:
 
-    npm run build
     npm run lint
+    npm run build
+    npm test -- --watch=false
+    npm audit --omit=dev
+
+La compilación de producción genera www/.
 
 ## Configuración de Supabase
 
-Los archivos src/environments/environment.ts y
-src/environments/environment.prod.ts contienen la URL del proyecto
-y su clave pública.
+src/environments/environment.ts y environment.prod.ts contienen
+la URL del proyecto y su clave pública.
 
-La aplicación utiliza una clave publicable. No deben incorporarse
-claves secretas ni service_role al código del cliente.
+No deben incorporarse claves secretas ni service_role al código
+del navegador ni al repositorio. La clave pública no sustituye
+las políticas de acceso.
 
-La configuración está documentada en:
+Las migraciones de supabase/migrations/ se aplican en el orden
+de sus nombres. En este proyecto se han ejecutado manualmente
+en el SQL Editor de Supabase.
 
-- supabase/migrations/202610260001_create_profiles.sql
-- supabase/migrations/202610270001_create_productos.sql
-- supabase/migrations/202610270002_configure_portadas.sql
-- supabase/migrations/202610270003_create_reservas.sql
-- supabase/migrations/202610270004_create_reservar_function.sql
-- supabase/migrations/202610270005_create_estado_reserva_function.sql
-- supabase/migrations/202610280001_configure_clientes.sql
+Definen perfiles, productos, reservas, Storage, políticas RLS
+y funciones de negocio. La aplicación no las ejecuta automáticamente.
 
-Los scripts se han ejecutado manualmente en el SQL Editor de Supabase,
-en el orden de sus nombres. La aplicación no ejecuta migraciones
-automáticamente.
+La migración 202610310001_clientes_fecha_alta.sql establece
+profiles.created_at como fecha de alta de negocio del cliente,
+conservando la fecha técnica de Auth.
 
-Las cuentas nuevas reciben el rol cliente. La asignación del rol
-admin se realiza desde la administración de la base de datos.
+Las cuentas nuevas reciben el rol cliente. El administrador
+se asigna desde la administración de la base de datos.
 
-## Acceso y clientes
+## Acceso y seguridad
 
-Los visitantes pueden consultar el catálogo y sus portadas.
-Las reservas requieren iniciar sesión.
+El visitante consulta el catálogo activo. Reservar requiere sesión.
 
-Los clientes consultan su sesión y sus reservas. La escritura directa
-de perfiles y reservas está restringida.
+El cliente consulta sus reservas y cancela las pendientes.
+El administrador gestiona productos, reservas, clientes e informes.
 
-El administrador gestiona productos y reservas y puede consultar
-el listado de clientes y sus fichas.
+La interfaz adapta sus opciones al rol; los guards protegen
+la navegación y PostgreSQL aplica los permisos mediante RLS
+y funciones que comprueban la identidad y la operación.
 
-Las fichas muestran nombre, correo, fecha de alta e historial.
-La consulta administrativa utiliza una función PostgreSQL que
-comprueba el rol antes de devolver datos de Auth y perfiles.
+AuthService centraliza sesión y rol. El SDK de Supabase gestiona
+los tokens y su renovación mediante sus propias peticiones fetch.
+No se utiliza un interceptor HTTP propio de Angular.
 
-Las fichas son de consulta; no permiten editar nombres ni gestionar
-las cuentas de Auth desde la aplicación.
+No hay registro público, recuperación de contraseña ni edición
+del perfil desde la aplicación.
 
-Las cuentas se crean desde Supabase. La interfaz no incluye registro
-público ni recuperación de contraseña.
+Las credenciales de evaluación se facilitan en la memoria.
+No se publican contraseñas en este repositorio.
 
 ## Productos y portadas
 
-Los productos incluyen título, artista, género, precio, existencias,
-descripción, ruta de portada, estado de publicación y fecha de creación.
+Los productos incluyen título, artista, género, precio,
+existencias, descripción, portada y estado de publicación.
 
-Los productos inactivos se conservan en administración y no aparecen
-en el catálogo público. Un producto activo sin existencias sigue
-visible, indicando que está temporalmente agotado.
+Retirar un producto conserva sus datos e historial y lo oculta
+del catálogo público. Los publicados sin existencias pueden
+seguir visibles como agotados.
 
-Al editar sin cambiar las existencias, el stock se omite de la
-actualización para conservar los movimientos realizados por reservas.
+Al editar sin modificar existencias, el stock se omite de la
+actualización. Si se modifica, se exige que conserve el valor
+original del formulario para evitar sobrescribir cambios recientes.
 
-Si el administrador modifica las existencias, la actualización exige
-que el stock siga coincidiendo con el valor original del formulario.
-Si ha cambiado, se rechaza el guardado y se solicita revisar el listado.
+El bucket público portadas admite JPEG, PNG y WebP de hasta 2 MiB.
+imagen_path guarda la ruta del archivo.
 
-Las imágenes se almacenan en el bucket público portadas.
-El campo imagen_path guarda la ruta del archivo.
+Al sustituir una imagen pueden quedar archivos sin referencia.
+Su limpieza automática está pendiente.
 
-Se admiten JPEG, PNG y WebP de hasta 2 MiB.
-Cada subida utiliza un nombre único.
+## Reservas y compras recogidas
 
-Al sustituir una portada, la imagen anterior permanece en Storage.
-También pueden quedar archivos sin referencia tras un guardado fallido.
-La limpieza segura de esos archivos está pendiente.
+Una reserva corresponde a un producto y una cantidad para recoger
+en tienda. No hay caducidad automática.
 
-## Reservas
-
-Cada reserva corresponde a un producto y una cantidad de unidades,
-para recoger en tienda. No incluye pagos ni caducidad automática.
-
-Al reservar, PostgreSQL comprueba la sesión, el producto,
-la cantidad y las existencias. La identidad y el precio se obtienen
-en el servidor.
-
-El descuento de unidades y la creación de la reserva se realizan
-en una misma transacción. Se utiliza FOR UPDATE para coordinar
-las modificaciones del stock.
+crear_reserva comprueba identidad, producto, cantidad y existencias
+y obtiene el precio desde PostgreSQL. La creación y el descuento
+se realizan en una transacción con bloqueo FOR UPDATE.
 
 Estados:
 
-- pendiente: unidades reservadas y descontadas.
-- recogida: recogida confirmada por el administrador, sin otro descuento.
-- cancelada: cancelación del propietario o administrador, con devolución
-  de las unidades.
+- pendiente: unidades apartadas y descontadas de las disponibles.
+- recogida: entrega confirmada por el administrador, sin otro descuento.
+- cancelada: devolución de las unidades a las existencias.
 
-Las reservas finalizadas no pueden cambiar a otro estado.
-Repetir una cancelación no vuelve a devolver existencias.
+La recogida equivale, en esta práctica, a una compra completada
+y cobrada en tienda. Su importe se incorpora al gasto del cliente
+y a las estadísticas. No existe pasarela de pago ni módulo de caja.
 
-Cada solicitud de creación tiene un identificador. Reintentar la misma
-solicitud devuelve la reserva existente sin descontar más stock.
+Las reservas finalizadas no cambian de estado. Repetir una
+cancelación no devuelve existencias otra vez.
 
-La página conserva la última solicitud fallida mientras permanece
-en memoria. Esa conservación no persiste tras una recarga completa
-ni mantiene un historial de todas las solicitudes anteriores.
+Cada solicitud tiene un identificador. Reintentar la misma devuelve
+la reserva existente sin repetir el descuento. La última solicitud
+fallida se conserva en memoria, no tras una recarga completa.
 
-La aplicación consulta las reservas directamente, pero las crea
-y cambia de estado mediante RPC a funciones PostgreSQL.
+precio_unitario conserva el precio histórico aunque cambie el catálogo.
 
-Si un producto pasa a inactivo, el cliente conserva su reserva,
-pero no puede consultar sus datos relacionados del catálogo por RLS.
-La interfaz muestra un texto alternativo.
+Si se retira un producto, la reserva permanece. Si RLS impide
+consultar sus datos relacionados, se muestra un texto alternativo.
 
-### Validación asíncrona de disponibilidad
+### Validación asíncrona
 
-El formulario valida que la cantidad sea un entero mayor que cero.
-Después consulta mediante un servicio si el producto sigue activo
-y tiene suficientes unidades en Supabase.
+La cantidad debe ser un entero mayor que cero. Al abandonar
+el campo se consulta la disponibilidad.
 
-Los cambios del campo se validan al perder el foco.
-Mientras la consulta está pendiente, se muestra un mensaje de
-comprobación y se bloquea la confirmación.
+Durante la comprobación se bloquea la confirmación. Se distingue
+entre falta de existencias y fallo de conexión, con un tiempo
+máximo de espera de diez segundos.
 
-Se distinguen la falta de disponibilidad y los errores de conexión.
-La validación tiene un tiempo máximo de espera de diez segundos.
+Esta consulta no aparta unidades. La función PostgreSQL comprueba
+otra vez las existencias al confirmar.
 
-La consulta utiliza el stock actual, aunque el catálogo mostrase
-unas existencias anteriores.
+## Estadísticas e informes
 
-Esta validación no aparta unidades. La función PostgreSQL mantiene
-la comprobación definitiva al confirmar, porque el stock puede
-cambiar después de validar el campo.
+Las métricas distinguen:
 
-## Dashboard e informes
+- Reservas creadas por created_at.
+- Compras recogidas por updated_at de las recogidas.
+- Cancelaciones por updated_at de las canceladas.
+- Estado actual de las reservas creadas dentro del periodo.
+- Productos y existencias actuales.
 
-El dashboard está restringido al administrador.
+Los intervalos incluyen ambos días según las fechas locales.
+La evolución se agrupa por día en periodos cortos y por mes
+en los largos.
 
-Productos y existencias reflejan la situación actual.
-Las métricas de reservas utilizan su fecha de creación dentro
-del periodo seleccionado, incluido hoy, según la hora local
-del navegador.
+Las reservas se recuperan por páginas desde Supabase; después
+se calculan localmente los periodos. Los importes se acumulan
+en céntimos usando el precio histórico.
 
-Incluye:
+Los gráficos incluyen tablas alternativas y sus instancias
+se destruyen al abandonar la página.
 
-- Productos registrados y activos.
-- Unidades disponibles en los productos activos.
-- Reservas creadas en el periodo y cuántas siguen pendientes.
-- Valor de las reservas del periodo que están recogidas.
-- Línea de reservas creadas por día.
-- Anillo con el estado actual de las reservas del periodo.
+PDF y CSV utilizan el periodo seleccionado. El PDF contiene
+tablas paginadas y carga sus bibliotecas mediante importación
+dinámica. El CSV utiliza UTF-8 con BOM y separador punto y coma.
 
-El valor de las reservas recogidas no representa pagos registrados.
-La aplicación no implementa cobros.
+Los informes no incluyen correos ni fichas de clientes.
 
-Los gráficos tienen tablas alternativas y sus instancias se destruyen
-al abandonar la página.
+## Datos de demostración
 
-Los informes PDF y CSV utilizan los datos mostrados en el dashboard.
-Incluyen resumen, distribución por estado y actividad diaria.
-No incluyen correos ni fichas de clientes.
+La carga preparada contiene:
 
-El PDF contiene tablas paginadas con cabeceras y numeración.
-Sus bibliotecas se cargan mediante importación dinámica al descargar.
+- 60 álbumes con portada WebP.
+- 15 clientes ficticios.
+- 400 reservas repartidas a lo largo de unos dos años:
+  - 320 recogidas: 370 unidades.
+  - 60 canceladas: 67 unidades.
+  - 20 pendientes: 22 unidades.
 
-El CSV utiliza UTF-8 y punto y coma como separador.
+La selección inicial de álbumes se preparó con ayuda de IA.
+Los metadatos se contrastaron con MusicBrainz y las portadas
+se obtuvieron de Cover Art Archive.
 
-## Comprobaciones realizadas
+Precios, existencias e historial comercial son ficticios.
+Las imágenes conservan los derechos de sus titulares.
 
-- Build y lint correctos.
-- Navegación, sesiones, menú y rutas según el rol.
-- Acceso mediante URL directa.
-- Alta y edición de productos con persistencia tras recargar.
-- Cancelación de edición sin guardar cambios.
-- Publicación y retirada del catálogo.
-- Consulta pública de catálogo y portadas.
-- Subida, sustitución y validación de tamaño de imágenes.
-- Reserva desde catálogo y descuento de unidades.
-- Cancelación con devolución de unidades.
-- Recogida sin descontar stock por segunda vez.
-- Persistencia de estados y existencias.
-- Filtro administrativo de reservas.
-- Listado, fichas e historial de clientes.
-- Navegación desde una reserva hasta su cliente.
-- Dashboard, periodos, gráficos y tablas alternativas.
-- Salida y regreso al dashboard sin reutilización incorrecta del canvas.
-- Descarga y revisión de informes PDF y CSV.
-- Cambio de título tras una reserva sin sobrescribir el stock.
-- Rechazo del guardado de existencias desactualizadas.
-- Validación asíncrona de cantidades disponibles y superiores al stock.
-- Rechazo de cantidad cero y recuperación de validez al corregirla.
-- Detección de cambios de stock desde otra sesión sin recargar el catálogo.
+La aplicación consulta Supabase durante su uso habitual.
+Las API musicales se utilizan durante la preparación.
 
-Pruebas mediante API con cuenta cliente:
+Sharp convirtió las 60 portadas a WebP: de 3,66 MiB a 1,84 MiB,
+una reducción del 49,8 %.
 
-- Perfiles: lectura del propio y actualización rechazada con HTTP 403.
-- Productos: actualización sin filas afectadas y creación rechazada
-  con HTTP 403 y código 42501.
-- Storage: subida rechazada por RLS; HTTP 400 con statusCode 403
-  y AccessDenied en el cuerpo.
-- Reservas: reintento de creación con la misma reserva y un solo descuento.
-- Reservas: cancelación repetida con una sola devolución de stock.
-- Reservas: confirmación de recogida rechazada al cliente.
-- Reservas: actualización directa rechazada con HTTP 403 y código 42501.
-- Clientes: consulta administrativa rechazada con HTTP 403
-  y código 42501.
+Scripts:
 
-La prueba de dos usuarios reservando simultáneamente la última unidad
-está pendiente. El bloqueo está implementado, pero ese escenario
-no se presenta como verificado.
+- scripts/preparar-catalogo.mjs
+- scripts/convertir-portadas.mjs
+- scripts/importar-catalogo.mjs
+- scripts/crear-clientes-demo.mjs
+- scripts/preparar-historial.mjs
 
-## Trabajo pendiente
+Los resultados locales se excluyen mediante .gitignore.
+Los scripts no se ejecutan al arrancar la aplicación.
+No es necesario regenerar cuentas ni historial para utilizarla.
 
-- Pruebas adicionales de concurrencia y acceso a reservas de otra cuenta.
-- Contenido de ayuda y manual de usuario.
-- Documentación técnica generada con Compodoc.
-- Limpieza segura de portadas sin referencias.
-- Diseño visual y revisión de la experiencia de usuario.
-- Revisión de accesibilidad y auditorías Lighthouse.
-- Completar los requisitos de despliegue y entrega.
-- Revisar las vulnerabilidades detectadas en dependencias de desarrollo.
-- Ajustar Browserslist a los navegadores admitidos por Angular.
+## Manual y documentación técnica
 
-## Organización del desarrollo
+La página /ayuda explica las reservas, los estados, la gestión,
+las estadísticas y la resolución de problemas habituales.
 
-Se utilizan ramas feature para cada bloque y pull requests
-para integrarlas en develop. Las correcciones pueden utilizar ramas fix.
+Generar la documentación técnica:
 
-La rama main se reserva para versiones estables de publicación
-o entrega.
+    npm run docs
 
-Vercel utiliza main para producción y genera despliegues Preview
-para las ramas de desarrollo.
+La salida HTML se guarda en docs/compodoc/.
+
+Consultar mediante un servidor local:
+
+    npm run docs:serve
+
+Abrir http://localhost:8080. Detener con Ctrl+C.
+
+tsconfig.doc.json selecciona el código y excluye las pruebas.
+Compodoc documenta la estructura técnica; Ayuda contiene
+las instrucciones de uso.
+
+## Comprobaciones y limitaciones
+
+Se han realizado compilación, lint y una prueba básica de
+AppComponent. No representan cobertura completa de negocio.
+
+Se han comprobado manualmente navegación, sesiones, formularios,
+movimientos de existencias, listados y exportaciones.
+
+Las pruebas previas mediante API con una cuenta cliente incluyeron:
+
+- Lectura del perfil propio y rechazo de su modificación.
+- Rechazo de creación de productos y ausencia de actualizaciones autorizadas.
+- Rechazo de subida de portadas.
+- Reintento de reserva sin repetir el descuento.
+- Cancelación repetida sin repetir la devolución.
+- Rechazo de confirmación de recogida por el cliente.
+- Rechazo de modificación directa de reservas.
+- Rechazo de consulta administrativa de clientes.
+
+Revisar SQL local no certifica que todas las políticas desplegadas
+coincidan con las migraciones.
+
+Quedan pruebas adicionales de concurrencia, expiración y mala conexión.
+
+Browserslist se ha actualizado. Persisten tres avisos de tamaño CSS
+en catálogo, productos y dashboard, sin impedir la compilación.
+
+Lighthouse y la comprobación del despliegue definitivo se
+documentan en la memoria de entrega.
+
+## Mejoras futuras
+
+- Ampliar pruebas automatizadas y de concurrencia.
+- Reducir CSS y extraer componentes reutilizables.
+- Paginar o virtualizar listados extensos.
+- Limpiar portadas sin referencia.
+- Registro, recuperación de contraseña y edición del perfil.
+- Contacto y gestión de incidencias.
+- Pruebas y empaquetado Android con Capacitor.
+- Evaluar instalación PWA y funcionamiento sin conexión.
+
+No se presenta como completada una versión Android ni una PWA
+con funcionamiento sin conexión.
+
+## Control de versiones y publicación
+
+Se utilizan main, develop y ramas feature/* y fix/*.
+Los cambios se integran mediante pull requests.
+
+main se reserva para versiones estables. Vercel utiliza main
+para producción y genera despliegues Preview para desarrollo.
+
+Vercel publica la web; Supabase mantiene autenticación,
+base de datos y portadas.
+
+## Fuentes
+
+- Angular: https://angular.dev/
+- Ionic: https://ionicframework.com/docs
+- Supabase: https://supabase.com/docs
+- Chart.js: https://www.chartjs.org/docs/latest/
+- MusicBrainz: https://musicbrainz.org/doc/MusicBrainz_API
+- Cover Art Archive: https://coverartarchive.org/
+- Compodoc: https://compodoc.app/
+
+Se ha utilizado IA como apoyo para explicación, desarrollo,
+revisión y preparación de datos de prueba. La memoria detalla su uso.

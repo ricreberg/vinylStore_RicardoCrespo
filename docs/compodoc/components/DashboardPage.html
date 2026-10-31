@@ -1,0 +1,4481 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Vinyl Store</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">Vinyl Store</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search">
+    <input type="text" placeholder="Escribe para buscar">
+    <button type="button"
+        class="search-input-clear"
+        aria-label="Clear search"
+        data-search-input-clear>&times;</button>
+</div>
+            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Componentes</li>
+  <li class="breadcrumb-item"
+  >
+  DashboardPage</li>
+</ol>
+
+<div class="io-file io-file-path" data-compodoc="entity-file-path">
+    <span class="icon ion-ios-document" aria-hidden="true"></span>
+    <code>src/app/pages/admin/dashboard/dashboard.page.ts</code>
+</div>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#api" class="nav-link"
+                role="tab" id="api-tab" data-bs-toggle="tab" data-link="api">API</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+
+
+    <p class="comment">
+        <h3>Implementa</h3>
+    </p>
+    <p class="comment">
+                    <code><a href="https://angular.dev/api/core/OnDestroy" target="_blank" >OnDestroy</a></code>
+    </p>
+
+
+<section data-compodoc="block-metadata">
+    <h3>Meta datos</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+            <tr>
+                <td class="col-md-3">changeDetection</td>
+                <td class="col-md-9"><code>ChangeDetectionStrategy.OnPush</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-dashboard</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                        <div>        <code><a href="https://angular.dev/api/forms/FormsModule" target="_blank" >FormsModule</a></code>
+</div>
+                        <div>    <code>IonButton</code>
+</div>
+                        <div>    <code>IonButtons</code>
+</div>
+                        <div>    <code>IonContent</code>
+</div>
+                        <div>    <code>IonHeader</code>
+</div>
+                        <div>    <code>IonMenuButton</code>
+</div>
+                        <div>    <code>IonTitle</code>
+</div>
+                        <div>    <code>IonToolbar</code>
+</div>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./dashboard.page.scss</code></td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./dashboard.page.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+        <section data-compodoc="block-relationships">
+            <h3>Relationships</h3>
+
+            <div class="row pt-3">
+                <div class="col-sm-6">
+                    <h4>Used by</h4>
+                        <p class="comment"><i>No hay resultados que coincidan.</i></p>
+                </div>
+
+                <div class="col-sm-6">
+                    <h4>Depends on</h4>
+                        <ul class="list-unstyled relationships-list">
+                                <li>
+                                            <code><a href="https://angular.dev/api/forms/FormsModule" target="_blank" >FormsModule</a></code>
+                                </li>
+                                <li>
+                                        <code>IonButton</code>
+                                </li>
+                                <li>
+                                        <code>IonButtons</code>
+                                </li>
+                                <li>
+                                        <code>IonContent</code>
+                                </li>
+                                <li>
+                                        <code>IonHeader</code>
+                                </li>
+                                <li>
+                                        <code>IonMenuButton</code>
+                                </li>
+                                <li>
+                                        <code>IonTitle</code>
+                                </li>
+                                <li>
+                                        <code>IonToolbar</code>
+                                </li>
+                                <li>
+                                            <code><a href="https://angular.dev/api/core/OnDestroy" target="_blank" >OnDestroy</a></code>
+                                </li>
+                        </ul>
+                </div>
+            </div>
+        </section>
+</div>
+
+    <div class="tab-pane fade " id="api">    <section data-compodoc="block-index">
+    <h3 id="index">Índice</h3>
+        <table class="table table-sm table-bordered index-table">
+            <tbody>
+                <tr>
+                    <td class="col-md-3">
+                        <h6><b>Propiedades</b></h6>
+                    </td>
+                    <td class="col-md-9">
+                        <ul class="index-list">
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Private</span>
+                                <a href="#activa" >activa</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#actividad" >actividad</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#agrupacion" >agrupacion</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Private</span>
+                                <a href="#canvasActividad" >canvasActividad</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier"></span>
+                                    <span class="modifier">Private</span>
+                                <a href="#canvasEstados" >canvasEstados</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Private</span>
+                                <a href="#datos" >datos</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#desde" >desde</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#detector" >detector</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#errorMessage" >errorMessage</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#errorPeriodo" >errorPeriodo</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#estados" >estados</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#exportando" >exportando</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#exportError" >exportError</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Private</span>
+                                <a href="#graficoActividad" >graficoActividad</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Private</span>
+                                <a href="#graficoEstados" >graficoEstados</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                <a href="#hasta" >hasta</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#indicadores" >indicadores</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#informes" >informes</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#loading" >loading</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#masReservados" >masReservados</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#moneda" >moneda</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#periodo" >periodo</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#periodos" >periodos</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Private</span>
+                                <a href="#peticion" >peticion</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#recientes" >recientes</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#resumen" >resumen</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#seleccionPeriodo" >seleccionPeriodo</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#servicio" >servicio</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#stockBajo" >stockBajo</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#textoPeriodo" >textoPeriodo</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#ultimaActualizacion" >ultimaActualizacion</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#umbralStockBajo" >umbralStockBajo</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table class="table table-sm table-bordered index-table">
+            <tbody>
+                <tr>
+                    <td class="col-md-3">
+                        <h6><b>Métodos</b></h6>
+                    </td>
+                    <td class="col-md-9">
+                        <ul class="index-list">
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                    <span class="modifier"></span>
+                                <a href="#actualizarTema" >actualizarTema</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#aplicarFechas" >aplicarFechas</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#cambiarPeriodo" >cambiarPeriodo</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#cargarDashboard" >cargarDashboard</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                    <span class="modifier">Private</span>
+                                <a href="#colorTema" >colorTema</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#descargarCsv" >descargarCsv</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#descargarPdf" >descargarPdf</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                    <span class="modifier">Private</span>
+                                <a href="#destruirGraficos" >destruirGraficos</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                    <span class="modifier">Private</span>
+                                <a href="#dibujarGraficos" >dibujarGraficos</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                    <span class="modifier">Private</span>
+                                <a href="#establecerPeriodo" >establecerPeriodo</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#formatearFecha" >formatearFecha</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#formatearPrecio" >formatearPrecio</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#ionViewDidEnter" >ionViewDidEnter</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#ionViewWillLeave" >ionViewWillLeave</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#ngOnDestroy" >ngOnDestroy</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#nombreEstado" >nombreEstado</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#porcentaje" >porcentaje</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                    <span class="modifier">Private</span>
+                                <a href="#prepararInforme" >prepararInforme</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                    <span class="modifier">Private</span>
+                                <a href="#puedeActualizarPeriodo" >puedeActualizarPeriodo</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                    <span class="modifier">Private</span>
+                                <a href="#recalcular" >recalcular</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+
+
+
+        <table class="table table-sm table-bordered index-table">
+            <tbody>
+                <tr>
+                    <td class="col-md-3">
+                        <h6><b>Escuchadores de Host</b></h6>
+                    </td>
+                    <td class="col-md-9">
+                        <ul class="index-list">
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">HL</span><a href="#document:vinylstore:tema" >document:vinylstore:tema</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table class="table table-sm table-bordered index-table">
+            <tbody>
+                <tr>
+                    <td class="col-md-3">
+                        <h6><b>Accesorios</b></h6>
+                    </td>
+                    <td class="col-md-9">
+                        <ul class="index-list">
+                            <li>
+                                <span class="reference-badge reference-badge--accessor" aria-hidden="true">A</span>
+                                <a href="#fechaHoy" >fechaHoy</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--accessor" aria-hidden="true">A</span>
+                                <a href="#coloresEstados" >coloresEstados</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    <h3>HostListeners</h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="document:vinylstore:tema"></a>
+                    <span class="name">
+                        <span ><b>document:vinylstore:tema</b></span>
+                        <a href="#document:vinylstore:tema"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>document:vinylstore:tema()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="414"
+                                    class="link-to-prism">src/app/pages/admin/dashboard/dashboard.page.ts:414</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Métodos
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="actualizarTema"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                        <span ><b>actualizarTema</b></span>
+                        <a href="#actualizarTema"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>actualizarTema()</code>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <b>Decoradores : </b>
+                    <br />
+                    <code>@HostListener(&#x27;document:vinylstore:tema&#x27;)<br /></code>
+                </td>
+            </tr>
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="414"
+                                    class="link-to-prism">src/app/pages/admin/dashboard/dashboard.page.ts:414</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="aplicarFechas"></a>
+                    <span class="name">
+                        <span ><b>aplicarFechas</b></span>
+                        <a href="#aplicarFechas"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>aplicarFechas()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="291"
+                                    class="link-to-prism">src/app/pages/admin/dashboard/dashboard.page.ts:291</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="cambiarPeriodo"></a>
+                    <span class="name">
+                        <span ><b>cambiarPeriodo</b></span>
+                        <a href="#cambiarPeriodo"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>cambiarPeriodo(opcion: <a href="../miscellaneous/typealiases.html#PeriodoRapido" target="_self">PeriodoRapido</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="283"
+                                    class="link-to-prism">src/app/pages/admin/dashboard/dashboard.page.ts:283</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>opcion</td>
+                                            <td>
+                                                            <code><a href="../miscellaneous/typealiases.html#PeriodoRapido" target="_self" >PeriodoRapido</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="cargarDashboard"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>cargarDashboard</b></span>
+                        <a href="#cargarDashboard"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>cargarDashboard()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="231"
+                                    class="link-to-prism">src/app/pages/admin/dashboard/dashboard.page.ts:231</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Devuelve : </b>    <code>Promise&lt;void&gt;</code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="colorTema"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>colorTema</b></span>
+                        <a href="#colorTema"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>colorTema(variable: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, alternativa: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="421"
+                                    class="link-to-prism">src/app/pages/admin/dashboard/dashboard.page.ts:421</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>variable</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>alternativa</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="descargarCsv"></a>
+                    <span class="name">
+                        <span ><b>descargarCsv</b></span>
+                        <a href="#descargarCsv"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>descargarCsv()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="349"
+                                    class="link-to-prism">src/app/pages/admin/dashboard/dashboard.page.ts:349</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="descargarPdf"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>descargarPdf</b></span>
+                        <a href="#descargarPdf"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>descargarPdf()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="369"
+                                    class="link-to-prism">src/app/pages/admin/dashboard/dashboard.page.ts:369</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Devuelve : </b>    <code>Promise&lt;void&gt;</code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="destruirGraficos"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>destruirGraficos</b></span>
+                        <a href="#destruirGraficos"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>destruirGraficos()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="570"
+                                    class="link-to-prism">src/app/pages/admin/dashboard/dashboard.page.ts:570</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="dibujarGraficos"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>dibujarGraficos</b></span>
+                        <a href="#dibujarGraficos"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>dibujarGraficos()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="427"
+                                    class="link-to-prism">src/app/pages/admin/dashboard/dashboard.page.ts:427</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="establecerPeriodo"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>establecerPeriodo</b></span>
+                        <a href="#establecerPeriodo"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>establecerPeriodo(periodo: <a href="../interfaces/PeriodoInforme.html" target="_self">PeriodoInforme</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="307"
+                                    class="link-to-prism">src/app/pages/admin/dashboard/dashboard.page.ts:307</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>periodo</td>
+                                            <td>
+                                                            <code><a href="../interfaces/PeriodoInforme.html" target="_self" >PeriodoInforme</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="formatearFecha"></a>
+                    <span class="name">
+                        <span ><b>formatearFecha</b></span>
+                        <a href="#formatearFecha"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>formatearFecha(fecha: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="340"
+                                    class="link-to-prism">src/app/pages/admin/dashboard/dashboard.page.ts:340</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>fecha</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="formatearPrecio"></a>
+                    <span class="name">
+                        <span ><b>formatearPrecio</b></span>
+                        <a href="#formatearPrecio"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>formatearPrecio(importe: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="336"
+                                    class="link-to-prism">src/app/pages/admin/dashboard/dashboard.page.ts:336</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>importe</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ionViewDidEnter"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>ionViewDidEnter</b></span>
+                        <a href="#ionViewDidEnter"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>ionViewDidEnter()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="216"
+                                    class="link-to-prism">src/app/pages/admin/dashboard/dashboard.page.ts:216</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Devuelve : </b>    <code>Promise&lt;void&gt;</code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ionViewWillLeave"></a>
+                    <span class="name">
+                        <span ><b>ionViewWillLeave</b></span>
+                        <a href="#ionViewWillLeave"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ionViewWillLeave()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="221"
+                                    class="link-to-prism">src/app/pages/admin/dashboard/dashboard.page.ts:221</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnDestroy"></a>
+                    <span class="name">
+                        <span ><b>ngOnDestroy</b></span>
+                        <a href="#ngOnDestroy"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnDestroy()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="227"
+                                    class="link-to-prism">src/app/pages/admin/dashboard/dashboard.page.ts:227</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="nombreEstado"></a>
+                    <span class="name">
+                        <span ><b>nombreEstado</b></span>
+                        <a href="#nombreEstado"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>nombreEstado(estado: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="323"
+                                    class="link-to-prism">src/app/pages/admin/dashboard/dashboard.page.ts:323</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>estado</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="porcentaje"></a>
+                    <span class="name">
+                        <span ><b>porcentaje</b></span>
+                        <a href="#porcentaje"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>porcentaje(cantidad: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="315"
+                                    class="link-to-prism">src/app/pages/admin/dashboard/dashboard.page.ts:315</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>cantidad</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="prepararInforme"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>prepararInforme</b></span>
+                        <a href="#prepararInforme"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>prepararInforme()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="392"
+                                    class="link-to-prism">src/app/pages/admin/dashboard/dashboard.page.ts:392</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="../interfaces/DatosInforme.html" target="_self" >DatosInforme</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="puedeActualizarPeriodo"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>puedeActualizarPeriodo</b></span>
+                        <a href="#puedeActualizarPeriodo"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>puedeActualizarPeriodo()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="302"
+                                    class="link-to-prism">src/app/pages/admin/dashboard/dashboard.page.ts:302</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="recalcular"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>recalcular</b></span>
+                        <a href="#recalcular"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>recalcular()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="402"
+                                    class="link-to-prism">src/app/pages/admin/dashboard/dashboard.page.ts:402</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Propiedades
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="activa"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>activa</b></span>
+                        <a href="#activa"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="116" class="link-to-prism">src/app/pages/admin/dashboard/dashboard.page.ts:116</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="actividad"></a>
+                    <span class="name">
+                            <span class="modifier">Readonly</span>
+                        <span ><b>actividad</b></span>
+                        <a href="#actividad"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>signal&lt;ActividadPeriodo[]&gt;([])</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="163" class="link-to-prism">src/app/pages/admin/dashboard/dashboard.page.ts:163</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="agrupacion"></a>
+                    <span class="name">
+                            <span class="modifier">Readonly</span>
+                        <span ><b>agrupacion</b></span>
+                        <a href="#agrupacion"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>computed(() &#x3D;&gt; this.periodo().agrupacion)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="130" class="link-to-prism">src/app/pages/admin/dashboard/dashboard.page.ts:130</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="canvasActividad"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                            <span class="modifier">Private</span>
+                        <span ><b>canvasActividad</b></span>
+                        <a href="#canvasActividad"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>ElementRef&lt;HTMLCanvasElement&gt;</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decoradores : </b>
+                        <br />
+                        <code>
+                            @ViewChild(&#x27;canvasActividad&#x27;, {static: true})<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="107" class="link-to-prism">src/app/pages/admin/dashboard/dashboard.page.ts:107</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="canvasEstados"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                            <span class="modifier">Private</span>
+                        <span ><b>canvasEstados</b></span>
+                        <a href="#canvasEstados"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>ElementRef&lt;HTMLCanvasElement&gt;</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decoradores : </b>
+                        <br />
+                        <code>
+                            @ViewChild(&#x27;canvasEstados&#x27;, {static: true})<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="110" class="link-to-prism">src/app/pages/admin/dashboard/dashboard.page.ts:110</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="datos"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>datos</b></span>
+                        <a href="#datos"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>        <code><a href="../interfaces/DatosDashboard.html" target="_self" >DatosDashboard | null</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>null</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="115" class="link-to-prism">src/app/pages/admin/dashboard/dashboard.page.ts:115</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="desde"></a>
+                    <span class="name">
+                        <span ><b>desde</b></span>
+                        <a href="#desde"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>this.periodo().desde</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="131" class="link-to-prism">src/app/pages/admin/dashboard/dashboard.page.ts:131</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="detector"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>detector</b></span>
+                        <a href="#detector"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>inject(ChangeDetectorRef)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="99" class="link-to-prism">src/app/pages/admin/dashboard/dashboard.page.ts:99</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="errorMessage"></a>
+                    <span class="name">
+                            <span class="modifier">Readonly</span>
+                        <span ><b>errorMessage</b></span>
+                        <a href="#errorMessage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>signal(&#x27;&#x27;)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="147" class="link-to-prism">src/app/pages/admin/dashboard/dashboard.page.ts:147</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="errorPeriodo"></a>
+                    <span class="name">
+                            <span class="modifier">Readonly</span>
+                        <span ><b>errorPeriodo</b></span>
+                        <a href="#errorPeriodo"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>signal(&#x27;&#x27;)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="128" class="link-to-prism">src/app/pages/admin/dashboard/dashboard.page.ts:128</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="estados"></a>
+                    <span class="name">
+                            <span class="modifier">Readonly</span>
+                        <span ><b>estados</b></span>
+                        <a href="#estados"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>signal&lt;
+    { etiqueta: string; cantidad: number }[]
+  &gt;([])</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="165" class="link-to-prism">src/app/pages/admin/dashboard/dashboard.page.ts:165</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="exportando"></a>
+                    <span class="name">
+                            <span class="modifier">Readonly</span>
+                        <span ><b>exportando</b></span>
+                        <a href="#exportando"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>signal(false)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="148" class="link-to-prism">src/app/pages/admin/dashboard/dashboard.page.ts:148</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="exportError"></a>
+                    <span class="name">
+                            <span class="modifier">Readonly</span>
+                        <span ><b>exportError</b></span>
+                        <a href="#exportError"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>signal(&#x27;&#x27;)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="149" class="link-to-prism">src/app/pages/admin/dashboard/dashboard.page.ts:149</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="graficoActividad"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>graficoActividad</b></span>
+                        <a href="#graficoActividad"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>Chart&lt;line | number[] | string&gt; | null</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>null</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="112" class="link-to-prism">src/app/pages/admin/dashboard/dashboard.page.ts:112</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="graficoEstados"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>graficoEstados</b></span>
+                        <a href="#graficoEstados"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>Chart&lt;doughnut | number[] | string&gt; | null</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>null</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="113" class="link-to-prism">src/app/pages/admin/dashboard/dashboard.page.ts:113</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="hasta"></a>
+                    <span class="name">
+                        <span ><b>hasta</b></span>
+                        <a href="#hasta"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>this.periodo().hasta</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="132" class="link-to-prism">src/app/pages/admin/dashboard/dashboard.page.ts:132</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="indicadores"></a>
+                    <span class="name">
+                            <span class="modifier">Readonly</span>
+                        <span ><b>indicadores</b></span>
+                        <a href="#indicadores"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>computed(() &#x3D;&gt; {
+    const resumen &#x3D; this.resumen();
+
+    return [
+      {
+        titulo: &#x27;Reservas creadas&#x27;,
+        valor: String(resumen.reservas),
+        detalle: this.textoPeriodo(),
+        destacada: true,
+      },
+      {
+        titulo: &#x27;Todavía pendientes&#x27;,
+        valor: String(resumen.pendientes),
+        detalle: &#x27;De las reservas creadas en el periodo&#x27;,
+        destacada: false,
+      },
+      {
+        titulo: &#x27;Ventas&#x27;,
+        valor: this.moneda.format(resumen.importeRecogidas),
+        detalle: &#x60;${resumen.compras} compras por fecha de recogida&#x60;,
+        destacada: false,
+      },
+      {
+        titulo: &#x27;Unidades disponibles&#x27;,
+        valor: String(resumen.stock),
+        detalle: &#x27;Stock actual de productos publicados&#x27;,
+        destacada: false,
+      },
+      {
+        titulo: &#x27;Discos publicados&#x27;,
+        valor: String(resumen.activos),
+        detalle: &#x27;Productos visibles en el catálogo&#x27;,
+        destacada: false,
+      },
+      {
+        titulo: &#x27;Productos registrados&#x27;,
+        valor: String(resumen.productos),
+        detalle: &#x27;Incluye publicados y retirados&#x27;,
+        destacada: false,
+      },
+    ];
+  })</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="173" class="link-to-prism">src/app/pages/admin/dashboard/dashboard.page.ts:173</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="informes"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>informes</b></span>
+                        <a href="#informes"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>inject(InformesService)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="98" class="link-to-prism">src/app/pages/admin/dashboard/dashboard.page.ts:98</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loading"></a>
+                    <span class="name">
+                            <span class="modifier">Readonly</span>
+                        <span ><b>loading</b></span>
+                        <a href="#loading"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>signal(true)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="146" class="link-to-prism">src/app/pages/admin/dashboard/dashboard.page.ts:146</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="masReservados"></a>
+                    <span class="name">
+                            <span class="modifier">Readonly</span>
+                        <span ><b>masReservados</b></span>
+                        <a href="#masReservados"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>signal&lt;ProductoDestacado[]&gt;([])</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="170" class="link-to-prism">src/app/pages/admin/dashboard/dashboard.page.ts:170</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="moneda"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>moneda</b></span>
+                        <a href="#moneda"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>new Intl.NumberFormat(&#x27;es-ES&#x27;, {
+    style: &#x27;currency&#x27;,
+    currency: &#x27;EUR&#x27;,
+  })</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="101" class="link-to-prism">src/app/pages/admin/dashboard/dashboard.page.ts:101</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="periodo"></a>
+                    <span class="name">
+                            <span class="modifier">Readonly</span>
+                        <span ><b>periodo</b></span>
+                        <a href="#periodo"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>signal&lt;PeriodoInforme&gt;(periodoRapido(7, []))</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="127" class="link-to-prism">src/app/pages/admin/dashboard/dashboard.page.ts:127</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="periodos"></a>
+                    <span class="name">
+                            <span class="modifier">Readonly</span>
+                        <span ><b>periodos</b></span>
+                        <a href="#periodos"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>        <code><a href="../miscellaneous/typealiases.html#PeriodoRapido" target="_self" >{ valor: PeriodoRapido; etiqueta: string }[]</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>[
+    { valor: 7, etiqueta: &#x27;7 días&#x27; },
+    { valor: 30, etiqueta: &#x27;30 días&#x27; },
+    { valor: 90, etiqueta: &#x27;90 días&#x27; },
+    { valor: 365, etiqueta: &#x27;Último año&#x27; },
+    { valor: &#x27;todo&#x27;, etiqueta: &#x27;Todo el historial&#x27; },
+  ]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="119" class="link-to-prism">src/app/pages/admin/dashboard/dashboard.page.ts:119</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="peticion"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>peticion</b></span>
+                        <a href="#peticion"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>0</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="117" class="link-to-prism">src/app/pages/admin/dashboard/dashboard.page.ts:117</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="recientes"></a>
+                    <span class="name">
+                            <span class="modifier">Readonly</span>
+                        <span ><b>recientes</b></span>
+                        <a href="#recientes"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>signal&lt;ReservaReciente[]&gt;([])</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="171" class="link-to-prism">src/app/pages/admin/dashboard/dashboard.page.ts:171</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="resumen"></a>
+                    <span class="name">
+                            <span class="modifier">Readonly</span>
+                        <span ><b>resumen</b></span>
+                        <a href="#resumen"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>signal&lt;ResumenDashboard&gt;({
+    productos: 0,
+    activos: 0,
+    stock: 0,
+    reservas: 0,
+    pendientes: 0,
+    importeRecogidas: 0,
+    compras: 0,
+    cancelaciones: 0,
+  })</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="152" class="link-to-prism">src/app/pages/admin/dashboard/dashboard.page.ts:152</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="seleccionPeriodo"></a>
+                    <span class="name">
+                            <span class="modifier">Readonly</span>
+                        <span ><b>seleccionPeriodo</b></span>
+                        <a href="#seleccionPeriodo"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>signal&lt;PeriodoRapido | &#x27;personalizado&#x27;&gt;(7)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="126" class="link-to-prism">src/app/pages/admin/dashboard/dashboard.page.ts:126</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="servicio"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>servicio</b></span>
+                        <a href="#servicio"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>inject(DashboardService)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="97" class="link-to-prism">src/app/pages/admin/dashboard/dashboard.page.ts:97</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="stockBajo"></a>
+                    <span class="name">
+                            <span class="modifier">Readonly</span>
+                        <span ><b>stockBajo</b></span>
+                        <a href="#stockBajo"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>signal&lt;DatosDashboard[&#x27;productos&#x27;]&gt;([])</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="169" class="link-to-prism">src/app/pages/admin/dashboard/dashboard.page.ts:169</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="textoPeriodo"></a>
+                    <span class="name">
+                            <span class="modifier">Readonly</span>
+                        <span ><b>textoPeriodo</b></span>
+                        <a href="#textoPeriodo"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>computed(() &#x3D;&gt; etiquetaPeriodo(this.periodo()))</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="129" class="link-to-prism">src/app/pages/admin/dashboard/dashboard.page.ts:129</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ultimaActualizacion"></a>
+                    <span class="name">
+                            <span class="modifier">Readonly</span>
+                        <span ><b>ultimaActualizacion</b></span>
+                        <a href="#ultimaActualizacion"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>signal(&#x27;&#x27;)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="150" class="link-to-prism">src/app/pages/admin/dashboard/dashboard.page.ts:150</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="umbralStockBajo"></a>
+                    <span class="name">
+                            <span class="modifier">Readonly</span>
+                        <span ><b>umbralStockBajo</b></span>
+                        <a href="#umbralStockBajo"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>3</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="137" class="link-to-prism">src/app/pages/admin/dashboard/dashboard.page.ts:137</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-accessors">
+    <h3 id="accessors">
+        Accesorios
+    </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="fechaHoy"></a>
+                        <span class="name"><b>fechaHoy</b><a href="#fechaHoy"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>fechaHoy()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Definido en <a href="" data-line="134" class="link-to-prism">src/app/pages/admin/dashboard/dashboard.page.ts:134</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="coloresEstados"></a>
+                        <span class="name"><b>coloresEstados</b><a href="#coloresEstados"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>coloresEstados()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Definido en <a href="" data-line="138" class="link-to-prism">src/app/pages/admin/dashboard/dashboard.page.ts:138</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+</section>
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  OnDestroy,
+  ViewChild,
+  computed,
+  inject,
+  signal,
+  HostListener,
+} from &#x27;@angular/core&#x27;;
+import { FormsModule } from &#x27;@angular/forms&#x27;;
+import {
+  IonButton,
+  IonButtons,
+  IonContent,
+  IonHeader,
+  IonMenuButton,
+  IonTitle,
+  IonToolbar,
+} from &#x27;@ionic/angular&#x27;;
+import {
+  ArcElement,
+  CategoryScale,
+  Chart,
+  DoughnutController,
+  Legend,
+  LineController,
+  LineElement,
+  LinearScale,
+  PointElement,
+  Tooltip,
+} from &#x27;chart.js&#x27;;
+
+import { DashboardService } from &#x27;../../../core/services/dashboard.service&#x27;;
+import type { DatosDashboard } from &#x27;../../../core/services/dashboard.service&#x27;;
+import { InformesService } from &#x27;../../../core/services/informes.service&#x27;;
+import type { DatosInforme } from &#x27;../../../core/services/informes.service&#x27;;
+import {
+  calcularDashboard,
+  crearPeriodo,
+  etiquetaPeriodo,
+  fechaLocal,
+  periodoRapido,
+  validarPeriodo,
+} from &#x27;../../../core/utils/dashboard-calculos&#x27;;
+import type {
+  ActividadPeriodo,
+  PeriodoInforme,
+  PeriodoRapido,
+  ResumenDashboard,
+} from &#x27;../../../core/utils/dashboard-calculos&#x27;;
+
+interface ProductoDestacado {
+  id: string;
+  titulo: string;
+  artista: string;
+  unidades: number;
+}
+
+interface ReservaReciente {
+  id: string;
+  titulo: string;
+  cantidad: number;
+  estado: string;
+  fecha: string;
+}
+
+Chart.register(
+  ArcElement,
+  CategoryScale,
+  DoughnutController,
+  Legend,
+  LineController,
+  LineElement,
+  LinearScale,
+  PointElement,
+  Tooltip,
+);
+
+@Component({
+  selector: &#x27;app-dashboard&#x27;,
+  templateUrl: &#x27;./dashboard.page.html&#x27;,
+  styleUrls: [&#x27;./dashboard.page.scss&#x27;],
+  imports: [
+    FormsModule,
+    IonButton,
+    IonButtons,
+    IonContent,
+    IonHeader,
+    IonMenuButton,
+    IonTitle,
+    IonToolbar,
+  ],
+})
+export class DashboardPage implements OnDestroy {
+  private readonly servicio &#x3D; inject(DashboardService);
+  private readonly informes &#x3D; inject(InformesService);
+  private readonly detector &#x3D; inject(ChangeDetectorRef);
+
+  private readonly moneda &#x3D; new Intl.NumberFormat(&#x27;es-ES&#x27;, {
+    style: &#x27;currency&#x27;,
+    currency: &#x27;EUR&#x27;,
+  });
+
+  @ViewChild(&#x27;canvasActividad&#x27;, { static: true })
+  private canvasActividad!: ElementRef&lt;HTMLCanvasElement&gt;;
+
+  @ViewChild(&#x27;canvasEstados&#x27;, { static: true })
+  private canvasEstados!: ElementRef&lt;HTMLCanvasElement&gt;;
+
+  private graficoActividad: Chart&lt;&#x27;line&#x27;, number[], string&gt; | null &#x3D; null;
+  private graficoEstados: Chart&lt;&#x27;doughnut&#x27;, number[], string&gt; | null &#x3D; null;
+
+  private datos: DatosDashboard | null &#x3D; null;
+  private activa &#x3D; false;
+  private peticion &#x3D; 0;
+
+  readonly periodos: { valor: PeriodoRapido; etiqueta: string }[] &#x3D; [
+    { valor: 7, etiqueta: &#x27;7 días&#x27; },
+    { valor: 30, etiqueta: &#x27;30 días&#x27; },
+    { valor: 90, etiqueta: &#x27;90 días&#x27; },
+    { valor: 365, etiqueta: &#x27;Último año&#x27; },
+    { valor: &#x27;todo&#x27;, etiqueta: &#x27;Todo el historial&#x27; },
+  ];
+  readonly seleccionPeriodo &#x3D; signal&lt;PeriodoRapido | &#x27;personalizado&#x27;&gt;(7);
+  readonly periodo &#x3D; signal&lt;PeriodoInforme&gt;(periodoRapido(7, []));
+  readonly errorPeriodo &#x3D; signal(&#x27;&#x27;);
+  readonly textoPeriodo &#x3D; computed(() &#x3D;&gt; etiquetaPeriodo(this.periodo()));
+  readonly agrupacion &#x3D; computed(() &#x3D;&gt; this.periodo().agrupacion);
+  desde &#x3D; this.periodo().desde;
+  hasta &#x3D; this.periodo().hasta;
+
+  get fechaHoy(): string {
+    return fechaLocal(new Date());
+  }
+  readonly umbralStockBajo &#x3D; 3;
+  get coloresEstados(): string[] {
+    return [
+      this.colorTema(&#x27;--store-chart-pending&#x27;, &#x27;#956615&#x27;),
+      this.colorTema(&#x27;--store-chart-collected&#x27;, &#x27;#455b4c&#x27;),
+      this.colorTema(&#x27;--store-chart-cancelled&#x27;, &#x27;#782c40&#x27;),
+    ];
+  }
+
+  readonly loading &#x3D; signal(true);
+  readonly errorMessage &#x3D; signal(&#x27;&#x27;);
+  readonly exportando &#x3D; signal(false);
+  readonly exportError &#x3D; signal(&#x27;&#x27;);
+  readonly ultimaActualizacion &#x3D; signal(&#x27;&#x27;);
+
+  readonly resumen &#x3D; signal&lt;ResumenDashboard&gt;({
+    productos: 0,
+    activos: 0,
+    stock: 0,
+    reservas: 0,
+    pendientes: 0,
+    importeRecogidas: 0,
+    compras: 0,
+    cancelaciones: 0,
+  });
+
+  readonly actividad &#x3D; signal&lt;ActividadPeriodo[]&gt;([]);
+
+  readonly estados &#x3D; signal&lt;
+    { etiqueta: string; cantidad: number }[]
+  &gt;([]);
+
+  readonly stockBajo &#x3D; signal&lt;DatosDashboard[&#x27;productos&#x27;]&gt;([]);
+  readonly masReservados &#x3D; signal&lt;ProductoDestacado[]&gt;([]);
+  readonly recientes &#x3D; signal&lt;ReservaReciente[]&gt;([]);
+
+  readonly indicadores &#x3D; computed(() &#x3D;&gt; {
+    const resumen &#x3D; this.resumen();
+
+    return [
+      {
+        titulo: &#x27;Reservas creadas&#x27;,
+        valor: String(resumen.reservas),
+        detalle: this.textoPeriodo(),
+        destacada: true,
+      },
+      {
+        titulo: &#x27;Todavía pendientes&#x27;,
+        valor: String(resumen.pendientes),
+        detalle: &#x27;De las reservas creadas en el periodo&#x27;,
+        destacada: false,
+      },
+      {
+        titulo: &#x27;Ventas&#x27;,
+        valor: this.moneda.format(resumen.importeRecogidas),
+        detalle: &#x60;${resumen.compras} compras por fecha de recogida&#x60;,
+        destacada: false,
+      },
+      {
+        titulo: &#x27;Unidades disponibles&#x27;,
+        valor: String(resumen.stock),
+        detalle: &#x27;Stock actual de productos publicados&#x27;,
+        destacada: false,
+      },
+      {
+        titulo: &#x27;Discos publicados&#x27;,
+        valor: String(resumen.activos),
+        detalle: &#x27;Productos visibles en el catálogo&#x27;,
+        destacada: false,
+      },
+      {
+        titulo: &#x27;Productos registrados&#x27;,
+        valor: String(resumen.productos),
+        detalle: &#x27;Incluye publicados y retirados&#x27;,
+        destacada: false,
+      },
+    ];
+  });
+
+  async ionViewDidEnter(): Promise&lt;void&gt; {
+    this.activa &#x3D; true;
+    await this.cargarDashboard();
+  }
+
+  ionViewWillLeave(): void {
+    this.activa &#x3D; false;
+    ++this.peticion;
+    this.destruirGraficos();
+  }
+
+  ngOnDestroy(): void {
+    this.ionViewWillLeave();
+  }
+
+  async cargarDashboard(): Promise&lt;void&gt; {
+    if (!this.activa || this.exportando()) {
+      return;
+    }
+
+    const peticion &#x3D; ++this.peticion;
+
+    this.loading.set(true);
+    this.errorMessage.set(&#x27;&#x27;);
+    this.exportError.set(&#x27;&#x27;);
+    this.destruirGraficos();
+
+    try {
+      const datos &#x3D; await this.servicio.obtenerDatos();
+
+      if (!this.activa || peticion !&#x3D;&#x3D; this.peticion) {
+        return;
+      }
+
+      this.datos &#x3D; datos;
+      const seleccion &#x3D; this.seleccionPeriodo();
+      if (seleccion !&#x3D;&#x3D; &#x27;personalizado&#x27;) {
+        this.establecerPeriodo(periodoRapido(seleccion, datos.reservas));
+      }
+      this.recalcular();
+
+      this.ultimaActualizacion.set(
+        new Date().toLocaleString(&#x27;es-ES&#x27;, {
+          day: &#x27;2-digit&#x27;,
+          month: &#x27;2-digit&#x27;,
+          hour: &#x27;2-digit&#x27;,
+          minute: &#x27;2-digit&#x27;,
+        }),
+      );
+
+      this.loading.set(false);
+      this.detector.detectChanges();
+      this.dibujarGraficos();
+    } catch {
+      if (this.activa &amp;&amp; peticion &#x3D;&#x3D;&#x3D; this.peticion) {
+        this.destruirGraficos();
+        this.errorMessage.set(
+          &#x27;No se han podido cargar las estadísticas. Comprueba la conexión y vuelve a actualizar.&#x27;,
+        );
+      }
+    } finally {
+      if (this.activa &amp;&amp; peticion &#x3D;&#x3D;&#x3D; this.peticion) {
+        this.loading.set(false);
+      }
+    }
+  }
+
+  cambiarPeriodo(opcion: PeriodoRapido): void {
+    if (!this.puedeActualizarPeriodo()) return;
+    this.seleccionPeriodo.set(opcion);
+    this.establecerPeriodo(periodoRapido(opcion, this.datos!.reservas));
+    this.recalcular();
+    this.dibujarGraficos();
+  }
+
+  aplicarFechas(): void {
+    if (!this.puedeActualizarPeriodo()) return;
+    const error &#x3D; validarPeriodo(this.desde, this.hasta);
+    this.errorPeriodo.set(error);
+    if (error) return;
+    this.seleccionPeriodo.set(&#x27;personalizado&#x27;);
+    this.establecerPeriodo(crearPeriodo(this.desde, this.hasta));
+    this.recalcular();
+    this.dibujarGraficos();
+  }
+
+  private puedeActualizarPeriodo(): boolean {
+    return this.activa &amp;&amp; !!this.datos &amp;&amp; !this.loading()
+      &amp;&amp; !this.exportando() &amp;&amp; !this.errorMessage();
+  }
+
+  private establecerPeriodo(periodo: PeriodoInforme): void {
+    this.periodo.set(periodo);
+    this.desde &#x3D; periodo.desde;
+    this.hasta &#x3D; periodo.hasta;
+    this.errorPeriodo.set(&#x27;&#x27;);
+    this.exportError.set(&#x27;&#x27;);
+  }
+
+  porcentaje(cantidad: number): string {
+    const total &#x3D; this.resumen().reservas;
+
+    return total &#x3D;&#x3D;&#x3D; 0
+      ? &#x27;0 %&#x27;
+      : &#x60;${Math.round((cantidad / total) * 100)} %&#x60;;
+  }
+
+  nombreEstado(estado: string): string {
+    switch (estado) {
+      case &#x27;pendiente&#x27;:
+        return &#x27;Pendiente&#x27;;
+      case &#x27;recogida&#x27;:
+        return &#x27;Recogida&#x27;;
+      case &#x27;cancelada&#x27;:
+        return &#x27;Cancelada&#x27;;
+      default:
+        return estado;
+    }
+  }
+
+  formatearPrecio(importe: number): string {
+    return this.moneda.format(importe);
+  }
+
+  formatearFecha(fecha: string): string {
+    return new Date(fecha).toLocaleString(&#x27;es-ES&#x27;, {
+      day: &#x27;2-digit&#x27;,
+      month: &#x27;short&#x27;,
+      hour: &#x27;2-digit&#x27;,
+      minute: &#x27;2-digit&#x27;,
+    });
+  }
+
+  descargarCsv(): void {
+    if (
+      this.loading() ||
+      this.errorMessage() ||
+      this.exportando() ||
+      !this.datos ||
+      this.errorPeriodo() !&#x3D;&#x3D; &#x27;&#x27;
+    ) {
+      return;
+    }
+
+    this.exportError.set(&#x27;&#x27;);
+
+    try {
+      this.informes.descargarCsv(this.prepararInforme());
+    } catch {
+      this.exportError.set(&#x27;No se ha podido generar el CSV.&#x27;);
+    }
+  }
+
+  async descargarPdf(): Promise&lt;void&gt; {
+    if (
+      this.loading() ||
+      this.errorMessage() ||
+      this.exportando() ||
+      !this.datos ||
+      this.errorPeriodo() !&#x3D;&#x3D; &#x27;&#x27;
+    ) {
+      return;
+    }
+
+    this.exportError.set(&#x27;&#x27;);
+    this.exportando.set(true);
+
+    try {
+      await this.informes.descargarPdf(this.prepararInforme());
+    } catch {
+      this.exportError.set(&#x27;No se ha podido generar el PDF.&#x27;);
+    } finally {
+      this.exportando.set(false);
+    }
+  }
+
+  private prepararInforme(): DatosInforme {
+    return {
+      periodo: { ...this.periodo() },
+      actualizado: this.ultimaActualizacion(),
+      resumen: { ...this.resumen() },
+      actividad: this.actividad().map((fila) &#x3D;&gt; ({ ...fila })),
+      estados: this.estados().map((fila) &#x3D;&gt; ({ ...fila })),
+    };
+  }
+
+  private recalcular(): void {
+    if (!this.datos) return;
+    const calculo &#x3D; calcularDashboard(this.datos, this.periodo(), this.umbralStockBajo);
+    this.resumen.set(calculo.resumen);
+    this.actividad.set(calculo.actividad);
+    this.estados.set(calculo.estados);
+    this.stockBajo.set(calculo.stockBajo);
+    this.masReservados.set(calculo.masReservados);
+    this.recientes.set(calculo.recientes);
+  }
+
+  @HostListener(&#x27;document:vinylstore:tema&#x27;)
+  actualizarTema(): void {
+    if (this.activa &amp;&amp; this.datos &amp;&amp; !this.loading() &amp;&amp; !this.errorMessage()) {
+      this.detector.detectChanges();
+      this.dibujarGraficos();
+    }
+  }
+
+  private colorTema(variable: string, alternativa: string): string {
+    return getComputedStyle(document.documentElement)
+      .getPropertyValue(variable)
+      .trim() || alternativa;
+  }
+
+  private dibujarGraficos(): void {
+    this.destruirGraficos();
+
+    const estilos &#x3D; getComputedStyle(
+      this.canvasActividad.nativeElement,
+    );
+
+    const colorTexto &#x3D; estilos.color;
+    const fuente &#x3D; estilos.fontFamily;
+
+    this.graficoActividad &#x3D; new Chart&lt;&#x27;line&#x27;, number[], string&gt;(
+      this.canvasActividad.nativeElement,
+      {
+        type: &#x27;line&#x27;,
+        data: {
+          labels: this.actividad().map((dia) &#x3D;&gt; dia.fecha),
+          datasets: [
+            {
+              label: &#x27;Reservas creadas&#x27;,
+              data: this.actividad().map((dia) &#x3D;&gt; dia.cantidad),
+              borderColor: this.colorTema(&#x27;--store-chart-primary&#x27;, &#x27;#782c40&#x27;),
+              backgroundColor: this.colorTema(&#x27;--store-chart-primary&#x27;, &#x27;#782c40&#x27;),
+              borderWidth: 3,
+              pointRadius: this.actividad().length &gt; 31 ? 1.5 : 3,
+              pointHoverRadius: 6,
+              pointBackgroundColor: this.colorTema(&#x27;--store-surface&#x27;, &#x27;#fffdf9&#x27;),
+              pointBorderColor: this.colorTema(&#x27;--store-chart-primary&#x27;, &#x27;#782c40&#x27;),
+              pointBorderWidth: 2,
+              tension: 0.25,
+            },
+            {
+              label: &#x27;Compras completadas&#x27;,
+              data: this.actividad().map((fila) &#x3D;&gt; fila.compras),
+              borderColor: this.colorTema(&#x27;--store-chart-collected&#x27;, &#x27;#455b4c&#x27;),
+              backgroundColor: this.colorTema(&#x27;--store-chart-collected&#x27;, &#x27;#455b4c&#x27;),
+              borderWidth: 2,
+              borderDash: [6, 4],
+              pointRadius: this.actividad().length &gt; 31 ? 1.5 : 3,
+              pointHoverRadius: 6,
+              tension: 0.25,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          animation: false,
+          interaction: {
+            intersect: false,
+            mode: &#x27;index&#x27;,
+          },
+          plugins: {
+            legend: {
+              display: true,
+              labels: {
+                color: colorTexto,
+                font: { family: fuente, size: 11 },
+                boxWidth: 20,
+                padding: 16,
+              },
+            },
+            tooltip: {
+              backgroundColor: &#x27;#292622&#x27;,
+              titleFont: { family: fuente },
+              bodyFont: { family: fuente },
+              padding: 12,
+              cornerRadius: 8,
+              displayColors: false,
+            },
+          },
+          scales: {
+            x: {
+              border: { display: false },
+              grid: { display: false },
+              ticks: {
+                color: colorTexto,
+                maxTicksLimit: 7,
+                maxRotation: 0,
+                font: { family: fuente, size: 11 },
+              },
+            },
+            y: {
+              beginAtZero: true,
+              border: { display: false },
+              grid: {
+                color: this.colorTema(&#x27;--store-border&#x27;, &#x27;#ded5c9&#x27;),
+              },
+              ticks: {
+                color: colorTexto,
+                precision: 0,
+                font: { family: fuente, size: 11 },
+              },
+            },
+          },
+        },
+      },
+    );
+
+    this.graficoEstados &#x3D; new Chart&lt;
+      &#x27;doughnut&#x27;,
+      number[],
+      string
+    &gt;(
+      this.canvasEstados.nativeElement,
+      {
+        type: &#x27;doughnut&#x27;,
+        data: {
+          labels: this.estados().map((estado) &#x3D;&gt; estado.etiqueta),
+          datasets: [
+            {
+              data: this.estados().map((estado) &#x3D;&gt; estado.cantidad),
+              backgroundColor: this.coloresEstados,
+              borderColor: this.colorTema(&#x27;--store-surface&#x27;, &#x27;#fffdf9&#x27;),
+              borderWidth: 5,
+              hoverOffset: 5,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          animation: false,
+          cutout: &#x27;76%&#x27;,
+          layout: {
+            padding: 8,
+          },
+          plugins: {
+            legend: {
+              display: false,
+            },
+            tooltip: {
+              backgroundColor: &#x27;#292622&#x27;,
+              titleFont: { family: fuente },
+              bodyFont: { family: fuente },
+              padding: 12,
+              cornerRadius: 8,
+            },
+          },
+        },
+      },
+    );
+  }
+
+  private destruirGraficos(): void {
+    this.graficoActividad?.destroy();
+    this.graficoEstados?.destroy();
+
+    this.graficoActividad &#x3D; null;
+    this.graficoEstados &#x3D; null;
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;ion-header&gt;
+  &lt;ion-toolbar&gt;
+    &lt;ion-buttons slot&#x3D;&quot;start&quot;&gt;
+      &lt;ion-menu-button
+        menu&#x3D;&quot;main-menu&quot;
+        aria-label&#x3D;&quot;Abrir menú principal&quot;
+      &gt;&lt;/ion-menu-button&gt;
+    &lt;/ion-buttons&gt;
+
+    &lt;ion-title&gt;Estadísticas&lt;/ion-title&gt;
+  &lt;/ion-toolbar&gt;
+&lt;/ion-header&gt;
+
+&lt;ion-content class&#x3D;&quot;ion-padding&quot;&gt;
+  &lt;div class&#x3D;&quot;dashboard&quot;&gt;
+    &lt;header class&#x3D;&quot;panel-cabecera&quot;&gt;
+      &lt;div&gt;
+        &lt;p class&#x3D;&quot;etiqueta-editorial&quot;&gt;Administración · Vista general&lt;/p&gt;
+        &lt;h1&gt;Estadísticas&lt;/h1&gt;
+        &lt;p class&#x3D;&quot;introduccion&quot;&gt;
+          Resumen de reservas, productos y existencias.
+        &lt;/p&gt;
+      &lt;/div&gt;
+
+      &lt;div class&#x3D;&quot;cabecera-acciones&quot;&gt;
+        &lt;ion-button
+          type&#x3D;&quot;button&quot;
+          fill&#x3D;&quot;outline&quot;
+          (click)&#x3D;&quot;cargarDashboard()&quot;
+          [disabled]&#x3D;&quot;loading() || exportando()&quot;
+        &gt;
+          {{ loading() ? &#x27;Actualizando…&#x27; : &#x27;Actualizar datos&#x27; }}
+        &lt;/ion-button&gt;
+
+        @if (ultimaActualizacion()) {
+          &lt;span class&#x3D;&quot;ultima-actualizacion&quot;&gt;
+            Actualizado: {{ ultimaActualizacion() }}
+          &lt;/span&gt;
+        }
+      &lt;/div&gt;
+    &lt;/header&gt;
+
+    &lt;section class&#x3D;&quot;controles&quot; aria-label&#x3D;&quot;Periodo e informes&quot;&gt;
+      &lt;div&gt;
+        &lt;span class&#x3D;&quot;control-etiqueta&quot;&gt;Periodo del informe&lt;/span&gt;
+
+        &lt;div class&#x3D;&quot;selector-periodo&quot; role&#x3D;&quot;group&quot; aria-label&#x3D;&quot;Elegir periodo&quot;&gt;
+          @for (periodo of periodos; track periodo.valor) {
+            &lt;button
+              type&#x3D;&quot;button&quot;
+              [class.activo]&#x3D;&quot;seleccionPeriodo() &#x3D;&#x3D;&#x3D; periodo.valor&quot;
+              [attr.aria-pressed]&#x3D;&quot;seleccionPeriodo() &#x3D;&#x3D;&#x3D; periodo.valor&quot;
+              [disabled]&#x3D;&quot;loading() || exportando() || errorMessage() !&#x3D;&#x3D; &#x27;&#x27;&quot;
+              (click)&#x3D;&quot;cambiarPeriodo(periodo.valor)&quot;
+            &gt;
+              {{ periodo.etiqueta }}
+            &lt;/button&gt;
+          }
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;div class&#x3D;&quot;exportaciones&quot;&gt;
+        &lt;span class&#x3D;&quot;control-etiqueta&quot;&gt;Descargar informe&lt;/span&gt;
+
+        &lt;div class&#x3D;&quot;exportaciones-botones&quot;&gt;
+          &lt;ion-button
+            type&#x3D;&quot;button&quot;
+            fill&#x3D;&quot;outline&quot;
+            (click)&#x3D;&quot;descargarCsv()&quot;
+            [disabled]&#x3D;&quot;loading() || errorMessage() !&#x3D;&#x3D; &#x27;&#x27; || exportando() || errorPeriodo() !&#x3D;&#x3D; &#x27;&#x27;&quot;
+          &gt;
+            CSV
+          &lt;/ion-button&gt;
+
+          &lt;ion-button
+            type&#x3D;&quot;button&quot;
+            (click)&#x3D;&quot;descargarPdf()&quot;
+            [disabled]&#x3D;&quot;loading() || errorMessage() !&#x3D;&#x3D; &#x27;&#x27; || exportando() || errorPeriodo() !&#x3D;&#x3D; &#x27;&#x27;&quot;
+          &gt;
+            {{ exportando() ? &#x27;Generando…&#x27; : &#x27;Descargar PDF&#x27; }}
+          &lt;/ion-button&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/section&gt;
+
+    &lt;form class&#x3D;&quot;intervalo-fechas&quot; (ngSubmit)&#x3D;&quot;aplicarFechas()&quot; novalidate&gt;
+      &lt;div class&#x3D;&quot;campo-fecha&quot;&gt;
+        &lt;label for&#x3D;&quot;fecha-desde&quot;&gt;Desde&lt;/label&gt;
+        &lt;input id&#x3D;&quot;fecha-desde&quot; name&#x3D;&quot;desde&quot; type&#x3D;&quot;date&quot;
+          [(ngModel)]&#x3D;&quot;desde&quot; [max]&#x3D;&quot;fechaHoy&quot; required
+          [disabled]&#x3D;&quot;loading() || exportando()&quot;
+          [attr.aria-invalid]&#x3D;&quot;errorPeriodo() ? &#x27;true&#x27; : null&quot;
+          [attr.aria-describedby]&#x3D;&quot;errorPeriodo() ? &#x27;error-periodo&#x27; : null&quot; /&gt;
+      &lt;/div&gt;
+      &lt;div class&#x3D;&quot;campo-fecha&quot;&gt;
+        &lt;label for&#x3D;&quot;fecha-hasta&quot;&gt;Hasta&lt;/label&gt;
+        &lt;input id&#x3D;&quot;fecha-hasta&quot; name&#x3D;&quot;hasta&quot; type&#x3D;&quot;date&quot;
+          [(ngModel)]&#x3D;&quot;hasta&quot; [max]&#x3D;&quot;fechaHoy&quot; required
+          [disabled]&#x3D;&quot;loading() || exportando()&quot;
+          [attr.aria-invalid]&#x3D;&quot;errorPeriodo() ? &#x27;true&#x27; : null&quot;
+          [attr.aria-describedby]&#x3D;&quot;errorPeriodo() ? &#x27;error-periodo&#x27; : null&quot; /&gt;
+      &lt;/div&gt;
+      &lt;ion-button type&#x3D;&quot;submit&quot; fill&#x3D;&quot;outline&quot;
+        [disabled]&#x3D;&quot;loading() || exportando() || errorMessage() !&#x3D;&#x3D; &#x27;&#x27;&quot;&gt;
+        Aplicar fechas
+      &lt;/ion-button&gt;
+      &lt;p class&#x3D;&quot;intervalo-aplicado&quot; role&#x3D;&quot;status&quot;&gt;
+        Intervalo aplicado: &lt;strong&gt;{{ textoPeriodo() }}&lt;/strong&gt;
+        · Datos agrupados por {{ agrupacion() &#x3D;&#x3D;&#x3D; &#x27;mensual&#x27; ? &#x27;mes&#x27; : &#x27;día&#x27; }}.
+      &lt;/p&gt;
+    &lt;/form&gt;
+
+    @if (errorPeriodo()) {
+      &lt;p id&#x3D;&quot;error-periodo&quot; role&#x3D;&quot;alert&quot;&gt;{{ errorPeriodo() }}&lt;/p&gt;
+    }
+
+    @if (exportError()) {
+      &lt;p role&#x3D;&quot;alert&quot;&gt;{{ exportError() }}&lt;/p&gt;
+    }
+
+    @if (loading()) {
+      &lt;p role&#x3D;&quot;status&quot;&gt;Preparando las estadísticas de la tienda…&lt;/p&gt;
+
+      &lt;div class&#x3D;&quot;esqueletos&quot; aria-hidden&#x3D;&quot;true&quot;&gt;
+        @for (numero of [1, 2, 3, 4, 5, 6]; track numero) {
+          &lt;div class&#x3D;&quot;esqueleto&quot;&gt;
+            &lt;span&gt;&lt;/span&gt;
+            &lt;strong&gt;&lt;/strong&gt;
+            &lt;span&gt;&lt;/span&gt;
+          &lt;/div&gt;
+        }
+      &lt;/div&gt;
+    }
+
+    @if (errorMessage()) {
+      &lt;p role&#x3D;&quot;alert&quot;&gt;{{ errorMessage() }}&lt;/p&gt;
+    }
+
+    &lt;div
+      class&#x3D;&quot;dashboard-contenido&quot;
+      [hidden]&#x3D;&quot;loading() || errorMessage() !&#x3D;&#x3D; &#x27;&#x27;&quot;
+    &gt;
+      &lt;section class&#x3D;&quot;indicadores&quot; aria-label&#x3D;&quot;Indicadores de la tienda&quot;&gt;
+        @for (indicador of indicadores(); track indicador.titulo) {
+          &lt;article
+            class&#x3D;&quot;indicador&quot;
+            [class.indicador-destacado]&#x3D;&quot;indicador.destacada&quot;
+          &gt;
+            &lt;h2&gt;{{ indicador.titulo }}&lt;/h2&gt;
+            &lt;p class&#x3D;&quot;indicador-valor&quot;&gt;{{ indicador.valor }}&lt;/p&gt;
+            &lt;p class&#x3D;&quot;indicador-detalle&quot;&gt;{{ indicador.detalle }}&lt;/p&gt;
+          &lt;/article&gt;
+        }
+      &lt;/section&gt;
+
+      &lt;p class&#x3D;&quot;nota-alcance&quot;&gt;
+        Reservas por fecha de creación; ventas por fecha de recogida.
+        Las pendientes y el anillo muestran el estado actual de las reservas
+        creadas en el intervalo, no su estado histórico.
+        Cancelaciones registradas en el intervalo: {{ resumen().cancelaciones }}.
+        Productos y existencias corresponden a la situación actual.
+      &lt;/p&gt;
+
+      &lt;div class&#x3D;&quot;graficos-grid&quot;&gt;
+        &lt;section class&#x3D;&quot;panel panel-actividad&quot; aria-labelledby&#x3D;&quot;titulo-actividad&quot;&gt;
+          &lt;div class&#x3D;&quot;seccion-cabecera&quot;&gt;
+            &lt;div&gt;
+              &lt;p class&#x3D;&quot;etiqueta-editorial&quot;&gt;Reservas del periodo&lt;/p&gt;
+              &lt;h2 id&#x3D;&quot;titulo-actividad&quot;&gt;Actividad {{ agrupacion() &#x3D;&#x3D;&#x3D; &#x27;mensual&#x27; ? &#x27;mensual&#x27; : &#x27;diaria&#x27; }}&lt;/h2&gt;
+            &lt;/div&gt;
+
+            &lt;span class&#x3D;&quot;distintivo&quot;&gt;{{ textoPeriodo() }}&lt;/span&gt;
+          &lt;/div&gt;
+
+          &lt;p class&#x3D;&quot;panel-descripcion&quot;&gt;
+            Reservas creadas y compras completadas por {{ agrupacion() &#x3D;&#x3D;&#x3D; &#x27;mensual&#x27; ? &#x27;mes&#x27; : &#x27;día&#x27; }}.
+          &lt;/p&gt;
+
+          &lt;div class&#x3D;&quot;grafico grafico-linea&quot;&gt;
+            &lt;canvas
+              #canvasActividad
+              role&#x3D;&quot;img&quot;
+              aria-label&#x3D;&quot;Reservas creadas y compras completadas. Consulta los valores y los importes en la tabla desplegable.&quot;
+            &gt;&lt;/canvas&gt;
+          &lt;/div&gt;
+
+          &lt;details class&#x3D;&quot;tabla-desplegable&quot;&gt;
+            &lt;summary&gt;Consultar los datos de actividad&lt;/summary&gt;
+
+            &lt;div class&#x3D;&quot;tabla-contenedor&quot;&gt;
+              &lt;table&gt;
+                &lt;caption&gt;Actividad {{ agrupacion() &#x3D;&#x3D;&#x3D; &#x27;mensual&#x27; ? &#x27;mensual&#x27; : &#x27;diaria&#x27; }} del intervalo&lt;/caption&gt;
+                &lt;thead&gt;
+                  &lt;tr&gt;
+                    &lt;th scope&#x3D;&quot;col&quot;&gt;Fecha&lt;/th&gt;
+                    &lt;th scope&#x3D;&quot;col&quot;&gt;Reservas creadas&lt;/th&gt;
+                    &lt;th scope&#x3D;&quot;col&quot;&gt;Compras&lt;/th&gt;
+                    &lt;th scope&#x3D;&quot;col&quot;&gt;Ventas&lt;/th&gt;
+                  &lt;/tr&gt;
+                &lt;/thead&gt;
+                &lt;tbody&gt;
+                  @for (dia of actividad(); track dia.fecha) {
+                    &lt;tr&gt;
+                      &lt;th scope&#x3D;&quot;row&quot;&gt;{{ dia.fecha }}&lt;/th&gt;
+                      &lt;td&gt;{{ dia.cantidad }}&lt;/td&gt;
+                      &lt;td&gt;{{ dia.compras }}&lt;/td&gt;
+                      &lt;td&gt;{{ formatearPrecio(dia.ventas) }}&lt;/td&gt;
+                    &lt;/tr&gt;
+                  }
+                &lt;/tbody&gt;
+              &lt;/table&gt;
+            &lt;/div&gt;
+          &lt;/details&gt;
+        &lt;/section&gt;
+
+        &lt;section class&#x3D;&quot;panel panel-estados&quot; aria-labelledby&#x3D;&quot;titulo-estados&quot;&gt;
+          &lt;div class&#x3D;&quot;seccion-cabecera&quot;&gt;
+            &lt;div&gt;
+              &lt;p class&#x3D;&quot;etiqueta-editorial&quot;&gt;Seguimiento&lt;/p&gt;
+              &lt;h2 id&#x3D;&quot;titulo-estados&quot;&gt;Estado de reservas&lt;/h2&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+
+          &lt;p class&#x3D;&quot;panel-descripcion&quot;&gt;
+            Situación actual de las creadas en el periodo.
+          &lt;/p&gt;
+
+          &lt;div class&#x3D;&quot;anillo-contenedor&quot;&gt;
+            &lt;div class&#x3D;&quot;grafico grafico-anillo&quot;&gt;
+              &lt;canvas
+                #canvasEstados
+                role&#x3D;&quot;img&quot;
+                aria-label&#x3D;&quot;Distribución de reservas por estado. Los valores aparecen en la leyenda y en la tabla desplegable.&quot;
+              &gt;&lt;/canvas&gt;
+            &lt;/div&gt;
+
+            &lt;div class&#x3D;&quot;anillo-centro&quot; aria-hidden&#x3D;&quot;true&quot;&gt;
+              &lt;strong&gt;{{ resumen().reservas }}&lt;/strong&gt;
+              &lt;span&gt;reservas&lt;/span&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+
+          @if (resumen().reservas &#x3D;&#x3D;&#x3D; 0) {
+            &lt;p class&#x3D;&quot;sin-datos&quot;&gt;No hay reservas en este periodo.&lt;/p&gt;
+          }
+
+          &lt;ul class&#x3D;&quot;leyenda-estados&quot;&gt;
+            @for (estado of estados(); track estado.etiqueta) {
+              &lt;li&gt;
+                &lt;span
+                  class&#x3D;&quot;punto-estado&quot;
+                  [style.background-color]&#x3D;&quot;coloresEstados[$index]&quot;
+                  aria-hidden&#x3D;&quot;true&quot;
+                &gt;&lt;/span&gt;
+
+                &lt;span&gt;{{ estado.etiqueta }}&lt;/span&gt;
+                &lt;strong&gt;{{ estado.cantidad }}&lt;/strong&gt;
+                &lt;span class&#x3D;&quot;porcentaje&quot;&gt;
+                  {{ porcentaje(estado.cantidad) }}
+                &lt;/span&gt;
+              &lt;/li&gt;
+            }
+          &lt;/ul&gt;
+
+          &lt;details class&#x3D;&quot;tabla-desplegable&quot;&gt;
+            &lt;summary&gt;Consultar los datos por estado&lt;/summary&gt;
+
+            &lt;div class&#x3D;&quot;tabla-contenedor&quot;&gt;
+              &lt;table&gt;
+                &lt;caption&gt;Estado actual de las reservas del periodo&lt;/caption&gt;
+                &lt;thead&gt;
+                  &lt;tr&gt;
+                    &lt;th scope&#x3D;&quot;col&quot;&gt;Estado&lt;/th&gt;
+                    &lt;th scope&#x3D;&quot;col&quot;&gt;Reservas&lt;/th&gt;
+                  &lt;/tr&gt;
+                &lt;/thead&gt;
+                &lt;tbody&gt;
+                  @for (estado of estados(); track estado.etiqueta) {
+                    &lt;tr&gt;
+                      &lt;th scope&#x3D;&quot;row&quot;&gt;{{ estado.etiqueta }}&lt;/th&gt;
+                      &lt;td&gt;{{ estado.cantidad }}&lt;/td&gt;
+                    &lt;/tr&gt;
+                  }
+                &lt;/tbody&gt;
+              &lt;/table&gt;
+            &lt;/div&gt;
+          &lt;/details&gt;
+        &lt;/section&gt;
+      &lt;/div&gt;
+
+      &lt;div class&#x3D;&quot;detalle-grid&quot;&gt;
+        &lt;section class&#x3D;&quot;panel&quot; aria-labelledby&#x3D;&quot;titulo-stock&quot;&gt;
+          &lt;div class&#x3D;&quot;seccion-cabecera&quot;&gt;
+            &lt;div&gt;
+              &lt;p class&#x3D;&quot;etiqueta-editorial&quot;&gt;Inventario actual&lt;/p&gt;
+              &lt;h2 id&#x3D;&quot;titulo-stock&quot;&gt;Productos con stock bajo&lt;/h2&gt;
+            &lt;/div&gt;
+
+            &lt;span class&#x3D;&quot;distintivo&quot;&gt;{{ stockBajo().length }} discos&lt;/span&gt;
+          &lt;/div&gt;
+
+          &lt;p class&#x3D;&quot;panel-descripcion&quot;&gt;
+            Productos publicados con {{ umbralStockBajo }} unidades
+            o menos, incluidos los agotados.
+          &lt;/p&gt;
+
+          @if (stockBajo().length &#x3D;&#x3D;&#x3D; 0) {
+            &lt;p class&#x3D;&quot;sin-datos&quot;&gt;
+              Todos los productos publicados superan el umbral de stock bajo.
+            &lt;/p&gt;
+          } @else {
+            &lt;ul class&#x3D;&quot;lista-editorial&quot;&gt;
+              @for (producto of stockBajo(); track producto.id) {
+                &lt;li&gt;
+                  &lt;div class&#x3D;&quot;fila-texto&quot;&gt;
+                    &lt;strong&gt;{{ producto.titulo }}&lt;/strong&gt;
+                    &lt;span&gt;{{ producto.artista }}&lt;/span&gt;
+                  &lt;/div&gt;
+
+                  &lt;span
+                    class&#x3D;&quot;etiqueta-stock&quot;
+                    [class.stock-agotado]&#x3D;&quot;producto.stock &#x3D;&#x3D;&#x3D; 0&quot;
+                  &gt;
+                    {{
+                      producto.stock &#x3D;&#x3D;&#x3D; 0
+                        ? &#x27;Agotado&#x27;
+                        : producto.stock + &#x27; uds.&#x27;
+                    }}
+                  &lt;/span&gt;
+                &lt;/li&gt;
+              }
+            &lt;/ul&gt;
+          }
+        &lt;/section&gt;
+
+        &lt;section class&#x3D;&quot;panel&quot; aria-labelledby&#x3D;&quot;titulo-populares&quot;&gt;
+          &lt;div class&#x3D;&quot;seccion-cabecera&quot;&gt;
+            &lt;div&gt;
+              &lt;p class&#x3D;&quot;etiqueta-editorial&quot;&gt;Selección del periodo&lt;/p&gt;
+              &lt;h2 id&#x3D;&quot;titulo-populares&quot;&gt;Los más reservados&lt;/h2&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+
+          &lt;p class&#x3D;&quot;panel-descripcion&quot;&gt;
+            Hasta cinco vinilos por unidades solicitadas.
+            Se excluyen las reservas canceladas.
+          &lt;/p&gt;
+
+          @if (masReservados().length &#x3D;&#x3D;&#x3D; 0) {
+            &lt;p class&#x3D;&quot;sin-datos&quot;&gt;
+              No hay reservas pendientes o recogidas en este periodo.
+            &lt;/p&gt;
+          } @else {
+            &lt;ol class&#x3D;&quot;lista-editorial ranking&quot;&gt;
+              @for (producto of masReservados(); track producto.id) {
+                &lt;li&gt;
+                  &lt;span class&#x3D;&quot;posicion&quot; aria-hidden&#x3D;&quot;true&quot;&gt;
+                    {{ $index + 1 }}
+                  &lt;/span&gt;
+
+                  &lt;div class&#x3D;&quot;fila-texto&quot;&gt;
+                    &lt;strong&gt;{{ producto.titulo }}&lt;/strong&gt;
+                    &lt;span&gt;{{ producto.artista }}&lt;/span&gt;
+                  &lt;/div&gt;
+
+                  &lt;span class&#x3D;&quot;unidades-ranking&quot;&gt;
+                    {{ producto.unidades }} uds.
+                  &lt;/span&gt;
+                &lt;/li&gt;
+              }
+            &lt;/ol&gt;
+          }
+        &lt;/section&gt;
+      &lt;/div&gt;
+
+      &lt;section class&#x3D;&quot;panel panel-recientes&quot; aria-labelledby&#x3D;&quot;titulo-recientes&quot;&gt;
+        &lt;div class&#x3D;&quot;seccion-cabecera&quot;&gt;
+          &lt;div&gt;
+            &lt;p class&#x3D;&quot;etiqueta-editorial&quot;&gt;Últimas solicitudes&lt;/p&gt;
+            &lt;h2 id&#x3D;&quot;titulo-recientes&quot;&gt;Reservas recientes&lt;/h2&gt;
+          &lt;/div&gt;
+
+          &lt;span class&#x3D;&quot;distintivo&quot;&gt;Dentro del periodo seleccionado&lt;/span&gt;
+        &lt;/div&gt;
+
+        @if (recientes().length &#x3D;&#x3D;&#x3D; 0) {
+          &lt;p class&#x3D;&quot;sin-datos&quot;&gt;
+            Todavía no hay reservas creadas en este periodo.
+          &lt;/p&gt;
+        } @else {
+          &lt;ul class&#x3D;&quot;lista-editorial lista-recientes&quot;&gt;
+            @for (reserva of recientes(); track reserva.id) {
+              &lt;li&gt;
+                &lt;div class&#x3D;&quot;fila-texto&quot;&gt;
+                  &lt;strong&gt;{{ reserva.titulo }}&lt;/strong&gt;
+                  &lt;span&gt;
+                    {{ formatearFecha(reserva.fecha) }}
+                    · {{ reserva.cantidad }} uds.
+                    · Ref. {{ reserva.id.slice(0, 8) }}
+                  &lt;/span&gt;
+                &lt;/div&gt;
+
+                &lt;span
+                  class&#x3D;&quot;etiqueta-reserva&quot;
+                  [class.estado-pendiente]&#x3D;&quot;reserva.estado &#x3D;&#x3D;&#x3D; &#x27;pendiente&#x27;&quot;
+                  [class.estado-recogida]&#x3D;&quot;reserva.estado &#x3D;&#x3D;&#x3D; &#x27;recogida&#x27;&quot;
+                  [class.estado-cancelada]&#x3D;&quot;reserva.estado &#x3D;&#x3D;&#x3D; &#x27;cancelada&#x27;&quot;
+                &gt;
+                  {{ nombreEstado(reserva.estado) }}
+                &lt;/span&gt;
+              &lt;/li&gt;
+            }
+          &lt;/ul&gt;
+        }
+      &lt;/section&gt;
+
+      &lt;p class&#x3D;&quot;nota-informes&quot;&gt;
+        Los informes PDF y CSV incluyen el resumen, la distribución
+        por estado y la actividad {{ agrupacion() &#x3D;&#x3D;&#x3D; &#x27;mensual&#x27; ? &#x27;mensual&#x27; : &#x27;diaria&#x27; }} del intervalo seleccionado.
+        No incluyen los listados complementarios.
+      &lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/ion-content&gt;
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="styleData">
+                <p class="comment">
+                    <code>./dashboard.page.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">.dashboard {
+  max-width: 1440px;
+  margin-inline: auto;
+}
+
+
+
+.cabecera-acciones {
+  display: flex;
+  flex-shrink: 0;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.6rem;
+
+  ion-button {
+    margin: 0;
+  }
+}
+
+.ultima-actualizacion {
+  color: var(--store-muted);
+  font-size: 0.75rem;
+}
+
+.controles {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.75rem;
+  padding-block: 1.25rem;
+  border-top: 1px solid var(--store-border);
+  border-bottom: 1px solid var(--store-border);
+}
+
+.control-etiqueta {
+  display: block;
+  margin-bottom: 0.6rem;
+  color: var(--store-muted);
+  font-size: 0.75rem;
+}
+
+.selector-periodo {
+  display: inline-flex;
+  gap: 4px;
+  padding: 4px;
+  border: 1px solid var(--store-border);
+  border-radius: 10px;
+  background: var(--store-surface);
+
+  button {
+    min-width: 75px;
+    min-height: 42px;
+    padding: 0.6rem 0.8rem;
+    border: 0;
+    border-radius: 7px;
+    background: transparent;
+    color: var(--store-muted);
+    font: inherit;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+
+    &amp;.activo {
+      background: var(--store-selected-bg);
+      color: #ffffff;
+    }
+
+    &amp;:disabled {
+      opacity: 0.6;
+      cursor: default;
+    }
+  }
+}
+
+.exportaciones {
+  text-align: right;
+}
+
+.exportaciones-botones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+
+  ion-button {
+    margin: 0;
+  }
+}
+
+.indicadores,
+.esqueletos {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.indicador {
+  min-width: 0;
+  padding: 1.4rem;
+  border: 1px solid var(--store-border);
+  border-radius: 12px;
+  background: var(--store-surface);
+
+  h2 {
+    margin: 0;
+    color: var(--store-muted);
+    font-family: var(--ion-font-family);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0;
+    line-height: 1.5;
+  }
+}
+
+.indicador-valor {
+  margin: 0.8rem 0 0.5rem;
+  font-size: clamp(1.8rem, 2.7vw, 2.7rem);
+  font-weight: 650;
+  line-height: 1.15;
+  letter-spacing: -0.05em;
+  overflow-wrap: anywhere;
+}
+
+.indicador-detalle {
+  margin: 0;
+  color: var(--store-muted);
+  font-size: 0.72rem;
+  line-height: 1.5;
+}
+
+.indicador-destacado {
+  border-color: var(--ion-color-primary);
+  background: var(--store-selected-bg);
+  color: #ffffff;
+
+  h2,
+  .indicador-detalle {
+    color: var(--store-selected-muted);
+  }
+}
+
+.nota-alcance,
+.nota-informes {
+  margin: 1rem 0 1.75rem;
+  color: var(--store-muted);
+  font-size: 0.75rem;
+  line-height: 1.6;
+}
+
+.graficos-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+  align-items: start;
+  gap: 1.25rem;
+}
+
+.panel {
+  min-width: 0;
+  padding: clamp(1.1rem, 2vw, 1.6rem);
+  border: 1px solid var(--store-border);
+  border-radius: 14px;
+  background: var(--store-surface);
+
+  h2 {
+    margin: 0;
+    font-size: clamp(1.45rem, 2vw, 1.9rem);
+  }
+}
+
+.seccion-cabecera {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.distintivo {
+  display: inline-block;
+  padding: 0.4rem 0.65rem;
+  border: 1px solid var(--store-border);
+  border-radius: 30px;
+  color: var(--store-muted);
+  font-size: 0.65rem;
+  line-height: 1.4;
+}
+
+.panel-descripcion {
+  margin: 0.75rem 0 1.25rem;
+  color: var(--store-muted);
+  font-size: 0.8rem;
+}
+
+.grafico {
+  position: relative;
+  width: 100%;
+  color: var(--store-muted);
+  font-family: var(--ion-font-family);
+}
+
+.grafico-linea {
+  height: 310px;
+}
+
+.anillo-contenedor {
+  position: relative;
+  max-width: 240px;
+  margin: 0 auto;
+}
+
+.grafico-anillo {
+  height: 230px;
+}
+
+.anillo-centro {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  pointer-events: none;
+
+  strong {
+    font-size: 2.6rem;
+    font-weight: 600;
+    letter-spacing: -0.06em;
+    line-height: 1.1;
+  }
+
+  span {
+    margin-top: 0.25rem;
+    color: var(--store-muted);
+    font-size: 0.75rem;
+  }
+}
+
+.leyenda-estados {
+  display: grid;
+  gap: 0.8rem;
+  margin: 1.25rem 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    display: grid;
+    grid-template-columns: 8px minmax(0, 1fr) auto 45px;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.8rem;
+  }
+}
+
+.punto-estado {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.porcentaje {
+  color: var(--store-muted);
+  text-align: right;
+  font-size: 0.75rem;
+}
+
+.tabla-desplegable {
+  margin-top: 1.25rem;
+  border-top: 1px solid var(--store-border);
+
+  summary {
+    padding-block: 0.9rem 0.25rem;
+    color: var(--ion-color-primary);
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+}
+
+.tabla-contenedor {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8rem;
+}
+
+caption {
+  padding-block: 1rem;
+  color: var(--store-muted);
+  text-align: left;
+  font-size: 0.75rem;
+}
+
+th,
+td {
+  padding: 0.7rem 0.4rem;
+  border-bottom: 1px solid var(--store-border);
+  text-align: left;
+}
+
+thead th {
+  color: var(--store-muted);
+}
+
+tbody th {
+  font-weight: 400;
+}
+
+td:last-child,
+thead th:last-child {
+  text-align: right;
+}
+
+.detalle-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  gap: 1.25rem;
+  margin-top: 1.25rem;
+}
+
+.lista-editorial {
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding-block: 0.9rem;
+    border-bottom: 1px solid var(--store-border);
+
+    &amp;:last-child {
+      border-bottom: 0;
+    }
+  }
+}
+
+.fila-texto {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 0;
+
+  strong {
+    font-size: 0.9rem;
+    font-weight: 600;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+  }
+
+  span {
+    color: var(--store-muted);
+    font-size: 0.75rem;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+  }
+}
+
+.etiqueta-stock,
+.etiqueta-reserva {
+  flex-shrink: 0;
+  padding: 0.35rem 0.65rem;
+  border-radius: 30px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.etiqueta-stock,
+.estado-pendiente {
+  background: var(--store-warning-bg);
+  color: var(--store-warning-text);
+}
+
+.stock-agotado,
+.estado-cancelada {
+  background: var(--store-accent-soft);
+  color: var(--ion-color-primary);
+}
+
+.estado-recogida {
+  background: var(--store-success-bg);
+  color: var(--store-success-text);
+}
+
+.posicion {
+  flex-shrink: 0;
+  width: 28px;
+  color: var(--ion-color-primary);
+  font-family: var(--store-heading-font);
+  font-size: 1.5rem;
+}
+
+.unidades-ranking {
+  flex-shrink: 0;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.panel-recientes {
+  margin-top: 1.25rem;
+}
+
+.sin-datos {
+  margin: 1.25rem 0 0;
+  padding: 1rem;
+  border: 1px dashed var(--store-border);
+  border-radius: 8px;
+  color: var(--store-muted);
+  font-size: 0.8rem;
+}
+
+.esqueleto {
+  display: grid;
+  gap: 1rem;
+  min-height: 155px;
+  padding: 1.4rem;
+  border: 1px solid var(--store-border);
+  border-radius: 12px;
+  background: var(--store-surface);
+
+  span,
+  strong {
+    display: block;
+    height: 12px;
+    border-radius: 4px;
+    background: var(--store-placeholder);
+  }
+
+  span:first-child {
+    width: 60%;
+  }
+
+  strong {
+    width: 45%;
+    height: 34px;
+  }
+}
+
+@media (max-width: 1100px) {
+  .graficos-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 700px) {
+  .panel-cabecera {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .cabecera-acciones {
+    align-items: flex-start;
+  }
+
+  .indicadores,
+  .esqueletos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .detalle-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .exportaciones {
+    text-align: left;
+  }
+}
+
+@media (max-width: 430px) {
+  .indicadores,
+  .esqueletos {
+    grid-template-columns: 1fr;
+  }
+
+  .grafico-linea {
+    height: 250px;
+  }
+
+  .lista-recientes li {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+/* Calendario de informes */
+.selector-periodo { flex-wrap: wrap; max-width: 100%; }
+.intervalo-fechas {
+  display: flex;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: -0.5rem 0 1.5rem;
+}
+.campo-fecha {
+  display: flex;
+  flex: 1 1 170px;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-width: 250px;
+  min-width: 0;
+}
+.campo-fecha label { color: var(--store-muted); font-size: 0.8rem; }
+.campo-fecha input {
+  width: 100%;
+  min-width: 0;
+  min-height: 46px;
+  padding: 0.65rem 0.8rem;
+  border: 1px solid var(--store-field-border);
+  border-radius: 8px;
+  background: var(--store-surface);
+  color: var(--store-ink);
+  font: inherit;
+  color-scheme: var(--store-color-scheme);
+}
+.campo-fecha input[aria-invalid&#x3D;&#x27;true&#x27;] { border-color: var(--ion-color-danger); }
+.intervalo-fechas ion-button { margin: 0; }
+.intervalo-aplicado { flex-basis: 100%; margin: 0; color: var(--store-muted); font-size: 0.8rem; }
+@media (max-width: 480px) {
+  .campo-fecha { max-width: none; flex-basis: 100%; }
+  .intervalo-fechas ion-button { width: 100%; }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Leyenda</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Elemento Html</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Componente</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Elemento Html con directiva</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis-network.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><ion-header>  <ion-toolbar>    <ion-buttons slot="start">      <ion-menu-button        menu="main-menu"        aria-label="Abrir menú principal"      ></ion-menu-button>    </ion-buttons>    <ion-title>Estadísticas</ion-title>  </ion-toolbar></ion-header><ion-content class="ion-padding">  <div class="dashboard">    <header class="panel-cabecera">      <div>        <p class="etiqueta-editorial">Administración · Vista general</p>        <h1>Estadísticas</h1>        <p class="introduccion">          Resumen de reservas, productos y existencias.        </p>      </div>      <div class="cabecera-acciones">        <ion-button          type="button"          fill="outline"          (click)="cargarDashboard()"          [disabled]="loading() || exportando()"        >          {{ loading() ? \'Actualizando…\' : \'Actualizar datos\' }}        </ion-button>        @if (ultimaActualizacion()) {          <span class="ultima-actualizacion">            Actualizado: {{ ultimaActualizacion() }}          </span>        }      </div>    </header>    <section class="controles" aria-label="Periodo e informes">      <div>        <span class="control-etiqueta">Periodo del informe</span>        <div class="selector-periodo" role="group" aria-label="Elegir periodo">          @for (periodo of periodos; track periodo.valor) {            <button              type="button"              [class.activo]="seleccionPeriodo() === periodo.valor"              [attr.aria-pressed]="seleccionPeriodo() === periodo.valor"              [disabled]="loading() || exportando() || errorMessage() !== \'\'"              (click)="cambiarPeriodo(periodo.valor)"            >              {{ periodo.etiqueta }}            </button>          }        </div>      </div>      <div class="exportaciones">        <span class="control-etiqueta">Descargar informe</span>        <div class="exportaciones-botones">          <ion-button            type="button"            fill="outline"            (click)="descargarCsv()"            [disabled]="loading() || errorMessage() !== \'\' || exportando() || errorPeriodo() !== \'\'"          >            CSV          </ion-button>          <ion-button            type="button"            (click)="descargarPdf()"            [disabled]="loading() || errorMessage() !== \'\' || exportando() || errorPeriodo() !== \'\'"          >            {{ exportando() ? \'Generando…\' : \'Descargar PDF\' }}          </ion-button>        </div>      </div>    </section>    <form class="intervalo-fechas" (ngSubmit)="aplicarFechas()" novalidate>      <div class="campo-fecha">        <label for="fecha-desde">Desde</label>        <input id="fecha-desde" name="desde" type="date"          [(ngModel)]="desde" [max]="fechaHoy" required          [disabled]="loading() || exportando()"          [attr.aria-invalid]="errorPeriodo() ? \'true\' : null"          [attr.aria-describedby]="errorPeriodo() ? \'error-periodo\' : null" />      </div>      <div class="campo-fecha">        <label for="fecha-hasta">Hasta</label>        <input id="fecha-hasta" name="hasta" type="date"          [(ngModel)]="hasta" [max]="fechaHoy" required          [disabled]="loading() || exportando()"          [attr.aria-invalid]="errorPeriodo() ? \'true\' : null"          [attr.aria-describedby]="errorPeriodo() ? \'error-periodo\' : null" />      </div>      <ion-button type="submit" fill="outline"        [disabled]="loading() || exportando() || errorMessage() !== \'\'">        Aplicar fechas      </ion-button>      <p class="intervalo-aplicado" role="status">        Intervalo aplicado: <strong>{{ textoPeriodo() }}</strong>        · Datos agrupados por {{ agrupacion() === \'mensual\' ? \'mes\' : \'día\' }}.      </p>    </form>    @if (errorPeriodo()) {      <p id="error-periodo" role="alert">{{ errorPeriodo() }}</p>    }    @if (exportError()) {      <p role="alert">{{ exportError() }}</p>    }    @if (loading()) {      <p role="status">Preparando las estadísticas de la tienda…</p>      <div class="esqueletos" aria-hidden="true">        @for (numero of [1, 2, 3, 4, 5, 6]; track numero) {          <div class="esqueleto">            <span></span>            <strong></strong>            <span></span>          </div>        }      </div>    }    @if (errorMessage()) {      <p role="alert">{{ errorMessage() }}</p>    }    <div      class="dashboard-contenido"      [hidden]="loading() || errorMessage() !== \'\'"    >      <section class="indicadores" aria-label="Indicadores de la tienda">        @for (indicador of indicadores(); track indicador.titulo) {          <article            class="indicador"            [class.indicador-destacado]="indicador.destacada"          >            <h2>{{ indicador.titulo }}</h2>            <p class="indicador-valor">{{ indicador.valor }}</p>            <p class="indicador-detalle">{{ indicador.detalle }}</p>          </article>        }      </section>      <p class="nota-alcance">        Reservas por fecha de creación; ventas por fecha de recogida.        Las pendientes y el anillo muestran el estado actual de las reservas        creadas en el intervalo, no su estado histórico.        Cancelaciones registradas en el intervalo: {{ resumen().cancelaciones }}.        Productos y existencias corresponden a la situación actual.      </p>      <div class="graficos-grid">        <section class="panel panel-actividad" aria-labelledby="titulo-actividad">          <div class="seccion-cabecera">            <div>              <p class="etiqueta-editorial">Reservas del periodo</p>              <h2 id="titulo-actividad">Actividad {{ agrupacion() === \'mensual\' ? \'mensual\' : \'diaria\' }}</h2>            </div>            <span class="distintivo">{{ textoPeriodo() }}</span>          </div>          <p class="panel-descripcion">            Reservas creadas y compras completadas por {{ agrupacion() === \'mensual\' ? \'mes\' : \'día\' }}.          </p>          <div class="grafico grafico-linea">            <canvas              #canvasActividad              role="img"              aria-label="Reservas creadas y compras completadas. Consulta los valores y los importes en la tabla desplegable."            ></canvas>          </div>          <details class="tabla-desplegable">            <summary>Consultar los datos de actividad</summary>            <div class="tabla-contenedor">              <table>                <caption>Actividad {{ agrupacion() === \'mensual\' ? \'mensual\' : \'diaria\' }} del intervalo</caption>                <thead>                  <tr>                    <th scope="col">Fecha</th>                    <th scope="col">Reservas creadas</th>                    <th scope="col">Compras</th>                    <th scope="col">Ventas</th>                  </tr>                </thead>                <tbody>                  @for (dia of actividad(); track dia.fecha) {                    <tr>                      <th scope="row">{{ dia.fecha }}</th>                      <td>{{ dia.cantidad }}</td>                      <td>{{ dia.compras }}</td>                      <td>{{ formatearPrecio(dia.ventas) }}</td>                    </tr>                  }                </tbody>              </table>            </div>          </details>        </section>        <section class="panel panel-estados" aria-labelledby="titulo-estados">          <div class="seccion-cabecera">            <div>              <p class="etiqueta-editorial">Seguimiento</p>              <h2 id="titulo-estados">Estado de reservas</h2>            </div>          </div>          <p class="panel-descripcion">            Situación actual de las creadas en el periodo.          </p>          <div class="anillo-contenedor">            <div class="grafico grafico-anillo">              <canvas                #canvasEstados                role="img"                aria-label="Distribución de reservas por estado. Los valores aparecen en la leyenda y en la tabla desplegable."              ></canvas>            </div>            <div class="anillo-centro" aria-hidden="true">              <strong>{{ resumen().reservas }}</strong>              <span>reservas</span>            </div>          </div>          @if (resumen().reservas === 0) {            <p class="sin-datos">No hay reservas en este periodo.</p>          }          <ul class="leyenda-estados">            @for (estado of estados(); track estado.etiqueta) {              <li>                <span                  class="punto-estado"                  [style.background-color]="coloresEstados[$index]"                  aria-hidden="true"                ></span>                <span>{{ estado.etiqueta }}</span>                <strong>{{ estado.cantidad }}</strong>                <span class="porcentaje">                  {{ porcentaje(estado.cantidad) }}                </span>              </li>            }          </ul>          <details class="tabla-desplegable">            <summary>Consultar los datos por estado</summary>            <div class="tabla-contenedor">              <table>                <caption>Estado actual de las reservas del periodo</caption>                <thead>                  <tr>                    <th scope="col">Estado</th>                    <th scope="col">Reservas</th>                  </tr>                </thead>                <tbody>                  @for (estado of estados(); track estado.etiqueta) {                    <tr>                      <th scope="row">{{ estado.etiqueta }}</th>                      <td>{{ estado.cantidad }}</td>                    </tr>                  }                </tbody>              </table>            </div>          </details>        </section>      </div>      <div class="detalle-grid">        <section class="panel" aria-labelledby="titulo-stock">          <div class="seccion-cabecera">            <div>              <p class="etiqueta-editorial">Inventario actual</p>              <h2 id="titulo-stock">Productos con stock bajo</h2>            </div>            <span class="distintivo">{{ stockBajo().length }} discos</span>          </div>          <p class="panel-descripcion">            Productos publicados con {{ umbralStockBajo }} unidades            o menos, incluidos los agotados.          </p>          @if (stockBajo().length === 0) {            <p class="sin-datos">              Todos los productos publicados superan el umbral de stock bajo.            </p>          } @else {            <ul class="lista-editorial">              @for (producto of stockBajo(); track producto.id) {                <li>                  <div class="fila-texto">                    <strong>{{ producto.titulo }}</strong>                    <span>{{ producto.artista }}</span>                  </div>                  <span                    class="etiqueta-stock"                    [class.stock-agotado]="producto.stock === 0"                  >                    {{                      producto.stock === 0                        ? \'Agotado\'                        : producto.stock + \' uds.\'                    }}                  </span>                </li>              }            </ul>          }        </section>        <section class="panel" aria-labelledby="titulo-populares">          <div class="seccion-cabecera">            <div>              <p class="etiqueta-editorial">Selección del periodo</p>              <h2 id="titulo-populares">Los más reservados</h2>            </div>          </div>          <p class="panel-descripcion">            Hasta cinco vinilos por unidades solicitadas.            Se excluyen las reservas canceladas.          </p>          @if (masReservados().length === 0) {            <p class="sin-datos">              No hay reservas pendientes o recogidas en este periodo.            </p>          } @else {            <ol class="lista-editorial ranking">              @for (producto of masReservados(); track producto.id) {                <li>                  <span class="posicion" aria-hidden="true">                    {{ $index + 1 }}                  </span>                  <div class="fila-texto">                    <strong>{{ producto.titulo }}</strong>                    <span>{{ producto.artista }}</span>                  </div>                  <span class="unidades-ranking">                    {{ producto.unidades }} uds.                  </span>                </li>              }            </ol>          }        </section>      </div>      <section class="panel panel-recientes" aria-labelledby="titulo-recientes">        <div class="seccion-cabecera">          <div>            <p class="etiqueta-editorial">Últimas solicitudes</p>            <h2 id="titulo-recientes">Reservas recientes</h2>          </div>          <span class="distintivo">Dentro del periodo seleccionado</span>        </div>        @if (recientes().length === 0) {          <p class="sin-datos">            Todavía no hay reservas creadas en este periodo.          </p>        } @else {          <ul class="lista-editorial lista-recientes">            @for (reserva of recientes(); track reserva.id) {              <li>                <div class="fila-texto">                  <strong>{{ reserva.titulo }}</strong>                  <span>                    {{ formatearFecha(reserva.fecha) }}                    · {{ reserva.cantidad }} uds.                    · Ref. {{ reserva.id.slice(0, 8) }}                  </span>                </div>                <span                  class="etiqueta-reserva"                  [class.estado-pendiente]="reserva.estado === \'pendiente\'"                  [class.estado-recogida]="reserva.estado === \'recogida\'"                  [class.estado-cancelada]="reserva.estado === \'cancelada\'"                >                  {{ nombreEstado(reserva.estado) }}                </span>              </li>            }          </ul>        }      </section>      <p class="nota-informes">        Los informes PDF y CSV incluyen el resumen, la distribución        por estado y la actividad {{ agrupacion() === \'mensual\' ? \'mensual\' : \'diaria\' }} del intervalo seleccionado.        No incluyen los listados complementarios.      </p>    </div>  </div></ion-content></div>'
+    var COMPONENTS = [{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AyudaPage', 'selector': 'app-ayuda'},{'name': 'CatalogoPage', 'selector': 'app-catalogo'},{'name': 'ClienteDetallePage', 'selector': 'app-cliente-detalle'},{'name': 'ClientesPage', 'selector': 'app-clientes'},{'name': 'DashboardPage', 'selector': 'app-dashboard'},{'name': 'LoginPage', 'selector': 'app-login'},{'name': 'MisReservasPage', 'selector': 'app-mis-reservas'},{'name': 'ProductosPage', 'selector': 'app-productos'},{'name': 'ReservasPage', 'selector': 'app-reservas'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'DashboardPage'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> comparación de resultados "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No hay resultados que coincidan "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'DashboardPage.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var updateDarkModeSwitchOffset = function () {
+                    var content = document.querySelector('.content');
+                    var scrollbarWidth = 0;
+
+                    if (content) {
+                         scrollbarWidth = Math.max(0, content.offsetWidth - content.clientWidth);
+                    }
+
+                    document.documentElement.style.setProperty(
+                         '--content-scrollbar-width',
+                         scrollbarWidth + 'px'
+                    );
+               };
+
+               updateDarkModeSwitchOffset();
+               requestAnimationFrame(updateDarkModeSwitchOffset);
+               window.addEventListener('resize', updateDarkModeSwitchOffset);
+
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

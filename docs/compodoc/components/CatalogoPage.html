@@ -1,0 +1,3443 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Vinyl Store</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">Vinyl Store</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search">
+    <input type="text" placeholder="Escribe para buscar">
+    <button type="button"
+        class="search-input-clear"
+        aria-label="Clear search"
+        data-search-input-clear>&times;</button>
+</div>
+            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Componentes</li>
+  <li class="breadcrumb-item"
+  >
+  CatalogoPage</li>
+</ol>
+
+<div class="io-file io-file-path" data-compodoc="entity-file-path">
+    <span class="icon ion-ios-document" aria-hidden="true"></span>
+    <code>src/app/pages/catalogo/catalogo.page.ts</code>
+</div>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#api" class="nav-link"
+                role="tab" id="api-tab" data-bs-toggle="tab" data-link="api">API</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#styleData" class="nav-link"
+                role="tab" id="styleData-tab" data-bs-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+
+
+
+
+<section data-compodoc="block-metadata">
+    <h3>Meta datos</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+            <tr>
+                <td class="col-md-3">changeDetection</td>
+                <td class="col-md-9"><code>ChangeDetectionStrategy.OnPush</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-catalogo</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">standalone</td>
+                <td class="col-md-9"><code>true</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                        <div>        <code><a href="https://angular.dev/api/forms/ReactiveFormsModule" target="_blank" >ReactiveFormsModule</a></code>
+</div>
+                        <div>    <code>IonButton</code>
+</div>
+                        <div>    <code>IonButtons</code>
+</div>
+                        <div>    <code>IonCard</code>
+</div>
+                        <div>    <code>IonCardContent</code>
+</div>
+                        <div>    <code>IonCardHeader</code>
+</div>
+                        <div>    <code>IonCardSubtitle</code>
+</div>
+                        <div>    <code>IonCardTitle</code>
+</div>
+                        <div>    <code>IonContent</code>
+</div>
+                        <div>    <code>IonHeader</code>
+</div>
+                        <div>    <code>IonInput</code>
+</div>
+                        <div>    <code>IonMenuButton</code>
+</div>
+                        <div>    <code>IonTitle</code>
+</div>
+                        <div>    <code>IonToolbar</code>
+</div>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./catalogo.page.scss</code></td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./catalogo.page.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+        <section data-compodoc="block-relationships">
+            <h3>Relationships</h3>
+
+            <div class="row pt-3">
+                <div class="col-sm-6">
+                    <h4>Used by</h4>
+                        <p class="comment"><i>No hay resultados que coincidan.</i></p>
+                </div>
+
+                <div class="col-sm-6">
+                    <h4>Depends on</h4>
+                        <ul class="list-unstyled relationships-list">
+                                <li>
+                                            <code><a href="https://angular.dev/api/forms/ReactiveFormsModule" target="_blank" >ReactiveFormsModule</a></code>
+                                </li>
+                                <li>
+                                        <code>IonButton</code>
+                                </li>
+                                <li>
+                                        <code>IonButtons</code>
+                                </li>
+                                <li>
+                                        <code>IonCard</code>
+                                </li>
+                                <li>
+                                        <code>IonCardContent</code>
+                                </li>
+                                <li>
+                                        <code>IonCardHeader</code>
+                                </li>
+                                <li>
+                                        <code>IonCardSubtitle</code>
+                                </li>
+                                <li>
+                                        <code>IonCardTitle</code>
+                                </li>
+                                <li>
+                                        <code>IonContent</code>
+                                </li>
+                                <li>
+                                        <code>IonHeader</code>
+                                </li>
+                                <li>
+                                        <code>IonInput</code>
+                                </li>
+                                <li>
+                                        <code>IonMenuButton</code>
+                                </li>
+                                <li>
+                                        <code>IonTitle</code>
+                                </li>
+                                <li>
+                                        <code>IonToolbar</code>
+                                </li>
+                        </ul>
+                </div>
+            </div>
+        </section>
+</div>
+
+    <div class="tab-pane fade " id="api">    <section data-compodoc="block-index">
+    <h3 id="index">Índice</h3>
+        <table class="table table-sm table-bordered index-table">
+            <tbody>
+                <tr>
+                    <td class="col-md-3">
+                        <h6><b>Propiedades</b></h6>
+                    </td>
+                    <td class="col-md-9">
+                        <ul class="index-list">
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#auth" >auth</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#busqueda" >busqueda</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#disponibilidad" >disponibilidad</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#fb" >fb</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#form" >form</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#formatoPrecio" >formatoPrecio</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#genero" >genero</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#generos" >generos</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#hayFiltros" >hayFiltros</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#loadError" >loadError</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#loading" >loading</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#orden" >orden</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#portadas" >portadas</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#productos" >productos</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#productosFiltrados" >productosFiltrados</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#productosService" >productosService</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#reservaError" >reservaError</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#reservasService" >reservasService</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Private</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#router" >router</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#saving" >saving</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#seleccionado" >seleccionado</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#soloDisponibles" >soloDisponibles</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Readonly</span>
+                                <a href="#successMessage" >successMessage</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--property" aria-hidden="true">P</span>
+                                    <span class="modifier">Private</span>
+                                <a href="#ultimaSolicitud" >ultimaSolicitud</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table class="table table-sm table-bordered index-table">
+            <tbody>
+                <tr>
+                    <td class="col-md-3">
+                        <h6><b>Métodos</b></h6>
+                    </td>
+                    <td class="col-md-9">
+                        <ul class="index-list">
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#actualizarBusqueda" >actualizarBusqueda</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#actualizarDisponibilidad" >actualizarDisponibilidad</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#actualizarGenero" >actualizarGenero</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#actualizarOrden" >actualizarOrden</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#cancelarSeleccion" >cancelarSeleccion</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#cargarProductos" >cargarProductos</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#confirmarReserva" >confirmarReserva</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#formatearPrecio" >formatearPrecio</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#ionViewWillEnter" >ionViewWillEnter</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                <a href="#limpiarFiltros" >limpiarFiltros</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                    <span class="modifier">Private</span>
+                                <a href="#normalizar" >normalizar</a>
+                            </li>
+                            <li>
+                                <span class="reference-badge reference-badge--method" aria-hidden="true">M</span>
+                                    <span class="modifier">Async</span>
+                                <a href="#prepararReserva" >prepararReserva</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+
+
+
+
+        <table class="table table-sm table-bordered index-table">
+            <tbody>
+                <tr>
+                    <td class="col-md-3">
+                        <h6><b>Accesorios</b></h6>
+                    </td>
+                    <td class="col-md-9">
+                        <ul class="index-list">
+                            <li>
+                                <span class="reference-badge reference-badge--accessor" aria-hidden="true">A</span>
+                                <a href="#errorCantidad" >errorCantidad</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Métodos
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="actualizarBusqueda"></a>
+                    <span class="name">
+                        <span ><b>actualizarBusqueda</b></span>
+                        <a href="#actualizarBusqueda"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>actualizarBusqueda(event: <a href="https://angular.dev/api/router/Event" target="_blank">Event</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="182"
+                                    class="link-to-prism">src/app/pages/catalogo/catalogo.page.ts:182</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>event</td>
+                                            <td>
+                                                            <code><a href="https://angular.dev/api/router/Event" target="_blank" >Event</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="actualizarDisponibilidad"></a>
+                    <span class="name">
+                        <span ><b>actualizarDisponibilidad</b></span>
+                        <a href="#actualizarDisponibilidad"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>actualizarDisponibilidad(event: <a href="https://angular.dev/api/router/Event" target="_blank">Event</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="198"
+                                    class="link-to-prism">src/app/pages/catalogo/catalogo.page.ts:198</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>event</td>
+                                            <td>
+                                                            <code><a href="https://angular.dev/api/router/Event" target="_blank" >Event</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="actualizarGenero"></a>
+                    <span class="name">
+                        <span ><b>actualizarGenero</b></span>
+                        <a href="#actualizarGenero"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>actualizarGenero(event: <a href="https://angular.dev/api/router/Event" target="_blank">Event</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="190"
+                                    class="link-to-prism">src/app/pages/catalogo/catalogo.page.ts:190</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>event</td>
+                                            <td>
+                                                            <code><a href="https://angular.dev/api/router/Event" target="_blank" >Event</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="actualizarOrden"></a>
+                    <span class="name">
+                        <span ><b>actualizarOrden</b></span>
+                        <a href="#actualizarOrden"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>actualizarOrden(event: <a href="https://angular.dev/api/router/Event" target="_blank">Event</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="206"
+                                    class="link-to-prism">src/app/pages/catalogo/catalogo.page.ts:206</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>event</td>
+                                            <td>
+                                                            <code><a href="https://angular.dev/api/router/Event" target="_blank" >Event</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="cancelarSeleccion"></a>
+                    <span class="name">
+                        <span ><b>cancelarSeleccion</b></span>
+                        <a href="#cancelarSeleccion"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>cancelarSeleccion()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="287"
+                                    class="link-to-prism">src/app/pages/catalogo/catalogo.page.ts:287</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="cargarProductos"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>cargarProductos</b></span>
+                        <a href="#cargarProductos"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>cargarProductos()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="236"
+                                    class="link-to-prism">src/app/pages/catalogo/catalogo.page.ts:236</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Devuelve : </b>    <code>Promise&lt;void&gt;</code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="confirmarReserva"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>confirmarReserva</b></span>
+                        <a href="#confirmarReserva"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>confirmarReserva()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="294"
+                                    class="link-to-prism">src/app/pages/catalogo/catalogo.page.ts:294</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Devuelve : </b>    <code>Promise&lt;void&gt;</code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="formatearPrecio"></a>
+                    <span class="name">
+                        <span ><b>formatearPrecio</b></span>
+                        <a href="#formatearPrecio"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>formatearPrecio(precio: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="232"
+                                    class="link-to-prism">src/app/pages/catalogo/catalogo.page.ts:232</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>precio</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ionViewWillEnter"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>ionViewWillEnter</b></span>
+                        <a href="#ionViewWillEnter"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>ionViewWillEnter()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="173"
+                                    class="link-to-prism">src/app/pages/catalogo/catalogo.page.ts:173</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Devuelve : </b>    <code>Promise&lt;void&gt;</code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="limpiarFiltros"></a>
+                    <span class="name">
+                        <span ><b>limpiarFiltros</b></span>
+                        <a href="#limpiarFiltros"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>limpiarFiltros()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="225"
+                                    class="link-to-prism">src/app/pages/catalogo/catalogo.page.ts:225</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="normalizar"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>normalizar</b></span>
+                        <a href="#normalizar"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>normalizar(texto: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="379"
+                                    class="link-to-prism">src/app/pages/catalogo/catalogo.page.ts:379</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>texto</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="prepararReserva"></a>
+                    <span class="name">
+                            <span class="modifier">Async</span>
+                        <span ><b>prepararReserva</b></span>
+                        <a href="#prepararReserva"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>prepararReserva(producto: <a href="../interfaces/Producto.html" target="_self">Producto</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Definido en <a href="" data-line="255"
+                                    class="link-to-prism">src/app/pages/catalogo/catalogo.page.ts:255</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parámetros :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Nombre</td>
+                                                <td>Tipo</td>
+                                            <td>Opcional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>producto</td>
+                                            <td>
+                                                            <code><a href="../interfaces/Producto.html" target="_self" >Producto</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Devuelve : </b>    <code>Promise&lt;void&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Propiedades
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="auth"></a>
+                    <span class="name">
+                            <span class="modifier">Readonly</span>
+                        <span ><b>auth</b></span>
+                        <a href="#auth"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>inject(AuthService)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="66" class="link-to-prism">src/app/pages/catalogo/catalogo.page.ts:66</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="busqueda"></a>
+                    <span class="name">
+                            <span class="modifier">Readonly</span>
+                        <span ><b>busqueda</b></span>
+                        <a href="#busqueda"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>signal(&#x27;&#x27;)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="77" class="link-to-prism">src/app/pages/catalogo/catalogo.page.ts:77</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="disponibilidad"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>disponibilidad</b></span>
+                        <a href="#disponibilidad"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>inject(DisponibilidadService)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="57" class="link-to-prism">src/app/pages/catalogo/catalogo.page.ts:57</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="fb"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>fb</b></span>
+                        <a href="#fb"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>inject(FormBuilder)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="59" class="link-to-prism">src/app/pages/catalogo/catalogo.page.ts:59</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="form"></a>
+                    <span class="name">
+                            <span class="modifier">Readonly</span>
+                        <span ><b>form</b></span>
+                        <a href="#form"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>this.fb.nonNullable.group({
+    cantidad: this.fb.nonNullable.control(1, {
+      validators: [
+        Validators.required,
+        Validators.min(1),
+        Validators.pattern(/^\d+$/),
+      ],
+      asyncValidators: [
+        this.disponibilidad.crearValidador(
+          () &#x3D;&gt; this.seleccionado()?.id ?? null,
+        ),
+      ],
+      updateOn: &#x27;blur&#x27;,
+    }),
+  })</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="143" class="link-to-prism">src/app/pages/catalogo/catalogo.page.ts:143</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="formatoPrecio"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>formatoPrecio</b></span>
+                        <a href="#formatoPrecio"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>new Intl.NumberFormat(&#x27;es-ES&#x27;, {
+    style: &#x27;currency&#x27;,
+    currency: &#x27;EUR&#x27;,
+  })</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="61" class="link-to-prism">src/app/pages/catalogo/catalogo.page.ts:61</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="genero"></a>
+                    <span class="name">
+                            <span class="modifier">Readonly</span>
+                        <span ><b>genero</b></span>
+                        <a href="#genero"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>signal(&#x27;&#x27;)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="78" class="link-to-prism">src/app/pages/catalogo/catalogo.page.ts:78</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="generos"></a>
+                    <span class="name">
+                            <span class="modifier">Readonly</span>
+                        <span ><b>generos</b></span>
+                        <a href="#generos"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>computed(() &#x3D;&gt;
+    [...new Set(this.productos().map((producto) &#x3D;&gt; producto.genero))]
+      .sort((a, b) &#x3D;&gt; a.localeCompare(b, &#x27;es&#x27;)),
+  )</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="82" class="link-to-prism">src/app/pages/catalogo/catalogo.page.ts:82</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="hayFiltros"></a>
+                    <span class="name">
+                            <span class="modifier">Readonly</span>
+                        <span ><b>hayFiltros</b></span>
+                        <a href="#hayFiltros"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>computed(() &#x3D;&gt;
+    this.busqueda().trim() !&#x3D;&#x3D; &#x27;&#x27; ||
+    this.genero() !&#x3D;&#x3D; &#x27;&#x27; ||
+    this.soloDisponibles() ||
+    this.orden() !&#x3D;&#x3D; &#x27;recientes&#x27;,
+  )</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="129" class="link-to-prism">src/app/pages/catalogo/catalogo.page.ts:129</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadError"></a>
+                    <span class="name">
+                            <span class="modifier">Readonly</span>
+                        <span ><b>loadError</b></span>
+                        <a href="#loadError"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>signal(&#x27;&#x27;)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="73" class="link-to-prism">src/app/pages/catalogo/catalogo.page.ts:73</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loading"></a>
+                    <span class="name">
+                            <span class="modifier">Readonly</span>
+                        <span ><b>loading</b></span>
+                        <a href="#loading"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>signal(true)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="71" class="link-to-prism">src/app/pages/catalogo/catalogo.page.ts:71</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="orden"></a>
+                    <span class="name">
+                            <span class="modifier">Readonly</span>
+                        <span ><b>orden</b></span>
+                        <a href="#orden"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>signal&lt;OrdenCatalogo&gt;(&#x27;recientes&#x27;)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="80" class="link-to-prism">src/app/pages/catalogo/catalogo.page.ts:80</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="portadas"></a>
+                    <span class="name">
+                            <span class="modifier">Readonly</span>
+                        <span ><b>portadas</b></span>
+                        <a href="#portadas"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>inject(PortadasService)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="67" class="link-to-prism">src/app/pages/catalogo/catalogo.page.ts:67</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="productos"></a>
+                    <span class="name">
+                            <span class="modifier">Readonly</span>
+                        <span ><b>productos</b></span>
+                        <a href="#productos"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>signal&lt;Producto[]&gt;([])</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="69" class="link-to-prism">src/app/pages/catalogo/catalogo.page.ts:69</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="productosFiltrados"></a>
+                    <span class="name">
+                            <span class="modifier">Readonly</span>
+                        <span ><b>productosFiltrados</b></span>
+                        <a href="#productosFiltrados"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>computed(() &#x3D;&gt; {
+    const consulta &#x3D; this.normalizar(this.busqueda().trim());
+    const genero &#x3D; this.genero();
+
+    const resultado &#x3D; this.productos().filter((producto) &#x3D;&gt; {
+      const coincideBusqueda &#x3D;
+        !consulta ||
+        this.normalizar(&#x60;${producto.titulo} ${producto.artista}&#x60;)
+          .includes(consulta);
+
+      const coincideGenero &#x3D;
+        !genero || producto.genero &#x3D;&#x3D;&#x3D; genero;
+
+      const coincideDisponibilidad &#x3D;
+        !this.soloDisponibles() || producto.stock &gt; 0;
+
+      return (
+        coincideBusqueda &amp;&amp;
+        coincideGenero &amp;&amp;
+        coincideDisponibilidad
+      );
+    });
+
+    switch (this.orden()) {
+      case &#x27;titulo&#x27;:
+        return resultado.sort((a, b) &#x3D;&gt;
+          a.titulo.localeCompare(b.titulo, &#x27;es&#x27;),
+        );
+
+      case &#x27;precio-asc&#x27;:
+        return resultado.sort((a, b) &#x3D;&gt; a.precio - b.precio);
+
+      case &#x27;precio-desc&#x27;:
+        return resultado.sort((a, b) &#x3D;&gt; b.precio - a.precio);
+
+      default:
+        return resultado.sort((a, b) &#x3D;&gt;
+          b.created_at.localeCompare(a.created_at),
+        );
+    }
+  })</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="87" class="link-to-prism">src/app/pages/catalogo/catalogo.page.ts:87</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="productosService"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>productosService</b></span>
+                        <a href="#productosService"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>inject(ProductosService)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="55" class="link-to-prism">src/app/pages/catalogo/catalogo.page.ts:55</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="reservaError"></a>
+                    <span class="name">
+                            <span class="modifier">Readonly</span>
+                        <span ><b>reservaError</b></span>
+                        <a href="#reservaError"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>signal(&#x27;&#x27;)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="74" class="link-to-prism">src/app/pages/catalogo/catalogo.page.ts:74</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="reservasService"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>reservasService</b></span>
+                        <a href="#reservasService"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>inject(ReservasService)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="56" class="link-to-prism">src/app/pages/catalogo/catalogo.page.ts:56</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="router"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                            <span class="modifier">Readonly</span>
+                        <span ><b>router</b></span>
+                        <a href="#router"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>inject(Router)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="58" class="link-to-prism">src/app/pages/catalogo/catalogo.page.ts:58</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="saving"></a>
+                    <span class="name">
+                            <span class="modifier">Readonly</span>
+                        <span ><b>saving</b></span>
+                        <a href="#saving"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>signal(false)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="72" class="link-to-prism">src/app/pages/catalogo/catalogo.page.ts:72</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="seleccionado"></a>
+                    <span class="name">
+                            <span class="modifier">Readonly</span>
+                        <span ><b>seleccionado</b></span>
+                        <a href="#seleccionado"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>signal&lt;Producto | null&gt;(null)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="70" class="link-to-prism">src/app/pages/catalogo/catalogo.page.ts:70</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="soloDisponibles"></a>
+                    <span class="name">
+                            <span class="modifier">Readonly</span>
+                        <span ><b>soloDisponibles</b></span>
+                        <a href="#soloDisponibles"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>signal(false)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="79" class="link-to-prism">src/app/pages/catalogo/catalogo.page.ts:79</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="successMessage"></a>
+                    <span class="name">
+                            <span class="modifier">Readonly</span>
+                        <span ><b>successMessage</b></span>
+                        <a href="#successMessage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>signal(&#x27;&#x27;)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="75" class="link-to-prism">src/app/pages/catalogo/catalogo.page.ts:75</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ultimaSolicitud"></a>
+                    <span class="name">
+                            <span class="modifier">Private</span>
+                        <span ><b>ultimaSolicitud</b></span>
+                        <a href="#ultimaSolicitud"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Tipo : </i>    <code>literal type | null</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Valor por defecto : </i><code>null</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Definido en <a href="" data-line="136" class="link-to-prism">src/app/pages/catalogo/catalogo.page.ts:136</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-accessors">
+    <h3 id="accessors">
+        Accesorios
+    </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="errorCantidad"></a>
+                        <span class="name"><b>errorCantidad</b><a href="#errorCantidad"><span class="icon ion-ios-link"></span></a></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <span class="accessor"><b>get</b><code>errorCantidad()</code></span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Definido en <a href="" data-line="159" class="link-to-prism">src/app/pages/catalogo/catalogo.page.ts:159</a></div>
+                                </td>
+                            </tr>
+
+            </tbody>
+        </table>
+</section>
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, computed, inject, signal } from &#x27;@angular/core&#x27;;
+import {
+  FormBuilder,
+  ReactiveFormsModule,
+  Validators,
+} from &#x27;@angular/forms&#x27;;
+import { Router } from &#x27;@angular/router&#x27;;
+import {
+  IonButton,
+  IonButtons,
+  IonCard,
+  IonCardContent,
+  IonCardHeader,
+  IonCardSubtitle,
+  IonCardTitle,
+  IonContent,
+  IonHeader,
+  IonInput,
+  IonMenuButton,
+  IonTitle,
+  IonToolbar,
+} from &#x27;@ionic/angular&#x27;;
+
+import { AuthService } from &#x27;../../core/services/auth.service&#x27;;
+import { DisponibilidadService } from &#x27;../../core/services/disponibilidad.service&#x27;;
+import { PortadasService } from &#x27;../../core/services/portadas.service&#x27;;
+import { ProductosService } from &#x27;../../core/services/productos.service&#x27;;
+import type { Producto } from &#x27;../../core/services/productos.service&#x27;;
+import { ReservasService } from &#x27;../../core/services/reservas.service&#x27;;
+
+type OrdenCatalogo &#x3D; &#x27;recientes&#x27; | &#x27;titulo&#x27; | &#x27;precio-asc&#x27; | &#x27;precio-desc&#x27;;
+
+@Component({
+  selector: &#x27;app-catalogo&#x27;,
+  templateUrl: &#x27;./catalogo.page.html&#x27;,
+  styleUrls: [&#x27;./catalogo.page.scss&#x27;],
+  imports: [
+    ReactiveFormsModule,
+    IonButton,
+    IonButtons,
+    IonCard,
+    IonCardContent,
+    IonCardHeader,
+    IonCardSubtitle,
+    IonCardTitle,
+    IonContent,
+    IonHeader,
+    IonInput,
+    IonMenuButton,
+    IonTitle,
+    IonToolbar,
+  ],
+})
+export class CatalogoPage {
+  private readonly productosService &#x3D; inject(ProductosService);
+  private readonly reservasService &#x3D; inject(ReservasService);
+  private readonly disponibilidad &#x3D; inject(DisponibilidadService);
+  private readonly router &#x3D; inject(Router);
+  private readonly fb &#x3D; inject(FormBuilder);
+
+  private readonly formatoPrecio &#x3D; new Intl.NumberFormat(&#x27;es-ES&#x27;, {
+    style: &#x27;currency&#x27;,
+    currency: &#x27;EUR&#x27;,
+  });
+
+  readonly auth &#x3D; inject(AuthService);
+  readonly portadas &#x3D; inject(PortadasService);
+
+  readonly productos &#x3D; signal&lt;Producto[]&gt;([]);
+  readonly seleccionado &#x3D; signal&lt;Producto | null&gt;(null);
+  readonly loading &#x3D; signal(true);
+  readonly saving &#x3D; signal(false);
+  readonly loadError &#x3D; signal(&#x27;&#x27;);
+  readonly reservaError &#x3D; signal(&#x27;&#x27;);
+  readonly successMessage &#x3D; signal(&#x27;&#x27;);
+
+  readonly busqueda &#x3D; signal(&#x27;&#x27;);
+  readonly genero &#x3D; signal(&#x27;&#x27;);
+  readonly soloDisponibles &#x3D; signal(false);
+  readonly orden &#x3D; signal&lt;OrdenCatalogo&gt;(&#x27;recientes&#x27;);
+
+  readonly generos &#x3D; computed(() &#x3D;&gt;
+    [...new Set(this.productos().map((producto) &#x3D;&gt; producto.genero))]
+      .sort((a, b) &#x3D;&gt; a.localeCompare(b, &#x27;es&#x27;)),
+  );
+
+  readonly productosFiltrados &#x3D; computed(() &#x3D;&gt; {
+    const consulta &#x3D; this.normalizar(this.busqueda().trim());
+    const genero &#x3D; this.genero();
+
+    const resultado &#x3D; this.productos().filter((producto) &#x3D;&gt; {
+      const coincideBusqueda &#x3D;
+        !consulta ||
+        this.normalizar(&#x60;${producto.titulo} ${producto.artista}&#x60;)
+          .includes(consulta);
+
+      const coincideGenero &#x3D;
+        !genero || producto.genero &#x3D;&#x3D;&#x3D; genero;
+
+      const coincideDisponibilidad &#x3D;
+        !this.soloDisponibles() || producto.stock &gt; 0;
+
+      return (
+        coincideBusqueda &amp;&amp;
+        coincideGenero &amp;&amp;
+        coincideDisponibilidad
+      );
+    });
+
+    switch (this.orden()) {
+      case &#x27;titulo&#x27;:
+        return resultado.sort((a, b) &#x3D;&gt;
+          a.titulo.localeCompare(b.titulo, &#x27;es&#x27;),
+        );
+
+      case &#x27;precio-asc&#x27;:
+        return resultado.sort((a, b) &#x3D;&gt; a.precio - b.precio);
+
+      case &#x27;precio-desc&#x27;:
+        return resultado.sort((a, b) &#x3D;&gt; b.precio - a.precio);
+
+      default:
+        return resultado.sort((a, b) &#x3D;&gt;
+          b.created_at.localeCompare(a.created_at),
+        );
+    }
+  });
+
+  readonly hayFiltros &#x3D; computed(() &#x3D;&gt;
+    this.busqueda().trim() !&#x3D;&#x3D; &#x27;&#x27; ||
+    this.genero() !&#x3D;&#x3D; &#x27;&#x27; ||
+    this.soloDisponibles() ||
+    this.orden() !&#x3D;&#x3D; &#x27;recientes&#x27;,
+  );
+
+  private ultimaSolicitud: {
+    id: string;
+    usuarioId: string;
+    productoId: string;
+    cantidad: number;
+  } | null &#x3D; null;
+
+  readonly form &#x3D; this.fb.nonNullable.group({
+    cantidad: this.fb.nonNullable.control(1, {
+      validators: [
+        Validators.required,
+        Validators.min(1),
+        Validators.pattern(/^\d+$/),
+      ],
+      asyncValidators: [
+        this.disponibilidad.crearValidador(
+          () &#x3D;&gt; this.seleccionado()?.id ?? null,
+        ),
+      ],
+      updateOn: &#x27;blur&#x27;,
+    }),
+  });
+
+  get errorCantidad(): string {
+    const cantidad &#x3D; this.form.controls.cantidad;
+
+    if (cantidad.hasError(&#x27;errorDisponibilidad&#x27;)) {
+      return &#x27;No se ha podido comprobar la disponibilidad. Cancela la selección y vuelve a intentarlo.&#x27;;
+    }
+
+    if (cantidad.hasError(&#x27;sinStock&#x27;)) {
+      return &#x27;El producto no está disponible o no tiene suficientes unidades.&#x27;;
+    }
+
+    return &#x27;Introduce una cantidad entera mayor que cero.&#x27;;
+  }
+
+  async ionViewWillEnter(): Promise&lt;void&gt; {
+    if (!this.saving()) {
+      this.seleccionado.set(null);
+      this.reservaError.set(&#x27;&#x27;);
+      this.successMessage.set(&#x27;&#x27;);
+      await this.cargarProductos();
+    }
+  }
+
+  actualizarBusqueda(event: Event): void {
+    const campo &#x3D; event.target;
+
+    if (campo instanceof HTMLInputElement) {
+      this.busqueda.set(campo.value);
+    }
+  }
+
+  actualizarGenero(event: Event): void {
+    const selector &#x3D; event.target;
+
+    if (selector instanceof HTMLSelectElement) {
+      this.genero.set(selector.value);
+    }
+  }
+
+  actualizarDisponibilidad(event: Event): void {
+    const campo &#x3D; event.target;
+
+    if (campo instanceof HTMLInputElement) {
+      this.soloDisponibles.set(campo.checked);
+    }
+  }
+
+  actualizarOrden(event: Event): void {
+    const selector &#x3D; event.target;
+
+    if (!(selector instanceof HTMLSelectElement)) {
+      return;
+    }
+
+    const valor &#x3D; selector.value;
+
+    if (
+      valor &#x3D;&#x3D;&#x3D; &#x27;recientes&#x27; ||
+      valor &#x3D;&#x3D;&#x3D; &#x27;titulo&#x27; ||
+      valor &#x3D;&#x3D;&#x3D; &#x27;precio-asc&#x27; ||
+      valor &#x3D;&#x3D;&#x3D; &#x27;precio-desc&#x27;
+    ) {
+      this.orden.set(valor);
+    }
+  }
+
+  limpiarFiltros(): void {
+    this.busqueda.set(&#x27;&#x27;);
+    this.genero.set(&#x27;&#x27;);
+    this.soloDisponibles.set(false);
+    this.orden.set(&#x27;recientes&#x27;);
+  }
+
+  formatearPrecio(precio: number): string {
+    return this.formatoPrecio.format(precio);
+  }
+
+  async cargarProductos(): Promise&lt;void&gt; {
+    if (this.saving()) {
+      return;
+    }
+
+    this.loading.set(true);
+    this.loadError.set(&#x27;&#x27;);
+
+    try {
+      this.productos.set(await this.productosService.listar());
+    } catch {
+      this.loadError.set(
+        &#x27;No se ha podido cargar el catálogo. Inténtalo de nuevo.&#x27;,
+      );
+    } finally {
+      this.loading.set(false);
+    }
+  }
+
+  async prepararReserva(producto: Producto): Promise&lt;void&gt; {
+    if (this.saving() || this.loading()) {
+      return;
+    }
+
+    this.reservaError.set(&#x27;&#x27;);
+    this.successMessage.set(&#x27;&#x27;);
+
+    try {
+      const { data, error } &#x3D; await this.auth.getSession();
+
+      if (error) {
+        throw error;
+      }
+
+      if (!data.session) {
+        await this.router.navigate([&#x27;/login&#x27;]);
+        return;
+      }
+
+      if (producto.stock &lt;&#x3D; 0) {
+        this.reservaError.set(&#x27;Este producto no tiene existencias.&#x27;);
+        return;
+      }
+
+      this.seleccionado.set(producto);
+      this.form.reset({ cantidad: 1 });
+    } catch {
+      this.reservaError.set(&#x27;No se ha podido comprobar tu sesión.&#x27;);
+    }
+  }
+
+  cancelarSeleccion(): void {
+    if (!this.saving()) {
+      this.seleccionado.set(null);
+      this.reservaError.set(&#x27;&#x27;);
+    }
+  }
+
+  async confirmarReserva(): Promise&lt;void&gt; {
+    const producto &#x3D; this.seleccionado();
+
+    if (
+      !producto ||
+      this.saving() ||
+      this.loading() ||
+      this.form.pending
+    ) {
+      return;
+    }
+
+    this.reservaError.set(&#x27;&#x27;);
+    this.successMessage.set(&#x27;&#x27;);
+
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
+
+    const cantidad &#x3D; Number(this.form.getRawValue().cantidad);
+
+    this.saving.set(true);
+    this.form.disable();
+
+    try {
+      const { data, error } &#x3D; await this.auth.getSession();
+
+      if (error) {
+        throw error;
+      }
+
+      if (!data.session) {
+        await this.router.navigate([&#x27;/login&#x27;]);
+        return;
+      }
+
+      const usuarioId &#x3D; data.session.user.id;
+      const anterior &#x3D; this.ultimaSolicitud;
+
+      if (
+        !anterior ||
+        anterior.usuarioId !&#x3D;&#x3D; usuarioId ||
+        anterior.productoId !&#x3D;&#x3D; producto.id ||
+        anterior.cantidad !&#x3D;&#x3D; cantidad
+      ) {
+        this.ultimaSolicitud &#x3D; {
+          id: crypto.randomUUID(),
+          usuarioId,
+          productoId: producto.id,
+          cantidad,
+        };
+      }
+
+      const solicitud &#x3D; this.ultimaSolicitud;
+
+      if (!solicitud) {
+        throw new Error(&#x27;No se ha podido preparar la solicitud.&#x27;);
+      }
+
+      const reserva &#x3D; await this.reservasService.reservar(
+        producto.id,
+        cantidad,
+        solicitud.id,
+      );
+
+      this.ultimaSolicitud &#x3D; null;
+      this.seleccionado.set(null);
+      this.successMessage.set(
+        &#x60;Solicitud registrada. Estado de la reserva: ${reserva.estado}.&#x60;,
+      );
+    } catch (error: unknown) {
+      this.reservaError.set(
+        error instanceof Error
+          ? error.message
+          : &#x27;No se ha podido confirmar la reserva. Comprueba Mis reservas antes de reintentar.&#x27;,
+      );
+    } finally {
+      this.form.enable();
+      this.saving.set(false);
+    }
+
+    await this.cargarProductos();
+  }
+
+  private normalizar(texto: string): string {
+    return texto
+      .normalize(&#x27;NFD&#x27;)
+      .replace(/[\u0300-\u036f]/g, &#x27;&#x27;)
+      .toLocaleLowerCase(&#x27;es&#x27;);
+  }
+}</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;ion-header&gt;
+  &lt;ion-toolbar&gt;
+    &lt;ion-buttons slot&#x3D;&quot;start&quot;&gt;
+      &lt;ion-menu-button
+        menu&#x3D;&quot;main-menu&quot;
+        aria-label&#x3D;&quot;Abrir menú principal&quot;
+      &gt;&lt;/ion-menu-button&gt;
+    &lt;/ion-buttons&gt;
+
+    &lt;ion-title&gt;Catálogo&lt;/ion-title&gt;
+  &lt;/ion-toolbar&gt;
+&lt;/ion-header&gt;
+
+&lt;ion-content class&#x3D;&quot;ion-padding&quot;&gt;
+  &lt;div class&#x3D;&quot;catalogo&quot;&gt;
+    &lt;section class&#x3D;&quot;presentacion&quot; aria-labelledby&#x3D;&quot;titulo-catalogo&quot;&gt;
+      &lt;div class&#x3D;&quot;presentacion-texto&quot;&gt;
+        &lt;p class&#x3D;&quot;etiqueta-editorial&quot;&gt;Vinyl Store · La colección&lt;/p&gt;
+
+        &lt;h1 id&#x3D;&quot;titulo-catalogo&quot;&gt;
+          Tu próxima escucha&lt;br /&gt;
+          empieza aquí.
+        &lt;/h1&gt;
+
+        &lt;p class&#x3D;&quot;introduccion&quot;&gt;
+          Explora el catálogo, encuentra tu próximo disco y resérvalo
+          para recoger en tienda.
+        &lt;/p&gt;
+
+        &lt;p class&#x3D;&quot;nota-recogida&quot;&gt;
+          Elige tu vinilo. Nosotros lo apartamos al confirmar la reserva.
+        &lt;/p&gt;
+      &lt;/div&gt;
+
+      &lt;div class&#x3D;&quot;ilustracion&quot; aria-hidden&#x3D;&quot;true&quot;&gt;
+        &lt;div class&#x3D;&quot;funda-editorial&quot;&gt;
+          &lt;span&gt;VINYL&lt;br /&gt;STORE&lt;/span&gt;
+          &lt;small&gt;Una colección por descubrir.&lt;/small&gt;
+        &lt;/div&gt;
+
+        &lt;div class&#x3D;&quot;vinilo-editorial&quot;&gt;&lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/section&gt;
+
+    @if (successMessage()) {
+      &lt;p role&#x3D;&quot;status&quot;&gt;{{ successMessage() }}&lt;/p&gt;
+    }
+
+    @if (reservaError()) {
+      &lt;p role&#x3D;&quot;alert&quot;&gt;{{ reservaError() }}&lt;/p&gt;
+    }
+
+    @if (seleccionado(); as productoSeleccionado) {
+      &lt;section class&#x3D;&quot;reserva-panel&quot; aria-labelledby&#x3D;&quot;titulo-reserva&quot;&gt;
+        &lt;div&gt;
+          &lt;p class&#x3D;&quot;etiqueta-editorial&quot;&gt;Tu selección&lt;/p&gt;
+
+          &lt;h2 id&#x3D;&quot;titulo-reserva&quot;&gt;
+            {{ productoSeleccionado.titulo }}
+          &lt;/h2&gt;
+
+          &lt;p class&#x3D;&quot;reserva-artista&quot;&gt;
+            {{ productoSeleccionado.artista }}
+          &lt;/p&gt;
+
+          &lt;p&gt;
+            {{ formatearPrecio(productoSeleccionado.precio) }}
+            por unidad ·
+            Existencias consultadas: {{ productoSeleccionado.stock }}
+          &lt;/p&gt;
+        &lt;/div&gt;
+
+        &lt;form [formGroup]&#x3D;&quot;form&quot; (ngSubmit)&#x3D;&quot;confirmarReserva()&quot;&gt;
+          &lt;ion-input
+            label&#x3D;&quot;Unidades que quieres reservar&quot;
+            labelPlacement&#x3D;&quot;stacked&quot;
+            type&#x3D;&quot;number&quot;
+            inputmode&#x3D;&quot;numeric&quot;
+            min&#x3D;&quot;1&quot;
+            step&#x3D;&quot;1&quot;
+            formControlName&#x3D;&quot;cantidad&quot;
+            [errorText]&#x3D;&quot;errorCantidad&quot;
+            [required]&#x3D;&quot;true&quot;
+          &gt;&lt;/ion-input&gt;
+
+          @if (form.pending) {
+            &lt;p role&#x3D;&quot;status&quot;&gt;Comprobando disponibilidad…&lt;/p&gt;
+          }
+
+          &lt;div class&#x3D;&quot;reserva-acciones&quot;&gt;
+            &lt;ion-button
+              type&#x3D;&quot;submit&quot;
+              [disabled]&#x3D;&quot;saving() || loading() || form.pending || form.invalid&quot;
+            &gt;
+              {{
+                saving()
+                  ? &#x27;Reservando…&#x27;
+                  : form.pending
+                    ? &#x27;Comprobando…&#x27;
+                    : &#x27;Confirmar reserva&#x27;
+              }}
+            &lt;/ion-button&gt;
+
+            &lt;ion-button
+              type&#x3D;&quot;button&quot;
+              fill&#x3D;&quot;outline&quot;
+              (click)&#x3D;&quot;cancelarSeleccion()&quot;
+              [disabled]&#x3D;&quot;saving()&quot;
+            &gt;
+              Cancelar selección
+            &lt;/ion-button&gt;
+          &lt;/div&gt;
+        &lt;/form&gt;
+      &lt;/section&gt;
+    }
+
+    &lt;section class&#x3D;&quot;coleccion&quot; aria-labelledby&#x3D;&quot;titulo-coleccion&quot;&gt;
+      &lt;div class&#x3D;&quot;coleccion-cabecera&quot;&gt;
+        &lt;div&gt;
+          &lt;p class&#x3D;&quot;etiqueta-editorial&quot;&gt;Encuentra tu disco&lt;/p&gt;
+          &lt;h2 id&#x3D;&quot;titulo-coleccion&quot;&gt;Explora la colección&lt;/h2&gt;
+        &lt;/div&gt;
+
+        &lt;ion-button
+          type&#x3D;&quot;button&quot;
+          fill&#x3D;&quot;outline&quot;
+          (click)&#x3D;&quot;cargarProductos()&quot;
+          [disabled]&#x3D;&quot;loading() || saving()&quot;
+        &gt;
+          {{ loading() ? &#x27;Actualizando…&#x27; : &#x27;Actualizar catálogo&#x27; }}
+        &lt;/ion-button&gt;
+      &lt;/div&gt;
+
+      &lt;div class&#x3D;&quot;filtros&quot;&gt;
+        &lt;div class&#x3D;&quot;campo-filtro buscador&quot;&gt;
+          &lt;label for&#x3D;&quot;buscar-vinilos&quot;&gt;Buscar un disco&lt;/label&gt;
+
+          &lt;input
+            id&#x3D;&quot;buscar-vinilos&quot;
+            type&#x3D;&quot;search&quot;
+            placeholder&#x3D;&quot;Título o artista&quot;
+            [value]&#x3D;&quot;busqueda()&quot;
+            (input)&#x3D;&quot;actualizarBusqueda($event)&quot;
+          /&gt;
+        &lt;/div&gt;
+
+        &lt;div class&#x3D;&quot;campo-filtro&quot;&gt;
+          &lt;label for&#x3D;&quot;genero-vinilos&quot;&gt;Género&lt;/label&gt;
+
+          &lt;select
+            id&#x3D;&quot;genero-vinilos&quot;
+            [value]&#x3D;&quot;genero()&quot;
+            (change)&#x3D;&quot;actualizarGenero($event)&quot;
+          &gt;
+            &lt;option value&#x3D;&quot;&quot;&gt;Todos los géneros&lt;/option&gt;
+
+            @for (opcion of generos(); track opcion) {
+              &lt;option [value]&#x3D;&quot;opcion&quot;&gt;{{ opcion }}&lt;/option&gt;
+            }
+          &lt;/select&gt;
+        &lt;/div&gt;
+
+        &lt;div class&#x3D;&quot;campo-filtro&quot;&gt;
+          &lt;label for&#x3D;&quot;orden-vinilos&quot;&gt;Ordenar por&lt;/label&gt;
+
+          &lt;select
+            id&#x3D;&quot;orden-vinilos&quot;
+            [value]&#x3D;&quot;orden()&quot;
+            (change)&#x3D;&quot;actualizarOrden($event)&quot;
+          &gt;
+            &lt;option value&#x3D;&quot;recientes&quot;&gt;Añadidos recientemente&lt;/option&gt;
+            &lt;option value&#x3D;&quot;titulo&quot;&gt;Título: A–Z&lt;/option&gt;
+            &lt;option value&#x3D;&quot;precio-asc&quot;&gt;Precio: menor a mayor&lt;/option&gt;
+            &lt;option value&#x3D;&quot;precio-desc&quot;&gt;Precio: mayor a menor&lt;/option&gt;
+          &lt;/select&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;div class&#x3D;&quot;filtros-secundarios&quot;&gt;
+        &lt;label class&#x3D;&quot;filtro-disponibles&quot;&gt;
+          &lt;input
+            type&#x3D;&quot;checkbox&quot;
+            [checked]&#x3D;&quot;soloDisponibles()&quot;
+            (change)&#x3D;&quot;actualizarDisponibilidad($event)&quot;
+          /&gt;
+          Solo con existencias
+        &lt;/label&gt;
+
+        @if (hayFiltros()) {
+          &lt;button
+            class&#x3D;&quot;limpiar-filtros&quot;
+            type&#x3D;&quot;button&quot;
+            (click)&#x3D;&quot;limpiarFiltros()&quot;
+          &gt;
+            Restablecer filtros
+          &lt;/button&gt;
+        }
+      &lt;/div&gt;
+
+      @if (loading()) {
+        &lt;p role&#x3D;&quot;status&quot;&gt;Cargando la colección…&lt;/p&gt;
+      } @else if (loadError()) {
+        &lt;p role&#x3D;&quot;alert&quot;&gt;{{ loadError() }}&lt;/p&gt;
+      } @else if (productos().length &#x3D;&#x3D;&#x3D; 0) {
+        &lt;div class&#x3D;&quot;estado-vacio&quot;&gt;
+          &lt;h3&gt;La colección está en camino&lt;/h3&gt;
+          &lt;p&gt;Todavía no hay vinilos publicados. Vuelve más adelante.&lt;/p&gt;
+        &lt;/div&gt;
+      } @else {
+        &lt;p class&#x3D;&quot;contador&quot; role&#x3D;&quot;status&quot;&gt;
+          {{
+            productosFiltrados().length &#x3D;&#x3D;&#x3D; 1
+              ? &#x27;1 disco&#x27;
+              : productosFiltrados().length + &#x27; discos&#x27;
+          }}
+          en esta selección
+        &lt;/p&gt;
+
+        @if (productosFiltrados().length &#x3D;&#x3D;&#x3D; 0) {
+          &lt;div class&#x3D;&quot;estado-vacio&quot;&gt;
+            &lt;h3&gt;No encontramos esa combinación&lt;/h3&gt;
+            &lt;p&gt;Prueba con otro título, artista o género.&lt;/p&gt;
+
+            &lt;ion-button
+              type&#x3D;&quot;button&quot;
+              fill&#x3D;&quot;outline&quot;
+              (click)&#x3D;&quot;limpiarFiltros()&quot;
+            &gt;
+              Ver toda la colección
+            &lt;/ion-button&gt;
+          &lt;/div&gt;
+        } @else {
+          &lt;div class&#x3D;&quot;productos-grid&quot;&gt;
+            @for (producto of productosFiltrados(); track producto.id) {
+              &lt;ion-card class&#x3D;&quot;producto-card&quot;&gt;
+                &lt;div class&#x3D;&quot;portada-marco&quot;&gt;
+                  @if (producto.imagen_path; as ruta) {
+                    &lt;img
+                      class&#x3D;&quot;portada&quot;
+                      [src]&#x3D;&quot;portadas.obtenerUrl(ruta)&quot;
+                      [alt]&#x3D;&quot;&#x27;Portada de &#x27; + producto.titulo&quot;
+                      width&#x3D;&quot;480&quot;
+                      height&#x3D;&quot;480&quot;
+                      loading&#x3D;&quot;lazy&quot;
+                    /&gt;
+                  } @else {
+                    &lt;div
+                      class&#x3D;&quot;portada-alternativa&quot;
+                      role&#x3D;&quot;img&quot;
+                      [attr.aria-label]&#x3D;&quot;&#x27;Sin portada disponible para &#x27; + producto.titulo&quot;
+                    &gt;
+                      &lt;span class&#x3D;&quot;disco-alternativo&quot; aria-hidden&#x3D;&quot;true&quot;&gt;&lt;/span&gt;
+                      &lt;span&gt;Vinyl Store&lt;/span&gt;
+                    &lt;/div&gt;
+                  }
+
+                  &lt;span class&#x3D;&quot;genero-producto&quot;&gt;
+                    {{ producto.genero }}
+                  &lt;/span&gt;
+                &lt;/div&gt;
+
+                &lt;ion-card-header&gt;
+                  &lt;ion-card-subtitle&gt;
+                    {{ producto.artista }}
+                  &lt;/ion-card-subtitle&gt;
+
+                  &lt;ion-card-title&gt;
+                    {{ producto.titulo }}
+                  &lt;/ion-card-title&gt;
+                &lt;/ion-card-header&gt;
+
+                &lt;ion-card-content&gt;
+                  @if (producto.descripcion) {
+                    &lt;p class&#x3D;&quot;descripcion-producto&quot;&gt;
+                      {{ producto.descripcion }}
+                    &lt;/p&gt;
+                  }
+
+                  &lt;div class&#x3D;&quot;producto-pie&quot;&gt;
+                    &lt;div class&#x3D;&quot;producto-datos&quot;&gt;
+                      &lt;p class&#x3D;&quot;precio&quot;&gt;
+                        {{ formatearPrecio(producto.precio) }}
+                      &lt;/p&gt;
+
+                      &lt;p
+                        class&#x3D;&quot;disponibilidad&quot;
+                        [class.agotado]&#x3D;&quot;producto.stock &lt;&#x3D; 0&quot;
+                      &gt;
+                        &lt;span class&#x3D;&quot;indicador-stock&quot; aria-hidden&#x3D;&quot;true&quot;&gt;&lt;/span&gt;
+
+                        {{
+                          producto.stock &gt; 0
+                            ? producto.stock + &#x27; disponibles&#x27;
+                            : &#x27;Temporalmente agotado&#x27;
+                        }}
+                      &lt;/p&gt;
+                    &lt;/div&gt;
+
+                    @if (producto.stock &gt; 0) {
+                      &lt;ion-button
+                        type&#x3D;&quot;button&quot;
+                        (click)&#x3D;&quot;prepararReserva(producto)&quot;
+                        [disabled]&#x3D;&quot;saving() || loading()&quot;
+                        [attr.aria-label]&#x3D;&quot;
+                          auth.session()
+                            ? &#x27;Reservar &#x27; + producto.titulo
+                            : &#x27;Iniciar sesión para reservar &#x27; + producto.titulo
+                        &quot;
+                      &gt;
+                        {{ auth.session() ? &#x27;Reservar&#x27; : &#x27;Acceder y reservar&#x27; }}
+                      &lt;/ion-button&gt;
+                    }
+                  &lt;/div&gt;
+                &lt;/ion-card-content&gt;
+              &lt;/ion-card&gt;
+            }
+          &lt;/div&gt;
+        }
+      }
+    &lt;/section&gt;
+  &lt;/div&gt;
+&lt;/ion-content&gt;</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="styleData">
+                <p class="comment">
+                    <code>./catalogo.page.scss</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">.catalogo {
+  max-width: 1320px;
+  margin-inline: auto;
+}
+
+.etiqueta-editorial {
+  margin: 0 0 0.9rem;
+  color: var(--ion-color-primary);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.presentacion {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(220px, 0.75fr);
+  align-items: center;
+  gap: 2rem;
+  padding: clamp(1rem, 3vw, 2.5rem) 0 2.5rem;
+  border-bottom: 1px solid var(--store-border);
+}
+
+.presentacion h1 {
+  margin: 0 0 1.25rem;
+  font-size: clamp(2.6rem, 4.8vw, 4.6rem);
+  line-height: 1.03;
+  letter-spacing: -0.055em;
+}
+
+.introduccion {
+  max-width: 44ch;
+  margin: 0;
+  color: var(--store-muted);
+  font-size: 1.05rem;
+}
+
+.nota-recogida {
+  margin-top: 1.25rem;
+  color: var(--store-muted);
+  font-size: 0.8rem;
+}
+
+.ilustracion {
+  position: relative;
+  width: min(100%, 330px);
+  height: 280px;
+  justify-self: center;
+}
+
+.funda-editorial {
+  position: absolute;
+  z-index: 1;
+  top: 26px;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 215px;
+  height: 230px;
+  padding: 25px;
+  border: 1px solid #6a2738;
+  background: var(--store-selected-bg);
+  color: #fff7ed;
+  box-shadow: 0 15px 30px rgb(41 38 34 / 12%);
+  transform: rotate(-7deg);
+
+  &gt; span {
+    font-family: var(--store-heading-font);
+    font-size: 2.8rem;
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+  }
+
+  small {
+    font-size: 0.7rem;
+    line-height: 1.5;
+  }
+}
+
+.vinilo-editorial {
+  position: absolute;
+  top: 27px;
+  right: 0;
+  width: 225px;
+  height: 225px;
+  border: 1px solid #171614;
+  border-radius: 50%;
+  background: repeating-radial-gradient(
+    circle,
+    #252320 0,
+    #252320 5px,
+    #3b3833 6px,
+    #252320 7px
+  );
+  box-shadow: 8px 15px 25px rgb(41 38 34 / 10%);
+
+  &amp;::before {
+    position: absolute;
+    inset: 78px;
+    border: 1px solid #bba88d;
+    border-radius: 50%;
+    background: #e8d9bf;
+    content: &#x27;&#x27;;
+  }
+
+  &amp;::after {
+    position: absolute;
+    inset: 109px;
+    border-radius: 50%;
+    background: var(--store-paper);
+    content: &#x27;&#x27;;
+  }
+}
+
+.coleccion {
+  padding-top: 2.5rem;
+}
+
+.coleccion-cabecera {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+
+  h2 {
+    margin: 0;
+  }
+
+  .etiqueta-editorial {
+    margin-bottom: 0.5rem;
+  }
+
+  ion-button {
+    flex-shrink: 0;
+  }
+}
+
+.filtros {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.campo-filtro {
+  min-width: 0;
+
+  label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+
+  input,
+  select {
+    width: 100%;
+    min-height: 48px;
+    padding: 0.75rem 0.9rem;
+    border: 1px solid var(--store-field-border);
+    border-radius: 8px;
+    background: var(--store-surface);
+    color: var(--store-ink);
+    font: inherit;
+    font-size: 0.9rem;
+  }
+
+  input::placeholder {
+    color: var(--store-muted);
+    opacity: 1;
+  }
+}
+
+.filtros-secundarios {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-block: 1rem 1.5rem;
+}
+
+.filtro-disponibles {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-height: 44px;
+  font-size: 0.85rem;
+  cursor: pointer;
+
+  input {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--ion-color-primary);
+  }
+}
+
+.limpiar-filtros {
+  min-height: 44px;
+  padding: 0.5rem;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--ion-color-primary);
+  font: inherit;
+  font-size: 0.85rem;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  cursor: pointer;
+}
+
+.contador {
+  margin-bottom: 1.25rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--store-muted);
+  font-size: 0.8rem;
+}
+
+.productos-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: stretch;
+  gap: 1.5rem;
+}
+
+.producto-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  margin: 0;
+  overflow: hidden;
+
+  ion-card-header {
+    padding: 1.15rem 1.25rem 0.5rem;
+  }
+
+  ion-card-subtitle {
+    margin-bottom: 0.4rem;
+  }
+
+  ion-card-title {
+    font-size: 1.6rem;
+    overflow-wrap: anywhere;
+  }
+
+  ion-card-content {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+  }
+}
+
+.portada-marco {
+  position: relative;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-bottom: 1px solid var(--store-border);
+  background: var(--store-placeholder);
+}
+
+.portada {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.genero-producto {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  max-width: calc(100% - 24px);
+  padding: 5px 10px;
+  border: 1px solid var(--store-border);
+  border-radius: 30px;
+  background: var(--store-surface);
+  color: var(--store-ink);
+  font-size: 0.7rem;
+  overflow-wrap: anywhere;
+}
+
+.portada-alternativa {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 1rem;
+  height: 100%;
+  padding: 1.5rem;
+  background: var(--store-placeholder);
+  color: #50473c;
+  font-family: var(--store-heading-font);
+  font-size: 1.25rem;
+}
+
+.disco-alternativo {
+  position: relative;
+  display: block;
+  width: 58%;
+  max-width: 180px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: repeating-radial-gradient(
+    circle,
+    #292622 0,
+    #292622 5px,
+    #454039 6px,
+    #292622 7px
+  );
+
+  &amp;::before {
+    position: absolute;
+    inset: 34%;
+    border-radius: 50%;
+    background: var(--store-selected-bg);
+    content: &#x27;&#x27;;
+  }
+
+  &amp;::after {
+    position: absolute;
+    inset: 48%;
+    border-radius: 50%;
+    background: var(--store-paper);
+    content: &#x27;&#x27;;
+  }
+}
+
+.descripcion-producto {
+  margin-bottom: 1rem;
+  color: var(--store-muted);
+  font-size: 0.85rem;
+  overflow-wrap: anywhere;
+}
+
+.producto-pie {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: auto;
+  padding-top: 1rem;
+
+  ion-button {
+    margin: 0;
+    font-size: 0.8rem;
+  }
+}
+
+.precio {
+  margin: 0;
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+.disponibilidad {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0.4rem 0 0;
+  color: var(--ion-color-success);
+  font-size: 0.75rem;
+
+  &amp;.agotado {
+    color: var(--store-muted);
+  }
+}
+
+.indicador-stock {
+  flex-shrink: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.reserva-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(240px, 0.8fr);
+  align-items: start;
+  gap: 2rem;
+  margin-top: 2rem;
+  padding: clamp(1.25rem, 3vw, 2rem);
+  border: 1px solid var(--ion-color-primary);
+  border-radius: 14px;
+  background: var(--store-surface);
+
+  h2 {
+    margin: 0;
+    overflow-wrap: anywhere;
+  }
+}
+
+.reserva-artista {
+  color: var(--store-muted);
+}
+
+.reserva-acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+
+  ion-button {
+    margin: 0;
+  }
+}
+
+.estado-vacio {
+  padding: 3rem 1rem;
+  border: 1px dashed var(--store-field-border);
+  border-radius: 14px;
+  text-align: center;
+
+  h3 {
+    margin-top: 0;
+  }
+
+  p {
+    color: var(--store-muted);
+  }
+}
+
+@media (max-width: 1150px) {
+  .productos-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .presentacion {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .ilustracion {
+    width: 260px;
+    height: 235px;
+    margin-top: 0.5rem;
+  }
+
+  .funda-editorial {
+    width: 170px;
+    height: 185px;
+    padding: 20px;
+
+    &gt; span {
+      font-size: 2.1rem;
+    }
+  }
+
+  .vinilo-editorial {
+    top: 30px;
+    width: 180px;
+    height: 180px;
+
+    &amp;::before {
+      inset: 62px;
+    }
+
+    &amp;::after {
+      inset: 87px;
+    }
+  }
+
+  .coleccion-cabecera {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .filtros {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .buscador {
+    grid-column: 1 / -1;
+  }
+
+  .reserva-panel {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .productos-grid,
+  .filtros {
+    grid-template-columns: 1fr;
+  }
+
+  .buscador {
+    grid-column: auto;
+  }
+}</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Leyenda</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Elemento Html</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Componente</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Elemento Html con directiva</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis-network.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><ion-header>  <ion-toolbar>    <ion-buttons slot="start">      <ion-menu-button        menu="main-menu"        aria-label="Abrir menú principal"      ></ion-menu-button>    </ion-buttons>    <ion-title>Catálogo</ion-title>  </ion-toolbar></ion-header><ion-content class="ion-padding">  <div class="catalogo">    <section class="presentacion" aria-labelledby="titulo-catalogo">      <div class="presentacion-texto">        <p class="etiqueta-editorial">Vinyl Store · La colección</p>        <h1 id="titulo-catalogo">          Tu próxima escucha<br />          empieza aquí.        </h1>        <p class="introduccion">          Explora el catálogo, encuentra tu próximo disco y resérvalo          para recoger en tienda.        </p>        <p class="nota-recogida">          Elige tu vinilo. Nosotros lo apartamos al confirmar la reserva.        </p>      </div>      <div class="ilustracion" aria-hidden="true">        <div class="funda-editorial">          <span>VINYL<br />STORE</span>          <small>Una colección por descubrir.</small>        </div>        <div class="vinilo-editorial"></div>      </div>    </section>    @if (successMessage()) {      <p role="status">{{ successMessage() }}</p>    }    @if (reservaError()) {      <p role="alert">{{ reservaError() }}</p>    }    @if (seleccionado(); as productoSeleccionado) {      <section class="reserva-panel" aria-labelledby="titulo-reserva">        <div>          <p class="etiqueta-editorial">Tu selección</p>          <h2 id="titulo-reserva">            {{ productoSeleccionado.titulo }}          </h2>          <p class="reserva-artista">            {{ productoSeleccionado.artista }}          </p>          <p>            {{ formatearPrecio(productoSeleccionado.precio) }}            por unidad ·            Existencias consultadas: {{ productoSeleccionado.stock }}          </p>        </div>        <form [formGroup]="form" (ngSubmit)="confirmarReserva()">          <ion-input            label="Unidades que quieres reservar"            labelPlacement="stacked"            type="number"            inputmode="numeric"            min="1"            step="1"            formControlName="cantidad"            [errorText]="errorCantidad"            [required]="true"          ></ion-input>          @if (form.pending) {            <p role="status">Comprobando disponibilidad…</p>          }          <div class="reserva-acciones">            <ion-button              type="submit"              [disabled]="saving() || loading() || form.pending || form.invalid"            >              {{                saving()                  ? \'Reservando…\'                  : form.pending                    ? \'Comprobando…\'                    : \'Confirmar reserva\'              }}            </ion-button>            <ion-button              type="button"              fill="outline"              (click)="cancelarSeleccion()"              [disabled]="saving()"            >              Cancelar selección            </ion-button>          </div>        </form>      </section>    }    <section class="coleccion" aria-labelledby="titulo-coleccion">      <div class="coleccion-cabecera">        <div>          <p class="etiqueta-editorial">Encuentra tu disco</p>          <h2 id="titulo-coleccion">Explora la colección</h2>        </div>        <ion-button          type="button"          fill="outline"          (click)="cargarProductos()"          [disabled]="loading() || saving()"        >          {{ loading() ? \'Actualizando…\' : \'Actualizar catálogo\' }}        </ion-button>      </div>      <div class="filtros">        <div class="campo-filtro buscador">          <label for="buscar-vinilos">Buscar un disco</label>          <input            id="buscar-vinilos"            type="search"            placeholder="Título o artista"            [value]="busqueda()"            (input)="actualizarBusqueda($event)"          />        </div>        <div class="campo-filtro">          <label for="genero-vinilos">Género</label>          <select            id="genero-vinilos"            [value]="genero()"            (change)="actualizarGenero($event)"          >            <option value="">Todos los géneros</option>            @for (opcion of generos(); track opcion) {              <option [value]="opcion">{{ opcion }}</option>            }          </select>        </div>        <div class="campo-filtro">          <label for="orden-vinilos">Ordenar por</label>          <select            id="orden-vinilos"            [value]="orden()"            (change)="actualizarOrden($event)"          >            <option value="recientes">Añadidos recientemente</option>            <option value="titulo">Título: A–Z</option>            <option value="precio-asc">Precio: menor a mayor</option>            <option value="precio-desc">Precio: mayor a menor</option>          </select>        </div>      </div>      <div class="filtros-secundarios">        <label class="filtro-disponibles">          <input            type="checkbox"            [checked]="soloDisponibles()"            (change)="actualizarDisponibilidad($event)"          />          Solo con existencias        </label>        @if (hayFiltros()) {          <button            class="limpiar-filtros"            type="button"            (click)="limpiarFiltros()"          >            Restablecer filtros          </button>        }      </div>      @if (loading()) {        <p role="status">Cargando la colección…</p>      } @else if (loadError()) {        <p role="alert">{{ loadError() }}</p>      } @else if (productos().length === 0) {        <div class="estado-vacio">          <h3>La colección está en camino</h3>          <p>Todavía no hay vinilos publicados. Vuelve más adelante.</p>        </div>      } @else {        <p class="contador" role="status">          {{            productosFiltrados().length === 1              ? \'1 disco\'              : productosFiltrados().length + \' discos\'          }}          en esta selección        </p>        @if (productosFiltrados().length === 0) {          <div class="estado-vacio">            <h3>No encontramos esa combinación</h3>            <p>Prueba con otro título, artista o género.</p>            <ion-button              type="button"              fill="outline"              (click)="limpiarFiltros()"            >              Ver toda la colección            </ion-button>          </div>        } @else {          <div class="productos-grid">            @for (producto of productosFiltrados(); track producto.id) {              <ion-card class="producto-card">                <div class="portada-marco">                  @if (producto.imagen_path; as ruta) {                    <img                      class="portada"                      [src]="portadas.obtenerUrl(ruta)"                      [alt]="\'Portada de \' + producto.titulo"                      width="480"                      height="480"                      loading="lazy"                    />                  } @else {                    <div                      class="portada-alternativa"                      role="img"                      [attr.aria-label]="\'Sin portada disponible para \' + producto.titulo"                    >                      <span class="disco-alternativo" aria-hidden="true"></span>                      <span>Vinyl Store</span>                    </div>                  }                  <span class="genero-producto">                    {{ producto.genero }}                  </span>                </div>                <ion-card-header>                  <ion-card-subtitle>                    {{ producto.artista }}                  </ion-card-subtitle>                  <ion-card-title>                    {{ producto.titulo }}                  </ion-card-title>                </ion-card-header>                <ion-card-content>                  @if (producto.descripcion) {                    <p class="descripcion-producto">                      {{ producto.descripcion }}                    </p>                  }                  <div class="producto-pie">                    <div class="producto-datos">                      <p class="precio">                        {{ formatearPrecio(producto.precio) }}                      </p>                      <p                        class="disponibilidad"                        [class.agotado]="producto.stock <= 0"                      >                        <span class="indicador-stock" aria-hidden="true"></span>                        {{                          producto.stock > 0                            ? producto.stock + \' disponibles\'                            : \'Temporalmente agotado\'                        }}                      </p>                    </div>                    @if (producto.stock > 0) {                      <ion-button                        type="button"                        (click)="prepararReserva(producto)"                        [disabled]="saving() || loading()"                        [attr.aria-label]="                          auth.session()                            ? \'Reservar \' + producto.titulo                            : \'Iniciar sesión para reservar \' + producto.titulo                        "                      >                        {{ auth.session() ? \'Reservar\' : \'Acceder y reservar\' }}                      </ion-button>                    }                  </div>                </ion-card-content>              </ion-card>            }          </div>        }      }    </section>  </div></ion-content></div>'
+    var COMPONENTS = [{'name': 'AppComponent', 'selector': 'app-root'},{'name': 'AyudaPage', 'selector': 'app-ayuda'},{'name': 'CatalogoPage', 'selector': 'app-catalogo'},{'name': 'ClienteDetallePage', 'selector': 'app-cliente-detalle'},{'name': 'ClientesPage', 'selector': 'app-clientes'},{'name': 'DashboardPage', 'selector': 'app-dashboard'},{'name': 'LoginPage', 'selector': 'app-login'},{'name': 'MisReservasPage', 'selector': 'app-mis-reservas'},{'name': 'ProductosPage', 'selector': 'app-productos'},{'name': 'ReservasPage', 'selector': 'app-reservas'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'CatalogoPage'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> comparación de resultados "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No hay resultados que coincidan "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'CatalogoPage.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var updateDarkModeSwitchOffset = function () {
+                    var content = document.querySelector('.content');
+                    var scrollbarWidth = 0;
+
+                    if (content) {
+                         scrollbarWidth = Math.max(0, content.offsetWidth - content.clientWidth);
+                    }
+
+                    document.documentElement.style.setProperty(
+                         '--content-scrollbar-width',
+                         scrollbarWidth + 'px'
+                    );
+               };
+
+               updateDarkModeSwitchOffset();
+               requestAnimationFrame(updateDarkModeSwitchOffset);
+               window.addEventListener('resize', updateDarkModeSwitchOffset);
+
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>
