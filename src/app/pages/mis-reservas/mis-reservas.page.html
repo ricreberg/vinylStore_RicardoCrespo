@@ -118,7 +118,7 @@
                   @if (reserva.producto?.imagen_path; as ruta) {
                     <img
                       [src]="portadas.obtenerUrl(ruta)"
-                      [alt]="'Portada de ' + reserva.producto?.titulo"
+                      [alt]="'Portada de ' + reserva.producto.titulo"
                       width="140"
                       height="140"
                       loading="lazy"

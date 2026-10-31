@@ -9,6 +9,7 @@ import {
   signal,
   HostListener,
 } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import {
   IonButton,
   IonButtons,
@@ -35,6 +36,20 @@ import { DashboardService } from '../../../core/services/dashboard.service';
 import type { DatosDashboard } from '../../../core/services/dashboard.service';
 import { InformesService } from '../../../core/services/informes.service';
 import type { DatosInforme } from '../../../core/services/informes.service';
+import {
+  calcularDashboard,
+  crearPeriodo,
+  etiquetaPeriodo,
+  fechaLocal,
+  periodoRapido,
+  validarPeriodo,
+} from '../../../core/utils/dashboard-calculos';
+import type {
+  ActividadPeriodo,
+  PeriodoInforme,
+  PeriodoRapido,
+  ResumenDashboard,
+} from '../../../core/utils/dashboard-calculos';
 
 interface ProductoDestacado {
   id: string;
@@ -68,6 +83,7 @@ Chart.register(
   templateUrl: './dashboard.page.html',
   styleUrls: ['./dashboard.page.scss'],
   imports: [
+    FormsModule,
     IonButton,
     IonButtons,
     IonContent,
@@ -100,7 +116,24 @@ export class DashboardPage implements OnDestroy {
   private activa = false;
   private peticion = 0;
 
-  readonly periodos = [7, 14, 30];
+  readonly periodos: { valor: PeriodoRapido; etiqueta: string }[] = [
+    { valor: 7, etiqueta: '7 días' },
+    { valor: 30, etiqueta: '30 días' },
+    { valor: 90, etiqueta: '90 días' },
+    { valor: 365, etiqueta: 'Último año' },
+    { valor: 'todo', etiqueta: 'Todo el historial' },
+  ];
+  readonly seleccionPeriodo = signal<PeriodoRapido | 'personalizado'>(7);
+  readonly periodo = signal<PeriodoInforme>(periodoRapido(7, []));
+  readonly errorPeriodo = signal('');
+  readonly textoPeriodo = computed(() => etiquetaPeriodo(this.periodo()));
+  readonly agrupacion = computed(() => this.periodo().agrupacion);
+  desde = this.periodo().desde;
+  hasta = this.periodo().hasta;
+
+  get fechaHoy(): string {
+    return fechaLocal(new Date());
+  }
   readonly umbralStockBajo = 3;
   get coloresEstados(): string[] {
     return [
@@ -114,21 +147,20 @@ export class DashboardPage implements OnDestroy {
   readonly errorMessage = signal('');
   readonly exportando = signal(false);
   readonly exportError = signal('');
-  readonly dias = signal(7);
   readonly ultimaActualizacion = signal('');
 
-  readonly resumen = signal({
+  readonly resumen = signal<ResumenDashboard>({
     productos: 0,
     activos: 0,
     stock: 0,
     reservas: 0,
     pendientes: 0,
     importeRecogidas: 0,
+    compras: 0,
+    cancelaciones: 0,
   });
 
-  readonly actividad = signal<
-    { fecha: string; cantidad: number }[]
-  >([]);
+  readonly actividad = signal<ActividadPeriodo[]>([]);
 
   readonly estados = signal<
     { etiqueta: string; cantidad: number }[]
@@ -145,7 +177,7 @@ export class DashboardPage implements OnDestroy {
       {
         titulo: 'Reservas creadas',
         valor: String(resumen.reservas),
-        detalle: `Últimos ${this.dias()} días, incluido hoy`,
+        detalle: this.textoPeriodo(),
         destacada: true,
       },
       {
@@ -155,9 +187,9 @@ export class DashboardPage implements OnDestroy {
         destacada: false,
       },
       {
-        titulo: 'Valor de recogidas',
+        titulo: 'Ventas',
         valor: this.moneda.format(resumen.importeRecogidas),
-        detalle: 'Del periodo; no representa cobros',
+        detalle: `${resumen.compras} compras por fecha de recogida`,
         destacada: false,
       },
       {
@@ -216,6 +248,10 @@ export class DashboardPage implements OnDestroy {
       }
 
       this.datos = datos;
+      const seleccion = this.seleccionPeriodo();
+      if (seleccion !== 'personalizado') {
+        this.establecerPeriodo(periodoRapido(seleccion, datos.reservas));
+      }
       this.recalcular();
 
       this.ultimaActualizacion.set(
@@ -244,21 +280,36 @@ export class DashboardPage implements OnDestroy {
     }
   }
 
-  cambiarPeriodo(dias: number): void {
-    if (
-      !this.periodos.includes(dias) ||
-      this.loading() ||
-      this.exportando() ||
-      this.errorMessage() ||
-      !this.activa ||
-      !this.datos
-    ) {
-      return;
-    }
-
-    this.dias.set(dias);
+  cambiarPeriodo(opcion: PeriodoRapido): void {
+    if (!this.puedeActualizarPeriodo()) return;
+    this.seleccionPeriodo.set(opcion);
+    this.establecerPeriodo(periodoRapido(opcion, this.datos!.reservas));
     this.recalcular();
     this.dibujarGraficos();
+  }
+
+  aplicarFechas(): void {
+    if (!this.puedeActualizarPeriodo()) return;
+    const error = validarPeriodo(this.desde, this.hasta);
+    this.errorPeriodo.set(error);
+    if (error) return;
+    this.seleccionPeriodo.set('personalizado');
+    this.establecerPeriodo(crearPeriodo(this.desde, this.hasta));
+    this.recalcular();
+    this.dibujarGraficos();
+  }
+
+  private puedeActualizarPeriodo(): boolean {
+    return this.activa && !!this.datos && !this.loading()
+      && !this.exportando() && !this.errorMessage();
+  }
+
+  private establecerPeriodo(periodo: PeriodoInforme): void {
+    this.periodo.set(periodo);
+    this.desde = periodo.desde;
+    this.hasta = periodo.hasta;
+    this.errorPeriodo.set('');
+    this.exportError.set('');
   }
 
   porcentaje(cantidad: number): string {
@@ -282,6 +333,10 @@ export class DashboardPage implements OnDestroy {
     }
   }
 
+  formatearPrecio(importe: number): string {
+    return this.moneda.format(importe);
+  }
+
   formatearFecha(fecha: string): string {
     return new Date(fecha).toLocaleString('es-ES', {
       day: '2-digit',
@@ -296,7 +351,8 @@ export class DashboardPage implements OnDestroy {
       this.loading() ||
       this.errorMessage() ||
       this.exportando() ||
-      !this.datos
+      !this.datos ||
+      this.errorPeriodo() !== ''
     ) {
       return;
     }
@@ -315,7 +371,8 @@ export class DashboardPage implements OnDestroy {
       this.loading() ||
       this.errorMessage() ||
       this.exportando() ||
-      !this.datos
+      !this.datos ||
+      this.errorPeriodo() !== ''
     ) {
       return;
     }
@@ -334,167 +391,23 @@ export class DashboardPage implements OnDestroy {
 
   private prepararInforme(): DatosInforme {
     return {
-      dias: this.dias(),
-      resumen: this.resumen(),
-      actividad: this.actividad(),
-      estados: this.estados(),
+      periodo: { ...this.periodo() },
+      actualizado: this.ultimaActualizacion(),
+      resumen: { ...this.resumen() },
+      actividad: this.actividad().map((fila) => ({ ...fila })),
+      estados: this.estados().map((fila) => ({ ...fila })),
     };
   }
 
   private recalcular(): void {
-    const datos = this.datos;
-
-    if (!datos) {
-      return;
-    }
-
-    const hoy = new Date();
-    hoy.setHours(0, 0, 0, 0);
-
-    const inicio = new Date(hoy);
-    inicio.setDate(inicio.getDate() - this.dias() + 1);
-
-    const fin = new Date(hoy);
-    fin.setDate(fin.getDate() + 1);
-
-    const reservas = datos.reservas.filter((reserva) => {
-      const fecha = new Date(reserva.created_at).getTime();
-
-      return fecha >= inicio.getTime() && fecha < fin.getTime();
-    });
-
-    const activos = datos.productos.filter(
-      (producto) => producto.activo,
-    );
-
-    const importeCentimos = reservas
-      .filter((reserva) => reserva.estado === 'recogida')
-      .reduce(
-        (total, reserva) =>
-          total +
-          Math.round(reserva.precio_unitario * 100) *
-            reserva.cantidad,
-        0,
-      );
-
-    this.resumen.set({
-      productos: datos.productos.length,
-      activos: activos.length,
-      stock: activos.reduce(
-        (total, producto) => total + producto.stock,
-        0,
-      ),
-      reservas: reservas.length,
-      pendientes: reservas.filter(
-        (reserva) => reserva.estado === 'pendiente',
-      ).length,
-      importeRecogidas: importeCentimos / 100,
-    });
-
-    this.estados.set([
-      {
-        etiqueta: 'Pendientes',
-        cantidad: reservas.filter(
-          (reserva) => reserva.estado === 'pendiente',
-        ).length,
-      },
-      {
-        etiqueta: 'Recogidas',
-        cantidad: reservas.filter(
-          (reserva) => reserva.estado === 'recogida',
-        ).length,
-      },
-      {
-        etiqueta: 'Canceladas',
-        cantidad: reservas.filter(
-          (reserva) => reserva.estado === 'cancelada',
-        ).length,
-      },
-    ]);
-
-    const cantidadesPorDia = new Map<string, number>();
-
-    for (const reserva of reservas) {
-      const clave = new Date(reserva.created_at).toDateString();
-
-      cantidadesPorDia.set(
-        clave,
-        (cantidadesPorDia.get(clave) ?? 0) + 1,
-      );
-    }
-
-    this.actividad.set(
-      Array.from({ length: this.dias() }, (_, indice) => {
-        const fecha = new Date(inicio);
-        fecha.setDate(fecha.getDate() + indice);
-
-        return {
-          fecha: fecha.toLocaleDateString('es-ES'),
-          cantidad: cantidadesPorDia.get(fecha.toDateString()) ?? 0,
-        };
-      }),
-    );
-
-    this.stockBajo.set(
-      activos
-        .filter((producto) => producto.stock <= this.umbralStockBajo)
-        .sort(
-          (a, b) =>
-            a.stock - b.stock ||
-            a.titulo.localeCompare(b.titulo, 'es'),
-        ),
-    );
-
-    const productosPorId = new Map(
-      datos.productos.map((producto) => [producto.id, producto]),
-    );
-
-    const unidadesPorProducto = new Map<string, number>();
-
-    for (const reserva of reservas) {
-      if (reserva.estado !== 'cancelada') {
-        unidadesPorProducto.set(
-          reserva.producto_id,
-          (unidadesPorProducto.get(reserva.producto_id) ?? 0) +
-            reserva.cantidad,
-        );
-      }
-    }
-
-    this.masReservados.set(
-      [...unidadesPorProducto.entries()]
-        .map(([id, unidades]) => {
-          const producto = productosPorId.get(id);
-
-          return {
-            id,
-            titulo: producto?.titulo ?? 'Producto no disponible',
-            artista: producto?.artista ?? '',
-            unidades,
-          };
-        })
-        .sort(
-          (a, b) =>
-            b.unidades - a.unidades ||
-            a.titulo.localeCompare(b.titulo, 'es'),
-        )
-        .slice(0, 5),
-    );
-
-    this.recientes.set(
-      [...reservas]
-        .sort((a, b) => b.created_at.localeCompare(a.created_at))
-        .slice(0, 5)
-        .map((reserva) => ({
-          id: reserva.id,
-          titulo:
-            productosPorId.get(reserva.producto_id)?.titulo ??
-            'Producto no disponible',
-          cantidad: reserva.cantidad,
-          estado: reserva.estado,
-          fecha: reserva.created_at,
-        })),
-    );
+    if (!this.datos) return;
+    const calculo = calcularDashboard(this.datos, this.periodo(), this.umbralStockBajo);
+    this.resumen.set(calculo.resumen);
+    this.actividad.set(calculo.actividad);
+    this.estados.set(calculo.estados);
+    this.stockBajo.set(calculo.stockBajo);
+    this.masReservados.set(calculo.masReservados);
+    this.recientes.set(calculo.recientes);
   }
 
   @HostListener('document:vinylstore:tema')
@@ -534,11 +447,22 @@ export class DashboardPage implements OnDestroy {
               borderColor: this.colorTema('--store-chart-primary', '#782c40'),
               backgroundColor: this.colorTema('--store-chart-primary', '#782c40'),
               borderWidth: 3,
-              pointRadius: this.dias() > 14 ? 2 : 4,
+              pointRadius: this.actividad().length > 31 ? 1.5 : 3,
               pointHoverRadius: 6,
               pointBackgroundColor: this.colorTema('--store-surface', '#fffdf9'),
               pointBorderColor: this.colorTema('--store-chart-primary', '#782c40'),
               pointBorderWidth: 2,
+              tension: 0.25,
+            },
+            {
+              label: 'Compras completadas',
+              data: this.actividad().map((fila) => fila.compras),
+              borderColor: this.colorTema('--store-chart-collected', '#455b4c'),
+              backgroundColor: this.colorTema('--store-chart-collected', '#455b4c'),
+              borderWidth: 2,
+              borderDash: [6, 4],
+              pointRadius: this.actividad().length > 31 ? 1.5 : 3,
+              pointHoverRadius: 6,
               tension: 0.25,
             },
           ],
@@ -553,7 +477,13 @@ export class DashboardPage implements OnDestroy {
           },
           plugins: {
             legend: {
-              display: false,
+              display: true,
+              labels: {
+                color: colorTexto,
+                font: { family: fuente, size: 11 },
+                boxWidth: 20,
+                padding: 16,
+              },
             },
             tooltip: {
               backgroundColor: '#292622',

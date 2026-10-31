@@ -514,3 +514,41 @@ thead th:last-child {
     flex-direction: column;
   }
 }
+
+/* Calendario de informes */
+.selector-periodo { flex-wrap: wrap; max-width: 100%; }
+.intervalo-fechas {
+  display: flex;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: -0.5rem 0 1.5rem;
+}
+.campo-fecha {
+  display: flex;
+  flex: 1 1 170px;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-width: 250px;
+  min-width: 0;
+}
+.campo-fecha label { color: var(--store-muted); font-size: 0.8rem; }
+.campo-fecha input {
+  width: 100%;
+  min-width: 0;
+  min-height: 46px;
+  padding: 0.65rem 0.8rem;
+  border: 1px solid var(--store-field-border);
+  border-radius: 8px;
+  background: var(--store-surface);
+  color: var(--store-ink);
+  font: inherit;
+  color-scheme: var(--store-color-scheme);
+}
+.campo-fecha input[aria-invalid='true'] { border-color: var(--ion-color-danger); }
+.intervalo-fechas ion-button { margin: 0; }
+.intervalo-aplicado { flex-basis: 100%; margin: 0; color: var(--store-muted); font-size: 0.8rem; }
+@media (max-width: 480px) {
+  .campo-fecha { max-width: none; flex-basis: 100%; }
+  .intervalo-fechas ion-button { width: 100%; }
+}

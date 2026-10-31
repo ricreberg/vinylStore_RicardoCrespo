@@ -42,18 +42,18 @@
 
     <section class="controles" aria-label="Periodo e informes">
       <div>
-        <span class="control-etiqueta">Periodo de reservas</span>
+        <span class="control-etiqueta">Periodo del informe</span>
 
         <div class="selector-periodo" role="group" aria-label="Elegir periodo">
-          @for (periodo of periodos; track periodo) {
+          @for (periodo of periodos; track periodo.valor) {
             <button
               type="button"
-              [class.activo]="dias() === periodo"
-              [attr.aria-pressed]="dias() === periodo"
+              [class.activo]="seleccionPeriodo() === periodo.valor"
+              [attr.aria-pressed]="seleccionPeriodo() === periodo.valor"
               [disabled]="loading() || exportando() || errorMessage() !== ''"
-              (click)="cambiarPeriodo(periodo)"
+              (click)="cambiarPeriodo(periodo.valor)"
             >
-              {{ periodo }} días
+              {{ periodo.etiqueta }}
             </button>
           }
         </div>
@@ -67,7 +67,7 @@
             type="button"
             fill="outline"
             (click)="descargarCsv()"
-            [disabled]="loading() || errorMessage() !== '' || exportando()"
+            [disabled]="loading() || errorMessage() !== '' || exportando() || errorPeriodo() !== ''"
           >
             CSV
           </ion-button>
@@ -75,13 +75,44 @@
           <ion-button
             type="button"
             (click)="descargarPdf()"
-            [disabled]="loading() || errorMessage() !== '' || exportando()"
+            [disabled]="loading() || errorMessage() !== '' || exportando() || errorPeriodo() !== ''"
           >
             {{ exportando() ? 'Generando…' : 'Descargar PDF' }}
           </ion-button>
         </div>
       </div>
     </section>
+
+    <form class="intervalo-fechas" (ngSubmit)="aplicarFechas()" novalidate>
+      <div class="campo-fecha">
+        <label for="fecha-desde">Desde</label>
+        <input id="fecha-desde" name="desde" type="date"
+          [(ngModel)]="desde" [max]="fechaHoy" required
+          [disabled]="loading() || exportando()"
+          [attr.aria-invalid]="errorPeriodo() ? 'true' : null"
+          [attr.aria-describedby]="errorPeriodo() ? 'error-periodo' : null" />
+      </div>
+      <div class="campo-fecha">
+        <label for="fecha-hasta">Hasta</label>
+        <input id="fecha-hasta" name="hasta" type="date"
+          [(ngModel)]="hasta" [max]="fechaHoy" required
+          [disabled]="loading() || exportando()"
+          [attr.aria-invalid]="errorPeriodo() ? 'true' : null"
+          [attr.aria-describedby]="errorPeriodo() ? 'error-periodo' : null" />
+      </div>
+      <ion-button type="submit" fill="outline"
+        [disabled]="loading() || exportando() || errorMessage() !== ''">
+        Aplicar fechas
+      </ion-button>
+      <p class="intervalo-aplicado" role="status">
+        Intervalo aplicado: <strong>{{ textoPeriodo() }}</strong>
+        · Datos agrupados por {{ agrupacion() === 'mensual' ? 'mes' : 'día' }}.
+      </p>
+    </form>
+
+    @if (errorPeriodo()) {
+      <p id="error-periodo" role="alert">{{ errorPeriodo() }}</p>
+    }
 
     @if (exportError()) {
       <p role="alert">{{ exportError() }}</p>
@@ -123,9 +154,11 @@
       </section>
 
       <p class="nota-alcance">
-        Las reservas se filtran por su fecha de creación, incluido hoy.
-        Sus estados son los actuales. Los productos y el stock reflejan
-        la situación actual, independientemente del periodo.
+        Reservas por fecha de creación; ventas por fecha de recogida.
+        Las pendientes y el anillo muestran el estado actual de las reservas
+        creadas en el intervalo, no su estado histórico.
+        Cancelaciones registradas en el intervalo: {{ resumen().cancelaciones }}.
+        Productos y existencias corresponden a la situación actual.
       </p>
 
       <div class="graficos-grid">
@@ -133,21 +166,21 @@
           <div class="seccion-cabecera">
             <div>
               <p class="etiqueta-editorial">Reservas del periodo</p>
-              <h2 id="titulo-actividad">Actividad diaria</h2>
+              <h2 id="titulo-actividad">Actividad {{ agrupacion() === 'mensual' ? 'mensual' : 'diaria' }}</h2>
             </div>
 
-            <span class="distintivo">Últimos {{ dias() }} días</span>
+            <span class="distintivo">{{ textoPeriodo() }}</span>
           </div>
 
           <p class="panel-descripcion">
-            Número de reservas creadas cada día.
+            Reservas creadas y compras completadas por {{ agrupacion() === 'mensual' ? 'mes' : 'día' }}.
           </p>
 
           <div class="grafico grafico-linea">
             <canvas
               #canvasActividad
               role="img"
-              aria-label="Reservas creadas por día. Los valores se pueden consultar en la tabla desplegable."
+              aria-label="Reservas creadas y compras completadas. Consulta los valores y los importes en la tabla desplegable."
             ></canvas>
           </div>
 
@@ -156,11 +189,13 @@
 
             <div class="tabla-contenedor">
               <table>
-                <caption>Reservas creadas por día en el periodo</caption>
+                <caption>Actividad {{ agrupacion() === 'mensual' ? 'mensual' : 'diaria' }} del intervalo</caption>
                 <thead>
                   <tr>
                     <th scope="col">Fecha</th>
-                    <th scope="col">Reservas</th>
+                    <th scope="col">Reservas creadas</th>
+                    <th scope="col">Compras</th>
+                    <th scope="col">Ventas</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -168,6 +203,8 @@
                     <tr>
                       <th scope="row">{{ dia.fecha }}</th>
                       <td>{{ dia.cantidad }}</td>
+                      <td>{{ dia.compras }}</td>
+                      <td>{{ formatearPrecio(dia.ventas) }}</td>
                     </tr>
                   }
                 </tbody>
@@ -379,7 +416,7 @@
 
       <p class="nota-informes">
         Los informes PDF y CSV incluyen el resumen, la distribución
-        por estado y la actividad diaria del periodo seleccionado.
+        por estado y la actividad {{ agrupacion() === 'mensual' ? 'mensual' : 'diaria' }} del intervalo seleccionado.
         No incluyen los listados complementarios.
       </p>
     </div>
